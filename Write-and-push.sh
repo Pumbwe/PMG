@@ -1,4 +1,3 @@
-chmod +x write-and-push.sh
 cat > write-and-push.sh <<'SCRIPT'
 #!/usr/bin/env bash
 set -euo pipefail
