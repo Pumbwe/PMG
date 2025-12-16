@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#notes {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    min-height: 100px;
+}/* Body and layout */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Buttons */
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Notes display */
+#notes {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    min-height: 100px;
+}
