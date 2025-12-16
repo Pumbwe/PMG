@@ -42,24 +42,45 @@
             padding: 20px;
             border-radius: 10px;
         }
-        .ai-helper, .dictionary {
-            margin-top: 20px;
-            padding: 15px;
+        .ai-helper, .dictionary, .past-papers {
+            margin-top: 30px;
+            padding: 20px;
             background-color: #333;
             border-radius: 10px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .past-papers h3 {
+            color: #FFD700;
+            margin-bottom: 15px;
+        }
+        .past-papers button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 15px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #FFD700, #cfa100);
+            color: #1a1a1a;
+            font-weight: bold;
         }
         a {
             display: inline-block;
-            margin-top: 20px;
+            margin-top: 30px;
             text-decoration: none;
             color: #1a1a1a;
             background-color: #FFD700;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 8px;
             font-weight: bold;
         }
     </style>
 </head>
+
 <body>
     <h1>PMG™EDU</h1>
 
@@ -71,6 +92,23 @@
 
     <div id="notes">
         <p>Select a subject to see notes.</p>
+    </div>
+
+    <!-- 🔥 PAST PAPERS SECTION -->
+    <div class="past-papers">
+        <h3>📘 Past Papers</h3>
+
+        <a href="past-papers/CH110_2022.pdf" target="_blank">
+            <button>CH110 – 2022</button>
+        </a>
+
+        <a href="past-papers/PH110_2021.pdf" target="_blank">
+            <button>PH110 – 2021</button>
+        </a>
+
+        <a href="past-papers/BI110_2020.pdf" target="_blank">
+            <button>BI110 – 2020</button>
+        </a>
     </div>
 
     <div class="ai-helper">
@@ -89,58 +127,61 @@
         <p id="dictResult" style="margin-top: 15px;"></p>
     </div>
 
-    <a href="https://wa.me/260775302886" target="_blank">Send Subscription Payment</a>
+    <a href="https://wa.me/260775302886" target="_blank">
+        Send Subscription Payment
+    </a>
 
     <script>
         const notesData = {
             'MA110': `
                 <h2>MA110 - Mathematics Notes</h2>
                 <ul>
-                    <li>Limits and Continuity: Concepts, Examples, and Techniques</li>
-                    <li>Differentiation: Rules, Applications, and Problem Solving</li>
-                    <li>Integration: Indefinite and Definite Integrals</li>
+                    <li>Limits and Continuity</li>
+                    <li>Differentiation</li>
+                    <li>Integration</li>
                 </ul>
             `,
             'PH110': `
                 <h2>PH110 - Physics Notes</h2>
                 <ul>
-                    <li>Work, Power, and Energy: Formulas & Examples</li>
-                    <li>Newton's Laws: Concepts and Applications</li>
-                    <li>Gravitation: Free Fall, Satellites, and Orbits</li>
+                    <li>Work, Power, and Energy</li>
+                    <li>Newton's Laws</li>
+                    <li>Gravitation</li>
                 </ul>
             `,
             'CH110': `
                 <h2>CH110 - Chemistry Notes</h2>
                 <ul>
-                    <li>Atomic Structure: Electrons, Protons, and Neutrons</li>
-                    <li>Chemical Bonding: Ionic, Covalent, Metallic</li>
-                    <li>Thermochemistry: Enthalpy, Heat Transfer, and Reactions</li>
+                    <li>Atomic Structure</li>
+                    <li>Chemical Bonding</li>
+                    <li>Thermochemistry</li>
                 </ul>
             `
         };
 
         function showNotes(subject) {
-            document.getElementById('notes').innerHTML = notesData[subject] || '<p>No notes available.</p>';
+            document.getElementById('notes').innerHTML =
+                notesData[subject] || '<p>No notes available.</p>';
         }
 
         function askAI() {
             const question = document.getElementById('aiQuestion').value;
-            if(!question) return alert('Please type a question first.');
-            // Placeholder response
-            document.getElementById('aiAnswer').innerHTML = `🤖 AI Answer: This is where a detailed explanation for "${question}" would appear.`;
+            if (!question) return alert('Please type a question first.');
+            document.getElementById('aiAnswer').innerHTML =
+                `🤖 AI Answer: This is where a detailed explanation for "${question}" would appear.`;
         }
 
         function searchDict() {
             const term = document.getElementById('dictTerm').value;
-            if(!term) return alert('Please enter a term.');
-            // Placeholder dictionary
+            if (!term) return alert('Please enter a term.');
             const dictionary = {
                 'Energy': 'The capacity to do work or produce heat.',
                 'Force': 'An influence that changes the motion of an object.',
-                'Atom': 'The smallest unit of matter that retains the properties of an element.'
+                'Atom': 'The smallest unit of matter.'
             };
-            document.getElementById('dictResult').innerHTML = dictionary[term] || 'Term not found in dictionary.';
+            document.getElementById('dictResult').innerHTML =
+                dictionary[term] || 'Term not found in dictionary.';
         }
     </script>
 </body>
-    </html>
+            </html>
