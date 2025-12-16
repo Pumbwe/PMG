@@ -37,4 +37,17 @@ button {
     border: 1px solid #ddd;
     padding: 10px;
     min-height: 100px;
+}/* Watermark for all pages */
+body::before {
+    content: "PMG";
+    position: fixed;        /* stays in place */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* center it */
+    font-size: 15rem;       /* BIG size */
+    color: rgba(0, 0, 0, 0.05); /* very faint */
+    z-index: -1;            /* behind everything */
+    pointer-events: none;   /* doesn’t block clicks */
+    font-family: Arial, sans-serif; /* change font if you want */
+    user-select: none;      /* can’t select text */
 }
