@@ -1,150 +1,146 @@
-<script>
-    const notesData = {
-        'MA110': `
-            <h2>MA110 - Mathematics Notes</h2>
-            <ul>
-                <li>Limits and Continuity: Concepts, Examples, and Techniques</li>
-                <li>Differentiation: Rules, Applications, and Problem Solving</li>
-                <li>Integration: Indefinite and Definite Integrals</li>
-            </ul>
-        `,
-        'PH110': `
-            <h2>PH110 - Physics Notes</h2>
-            <ul>
-                <li>Work, Power, and Energy: Formulas & Examples</li>
-                <li>Newton's Laws: Concepts and Applications</li>
-                <li>Gravitation: Free Fall, Satellites, and Orbits</li>
-            </ul>
-        `,
-        'CH110': `
-            <h2>CH110 - Chemistry Notes</h2>
-            <ul>
-                <li>Atomic Structure: Electrons, Protons, and Neutrons</li>
-                <li>Chemical Bonding: Ionic, Covalent, Metallic</li>
-                <li>Thermochemistry: Enthalpy, Heat Transfer, and Reactions</li>
-            </ul>
-        `
-    };
-
-    function showNotes(subject) {
-        document.getElementById('notes').innerHTML = notesData[subject] || '<p>No notes available.</p>';
-    }
-
-    // ==================== QUIZ DATA ====================
-    const quizData = {
-        'CH110': [
-            {
-                question: "Define Atomic Number.",
-                answer: "The number of protons in the nucleus of an atom.",
-                explanation: "Atomic number determines the element and is equal to the number of protons."
-            },
-            {
-                question: "Explain the difference between Ionic and Covalent bonding.",
-                answer: "Ionic bonding is the transfer of electrons; covalent bonding is the sharing of electrons.",
-                explanation: "In ionic bonds, one atom gives electrons to another; covalent bonds share electrons between atoms."
-            },
-            {
-                question: "What is the molar mass of H2O?",
-                answer: "18 g/mol",
-                explanation: "H2O has 2 H (1 g/mol each) and 1 O (16 g/mol): 1+1+16=18 g/mol."
-            }
-        ],
-        'PH110': [
-            {
-                question: "What is a vector?",
-                answer: "A quantity that has both magnitude and direction.",
-                explanation: "Examples include velocity, force, and displacement."
-            },
-            {
-                question: "State Newton's Second Law.",
-                answer: "Force equals mass times acceleration (F=ma).",
-                explanation: "This law explains how the motion of an object changes when a force is applied."
-            },
-            {
-                question: "Define gravitational potential energy.",
-                answer: "Energy an object has due to its position in a gravitational field.",
-                explanation: "GPE = m * g * h, where m=mass, g=gravity, h=height."
-            }
-        ],
-        'MA110': [
-            {
-                question: "Find the derivative of f(x) = x^2.",
-                answer: "f'(x) = 2x",
-                explanation: "Using the power rule: d(x^n)/dx = n*x^(n-1)."
-            },
-            {
-                question: "Evaluate the limit: lim(x→0) (sin x)/x.",
-                answer: "1",
-                explanation: "This is a standard trigonometric limit."
-            },
-            {
-                question: "Integrate ∫2x dx.",
-                answer: "x^2 + C",
-                explanation: "Use the power rule for integration: ∫x^n dx = x^(n+1)/(n+1) + C."
-            }
-        ]
-    };
-
-    let currentQuiz = [];
-    let currentQuestionIndex = 0;
-
-    function startQuiz(subject) {
-        if (!quizData[subject]) {
-            alert("No quiz available for this subject.");
-            return;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PMG™EDU</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
         }
-        currentQuiz = quizData[subject];
-        currentQuestionIndex = 0;
-        showQuizQuestion();
-    }
-
-    function showQuizQuestion() {
-        if (currentQuestionIndex >= currentQuiz.length) {
-            document.getElementById('notes').innerHTML = "<p>🎉 You've completed the quiz!</p>";
-            return;
+        h1 {
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 30px;
         }
+        #subjects button {
+            margin: 10px;
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            background-color: #333;
+            color: #FFD700;
+            transition: 0.3s;
+        }
+        #subjects button:hover {
+            background-color: #FFD700;
+            color: #333;
+        }
+        #notes {
+            margin-top: 30px;
+            text-align: left;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .ai-helper, .dictionary {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #333;
+            border-radius: 10px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #1a1a1a;
+            background-color: #FFD700;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>PMG™EDU</h1>
 
-        const q = currentQuiz[currentQuestionIndex];
-        document.getElementById('notes').innerHTML = `
-            <h3>Question ${currentQuestionIndex + 1}</h3>
-            <p>${q.question}</p>
-            <input type="text" id="userAnswer" placeholder="Type your answer here" style="width: 80%; padding: 10px;">
-            <button onclick="checkAnswer()">Submit</button>
-            <p id="feedback" style="margin-top:15px;"></p>
-        `;
-    }
+    <div id="subjects">
+        <button onclick="showNotes('MA110')">MA110</button>
+        <button onclick="showNotes('PH110')">PH110</button>
+        <button onclick="showNotes('CH110')">CH110</button>
+    </div>
 
-    function checkAnswer() {
-        const userAns = document.getElementById('userAnswer').value.trim();
-        const q = currentQuiz[currentQuestionIndex];
+    <div id="notes">
+        <p>Select a subject to see notes.</p>
+    </div>
 
-        const feedback = userAns.toLowerCase() === q.answer.toLowerCase()
-            ? "✅ Correct!" 
-            : `❌ Not quite. Correct Answer: ${q.answer}`;
+    <div class="ai-helper">
+        <h3>AI Helper</h3>
+        <p>Type your question and get a detailed explanation of concepts or answers:</p>
+        <input type="text" id="aiQuestion" placeholder="Ask something..." style="width: 80%; padding: 10px; border-radius: 5px;">
+        <button onclick="askAI()" style="padding: 10px 15px; margin-left: 5px; border-radius: 5px; cursor:pointer;">Ask AI</button>
+        <p id="aiAnswer" style="margin-top: 15px;"></p>
+    </div>
 
-        document.getElementById('feedback').innerHTML = `${feedback}<br><em>Explanation:</em> ${q.explanation}`;
+    <div class="dictionary">
+        <h3>Dictionary</h3>
+        <p>Search for definitions of terms:</p>
+        <input type="text" id="dictTerm" placeholder="Enter term..." style="width: 80%; padding: 10px; border-radius: 5px;">
+        <button onclick="searchDict()" style="padding: 10px 15px; margin-left: 5px; border-radius: 5px; cursor:pointer;">Search</button>
+        <p id="dictResult" style="margin-top: 15px;"></p>
+    </div>
 
-        currentQuestionIndex++;
-        setTimeout(showQuizQuestion, 3000);
-    }
+    <a href="https://wa.me/260775302886" target="_blank">Send Subscription Payment</a>
 
-    // ==================== AI HELPER & DICTIONARY ====================
-    function askAI() {
-        const question = document.getElementById('aiQuestion').value;
-        if(!question) return alert('Please type a question first.');
-        document.getElementById('aiAnswer').innerHTML = `🤖 AI Answer: This is where a detailed explanation for "${question}" would appear.`;
-    }
-
-    function searchDict() {
-        const term = document.getElementById('dictTerm').value;
-        if(!term) return alert('Please enter a term.');
-        const dictionary = {
-            'Energy': 'The capacity to do work or produce heat.',
-            'Force': 'An influence that changes the motion of an object.',
-            'Atom': 'The smallest unit of matter that retains the properties of an element.',
-            'Vector': 'A quantity that has both magnitude and direction, like force or velocity.',
-            'Mole': 'A unit representing 6.022 x 10^23 particles of a substance.'
+    <script>
+        const notesData = {
+            'MA110': `
+                <h2>MA110 - Mathematics Notes</h2>
+                <ul>
+                    <li>Limits and Continuity: Concepts, Examples, and Techniques</li>
+                    <li>Differentiation: Rules, Applications, and Problem Solving</li>
+                    <li>Integration: Indefinite and Definite Integrals</li>
+                </ul>
+            `,
+            'PH110': `
+                <h2>PH110 - Physics Notes</h2>
+                <ul>
+                    <li>Work, Power, and Energy: Formulas & Examples</li>
+                    <li>Newton's Laws: Concepts and Applications</li>
+                    <li>Gravitation: Free Fall, Satellites, and Orbits</li>
+                </ul>
+            `,
+            'CH110': `
+                <h2>CH110 - Chemistry Notes</h2>
+                <ul>
+                    <li>Atomic Structure: Electrons, Protons, and Neutrons</li>
+                    <li>Chemical Bonding: Ionic, Covalent, Metallic</li>
+                    <li>Thermochemistry: Enthalpy, Heat Transfer, and Reactions</li>
+                </ul>
+            `
         };
-        document.getElementById('dictResult').innerHTML = dictionary[term] || 'Term not found in dictionary.';
-    }
-</script>
+
+        function showNotes(subject) {
+            document.getElementById('notes').innerHTML = notesData[subject] || '<p>No notes available.</p>';
+        }
+
+        function askAI() {
+            const question = document.getElementById('aiQuestion').value;
+            if(!question) return alert('Please type a question first.');
+            // Placeholder response
+            document.getElementById('aiAnswer').innerHTML = `🤖 AI Answer: This is where a detailed explanation for "${question}" would appear.`;
+        }
+
+        function searchDict() {
+            const term = document.getElementById('dictTerm').value;
+            if(!term) return alert('Please enter a term.');
+            // Placeholder dictionary
+            const dictionary = {
+                'Energy': 'The capacity to do work or produce heat.',
+                'Force': 'An influence that changes the motion of an object.',
+                'Atom': 'The smallest unit of matter that retains the properties of an element.'
+            };
+            document.getElementById('dictResult').innerHTML = dictionary[term] || 'Term not found in dictionary.';
+        }
+    </script>
+</body>
+    </html>
