@@ -1,53 +1,121 @@
+/* ===== GLOBAL STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Playfair Display', serif; /* classy & elegant */
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 20px;
+    background-color: #fdfcf6; /* soft luxury cream */
+    color: #1a1a1a; /* dark text for readability */
+    line-height: 1.7;
 }
 
+/* ===== HEADINGS ===== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    color: #2c2c2c;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+/* ===== LINKS ===== */
+a {
+    text-decoration: none;
+    color: #8c6d4b; /* gold-ish luxury color */
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: #bfa47a;
+    letter-spacing: 1px;
+}
+
+/* ===== BUTTONS ===== */
 button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(135deg, #cbb59b, #8c6d4b);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: 600;
     cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
 }
 
-#notes {
-    margin-top: 20px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    min-height: 100px;
-}/* Body and layout */
-body {
-    font-family: Arial, sans-serif;
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+}
+
+/* ===== SECTIONS ===== */
+.section {
+    padding: 80px 50px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* ===== CARD / BOX STYLING ===== */
+.card {
+    background-color: #fffdf9;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+}
+
+/* ===== FOOTER ===== */
+footer {
+    background-color: #1a1a1a;
+    color: #fdfcf6;
+    padding: 50px;
     text-align: center;
-    padding: 20px;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
 }
 
-/* Buttons */
-button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+/* ===== SUBTLE DETAILS ===== */
+.shadow-text {
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
 }
 
-/* Notes display */
-#notes {
-    margin-top: 20px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    min-height: 100px;
-}/* Watermark for all pages */
-body::before {
-    content: "PMG";
-    position: fixed;        /* stays in place */
+.faint-logo {
+    font-size: 6rem;
+    color: rgba(140, 109, 75, 0.05); /* faint gold watermark style */
+    position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* center it */
-    font-size: 15rem;       /* BIG size */
-    color: rgba(0, 0, 0, 0.05); /* very faint */
-    z-index: -1;            /* behind everything */
-    pointer-events: none;   /* doesn’t block clicks */
-    font-family: Arial, sans-serif; /* change font if you want */
-    user-select: none;      /* can’t select text */
+    transform: translate(-50%, -50%);
+    z-index: -1;
 }
+
+/* ===== SMOOTH TRANSITIONS ===== */
+* {
+    transition: all 0.3s ease-in-out;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 2rem; }
+    .section { padding: 50px 20px; }
+        
