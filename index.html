@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PMG™EDU | All Courses</title>
-
 <style>
 body {
     margin: 0;
@@ -56,16 +55,57 @@ h1 {
     background: #555;
     color: #ccc;
 }
-.pay-box {
+.pay-box, .admin {
     margin-top: 20px;
-    font-size: 0.95rem;
 }
-.admin {
-    margin-top: 20px;
+#dictionary input {
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    width: 60%;
+}
+#dictionary button {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    background: #FFD700;
+    color: #111;
+    cursor: pointer;
+}
+#ai-chat {
+    background: #1b1b1b;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 800px;
+    margin: 30px auto;
+}
+#ai-chat textarea {
+    width: 80%;
+    height: 80px;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+}
+#ai-chat button {
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+    background: #FFD700;
+    color: #111;
+    font-weight: bold;
+    cursor: pointer;
+}
+#ai-response {
+    text-align: left;
+    margin-top: 15px;
+    background: #111;
+    padding: 15px;
+    border-radius: 10px;
+    min-height: 60px;
 }
 </style>
 </head>
-
 <body>
 
 <h1>PMG™EDU</h1>
@@ -83,20 +123,36 @@ h1 {
     <p>Select a course to view papers.</p>
 </div>
 
+<!-- Payment Section -->
 <div class="pay-box">
-    <p><b>Pay K25 Monthly</b></p>
-    <p>📱 MTN: <b>0775302886</b><br>
-       📱 Airtel: <b>0768497390</b></p>
+    <h2>Pay K25 Monthly</h2>
+    <p>Choose your payment method:</p>
+    <button onclick="pay('MTN')">📱 MTN MoMo</button>
+    <button onclick="pay('Airtel')">📱 Airtel Money</button>
+    <p>If you face any payment issue, contact the admin via WhatsApp:</p>
     <a href="https://wa.me/260775302886" target="_blank">📲 WhatsApp Admin</a>
 </div>
 
-<div class="admin">
-    <button onclick="activate()">🔓 Admin Activate (30 Days)</button>
+<!-- Dictionary Section -->
+<div class="section" id="dictionary">
+  <h2>Dictionary</h2>
+  <input type="text" id="wordInput" placeholder="Type a term..." />
+  <button onclick="lookup()">Search</button>
+  <p id="definition"></p>
+</div>
+
+<!-- AI Section -->
+<div class="section" id="ai-chat">
+  <h2>AI Helper</h2>
+  <textarea id="aiInput" placeholder="Ask me a question about your course..."></textarea><br>
+  <button onclick="askAI()">Ask AI</button>
+  <div id="ai-response"></div>
 </div>
 
 <script>
+/* --- Subscription System --- */
 const years = [2018,2019,2020,2021,2022,2023,2024];
-const demoYears = [2018,2019,2020,2021,2022]; // 5 demo papers
+const demoYears = [2018,2019,2020,2021,2022];
 
 function isActive() {
     const exp = localStorage.getItem("sub_expiry");
@@ -105,24 +161,14 @@ function isActive() {
 
 function loadCourse(course) {
     let html = `<h2>${course} Past Papers</h2>`;
-
     years.forEach(y => {
         const isDemo = demoYears.includes(y);
         if (isDemo) {
-            html += `
-            <button class="paper-btn"
-            onclick="openPaper('${course}',${y})">
-            ${course} – ${y} (DEMO)
-            </button>`;
+            html += `<button class="paper-btn" onclick="openPaper('${course}',${y})">${course} – ${y} (DEMO)</button>`;
         } else {
-            html += `
-            <button class="paper-btn locked"
-            onclick="locked()">
-            ${course} – ${y} 🔒
-            </button>`;
+            html += `<button class="paper-btn locked" onclick="locked()">${course} – ${y} 🔒</button>`;
         }
     });
-
     document.getElementById("papers").innerHTML = html;
 }
 
@@ -137,26 +183,66 @@ function locked() {
 
 Monthly subscription is K25.
 
-Pay via:
-MTN: 0775302886
-Airtel: 0768497390
-
-Then WhatsApp admin for activation.`
+Choose MTN or Airtel above to pay and unlock, or contact admin via WhatsApp for help.`
         );
     }
 }
 
-function activate() {
-    const code = prompt("Admin code:");
-    if (code !== "PMG25") {
-        alert("❌ Wrong code");
-        return;
+/* --- Payment Simulation --- */
+function pay(method) {
+    alert(`You chose ${method}. Simulating payment...`);
+    
+    setTimeout(() => {
+        const expiry = Date.now() + (30*24*60*60*1000);
+        localStorage.setItem("sub_expiry", expiry);
+        alert(`✅ Payment successful via ${method}. Subscription active for 30 days!`);
+    }, 3000);
+}
+
+/* --- Dictionary --- */
+const dictionary = {
+  "derivative": "A measure of how a function changes as its input changes.",
+  "integral": "Represents area under a curve in calculus.",
+  "matrix": "A rectangular array of numbers or expressions.",
+  "cell": "The basic structural and functional unit of life.",
+  "photosynthesis": "Process by which plants make food from sunlight.",
+  "mitosis": "Cell division process creating identical daughter cells.",
+  "atom": "Smallest unit of an element retaining chemical properties.",
+  "molecule": "Two or more atoms chemically bonded together.",
+  "reaction": "A process where substances change into new substances.",
+  "algorithm": "Step-by-step procedure for solving a problem.",
+  "variable": "A storage location paired with a name.",
+  "function": "A block of code that performs a task.",
+  "force": "A push or pull on an object.",
+  "velocity": "The speed of something in a given direction.",
+  "acceleration": "Rate of change of velocity over time."
+};
+
+function lookup() {
+  const word = document.getElementById("wordInput").value.toLowerCase();
+  const def = dictionary[word];
+  document.getElementById("definition").innerText = def ? def : "❌ Term not found.";
+}
+
+/* --- Offline AI Helper --- */
+function askAI() {
+    const question = document.getElementById("aiInput").value.toLowerCase();
+    let response = "🤖 Sorry, I don't know the answer. Try a simpler question.";
+    
+    for (let key in dictionary) {
+        if (question.includes(key)) {
+            response = `💡 Here's an explanation for "${key}": ${dictionary[key]}\n\nTip: Try solving problems step by step, applying this concept.`;
+            break;
+        }
     }
-    const expiry = Date.now() + (30 * 24 * 60 * 60 * 1000);
-    localStorage.setItem("sub_expiry", expiry);
-    alert("✅ Subscription active for 30 days");
+
+    if (question.includes("example") || question.includes("how to solve") || question.includes("explain")) {
+        response += "\n💡 Try breaking the problem into smaller steps and relate it to known formulas or definitions.";
+    }
+
+    document.getElementById("ai-response").innerText = response;
 }
 </script>
 
 </body>
-</html> 
+</html>
