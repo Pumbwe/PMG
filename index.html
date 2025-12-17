@@ -5,81 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PMG™EDU | All Courses</title>
 <style>
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#0f0f0f;
-  color:#f0f0f0;
-  text-align:center;
-  padding:20px;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#0f0f0f;color:#f0f0f0;text-align:center;padding:20px;}
 h1{color:#FFD700;font-size:2.5em;}
-.quote{
-  font-size:1.6em;
-  font-weight:bold;
-  margin:20px auto 30px;
-  background: linear-gradient(to right, #222, #888);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  max-width:900px;
-}
-.courses{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-  gap:15px;
-  max-width:800px;
-  margin:auto;
-}
-.course{
-  background:#1b1b1b;
-  padding:20px;
-  border-radius:12px;
-  cursor:pointer;
-}
+.quote{font-size:1.6em;font-weight:bold;margin:20px auto 30px;background: linear-gradient(to right,#222,#888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;max-width:900px;}
+.courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;max-width:800px;margin:auto;}
+.course{background:#1b1b1b;padding:20px;border-radius:12px;cursor:pointer;}
 .course h3{color:#FFD700;}
-.section{
-  margin-top:30px;
-  background:#1b1b1b;
-  padding:20px;
-  border-radius:12px;
-  max-width:800px;
-  margin:auto;
-}
-.paper-btn{
-  width:100%;
-  padding:12px;
-  margin:6px 0;
-  border:none;
-  border-radius:10px;
-  font-weight:bold;
-  cursor:pointer;
-  background:linear-gradient(135deg,#FFD700,#cfa100);
-  color:#111;
-}
+.section{margin-top:30px;background:#1b1b1b;padding:20px;border-radius:12px;max-width:800px;margin:auto;position:relative;}
+.paper-btn{width:100%;padding:12px;margin:6px 0;border:none;border-radius:10px;font-weight:bold;cursor:pointer;background:linear-gradient(135deg,#FFD700,#cfa100);color:#111;}
 .locked{background:#555;color:#ccc;}
-#dictionary input{
-  padding:8px;border-radius:8px;border:none;width:60%;
-}
-#dictionary button{
-  padding:8px 12px;border-radius:8px;border:none;
-  font-weight:bold;background:#FFD700;color:#111;cursor:pointer;
-}
-#ai-chat textarea{
-  width:80%;height:80px;border-radius:10px;border:none;padding:10px;
-}
-#ai-chat button{
-  padding:10px 15px;border-radius:10px;border:none;
-  background:#FFD700;color:#111;font-weight:bold;cursor:pointer;
-}
-#ai-response{
-  text-align:left;margin-top:15px;background:#111;
-  padding:15px;border-radius:10px;min-height:80px;
-}
 iframe{border:none;background:#111;}
-.pay-box button{
-  padding:12px 20px;border:none;border-radius:10px;
-  background:#FFD700;color:#111;font-weight:bold;cursor:pointer;
-}
+#watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-45deg);font-size:5em;color:rgba(255,255,255,0.1);font-weight:bold;pointer-events:none;z-index:10;user-select:none;white-space:nowrap;}
+.pay-box input{padding:10px;border-radius:8px;border:none;width:60%;margin-bottom:10px;}
+.pay-box button{padding:12px 20px;border:none;border-radius:10px;background:#FFD700;color:#111;font-weight:bold;cursor:pointer;}
+#admin-unlock{display:none;position:fixed;bottom:20px;right:20px;background:#ff0;color:#111;padding:10px 15px;border-radius:8px;font-weight:bold;cursor:pointer;z-index:1000;}
 </style>
 </head>
 <body>
@@ -104,27 +43,19 @@ iframe{border:none;background:#111;}
 <div id="viewer" class="section" style="display:none;">
   <h2 id="viewer-title"></h2>
   <iframe id="pdfFrame" width="100%" height="600px"></iframe>
+  <div id="watermark">PMG™ EDU</div>
 </div>
 
 <div class="pay-box">
-  <h2>Monthly Subscription: K25</h2>
-  <p>📱 MTN: 0775302886<br>📱 Airtel: 0768497390</p>
-  <button onclick="activateSubscription()">Activate Subscription</button>
+  <h2>Activate Subscription</h2>
+  <input type="text" id="username" placeholder="Enter your Name or Phone">
+  <br>
+  <button onclick="notifyPayment()">I Paid</button>
+  <p>📱 Send payment K25 and screenshot to WhatsApp: <b>0775302886</b></p>
 </div>
 
-<div class="section" id="dictionary">
-  <h2>Dictionary</h2>
-  <input type="text" id="wordInput" placeholder="Type a term..." />
-  <button onclick="lookup()">Search</button>
-  <p id="definition"></p>
-</div>
-
-<div class="section" id="ai-chat">
-  <h2>AI Helper</h2>
-  <textarea id="aiInput" placeholder="Ask a question e.g. explain vector with example"></textarea><br>
-  <button onclick="askAI()">Ask AI</button>
-  <div id="ai-response"></div>
-</div>
+<!-- Admin unlock button (only visible to you) -->
+<button id="admin-unlock" onclick="unlockAccess()">🔓 Admin Unlock</button>
 
 <script>
 document.addEventListener("contextmenu", e => e.preventDefault());
@@ -132,38 +63,63 @@ document.addEventListener("contextmenu", e => e.preventDefault());
 const years=[2018,2019,2020,2021,2022,2023,2024];
 const demoYears=[2018,2019,2020,2021,2022];
 const subscriptionDays=30;
+let userAccess=false;
 
+// Load papers for selected course
 function loadCourse(course){
   let html=`<h2>${course} Past Papers</h2>`;
   years.forEach(y=>{
-    if(demoYears.includes(y)){
-      html+=`<button class="paper-btn" onclick="openPaper('${course}',${y})">${course} – ${y} (DEMO)</button>`;
+    if(demoYears.includes(y) || userAccess){
+      html+=`<button class="paper-btn" onclick="openPaper('${course}',${y})">${course} – ${y}</button>`;
     }else{
-      html+=`<button class="paper-btn locked" onclick="openPaper('${course}',${y})">${course} – ${y} 🔒</button>`;
+      html+=`<button class="paper-btn locked" onclick="locked()">${course} – ${y} 🔒</button>`;
     }
   });
   document.getElementById("papers").innerHTML=html;
 }
 
-// Subscription system
-function activateSubscription(){
-  const now = new Date().getTime();
+// Notify payment
+function notifyPayment(){
+  const user=document.getElementById('username').value.trim();
+  if(!user){
+    alert("⚠️ Please enter your Name or Phone before sending payment.");
+    return;
+  }
+  localStorage.setItem('lastPayer', user);
+  alert(`✅ Payment notification recorded for ${user}!\nSend screenshot to WhatsApp 0775302886.\nThen click Admin Unlock.`);
+}
+
+// Admin unlock (manual)
+function unlockAccess(){
+  const now=new Date().getTime();
   localStorage.setItem('subscriptionStart', now);
-  alert("✅ Subscription activated! You have 30 days of access.");
+  userAccess=true;
+  const payer = localStorage.getItem('lastPayer') || 'Unknown';
+  alert(`✅ Access granted to ${payer} for 30 days!`);
+  loadCourse('MA110');
 }
 
-function isSubscriptionActive(){
+// Check subscription expiry
+function checkSubscriptionExpiry(){
   const start = localStorage.getItem('subscriptionStart');
-  if(!start) return false;
+  if(!start) return;
   const now = new Date().getTime();
-  const diffDays = (now - parseInt(start)) / (1000*60*60*24);
-  return diffDays <= subscriptionDays;
+  const diffDays=(now-parseInt(start))/(1000*60*60*24);
+  if(diffDays>subscriptionDays){
+    userAccess=false;
+    alert("⚠️ Subscription expired. Renew to continue viewing papers.");
+    loadCourse('MA110');
+  }else{
+    userAccess=true;
+  }
 }
+setInterval(checkSubscriptionExpiry, 60*1000);
 
+// Open PDF in iframe
 function openPaper(course,year){
   const filePath=`past-papers/${course}/${course}-${year}.pdf`;
-  if(!demoYears.includes(year) && !isSubscriptionActive()){
-    alert("🔒 Locked. Activate your subscription to view this paper.");
+  if(!demoYears.includes(year) && !userAccess){
+    alert("🔒 Locked. Activate your subscription via WhatsApp first.");
     return;
   }
   document.getElementById("viewer-title").innerText=`${course} – ${year} Past Paper`;
@@ -172,62 +128,19 @@ function openPaper(course,year){
   document.getElementById("viewer").scrollIntoView({behavior:"smooth"});
 }
 
-// Dictionary
-const dictionary={
-  "vector":"A quantity with both magnitude and direction.",
-  "scalar":"A quantity with magnitude only.",
-  "function":"A rule that assigns each input exactly one output.",
-  "limit":"The value a function approaches as input nears a point.",
-  "derivative":"Rate of change of a function.",
-  "integration":"Process of finding area under a curve.",
-  "matrix":"Rectangular array of numbers.",
-  "determinant":"Single value from a square matrix.",
-  "force":"A push or pull acting on an object.",
-  "velocity":"Speed in a given direction.",
-  "acceleration":"Rate of change of velocity.",
-  "work":"Force applied over a distance.",
-  "power":"Rate of doing work.",
-  "energy":"Capacity to do work.",
-  "atom":"Smallest unit of an element.",
-  "molecule":"Two or more atoms bonded together.",
-  "ionic bond":"Bond formed by electron transfer.",
-  "covalent bond":"Bond formed by electron sharing.",
-  "mole":"Amount of substance containing Avogadro's number.",
-  "acid":"Substance that donates hydrogen ions.",
-  "base":"Substance that accepts hydrogen ions.",
-  "cell":"Basic unit of life.",
-  "mitosis":"Cell division producing identical cells.",
-  "meiosis":"Cell division producing gametes.",
-  "photosynthesis":"Process plants use to make food.",
-  "enzyme":"Protein that speeds up reactions.",
-  "algorithm":"Step-by-step method to solve a problem.",
-  "variable":"Named storage location in a program.",
-  "loop":"Code that repeats.",
-  "array":"Collection of values under one name.",
-  "debugging":"Finding and fixing errors."
-};
+// Prevent download
+document.addEventListener('keydown', function(e){
+  if(e.key==="s" && (e.ctrlKey || e.metaKey)) e.preventDefault();
+});
 
-function lookup(){
-  const w=document.getElementById("wordInput").value.toLowerCase().trim();
-  document.getElementById("definition").innerText=dictionary[w]||"❌ Term not found.";
+// Show admin button only for you (example: set localStorage manually)
+if(localStorage.getItem('isAdmin')==='true'){
+  document.getElementById('admin-unlock').style.display='block';
 }
 
-// AI Helper
-function askAI(){
-  const q=document.getElementById("aiInput").value.toLowerCase();
-  let response="🤖 Try asking about a known term with 'explain' or 'example'.";
-  for(let term in dictionary){
-    if(q.includes(term)){
-      response=`💡 ${term.toUpperCase()}\n${dictionary[term]}\n\n📘 Study Tip: Practice using past papers daily.`;
-      if(q.includes("example")){
-        response+=`\n\n📌 Example: Apply ${term} step by step in a real problem.`;
-      }
-      break;
-    }
-  }
-  document.getElementById("ai-response").innerText=response;
-}
+// Initialize
+checkSubscriptionExpiry();
 </script>
 
 </body>
-  </html>
+</html>
