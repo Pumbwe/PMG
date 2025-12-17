@@ -5,143 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PMG™ EDU | All Courses</title>
 <style>
-/* ===== BODY & GENERAL ===== */
-body {
-    margin:0;
-    font-family:'Playfair Display', serif;
-    background:#0f0f0f;
-    color:#f0f0f0;
-    text-align:center;
-    padding:20px;
-    position:relative;
-}
+body {margin:0;font-family:'Playfair Display', serif;background:#0f0f0f;color:#f0f0f0;text-align:center;padding:20px;position:relative;}
 h1{color:#FFD700;font-size:2.8em;text-shadow:0 0 10px #ffbf00;}
 .quote{font-size:1.5em;margin:15px auto 30px;color:#ccc;max-width:800px;font-style:italic;font-weight:bold;text-shadow:1px 1px 4px #000;}
-.watermark {
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%) rotate(-45deg);
-    font-size:6em;
-    color:rgba(200,200,200,0.05);
-    pointer-events:none;
-    user-select:none;
-    z-index:0;
-    font-weight:bold;
-}
-.creator {
-    position:fixed;
-    bottom:10px;
-    right:15px;
-    font-size:1.2em;
-    color:#FFD700;
-    font-weight:bold;
-    text-shadow:1px 1px 4px #000;
-    z-index:1000;
-}
+.watermark {position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-45deg);font-size:6em;color:rgba(200,200,200,0.05);pointer-events:none;user-select:none;z-index:0;font-weight:bold;}
+.creator {position:fixed;bottom:10px;right:15px;font-size:1.2em;color:#FFD700;font-weight:bold;text-shadow:1px 1px 4px #000;z-index:1000;}
 
-/* ===== COURSES ===== */
-.courses {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-    gap:15px;
-    max-width:800px;
-    margin:auto;
-}
-.course {
-    background:#1b1b1b;
-    padding:20px;
-    border-radius:12px;
-    cursor:pointer;
-    transition:all 0.3s ease;
-}
-.course:hover {
-    transform:translateY(-5px);
-    box-shadow:0 10px 30px rgba(255,215,0,0.3);
-}
+/* Courses */
+.courses {display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;max-width:800px;margin:auto;}
+.course {background:#1b1b1b;padding:20px;border-radius:12px;cursor:pointer;transition:all 0.3s ease;}
+.course:hover {transform:translateY(-5px);box-shadow:0 10px 30px rgba(255,215,0,0.3);}
 .course h3{color:#FFD700;}
 
-/* ===== SECTIONS ===== */
-.section {
-    margin-top:30px;
-    background:#1b1b1b;
-    padding:20px;
-    border-radius:12px;
-    max-width:800px;
-    margin:auto;
-}
+/* Sections */
+.section {margin-top:30px;background:#1b1b1b;padding:20px;border-radius:12px;max-width:800px;margin:auto;}
 
-/* ===== BUTTONS ===== */
-button, .paper-btn {
-    font-family:'Playfair Display', serif;
-    border:none;
-    border-radius:12px;
-    padding:12px 20px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:all 0.3s ease;
-}
+/* Buttons */
+button, .paper-btn {font-family:'Playfair Display', serif;border:none;border-radius:12px;padding:12px 20px;font-weight:bold;cursor:pointer;transition:all 0.3s ease;}
 button:hover, .paper-btn:hover {transform:translateY(-3px);}
 .paper-btn {background:linear-gradient(135deg,#4da3ff,#2563eb);color:#fff;margin:5px 0;width:100%;}
 .paper-btn.clicked{background:#555;color:#ccc;}
 .paper-btn.locked{background:#555;color:#ccc;cursor:not-allowed;}
 
-/* ===== ADMIN LOGIN ===== */
-.admin-login {
-    margin:20px auto;
-    max-width:400px;
-    text-align:center;
-    background:#1b1b1b;
-    padding:15px;
-    border-radius:12px;
-}
-.admin-login input, .admin-login button {
-    padding:8px;
-    border-radius:8px;
-    border:none;
-}
+/* Admin login */
+.admin-login {margin:20px auto; max-width:400px; text-align:center; background:#1b1b1b; padding:15px; border-radius:12px;}
+.admin-login input, .admin-login button {padding:8px;border-radius:8px;border:none;}
 .admin-login input {width:70%; margin:5px 0;}
 .admin-login button {background:#FFD700;color:#111; margin-left:5px;}
 
-/* ===== DASHBOARD ===== */
-.central-dashboard {
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:90%;
-    max-width:900px;
-    max-height:90vh;
-    overflow-y:auto;
-    background:#1b1a2e;
-    padding:30px;
-    border-radius:25px;
-    box-shadow:0 25px 60px rgba(0,0,0,0.7),0 0 35px rgba(255,140,0,0.3);
-    z-index:999;
-    display:none;
-}
-.central-dashboard table{
-    width:100%;
-    border-collapse:collapse;
-    color:#fff;
-}
-.central-dashboard th, .central-dashboard td{
-    border:1px solid #555;
-    padding:8px;
-}
+/* Dashboard */
+.central-dashboard {position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:95%;max-width:900px;max-height:90vh;overflow-y:auto;background:#1b1a2e;padding:30px;border-radius:25px;box-shadow:0 25px 60px rgba(0,0,0,0.7),0 0 35px rgba(255,140,0,0.3);z-index:999;display:none;}
+.central-dashboard table{width:100%;border-collapse:collapse;color:#fff;}
+.central-dashboard th, .central-dashboard td{border:1px solid #555;padding:8px;}
 .central-dashboard th{background:#333;}
 
-/* ===== INPUTS ===== */
+/* Inputs */
 input[type=text], textarea {width:80%; padding:10px; border-radius:10px; border:none; margin:5px 0;}
-textarea{height:80px;}
-#ai-response, #definition{background:#111;padding:10px;border-radius:10px;min-height:80px;text-align:left;}
+iframe{border:none;width:100%;height:600px;}
 
-/* ===== RESPONSIVE ===== */
-@media(max-width:768px){
-    h1{font-size:2.2em;}
-    .courses{grid-template-columns:repeat(auto-fit,minmax(100px,1fr));}
-    .central-dashboard{padding:15px;}
-}
+/* Responsive */
+@media(max-width:768px){h1{font-size:2.2em;}.courses{grid-template-columns:repeat(auto-fit,minmax(100px,1fr));}.central-dashboard{padding:15px;}}
 </style>
 </head>
 <body>
@@ -173,7 +76,7 @@ textarea{height:80px;}
 
 <div id="viewer" class="section" style="display:none;">
   <h2 id="viewer-title"></h2>
-  <iframe id="pdfFrame" width="100%" height="600px"></iframe>
+  <iframe id="pdfFrame"></iframe>
 </div>
 
 <div class="pay-box section">
@@ -187,30 +90,11 @@ textarea{height:80px;}
   <button onclick="submitPayment()">I Paid</button>
 </div>
 
-<div class="section" id="dictionary">
-  <h2>Dictionary</h2>
-  <input type="text" id="wordInput" placeholder="Type a term...">
-  <button onclick="lookup()">Search</button>
-  <p id="definition"></p>
-</div>
-
-<div class="section" id="ai-chat">
-  <h2>AI Helper</h2>
-  <textarea id="aiInput" placeholder="Ask a question e.g. explain vector with example"></textarea><br>
-  <button onclick="askAI()">Ask AI</button>
-  <div id="ai-response"></div>
-</div>
-
 <!-- Central dashboard -->
 <div class="central-dashboard" id="centralDash">
   <h2>Pending Payments</h2>
   <table id="centralTable">
-    <tr>
-      <th>Name</th>
-      <th>Phone</th>
-      <th>Time</th>
-      <th>Action</th>
-    </tr>
+    <tr><th>Name</th><th>Phone</th><th>Time</th><th>Action</th></tr>
   </table>
   <button onclick="closeCentral()">Close</button>
 </div>
@@ -220,12 +104,11 @@ document.addEventListener("contextmenu", e=>e.preventDefault());
 
 const years=[2018,2019,2020,2021,2022,2023,2024];
 const demoYears=[2020,2021,2022,2023];
-let pendingUsers = [];
-let approvedUsers = [];
+let pendingPayments=[];
+let approvedUsers=[];
 
-// ===== LOAD COURSE =====
+// Load courses
 function loadCourse(course){
-  loadCourseDictionary(course);
   let html=`<h2>${course} Past Papers</h2>`;
   years.forEach(y=>{
     if(demoYears.includes(y)){
@@ -237,89 +120,84 @@ function loadCourse(course){
   document.getElementById("papers").innerHTML=html;
 }
 
-// ===== OPEN PAPER =====
+// Paper access check
 function openPaper(btn,course,year){
-  const phone = prompt("Enter your phone number to verify access:");
-  if(!isUserApproved(phone)){alert("🔒 Locked. Pay & be approved."); return;}
+  const input=prompt("Enter your phone or access code:");
+  const now=new Date();
+  const approved=approvedUsers.find(u=>u.phone===input || u.accessCode===input);
+  if(!approved){
+    alert("🔒 Locked. You need to be approved.");
+    return;
+  }
+  // check expiry
+  if(new Date(approved.expiry) < now){
+    alert("⛔ Access expired. Contact admin.");
+    return;
+  }
   btn.classList.add("clicked");
   document.getElementById("viewer-title").innerText=`${course} – ${year} Past Paper`;
   document.getElementById("pdfFrame").src=`past-papers/${course}/${course}-${year}.pdf#toolbar=0&navpanes=0&scrollbar=0`;
   document.getElementById("viewer").style.display="block";
   document.getElementById("viewer").scrollIntoView({behavior:"smooth"});
 }
+
 function locked(){alert("🔒 Locked. Pay K25 & WhatsApp admin.");}
-function isUserApproved(phone){return approvedUsers.some(u=>u.phone===phone);}
 
-// ===== DICTIONARY & AI =====
-let dictionary={}, aiData={};
-function loadCourseDictionary(course){
-  fetch(`data/${course.toLowerCase()}.json`).then(r=>r.json()).then(data=>{
-    dictionary={}; aiData={};
-    data.forEach(item=>{dictionary[item.term.toLowerCase()]=item.definition; aiData[item.term.toLowerCase()]=item.definition;});
-    console.log(`${course} dictionary loaded:`,Object.keys(dictionary).length,"terms");
-  });
-}
-function lookup(){
-  const w=document.getElementById("wordInput").value.toLowerCase().trim();
-  document.getElementById("definition").innerText=dictionary[w]||"❌ Term not found.";
-}
-function askAI(){
-  const q=document.getElementById("aiInput").value.toLowerCase();
-  let response="🤖 Ask about a known term with 'explain' or 'example'.";
-  for(let term in aiData){
-    if(q.includes(term)){
-      response=`💡 ${term.toUpperCase()}\n${aiData[term]}\n\n📘 Tip: Practice with past papers daily.`;
-      if(q.includes("example")){response+=`\n📌 Example: Apply ${term} step by step.`;}
-      break;
-    }
-  }
-  document.getElementById("ai-response").innerText=response;
-}
-
-// ===== PAYMENT =====
+// Payment submission
 function submitPayment(){
   const name=document.getElementById("userName").value.trim();
   const phone=document.getElementById("userPhone").value.trim();
   if(!name||!phone){alert("Enter name and phone"); return;}
   const now=new Date().toISOString();
-  pendingUsers.push({name,phone,time:now});
+  pendingPayments.push({name,phone,time:now});
   alert("Payment submitted! Admin will approve after screenshot check.");
   openCentral();
 }
 
-// ===== DASHBOARD =====
+// Dashboard
 function openCentral(){updateCentral();}
 function closeCentral(){document.getElementById("centralDash").style.display="none";}
 function updateCentral(){
   const container=document.getElementById("centralTable");
-  container.innerHTML=`<tr>
-      <th>Name</th><th>Phone</th><th>Time</th><th>Action</th>
-    </tr>`;
-  pendingUsers.forEach((u,i)=>{
+  container.innerHTML=`<tr><th>Name</th><th>Phone</th><th>Time</th><th>Action</th></tr>`;
+  pendingPayments.forEach((u,i)=>{
     const row=document.createElement("tr");
     row.innerHTML=`<td>${u.name}</td><td>${u.phone}</td><td>${u.time}</td>
-      <td><button onclick="approveUser(${i})">Approve</button></td>`;
+      <td>
+        <button onclick="approveUser(${i})">Accept</button>
+        <button onclick="deleteRequest(${i})">Delete</button>
+      </td>`;
     container.appendChild(row);
   });
   document.getElementById("centralDash").style.display="block";
 }
-function approveUser(index){
-  const user=pendingUsers[index];
-  if(!confirm(`Approve ${user.name}?`)) return;
-  approvedUsers.push({...user, accessExpiry:getExpiryDate()});
-  pendingUsers.splice(index,1);
-  updateCentral();
-  alert(`${user.name} approved!`);
-}
-function getExpiryDate(){const now=new Date(); now.setMonth(now.getMonth()+1); return now.toLocaleDateString();}
 
-// ===== ADMIN LOGIN =====
+function approveUser(index){
+  const user=pendingPayments[index];
+  if(!confirm(`Accept ${user.name}?`)) return;
+  // Generate access code valid 30 days
+  const code="PMGEDU-"+Math.floor(Math.random()*1000000);
+  const expiry=new Date(); expiry.setDate(expiry.getDate()+30);
+  user.accessCode=code;
+  user.expiry=expiry.toISOString();
+  approvedUsers.push(user);
+  pendingPayments.splice(index,1);
+  updateCentral();
+  alert(`${user.name} accepted!\nAccess code: ${code}\nValid until: ${expiry.toLocaleDateString()}`);
+}
+
+function deleteRequest(index){
+  if(!confirm("Delete this request?")) return;
+  pendingPayments.splice(index,1);
+  updateCentral();
+}
+
+// Admin login
 function unlockDashboard(){
   const pass=document.getElementById("adminPass").value;
   if(pass!=='Pmg76243406.,SILENCE'){alert("Wrong password"); return;}
   openCentral();
 }
 </script>
-
 </body>
-    </html>
+      </html>
