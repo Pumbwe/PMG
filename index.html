@@ -117,7 +117,9 @@ iframe{border:none;background:#111;}
   <input type="text" id="payName" placeholder="Your Full Name" /><br><br>
   <input type="text" id="payPhone" placeholder="Your Phone Number" /><br><br>
   <button onclick="submitPayment()">Submit Payment</button>
-  <p>After submission, send screenshot to WhatsApp: <b>0775302886</b></p>
+  <p>After submission, send screenshot to WhatsApp: 
+     <a href="https://wa.me/260775302886" target="_blank" style="color:#FFD700;">📲 0775302886</a>
+  </p>
 </div>
 
 <div class="section" id="dictionary">
@@ -135,11 +137,11 @@ iframe{border:none;background:#111;}
 </div>
 
 <!-- Admin Dashboard -->
-<div class="section" id="admin-dashboard" style="display:none;">
+<div class="section" id="admin-dashboard">
   <h2>Admin Dashboard</h2>
   <input type="password" id="adminPass" placeholder="Enter Password" />
   <button onclick="loginAdmin()">Login</button>
-  <div id="dashboardContent" style="display:none;"></div>
+  <div id="dashboardContent" style="display:none;margin-top:20px;"></div>
 </div>
 
 <script>
@@ -194,7 +196,7 @@ function submitPayment(){
   .catch(err=>alert("Error submitting payment."));
 }
 
-/* Dictionary */
+/* Dictionary & AI */
 const dictionary={
   "vector":"A quantity with both magnitude and direction.",
   "scalar":"A quantity with magnitude only.",
@@ -292,4 +294,4 @@ function approveUser(phone){
 }
 </script>
 </body>
-    </html>
+  </html>
