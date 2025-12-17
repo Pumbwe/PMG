@@ -1,49 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF‑8">
-<meta name="viewport" content="width=device‑width, initial‑scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PMG™EDU | All Courses</title>
+
 <style>
-/* (CSS same as before — omitted for brevity; you can reuse your previous styling) */
-body{margin:0;font-family:Arial,sans-serif;background:#0f0f0f;color:#f0f0f0;text-align:center;padding:20px;}
-h1{color:#FFD700;}
-.courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;max-width:800px;margin:auto;}
-.course{background:#1b1b1b;padding:20px;border-radius:12px;cursor:pointer;}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#0f0f0f;
+  color:#f0f0f0;
+  text-align:center;
+  padding:20px;
+}
+h1{color:#FFD700;font-size:2.5em;}
+.quote{
+  font-size:1.3em;
+  margin:15px auto 30px;
+  color:#ccc;
+  max-width:800px;
+  font-style:italic;
+}
+.courses{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:15px;
+  max-width:800px;
+  margin:auto;
+}
+.course{
+  background:#1b1b1b;
+  padding:20px;
+  border-radius:12px;
+  cursor:pointer;
+}
 .course h3{color:#FFD700;}
-.section{margin-top:30px;background:#1b1b1b;padding:20px;border-radius:12px;max-width:800px;margin:auto;}
-.paper-btn{width:100%;padding:12px;margin:6px 0;border:none;border-radius:10px;font-weight:bold;cursor:pointer;background:linear-gradient(135deg,#FFD700,#cfa100);color:#111;}
+.section{
+  margin-top:30px;
+  background:#1b1b1b;
+  padding:20px;
+  border-radius:12px;
+  max-width:800px;
+  margin:auto;
+}
+.paper-btn{
+  width:100%;
+  padding:12px;
+  margin:6px 0;
+  border:none;
+  border-radius:10px;
+  font-weight:bold;
+  cursor:pointer;
+  background:linear-gradient(135deg,#FFD700,#cfa100);
+  color:#111;
+}
 .locked{background:#555;color:#ccc;}
-.pay-box, .admin{margin-top:20px;}
-#dictionary input{padding:8px;border-radius:8px;border:none;width:60%;}
-#dictionary button{padding:8px 12px;border-radius:8px;border:none;font-weight:bold;background:#FFD700;color:#111;cursor:pointer;}
-#ai-chat{background:#1b1b1b;padding:20px;border-radius:12px;max-width:800px;margin:30px auto;}
-#ai-chat textarea{width:80%;height:80px;border-radius:10px;border:none;padding:10px;}
-#ai-chat button{padding:10px 15px;border-radius:10px;border:none;background:#FFD700;color:#111;font-weight:bold;cursor:pointer;}
-#ai-response{text-align:left;margin-top:15px;background:#111;padding:15px;border-radius:10px;min-height:80px;}
+#dictionary input{
+  padding:8px;border-radius:8px;border:none;width:60%;
+}
+#dictionary button{
+  padding:8px 12px;border-radius:8px;border:none;
+  font-weight:bold;background:#FFD700;color:#111;cursor:pointer;
+}
+#ai-chat textarea{
+  width:80%;height:80px;border-radius:10px;border:none;padding:10px;
+}
+#ai-chat button{
+  padding:10px 15px;border-radius:10px;border:none;
+  background:#FFD700;color:#111;font-weight:bold;cursor:pointer;
+}
+#ai-response{
+  text-align:left;margin-top:15px;background:#111;
+  padding:15px;border-radius:10px;min-height:80px;
+}
+iframe{border:none;background:#111;}
 </style>
 </head>
+
 <body>
 
 <h1>PMG™EDU</h1>
+<div class="quote">
+  “HARD WORK BEATS NATURAL TALENT WHEN NATURAL TALENT DOES NOT WORK HARD.”
+</div>
+
 <p>All Courses • Monthly Subscription: <b>K25</b></p>
 
 <div class="courses">
-    <div class="course" onclick="loadCourse('MA110')"><h3>MA110</h3></div>
-    <div class="course" onclick="loadCourse('BI110')"><h3>BI110</h3></div>
-    <div class="course" onclick="loadCourse('CH110')"><h3>CH110</h3></div>
-    <div class="course" onclick="loadCourse('CS110')"><h3>CS110</h3></div>
-    <div class="course" onclick="loadCourse('PH110')"><h3>PH110</h3></div>
+  <div class="course" onclick="loadCourse('MA110')"><h3>MA110</h3></div>
+  <div class="course" onclick="loadCourse('BI110')"><h3>BI110</h3></div>
+  <div class="course" onclick="loadCourse('CH110')"><h3>CH110</h3></div>
+  <div class="course" onclick="loadCourse('CS110')"><h3>CS110</h3></div>
+  <div class="course" onclick="loadCourse('PH110')"><h3>PH110</h3></div>
 </div>
 
-<div id="papers" class="section"><p>Select a course to view papers.</p></div>
+<div id="papers" class="section">
+  <p>Select a course to view papers.</p>
+</div>
 
-<div class="pay-box">
-    <h2>Pay K25 Monthly</h2>
-    <p>To access all papers and notes, pay via:</p>
-    <p>📱 MTN: <b>0775302886</b><br>📱 Airtel: <b>0768497390</b></p>
-    <p>After payment, contact admin to activate:</p>
-    <a href="https://wa.me/260775302886" target="_blank">📲 WhatsApp Admin</a>
+<div id="viewer" class="section" style="display:none;">
+  <h2 id="viewer-title"></h2>
+  <iframe id="pdfFrame" width="100%" height="600px"></iframe>
 </div>
 
 <div class="section" id="dictionary">
@@ -55,114 +113,104 @@ h1{color:#FFD700;}
 
 <div class="section" id="ai-chat">
   <h2>AI Helper</h2>
-  <textarea id="aiInput" placeholder="Ask a question about your course..."></textarea><br>
+  <textarea id="aiInput" placeholder="Ask a question e.g. explain vector with example"></textarea><br>
   <button onclick="askAI()">Ask AI</button>
   <div id="ai-response"></div>
 </div>
 
 <script>
-const years = [2018,2019,2020,2021,2022,2023,2024];
-const demoYears = [2018,2019,2020,2021,2022];
+document.addEventListener("contextmenu", e => e.preventDefault());
 
-function loadCourse(course) {
-    let html = `<h2>${course} Past Papers</h2>`;
-    years.forEach(y => {
-        if (demoYears.includes(y)) {
-            html += `<button class="paper-btn" onclick="openPaper('${course}',${y})">${course} – ${y} (DEMO)</button>`;
-        } else {
-            html += `<button class="paper-btn locked" onclick="locked()">${course} – ${y} 🔒</button>`;
-        }
-    });
-    document.getElementById("papers").innerHTML = html;
+const years=[2018,2019,2020,2021,2022,2023,2024];
+const demoYears=[2018,2019,2020,2021,2022];
+
+function loadCourse(course){
+  let html=`<h2>${course} Past Papers</h2>`;
+  years.forEach(y=>{
+    if(demoYears.includes(y)){
+      html+=`<button class="paper-btn" onclick="openPaper('${course}',${y})">${course} – ${y} (DEMO)</button>`;
+    }else{
+      html+=`<button class="paper-btn locked" onclick="locked()">${course} – ${y} 🔒</button>`;
+    }
+  });
+  document.getElementById("papers").innerHTML=html;
 }
 
-function openPaper(c,y){window.open(`past-papers/${c}/${c}-${y}.pdf`,'_blank');}
-function locked(){alert("🔒 Locked. Please pay K25 and WhatsApp admin to activate.");}
+function openPaper(course,year){
+  document.getElementById("viewer-title").innerText=`${course} – ${year} Past Paper`;
+  document.getElementById("pdfFrame").src=
+    `past-papers/${course}/${course}-${year}.pdf#toolbar=0&navpanes=0&scrollbar=0`;
+  document.getElementById("viewer").style.display="block";
+  document.getElementById("viewer").scrollIntoView({behavior:"smooth"});
+}
 
-/* — HUGE DICTIONARY */
-const dictionary = {
-  /* ==== MA110 ===== */
-  "set": "A collection of distinct objects.",
-  "function": "A rule that assigns each input exactly one output.",
-  "relation": "A relationship between sets of values.",
-  "limit": "The value a function approaches as input nears some point.",
-  "continuity": "A function without breaks at a point.",
-  "derivative": "The rate at which a function changes.",
-  "integration": "The process of finding the area under a curve.",
-  "matrix": "A rectangular array of numbers.",
-  "determinant": "A scalar value derived from a square matrix.",
-  "vector": "A quantity with direction and magnitude.",
-  /* ==== BI110 ===== */
-  "cell": "Basic structural and functional unit of life.",
-  "prokaryotic": "Cells without a nucleus.",
-  "eukaryotic": "Cells with a nucleus.",
-  "photosynthesis": "Process plants use sunlight to make food.",
-  "respiration": "Process of releasing energy from food.",
-  "mitosis": "Cell division producing identical cells.",
-  "meiosis": "Cell division producing sex cells.",
-  "dna": "Genetic material containing instructions for life.",
-  "rna": "Ribonucleic acid involved in protein synthesis.",
-  "enzyme": "Protein that speeds up chemical reactions.",
-  /* ==== CH110 ===== */
-  "atom": "Smallest unit of an element.",
-  "element": "Pure substance made of one type of atom.",
-  "molecule": "Two or more atoms bonded together.",
-  "ionic bond": "Electron transfer bond between atoms.",
-  "covalent bond": "Electron sharing bond between atoms.",
-  "mole concept": "Amount of substance based on Avogadro's number.",
-  "molarity": "Moles of solute per liter of solution.",
-  "acid": "Substance that donates hydrogen ions.",
-  "base": "Substance that accepts hydrogen ions.",
-  "ph scale": "Measure of acidity/basicity of a solution.",
-  /* ==== CS110 ===== */
-  "algorithm": "Steps for solving a problem.",
-  "variable": "A named storage in a program.",
-  "array": "List of values stored under one name.",
-  "loop": "Code that repeats until a condition is met.",
-  "condition": "Statement that controls program flow.",
-  "function call": "Invoking a function to execute.",
-  "string": "Sequence of text characters.",
-  "debugging": "Finding and fixing errors in code.",
-  /* ==== PH110 ===== */
-  "force": "Push or pull on an object.",
-  "mass": "Amount of matter in an object.",
-  "acceleration": "Rate of change of velocity.",
-  "velocity": "Speed with direction.",
-  "newton's laws": "Three laws describing motion.",
-  "energy": "Capacity to do work.",
-  "work": "Force applied over distance.",
-  "power": "Rate of doing work.",
-  "wave": "Disturbance that transfers energy.",
-  "electric current": "Flow of electric charge."
+function locked(){
+  alert("🔒 Locked. Pay K25 and WhatsApp admin to activate.");
+}
+
+/* HUGE DICTIONARY */
+const dictionary={
+  /* MA110 */
+  "vector":"A quantity with both magnitude and direction.",
+  "scalar":"A quantity with magnitude only.",
+  "function":"A rule that assigns each input exactly one output.",
+  "limit":"The value a function approaches as input nears a point.",
+  "derivative":"Rate of change of a function.",
+  "integration":"Process of finding area under a curve.",
+  "matrix":"Rectangular array of numbers.",
+  "determinant":"Single value from a square matrix.",
+  /* PH110 */
+  "force":"A push or pull acting on an object.",
+  "velocity":"Speed in a given direction.",
+  "acceleration":"Rate of change of velocity.",
+  "work":"Force applied over a distance.",
+  "power":"Rate of doing work.",
+  "energy":"Capacity to do work.",
+  /* CH110 */
+  "atom":"Smallest unit of an element.",
+  "molecule":"Two or more atoms bonded together.",
+  "ionic bond":"Bond formed by electron transfer.",
+  "covalent bond":"Bond formed by electron sharing.",
+  "mole":"Amount of substance containing Avogadro's number.",
+  "acid":"Substance that donates hydrogen ions.",
+  "base":"Substance that accepts hydrogen ions.",
+  /* BI110 */
+  "cell":"Basic unit of life.",
+  "mitosis":"Cell division producing identical cells.",
+  "meiosis":"Cell division producing gametes.",
+  "photosynthesis":"Process plants use to make food.",
+  "enzyme":"Protein that speeds up reactions.",
+  /* CS110 */
+  "algorithm":"Step-by-step method to solve a problem.",
+  "variable":"Named storage location in a program.",
+  "loop":"Code that repeats.",
+  "array":"Collection of values under one name.",
+  "debugging":"Finding and fixing errors."
 };
 
-/* Dictionary lookup */
-function lookup() {
-  const w = document.getElementById("wordInput").value.toLowerCase().trim();
-  const def = dictionary[w];
-  document.getElementById("definition").innerText = def ? def : "❌ Term not found in dictionary.";
+function lookup(){
+  const w=document.getElementById("wordInput").value.toLowerCase().trim();
+  document.getElementById("definition").innerText=
+    dictionary[w]||"❌ Term not found.";
 }
 
-/* AI helper — tries to match terms and expand */
-function askAI() {
-    const q = document.getElementById("aiInput").value.toLowerCase();
-    let reply = "🤖 I couldn't find a direct explanation. Try simpler wording.";
-    
-    for (let term in dictionary) {
-        if (q.includes(term)) {
-            reply = `💡 **${term.charAt(0).toUpperCase()+term.slice(1)}**: ${dictionary[term]}`;
-            
-            // optionally add extra tips
-            if (q.includes("example")) {
-                reply += "\n📌 Example: Try applying this concept step by step.";
-            }
-            break;
-        }
+/* SMARTER AI HELPER */
+function askAI(){
+  const q=document.getElementById("aiInput").value.toLowerCase();
+  let response="🤖 Try asking about a known term with 'explain' or 'example'.";
+
+  for(let term in dictionary){
+    if(q.includes(term)){
+      response=`💡 ${term.toUpperCase()}\n${dictionary[term]}\n\n📘 Study Tip: Practice this concept using past papers daily.`;
+      if(q.includes("example")){
+        response+=`\n\n📌 Example: Apply ${term} step by step in a real problem.`;
+      }
+      break;
     }
-    
-    document.getElementById("ai-response").innerText = reply;
+  }
+  document.getElementById("ai-response").innerText=response;
 }
-
 </script>
+
 </body>
 </html>
