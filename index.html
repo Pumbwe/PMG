@@ -5,31 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PMG™ EDU | All Courses</title>
 <style>
-body{
-  margin:0;font-family:Arial,sans-serif;background:#0f0f0f;color:#f0f0f0;text-align:center;padding:20px;position:relative;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#0f0f0f;color:#f0f0f0;text-align:center;padding:20px;position:relative;}
 h1{color:#FFD700;font-size:2.5em;}
-.quote{
-  font-size:1.5em;
-  margin:15px auto 30px;
-  color:#999;
-  max-width:800px;
-  font-style:italic;
-  font-weight:bold;
-  text-shadow:1px 1px 2px #000;
-}
-.courses{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;max-width:800px;margin:auto;
-}
+.quote{font-size:1.5em;margin:15px auto 30px;color:#999;max-width:800px;font-style:italic;font-weight:bold;text-shadow:1px 1px 2px #000;}
+.courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;max-width:800px;margin:auto;}
 .course{background:#1b1b1b;padding:20px;border-radius:12px;cursor:pointer;}
 .course h3{color:#FFD700;}
-.section{
-  margin-top:30px;background:#1b1b1b;padding:20px;border-radius:12px;max-width:800px;margin:auto;
-}
-.paper-btn{
-  width:100%;padding:12px;margin:6px 0;border:none;border-radius:10px;font-weight:bold;cursor:pointer;
-  background:linear-gradient(135deg,#FFD700,#cfa100);color:#111;
-}
+.section{margin-top:30px;background:#1b1b1b;padding:20px;border-radius:12px;max-width:800px;margin:auto;}
+.paper-btn{width:100%;padding:12px;margin:6px 0;border:none;border-radius:10px;font-weight:bold;cursor:pointer;background:linear-gradient(135deg,#FFD700,#cfa100);color:#111;}
 .locked{background:#555;color:#ccc;}
 #dictionary input{padding:8px;border-radius:8px;border:none;width:60%;}
 #dictionary button{padding:8px 12px;border-radius:8px;border:none;font-weight:bold;background:#FFD700;color:#111;cursor:pointer;}
@@ -37,14 +20,11 @@ h1{color:#FFD700;font-size:2.5em;}
 #ai-chat button{padding:10px 15px;border-radius:10px;border:none;background:#FFD700;color:#111;font-weight:bold;cursor:pointer;}
 #ai-response{text-align:left;margin-top:15px;background:#111;padding:15px;border-radius:10px;min-height:80px;}
 iframe{border:none;background:#111;}
-/* Watermark */
-.watermark{
-  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-45deg);
-  font-size:6em;color:rgba(200,200,200,0.05);pointer-events:none;user-select:none;z-index:0;
-  font-weight:bold;
-}
-.dashboard{display:none;margin-top:30px;}
-.dashboard table{width:100%;border-collapse:collapse;color:#f0f0f0;}
+.watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-45deg);font-size:6em;color:rgba(200,200,200,0.05);pointer-events:none;user-select:none;z-index:0;font-weight:bold;}
+.admin-login{margin:20px auto; max-width:400px; text-align:center; background:#1b1b1b; padding:15px; border-radius:12px;}
+.admin-login input{padding:8px;border-radius:8px;border:none;width:80%;}
+.admin-login button{padding:8px 12px;border-radius:8px;border:none;font-weight:bold;background:#FFD700;color:#111;cursor:pointer;margin-left:5px;}
+.dashboard table{width:100%;border-collapse:collapse;color:#f0f0f0;margin-top:10px;}
 .dashboard th, .dashboard td{border:1px solid #555;padding:8px;}
 .dashboard th{background:#333;}
 </style>
@@ -55,6 +35,13 @@ iframe{border:none;background:#111;}
 
 <h1>PMG™ EDU</h1>
 <div class="quote">“WORK HARDER, NOBODY CARES”</div>
+
+<!-- Admin login fixed at top -->
+<div class="admin-login">
+  <h2>Admin Login</h2>
+  <input type="password" id="adminPass" placeholder="Enter password" />
+  <button onclick="unlockDashboard()">Unlock Dashboard</button>
+</div>
 
 <p>All Courses • Monthly Subscription: <b>K25</b></p>
 
@@ -98,17 +85,11 @@ iframe{border:none;background:#111;}
   <div id="ai-response"></div>
 </div>
 
-<div class="dashboard section" id="adminDash">
-  <h2>Admin Dashboard</h2>
-  <p>Password required:</p>
-  <input type="password" id="adminPass" placeholder="Enter password" />
-  <button onclick="unlockDashboard()">Unlock Dashboard</button>
-  <div id="dashContent" style="display:none;">
-    <h3>Pending Payments</h3>
-    <table id="pendingTable"><tr><th>Name</th><th>Phone</th><th>Time</th><th>Action</th></tr></table>
-    <h3>Approved Users</h3>
-    <table id="approvedTable"><tr><th>Name</th><th>Phone</th><th>Access Expiry</th></tr></table>
-  </div>
+<div class="dashboard section" id="dashContent" style="display:none;">
+  <h3>Pending Payments</h3>
+  <table id="pendingTable"><tr><th>Name</th><th>Phone</th><th>Time</th><th>Action</th></tr></table>
+  <h3>Approved Users</h3>
+  <table id="approvedTable"><tr><th>Name</th><th>Phone</th><th>Access Expiry</th></tr></table>
 </div>
 
 <script>
@@ -140,7 +121,7 @@ function locked(){
   alert("🔒 Locked. Pay K25 and WhatsApp admin to activate.");
 }
 
-/* DICTIONARY */
+/* Dictionary + AI */
 const dictionary={
   "vector":"A quantity with both magnitude and direction.",
   "scalar":"A quantity with magnitude only.",
@@ -195,11 +176,11 @@ function askAI(){
   document.getElementById("ai-response").innerText=response;
 }
 
-/* PAYMENT SUBMISSION */
+/* Payment submission */
 function submitPayment(){
   const name=document.getElementById("userName").value.trim();
   const phone=document.getElementById("userPhone").value.trim();
-  if(!name || !phone){alert("Enter name and phone"); return;}
+  if(!name||!phone){alert("Enter name and phone"); return;}
   fetch('update_users.php',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -209,12 +190,12 @@ function submitPayment(){
   });
 }
 
-/* ADMIN DASHBOARD */
+/* Admin dashboard */
 function unlockDashboard(){
   const pass=document.getElementById("adminPass").value;
   if(pass!=='Pmg76243406.,SILENCE'){alert("Wrong password"); return;}
   document.getElementById("dashContent").style.display='block';
-  document.getElementById("adminPass").style.display='none';
+  document.querySelector(".admin-login").style.display='none';
   fetchDashboard();
 }
 
@@ -254,4 +235,4 @@ function approveUser(phone){
 </script>
 
 </body>
-  </html>
+    </html>
