@@ -1,49 +1,4 @@
-/* ===== GLOBAL STYLES ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Playfair Display', serif; /* classy & elegant */
-    scroll-behavior: smooth;
-}
-
-body {
-    background-color: #fdfcf6; /* soft luxury cream */
-    color: #1a1a1a; /* dark text for readability */
-    line-height: 1.7;
-}
-
-/* ===== HEADINGS ===== */
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
-    color: #2c2c2c;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-}
-
-h1 {
-    font-size: 3rem;
-    font-weight: 700;
-}
-
-h2 {
-    font-size: 2.5rem;
-    font-weight: 600;
-}
-
-/* ===== LINKS ===== */
-a {
-    text-decoration: none;
-    color: #8c6d4b; /* gold-ish luxury color */
-    transition: all 0.3s ease;
-}
-
-a:hover {
-    color: #bfa47a;
-    letter-spacing: 1px;
-}
-
-/* ===== BUTTONS ===== */
+/* ===== BUTTON STYLING ===== */
 button {
     font-family: 'Playfair Display', serif;
     background: linear-gradient(135deg, #cbb59b, #8c6d4b);
@@ -55,6 +10,8 @@ button {
     cursor: pointer;
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 10; /* ensures button is above watermark */
 }
 
 button:hover {
@@ -64,9 +21,11 @@ button:hover {
 
 /* ===== SECTIONS ===== */
 .section {
-    padding: 80px 50px;
+    padding: 60px 30px; /* reduce padding for better mobile display */
     max-width: 1200px;
     margin: auto;
+    position: relative; /* ensure z-index works properly */
+    z-index: 5;
 }
 
 /* ===== CARD / BOX STYLING ===== */
@@ -76,6 +35,8 @@ button:hover {
     padding: 25px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 5;
 }
 
 .card:hover {
@@ -101,11 +62,13 @@ footer {
 .faint-logo {
     font-size: 6rem;
     color: rgba(140, 109, 75, 0.05); /* faint gold watermark style */
-    position: absolute;
+    position: fixed;  /* make sure it stays behind content */
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    z-index: 0; /* behind everything */
+    pointer-events: none;
+    user-select: none;
 }
 
 /* ===== SMOOTH TRANSITIONS ===== */
@@ -117,5 +80,6 @@ footer {
 @media (max-width: 768px) {
     h1 { font-size: 2.2rem; }
     h2 { font-size: 2rem; }
-    .section { padding: 50px 20px; }
-        
+    .section { padding: 40px 15px; }
+    .admin-login input, .admin-login button { width: 90%; margin: 5px 0; }
+                                 }
