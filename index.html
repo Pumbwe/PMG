@@ -4,198 +4,150 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PMG™ EDU | All Courses</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 <style>
-/* ===== GLOBAL ===== */
+/* ===== BODY & GENERAL ===== */
 body {
     margin:0;
-    font-family:'Montserrat',sans-serif;
-    background: linear-gradient(135deg, #0b0c10, #1f1b24);
-    color:#fdfcf6;
+    font-family:'Playfair Display', serif;
+    background:#0f0f0f;
+    color:#f0f0f0;
     text-align:center;
     padding:20px;
     position:relative;
 }
-
-/* ===== HEADINGS ===== */
-h1,h2,h3 { font-family:'Playfair Display', serif; margin:15px 0; text-shadow:1px 1px 6px rgba(255,255,255,0.1);}
-h1 { font-size:3rem; color:#f0a500; letter-spacing:1.2px; }
-h2 { font-size:2.5rem; color:#ffa500; }
-h3 { font-size:1.5rem; color:#ffce73; }
-
-/* ===== WATERMARK ===== */
+h1{color:#FFD700;font-size:2.8em;text-shadow:0 0 10px #ffbf00;}
+.quote{font-size:1.5em;margin:15px auto 30px;color:#ccc;max-width:800px;font-style:italic;font-weight:bold;text-shadow:1px 1px 4px #000;}
 .watermark {
-    position: fixed;
-    top:50%; left:50%;
-    transform: translate(-50%, -50%) rotate(-45deg);
-    font-size:9rem;
-    color: rgba(255,200,0,0.03);
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) rotate(-45deg);
+    font-size:6em;
+    color:rgba(200,200,200,0.05);
     pointer-events:none;
     user-select:none;
     z-index:0;
     font-weight:bold;
 }
-
-/* ===== QUOTE ===== */
-.quote {
-    font-size:1.5em;
-    margin:15px auto 30px;
-    color:#bbb;
-    max-width:800px;
-    font-style:italic;
+.creator {
+    position:fixed;
+    bottom:10px;
+    right:15px;
+    font-size:1.2em;
+    color:#FFD700;
     font-weight:bold;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    text-shadow:1px 1px 4px #000;
+    z-index:1000;
 }
 
-/* ===== SECTIONS ===== */
-.section {
-    margin-top:30px;
-    background:#1a1a2e;
-    padding:30px;
-    border-radius:20px;
-    max-width:800px;
-    margin-left:auto;
-    margin-right:auto;
-    box-shadow:0 20px 50px rgba(0,0,0,0.5),0 0 20px rgba(255,140,0,0.1);
-    transition:all 0.5s ease;
-    position:relative;
-    z-index:5;
-}
-.section:hover { transform: translateY(-5px) scale(1.02); box-shadow:0 35px 60px rgba(0,0,0,0.7),0 0 25px rgba(255,165,0,0.4); }
-
-/* ===== COURSES GRID ===== */
+/* ===== COURSES ===== */
 .courses {
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
     gap:15px;
     max-width:800px;
-    margin:20px auto;
+    margin:auto;
 }
 .course {
-    background:#1e1a29;
+    background:#1b1b1b;
     padding:20px;
-    border-radius:18px;
+    border-radius:12px;
     cursor:pointer;
-    box-shadow:0 10px 25px rgba(0,0,0,0.4);
-    transition:all 0.4s ease;
+    transition:all 0.3s ease;
 }
 .course:hover {
-    transform:translateY(-5px) scale(1.03);
-    box-shadow:0 25px 50px rgba(0,0,0,0.7),0 0 20px rgba(255,165,0,0.3);
+    transform:translateY(-5px);
+    box-shadow:0 10px 30px rgba(255,215,0,0.3);
 }
-.course h3 { text-shadow:0 0 5px #ffbb33,0 0 15px #ff9900; }
+.course h3{color:#FFD700;}
 
-/* ===== PAPER BUTTONS ===== */
-.paper-btn {
-    width:100%;
-    padding:14px;
-    margin:6px 0;
+/* ===== SECTIONS ===== */
+.section {
+    margin-top:30px;
+    background:#1b1b1b;
+    padding:20px;
+    border-radius:12px;
+    max-width:800px;
+    margin:auto;
+}
+
+/* ===== BUTTONS ===== */
+button, .paper-btn {
+    font-family:'Playfair Display', serif;
     border:none;
-    border-radius:18px;
+    border-radius:12px;
+    padding:12px 20px;
     font-weight:bold;
     cursor:pointer;
-    background: linear-gradient(135deg, #ff6f00, #ffa500);
-    color:#0b0c10;
-    box-shadow:0 8px 25px rgba(255,165,0,0.5),0 0 12px rgba(255,165,0,0.3);
-    transition:all 0.5s ease;
-    text-transform:uppercase;
-    letter-spacing:1.2px;
+    transition:all 0.3s ease;
 }
+button:hover, .paper-btn:hover {transform:translateY(-3px);}
+.paper-btn {background:linear-gradient(135deg,#4da3ff,#2563eb);color:#fff;margin:5px 0;width:100%;}
 .paper-btn.clicked{background:#555;color:#ccc;}
-.paper-btn.locked{background:#555;color:#ccc;}
-.paper-btn:hover{
-    transform:translateY(-5px) scale(1.07);
-    box-shadow:0 18px 45px rgba(255,200,0,0.8),0 0 35px rgba(255,150,0,0.9);
-    animation:pulse 1.5s infinite alternate;
-}
-@keyframes pulse{
-    0%{box-shadow:0 18px 45px rgba(255,200,0,0.8),0 0 35px rgba(255,150,0,0.9);}
-    100%{box-shadow:0 22px 55px rgba(255,215,0,1),0 0 45px rgba(255,180,0,1);}
-}
-
-/* ===== INPUTS ===== */
-input, textarea {
-    padding:10px;
-    border-radius:10px;
-    border:none;
-    outline:none;
-    margin:5px 0;
-    width:80%;
-}
-textarea{ height:80px; resize:none; }
-button, #ai-chat button, #dictionary button, .admin-login button {
-    background: linear-gradient(135deg, #ff9900, #ffcc33);
-    color:#0b0c10;
-    font-weight:bold;
-    border-radius:15px;
-    padding:12px 25px;
-    cursor:pointer;
-    transition:all 0.5s ease;
-}
-button:hover{ transform:translateY(-3px) scale(1.05); }
+.paper-btn.locked{background:#555;color:#ccc;cursor:not-allowed;}
 
 /* ===== ADMIN LOGIN ===== */
-.admin-login{
+.admin-login {
     margin:20px auto;
     max-width:400px;
     text-align:center;
-    background:#1a1a2e;
-    padding:20px;
-    border-radius:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    background:#1b1b1b;
+    padding:15px;
+    border-radius:12px;
 }
+.admin-login input, .admin-login button {
+    padding:8px;
+    border-radius:8px;
+    border:none;
+}
+.admin-login input {width:70%; margin:5px 0;}
+.admin-login button {background:#FFD700;color:#111; margin-left:5px;}
 
-/* ===== DASHBOARD TABLE ===== */
-.dashboard table{width:100%;border-collapse:collapse;color:#fdfcf6;margin-top:10px;}
-.dashboard th,.dashboard td{border:1px solid #555;padding:8px;}
-.dashboard th{background:#333;}
-
-/* ===== CENTRALIZED DASHBOARD ===== */
-.central-dashboard{
+/* ===== DASHBOARD ===== */
+.central-dashboard {
     position:fixed;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
     width:90%;
     max-width:900px;
+    max-height:90vh;
+    overflow-y:auto;
     background:#1b1a2e;
     padding:30px;
     border-radius:25px;
     box-shadow:0 25px 60px rgba(0,0,0,0.7),0 0 35px rgba(255,140,0,0.3);
     z-index:999;
     display:none;
-    overflow:auto;
 }
-
-/* ===== CREATOR SIGNATURE ===== */
-.creator-tag{
-    position:fixed;
-    bottom:15px;
-    right:15px;
-    font-family:'Playfair Display',serif;
-    font-weight:bold;
-    font-size:1rem;
-    color:rgba(255,200,0,0.6);
-    text-shadow:1px 1px 2px #000;
-    user-select:none;
-    pointer-events:none;
+.central-dashboard table{
+    width:100%;
+    border-collapse:collapse;
+    color:#fff;
 }
+.central-dashboard th, .central-dashboard td{
+    border:1px solid #555;
+    padding:8px;
+}
+.central-dashboard th{background:#333;}
 
-/* ===== FOOTER ===== */
-footer{background-color:#111111;color:#fdfcf6;padding:60px;text-align:center;font-size:1rem;letter-spacing:0.8px;box-shadow:inset 0 5px 15px rgba(255,215,0,0.05);}
+/* ===== INPUTS ===== */
+input[type=text], textarea {width:80%; padding:10px; border-radius:10px; border:none; margin:5px 0;}
+textarea{height:80px;}
+#ai-response, #definition{background:#111;padding:10px;border-radius:10px;min-height:80px;text-align:left;}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px){
-    h1{font-size:2.4rem;}
-    h2{font-size:2rem;}
-    .section{padding:20px;}
-    input,textarea,button{width:90%;margin:5px 0;}
+    h1{font-size:2.2em;}
+    .courses{grid-template-columns:repeat(auto-fit,minmax(100px,1fr));}
+    .central-dashboard{padding:15px;}
 }
 </style>
 </head>
 <body>
 
 <div class="watermark">PMG™ EDU</div>
+<div class="creator">GIDECK</div>
 
 <h1>PMG™ EDU</h1>
 <div class="quote">“WORK HARDER, NOBODY CARES”</div>
@@ -203,7 +155,7 @@ footer{background-color:#111111;color:#fdfcf6;padding:60px;text-align:center;fon
 <!-- Admin login -->
 <div class="admin-login">
   <h2>Admin Login</h2>
-  <input type="password" id="adminPass" placeholder="Enter password" />
+  <input type="password" id="adminPass" placeholder="Enter password">
   <button onclick="unlockDashboard()">Unlock Dashboard</button>
 </div>
 
@@ -230,14 +182,14 @@ footer{background-color:#111111;color:#fdfcf6;padding:60px;text-align:center;fon
   <p>📱 <b>0775302886</b></p>
   <a href="https://wa.me/260775302886" target="_blank">📲 WhatsApp Admin</a>
   <p>After payment, submit "I Paid" below:</p>
-  <input type="text" id="userName" placeholder="Your Name" />
-  <input type="text" id="userPhone" placeholder="Phone Number" />
+  <input type="text" id="userName" placeholder="Your Name">
+  <input type="text" id="userPhone" placeholder="Phone Number">
   <button onclick="submitPayment()">I Paid</button>
 </div>
 
 <div class="section" id="dictionary">
   <h2>Dictionary</h2>
-  <input type="text" id="wordInput" placeholder="Type a term..." />
+  <input type="text" id="wordInput" placeholder="Type a term...">
   <button onclick="lookup()">Search</button>
   <p id="definition"></p>
 </div>
@@ -249,39 +201,31 @@ footer{background-color:#111111;color:#fdfcf6;padding:60px;text-align:center;fon
   <div id="ai-response"></div>
 </div>
 
-<div class="dashboard section" id="dashContent" style="display:none;">
-  <h3>Pending Payments</h3>
-  <table id="pendingTable"><tr><th>Name</th><th>Phone</th><th>Time</th><th>Action</th></tr></table>
-  <h3>Approved Users</h3>
-  <table id="approvedTable"><tr><th>Name</th><th>Phone</th><th>Access Expiry</th></tr></table>
-</div>
-
-<!-- Centralized dashboard overlay -->
+<!-- Central dashboard -->
 <div class="central-dashboard" id="centralDash">
-  <h2>Central Dashboard</h2>
-  <p>All users who pressed "I Paid" & sent WhatsApp screenshot</p>
-  <div id="centralList"></div>
+  <h2>Pending Payments</h2>
+  <table id="centralTable">
+    <tr>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Time</th>
+      <th>Action</th>
+    </tr>
+  </table>
   <button onclick="closeCentral()">Close</button>
 </div>
 
-<div class="creator-tag">GIDECK</div>
-
 <script>
-// ===== DUMMY DATA FOR AI & DICTIONARY =====
-// For now, demo data. You can replace with JSON files of 20k+ terms per course.
-let dictionary = {
-  "vector":"A quantity with both magnitude and direction.",
-  "scalar":"A quantity with magnitude only.",
-  "derivative":"Rate of change of a function.",
-  "integration":"Process of finding area under a curve."
-};
-let aiData = {...dictionary}; // expand in JSON for full courses
+document.addEventListener("contextmenu", e=>e.preventDefault());
 
-// ===== COURSES & PAPERS =====
 const years=[2018,2019,2020,2021,2022,2023,2024];
 const demoYears=[2020,2021,2022,2023];
+let pendingUsers = [];
+let approvedUsers = [];
 
+// ===== LOAD COURSE =====
 function loadCourse(course){
+  loadCourseDictionary(course);
   let html=`<h2>${course} Past Papers</h2>`;
   years.forEach(y=>{
     if(demoYears.includes(y)){
@@ -293,67 +237,88 @@ function loadCourse(course){
   document.getElementById("papers").innerHTML=html;
 }
 
+// ===== OPEN PAPER =====
 function openPaper(btn,course,year){
+  const phone = prompt("Enter your phone number to verify access:");
+  if(!isUserApproved(phone)){alert("🔒 Locked. Pay & be approved."); return;}
   btn.classList.add("clicked");
   document.getElementById("viewer-title").innerText=`${course} – ${year} Past Paper`;
   document.getElementById("pdfFrame").src=`past-papers/${course}/${course}-${year}.pdf#toolbar=0&navpanes=0&scrollbar=0`;
   document.getElementById("viewer").style.display="block";
   document.getElementById("viewer").scrollIntoView({behavior:"smooth"});
 }
-
-function locked(){alert("🔒 Locked. Pay K25 and WhatsApp admin to activate.");}
+function locked(){alert("🔒 Locked. Pay K25 & WhatsApp admin.");}
+function isUserApproved(phone){return approvedUsers.some(u=>u.phone===phone);}
 
 // ===== DICTIONARY & AI =====
+let dictionary={}, aiData={};
+function loadCourseDictionary(course){
+  fetch(`data/${course.toLowerCase()}.json`).then(r=>r.json()).then(data=>{
+    dictionary={}; aiData={};
+    data.forEach(item=>{dictionary[item.term.toLowerCase()]=item.definition; aiData[item.term.toLowerCase()]=item.definition;});
+    console.log(`${course} dictionary loaded:`,Object.keys(dictionary).length,"terms");
+  });
+}
 function lookup(){
   const w=document.getElementById("wordInput").value.toLowerCase().trim();
   document.getElementById("definition").innerText=dictionary[w]||"❌ Term not found.";
 }
-
 function askAI(){
   const q=document.getElementById("aiInput").value.toLowerCase();
-  let response="🤖 Try asking about a known term with 'explain' or 'example'.";
+  let response="🤖 Ask about a known term with 'explain' or 'example'.";
   for(let term in aiData){
     if(q.includes(term)){
-      response=`💡 ${term.toUpperCase()}\n${aiData[term]}\n\n📘 Study Tip: Practice this concept using past papers daily.`;
-      if(q.includes("example")){
-        response+=`\n📌 Example: Apply ${term} step by step in a real problem.`;
-      }
+      response=`💡 ${term.toUpperCase()}\n${aiData[term]}\n\n📘 Tip: Practice with past papers daily.`;
+      if(q.includes("example")){response+=`\n📌 Example: Apply ${term} step by step.`;}
       break;
     }
   }
   document.getElementById("ai-response").innerText=response;
 }
 
-// ===== PAYMENT SUBMISSION =====
-let pendingUsers = [];
+// ===== PAYMENT =====
 function submitPayment(){
   const name=document.getElementById("userName").value.trim();
   const phone=document.getElementById("userPhone").value.trim();
   if(!name||!phone){alert("Enter name and phone"); return;}
-  const time = new Date().toLocaleString();
-  pendingUsers.push({name,phone,time});
-  alert("✅ Payment request submitted. Confirm screenshot via WhatsApp.");
-  updateCentral();
+  const now=new Date().toISOString();
+  pendingUsers.push({name,phone,time:now});
+  alert("Payment submitted! Admin will approve after screenshot check.");
+  openCentral();
 }
 
-// ===== CENTRAL DASHBOARD =====
+// ===== DASHBOARD =====
+function openCentral(){updateCentral();}
+function closeCentral(){document.getElementById("centralDash").style.display="none";}
 function updateCentral(){
-  const container = document.getElementById("centralList");
-  container.innerHTML = pendingUsers.map(u=>`<div>${u.name} | ${u.phone} | ${u.time}</div>`).join('');
-  document.getElementById("centralDash").style.display = "block";
+  const container=document.getElementById("centralTable");
+  container.innerHTML=`<tr>
+      <th>Name</th><th>Phone</th><th>Time</th><th>Action</th>
+    </tr>`;
+  pendingUsers.forEach((u,i)=>{
+    const row=document.createElement("tr");
+    row.innerHTML=`<td>${u.name}</td><td>${u.phone}</td><td>${u.time}</td>
+      <td><button onclick="approveUser(${i})">Approve</button></td>`;
+    container.appendChild(row);
+  });
+  document.getElementById("centralDash").style.display="block";
 }
-function closeCentral(){ document.getElementById("centralDash").style.display="none"; }
+function approveUser(index){
+  const user=pendingUsers[index];
+  if(!confirm(`Approve ${user.name}?`)) return;
+  approvedUsers.push({...user, accessExpiry:getExpiryDate()});
+  pendingUsers.splice(index,1);
+  updateCentral();
+  alert(`${user.name} approved!`);
+}
+function getExpiryDate(){const now=new Date(); now.setMonth(now.getMonth()+1); return now.toLocaleDateString();}
 
-// ===== ADMIN DASHBOARD =====
+// ===== ADMIN LOGIN =====
 function unlockDashboard(){
   const pass=document.getElementById("adminPass").value;
   if(pass!=='Pmg76243406.,SILENCE'){alert("Wrong password"); return;}
-  document.getElementById("dashContent").style.display='block';
-  document.querySelector(".admin-login").style.display='none';
+  openCentral();
 }
-
-// Prevent right-click
-document.addEventListener("contextmenu", e => e.preventDefault());
 </script>
 
 </body>
