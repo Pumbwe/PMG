@@ -4,27 +4,101 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PMG™EDU | All Courses</title>
+
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#0f0f0f;color:#f0f0f0;text-align:center;padding:20px;}
-h1{color:#FFD700;font-size:2.5em;}
-.quote{font-size:1.6em;font-weight:bold;margin:20px auto 30px;background: linear-gradient(to right,#222,#888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;max-width:900px;}
-.courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;max-width:800px;margin:auto;}
-.course{background:#1b1b1b;padding:20px;border-radius:12px;cursor:pointer;}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#0f0f0f;
+  color:#f0f0f0;
+  text-align:center;
+  padding:20px;
+  position:relative;
+  overflow-x:hidden;
+}
+h1{color:#FFD700;font-size:2.5em; margin-bottom:0;}
+.quote{
+  font-size:1.5em;
+  margin:5px auto 30px;
+  color:#888;
+  max-width:900px;
+  font-style:italic;
+  font-weight:bold;
+}
+.courses{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:15px;
+  max-width:900px;
+  margin:auto;
+}
+.course{
+  background:#1b1b1b;
+  padding:20px;
+  border-radius:12px;
+  cursor:pointer;
+}
 .course h3{color:#FFD700;}
-.section{margin-top:30px;background:#1b1b1b;padding:20px;border-radius:12px;max-width:800px;margin:auto;position:relative;}
-.paper-btn{width:100%;padding:12px;margin:6px 0;border:none;border-radius:10px;font-weight:bold;cursor:pointer;background:linear-gradient(135deg,#FFD700,#cfa100);color:#111;}
+.section{
+  margin-top:30px;
+  background:#1b1b1b;
+  padding:20px;
+  border-radius:12px;
+  max-width:900px;
+  margin:auto;
+}
+.paper-btn{
+  width:100%;
+  padding:12px;
+  margin:6px 0;
+  border:none;
+  border-radius:10px;
+  font-weight:bold;
+  cursor:pointer;
+  background:linear-gradient(135deg,#FFD700,#cfa100);
+  color:#111;
+}
 .locked{background:#555;color:#ccc;}
+#dictionary input{
+  padding:8px;border-radius:8px;border:none;width:60%;
+}
+#dictionary button{
+  padding:8px 12px;border-radius:8px;border:none;
+  font-weight:bold;background:#FFD700;color:#111;cursor:pointer;
+}
+#ai-chat textarea{
+  width:80%;height:80px;border-radius:10px;border:none;padding:10px;
+}
+#ai-chat button{
+  padding:10px 15px;border-radius:10px;border:none;
+  background:#FFD700;color:#111;font-weight:bold;cursor:pointer;
+}
+#ai-response{
+  text-align:left;margin-top:15px;background:#111;
+  padding:15px;border-radius:10px;min-height:80px;
+}
 iframe{border:none;background:#111;}
-#watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-45deg);font-size:5em;color:rgba(255,255,255,0.1);font-weight:bold;pointer-events:none;z-index:10;user-select:none;white-space:nowrap;}
-.pay-box input{padding:10px;border-radius:8px;border:none;width:60%;margin-bottom:10px;}
-.pay-box button{padding:12px 20px;border:none;border-radius:10px;background:#FFD700;color:#111;font-weight:bold;cursor:pointer;}
-#admin-unlock{display:none;position:fixed;bottom:20px;right:20px;background:#ff0;color:#111;padding:10px 15px;border-radius:8px;font-weight:bold;cursor:pointer;z-index:1000;}
+/* PMG Watermark */
+body::before{
+  content:"PMG™ EDU";
+  position:fixed;
+  top:40%;
+  left:-50px;
+  font-size:120px;
+  color:rgba(50,50,50,0.15);
+  transform:rotate(-45deg);
+  z-index:0;
+  pointer-events:none;
+}
 </style>
 </head>
+
 <body>
 
 <h1>PMG™EDU</h1>
-<div class="quote">WORK HARDER. NOBODY CARES.</div>
+<div class="quote">
+  “WORK HARDER, NOBODY CARES.”
+</div>
 
 <p>All Courses • Monthly Subscription: <b>K25</b></p>
 
@@ -43,34 +117,52 @@ iframe{border:none;background:#111;}
 <div id="viewer" class="section" style="display:none;">
   <h2 id="viewer-title"></h2>
   <iframe id="pdfFrame" width="100%" height="600px"></iframe>
-  <div id="watermark">PMG™ EDU</div>
 </div>
 
-<div class="pay-box">
-  <h2>Activate Subscription</h2>
-  <input type="text" id="username" placeholder="Enter your Name or Phone">
-  <br>
-  <button onclick="notifyPayment()">I Paid</button>
-  <p>📱 Send payment K25 and screenshot to WhatsApp: <b>0775302886</b></p>
+<div class="section" id="dictionary">
+  <h2>Dictionary</h2>
+  <input type="text" id="wordInput" placeholder="Type a term..." />
+  <button onclick="lookup()">Search</button>
+  <p id="definition"></p>
 </div>
 
-<!-- Admin unlock button (only visible to you) -->
-<button id="admin-unlock" onclick="unlockAccess()">🔓 Admin Unlock</button>
+<div class="section" id="ai-chat">
+  <h2>AI Helper</h2>
+  <textarea id="aiInput" placeholder="Ask a question e.g. explain vector with example"></textarea><br>
+  <button onclick="askAI()">Ask AI</button>
+  <div id="ai-response"></div>
+</div>
+
+<div class="section" id="payment">
+  <h2>Payment Verification</h2>
+  <p>Pay K25 via WhatsApp and submit your name and phone:</p>
+  <input type="text" id="payerName" placeholder="Your Name" /><br><br>
+  <input type="text" id="payerPhone" placeholder="Phone Number" /><br><br>
+  <button onclick="markPaid()">I Paid (Submit)</button>
+  <p>WhatsApp Admin: <a href="https://wa.me/260775302886" target="_blank">📲 0775302886</a></p>
+</div>
+
+<div class="section" id="adminUnlock" style="display:none;">
+  <h2>Admin Panel</h2>
+  <button onclick="unlockPapers()">Unlock Papers for 30 Days</button>
+</div>
 
 <script>
+// Prevent right-click
 document.addEventListener("contextmenu", e => e.preventDefault());
 
+// Years and demo papers
 const years=[2018,2019,2020,2021,2022,2023,2024];
 const demoYears=[2018,2019,2020,2021,2022];
-const subscriptionDays=30;
-let userAccess=false;
 
-// Load papers for selected course
+// Payment tracking
+let currentUser = {name:"", phone:"", paid:false, accessExpiry:null};
+
 function loadCourse(course){
   let html=`<h2>${course} Past Papers</h2>`;
   years.forEach(y=>{
-    if(demoYears.includes(y) || userAccess){
-      html+=`<button class="paper-btn" onclick="openPaper('${course}',${y})">${course} – ${y}</button>`;
+    if(demoYears.includes(y)){
+      html+=`<button class="paper-btn" onclick="openPaper('${course}',${y})">${course} – ${y} (DEMO)</button>`;
     }else{
       html+=`<button class="paper-btn locked" onclick="locked()">${course} – ${y} 🔒</button>`;
     }
@@ -78,69 +170,141 @@ function loadCourse(course){
   document.getElementById("papers").innerHTML=html;
 }
 
-// Notify payment
-function notifyPayment(){
-  const user=document.getElementById('username').value.trim();
-  if(!user){
-    alert("⚠️ Please enter your Name or Phone before sending payment.");
-    return;
-  }
-  localStorage.setItem('lastPayer', user);
-  alert(`✅ Payment notification recorded for ${user}!\nSend screenshot to WhatsApp 0775302886.\nThen click Admin Unlock.`);
-}
-
-// Admin unlock (manual)
-function unlockAccess(){
-  const now=new Date().getTime();
-  localStorage.setItem('subscriptionStart', now);
-  userAccess=true;
-  const payer = localStorage.getItem('lastPayer') || 'Unknown';
-  alert(`✅ Access granted to ${payer} for 30 days!`);
-  loadCourse('MA110');
-}
-
-// Check subscription expiry
-function checkSubscriptionExpiry(){
-  const start = localStorage.getItem('subscriptionStart');
-  if(!start) return;
-  const now = new Date().getTime();
-  const diffDays=(now-parseInt(start))/(1000*60*60*24);
-  if(diffDays>subscriptionDays){
-    userAccess=false;
-    alert("⚠️ Subscription expired. Renew to continue viewing papers.");
-    loadCourse('MA110');
-  }else{
-    userAccess=true;
-  }
-}
-setInterval(checkSubscriptionExpiry, 60*1000);
-
-// Open PDF in iframe
 function openPaper(course,year){
-  const filePath=`past-papers/${course}/${course}-${year}.pdf`;
-  if(!demoYears.includes(year) && !userAccess){
-    alert("🔒 Locked. Activate your subscription via WhatsApp first.");
-    return;
+  if(currentUser.accessExpiry && new Date() < currentUser.accessExpiry){
+    document.getElementById("viewer-title").innerText=`${course} – ${year} Past Paper`;
+    document.getElementById("pdfFrame").src=`past-papers/${course}/${course}-${year}.pdf#toolbar=0&navpanes=0&scrollbar=0`;
+    document.getElementById("viewer").style.display="block";
+    document.getElementById("viewer").scrollIntoView({behavior:"smooth"});
+  } else {
+    locked();
   }
-  document.getElementById("viewer-title").innerText=`${course} – ${year} Past Paper`;
-  document.getElementById("pdfFrame").src=filePath+"#toolbar=0&navpanes=0&scrollbar=0";
-  document.getElementById("viewer").style.display="block";
-  document.getElementById("viewer").scrollIntoView({behavior:"smooth"});
 }
 
-// Prevent download
-document.addEventListener('keydown', function(e){
-  if(e.key==="s" && (e.ctrlKey || e.metaKey)) e.preventDefault();
-});
+function locked(){alert("🔒 Locked. Pay K25, send screenshot via WhatsApp, then admin will unlock for 30 days.");}
 
-// Show admin button only for you (example: set localStorage manually)
-if(localStorage.getItem('isAdmin')==='true'){
-  document.getElementById('admin-unlock').style.display='block';
+// Dictionary & AI (expanded as requested)
+const dictionary = {
+  /* MA110 */
+  "vector":"A quantity with both magnitude and direction.",
+  "scalar":"A quantity with magnitude only.",
+  "function":"A rule that assigns each input exactly one output.",
+  "limit":"The value a function approaches as input nears a point.",
+  "derivative":"Rate of change of a function.",
+  "integration":"Process of finding area under a curve.",
+  "matrix":"Rectangular array of numbers.",
+  "determinant":"Single value from a square matrix.",
+  "gradient":"Vector of partial derivatives showing slope.",
+  "tangent":"Line that touches a curve at one point.",
+  "continuity":"A function without breaks at a point.",
+  "differential":"An infinitesimal change in a variable.",
+  "series":"Sum of terms of a sequence.",
+  "sequence":"Ordered list of numbers.",
+  "polynomial":"Expression with multiple terms of variables and powers.",
+  "laplace transform":"Converts time-domain function to s-domain.",
+  "partial derivative":"Derivative with respect to one variable keeping others constant.",
+  "jacobian":"Matrix of all first-order partial derivatives.",
+  "hessian":"Matrix of second-order partial derivatives.",
+  "eigenvalue":"Scalar λ satisfying Av=λv.",
+  "eigenvector":"Non-zero vector v associated with λ.",
+  "orthogonal":"Vectors with zero dot product.",
+  /* PH110 */
+  "force":"A push or pull acting on an object.",
+  "mass":"Amount of matter in an object.",
+  "weight":"Force due to gravity (mass*g).",
+  "velocity":"Speed in a given direction.",
+  "acceleration":"Rate of change of velocity.",
+  "momentum":"Mass multiplied by velocity.",
+  "kinetic energy":"Energy due to motion.",
+  "potential energy":"Energy due to position or configuration.",
+  "work":"Force applied over a distance.",
+  "power":"Rate of doing work.",
+  "energy":"Capacity to do work.",
+  "friction":"Force opposing motion.",
+  "gravity":"Attractive force between masses.",
+  "newton's first law":"Object remains at rest or in motion unless acted upon.",
+  "newton's second law":"F=ma, force equals mass times acceleration.",
+  "newton's third law":"Every action has equal and opposite reaction.",
+  /* CH110 */
+  "atom":"Smallest unit of an element.",
+  "molecule":"Two or more atoms bonded together.",
+  "ionic bond":"Bond formed by electron transfer.",
+  "covalent bond":"Bond formed by electron sharing.",
+  "mole":"Amount of substance containing Avogadro's number.",
+  "acid":"Substance that donates hydrogen ions.",
+  "base":"Substance that accepts hydrogen ions.",
+  "oxidation":"Loss of electrons.",
+  "reduction":"Gain of electrons.",
+  "pH":"Measure of acidity/basicity.",
+  "reaction rate":"Speed at which reactants form products.",
+  "equilibrium":"State where forward and reverse reactions are equal.",
+  /* BI110 */
+  "cell":"Basic unit of life.",
+  "mitosis":"Cell division producing identical cells.",
+  "meiosis":"Cell division producing gametes.",
+  "photosynthesis":"Process plants use to make food.",
+  "respiration":"Process of releasing energy from food.",
+  "enzyme":"Protein that speeds up reactions.",
+  "dna":"Genetic material containing instructions for life.",
+  "rna":"Ribonucleic acid involved in protein synthesis.",
+  /* CS110 */
+  "algorithm":"Step-by-step method to solve a problem.",
+  "variable":"Named storage location in a program.",
+  "loop":"Code that repeats.",
+  "array":"Collection of values under one name.",
+  "debugging":"Finding and fixing errors.",
+  "function call":"Invoking a function to execute.",
+  "string":"Sequence of characters.",
+  "conditional":"Decision-making statement (if/else).",
+  "object":"Instance of a class containing data and methods.",
+  "class":"Blueprint for creating objects.",
+  "recursion":"Function that calls itself.",
+  "syntax":"Rules defining valid program statements."
+};
+
+function lookup(){
+  const w=document.getElementById("wordInput").value.toLowerCase().trim();
+  document.getElementById("definition").innerText=
+    dictionary[w]||"❌ Term not found.";
 }
 
-// Initialize
-checkSubscriptionExpiry();
+function askAI(){
+  const q=document.getElementById("aiInput").value.toLowerCase();
+  let response="🤖 Try asking about a known term with 'explain' or 'example'.";
+  for(let term in dictionary){
+    if(q.includes(term)){
+      response=`💡 ${term.toUpperCase()}\n${dictionary[term]}\n\n📘 Study Tip: Practice using past papers.`;
+      if(q.includes("example")){
+        response+=`\n📌 Example: Apply ${term} step by step.`;
+      }
+      break;
+    }
+  }
+  document.getElementById("ai-response").innerText=response;
+}
+
+// Payment verification
+function markPaid(){
+  const name=document.getElementById("payerName").value.trim();
+  const phone=document.getElementById("payerPhone").value.trim();
+  if(name && phone){
+    currentUser.name=name;
+    currentUser.phone=phone;
+    currentUser.paid=true;
+    alert(`✅ Payment submitted. Verify screenshot via WhatsApp: 0775302886`);
+    document.getElementById("adminUnlock").style.display="block";
+  } else alert("❌ Enter name and phone number.");
+}
+
+// Admin unlock
+function unlockPapers(){
+  if(currentUser.paid){
+    let now = new Date();
+    currentUser.accessExpiry = new Date(now.getTime() + 30*24*60*60*1000); // 30 days
+    alert("✅ Papers unlocked for 30 days.");
+  }
+}
+
 </script>
-
 </body>
 </html>
