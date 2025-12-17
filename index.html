@@ -13,14 +13,13 @@ body{
   text-align:center;
   padding:20px;
   position:relative;
-  overflow-x:hidden;
 }
-h1{color:#FFD700;font-size:2.5em;margin-bottom:0;}
+h1{color:#FFD700;font-size:2.5em; margin-bottom:10px;}
 .quote{
   font-size:1.5em;
-  margin:5px auto 30px;
+  margin:15px auto 30px;
   color:#888;
-  max-width:900px;
+  max-width:800px;
   font-style:italic;
   font-weight:bold;
 }
@@ -28,7 +27,7 @@ h1{color:#FFD700;font-size:2.5em;margin-bottom:0;}
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
   gap:15px;
-  max-width:900px;
+  max-width:800px;
   margin:auto;
 }
 .course{
@@ -43,7 +42,7 @@ h1{color:#FFD700;font-size:2.5em;margin-bottom:0;}
   background:#1b1b1b;
   padding:20px;
   border-radius:12px;
-  max-width:900px;
+  max-width:800px;
   margin:auto;
 }
 .paper-btn{
@@ -58,11 +57,10 @@ h1{color:#FFD700;font-size:2.5em;margin-bottom:0;}
   color:#111;
 }
 .locked{background:#555;color:#ccc;}
-#dictionary input,#payment input{
+#dictionary input{
   padding:8px;border-radius:8px;border:none;width:60%;
-  margin-bottom:8px;
 }
-#dictionary button,#payment button{
+#dictionary button{
   padding:8px 12px;border-radius:8px;border:none;
   font-weight:bold;background:#FFD700;color:#111;cursor:pointer;
 }
@@ -78,27 +76,24 @@ h1{color:#FFD700;font-size:2.5em;margin-bottom:0;}
   padding:15px;border-radius:10px;min-height:80px;
 }
 iframe{border:none;background:#111;}
-body::before{
-  content:"PMG™ EDU";
+.watermark{
   position:fixed;
-  top:40%;
-  left:-50px;
-  font-size:120px;
-  color:rgba(50,50,50,0.15);
+  bottom:10px;
+  right:-60px;
+  font-size:50px;
+  color:rgba(255,215,0,0.05);
   transform:rotate(-45deg);
-  z-index:0;
   pointer-events:none;
+  z-index:0;
 }
-table{width:100%;border-collapse:collapse;margin-top:10px;}
-th,td{padding:8px;border:1px solid #333;text-align:center;}
-th{background:#222;color:#FFD700;}
-button.adminLogin{margin-top:20px;padding:8px 12px;border-radius:8px;border:none;background:#FFD700;color:#111;font-weight:bold;cursor:pointer;}
 </style>
 </head>
 <body>
 
+<div class="watermark">PMG™ EDU</div>
+
 <h1>PMG™EDU</h1>
-<div class="quote">“WORK HARDER, NOBODY CARES.”</div>
+<div class="quote">WORK HARDER, NOBODY CARES</div>
 
 <p>All Courses • Monthly Subscription: <b>K25</b></p>
 
@@ -117,6 +112,14 @@ button.adminLogin{margin-top:20px;padding:8px 12px;border-radius:8px;border:none
   <iframe id="pdfFrame" width="100%" height="600px"></iframe>
 </div>
 
+<div class="section">
+  <h2>I Paid? Submit Here</h2>
+  <input type="text" id="payName" placeholder="Your Full Name" /><br><br>
+  <input type="text" id="payPhone" placeholder="Your Phone Number" /><br><br>
+  <button onclick="submitPayment()">Submit Payment</button>
+  <p>After submission, send screenshot to WhatsApp: <b>0775302886</b></p>
+</div>
+
 <div class="section" id="dictionary">
   <h2>Dictionary</h2>
   <input type="text" id="wordInput" placeholder="Type a term..." />
@@ -131,35 +134,20 @@ button.adminLogin{margin-top:20px;padding:8px 12px;border-radius:8px;border:none
   <div id="ai-response"></div>
 </div>
 
-<div class="section" id="payment">
-  <h2>Payment Verification</h2>
-  <input type="text" id="payerName" placeholder="Your Name" /><br>
-  <input type="text" id="payerPhone" placeholder="Phone Number" /><br>
-  <button onclick="markPaid()">I Paid (Submit)</button>
-  <p>WhatsApp Admin: <a href="https://wa.me/260775302886" target="_blank">📲 0775302886</a></p>
-</div>
-
-<!-- Admin Login Button -->
-<button class="adminLogin" onclick="adminLogin()">Admin Login</button>
-
-<div class="section" id="adminDashboard" style="display:none;">
+<!-- Admin Dashboard -->
+<div class="section" id="admin-dashboard" style="display:none;">
   <h2>Admin Dashboard</h2>
-  <button onclick="renderDashboard()">Refresh Dashboard</button>
-  <button onclick="exportData()">Export Data</button>
-  <input type="file" onchange="importData(event)"><br>
-  <div id="dashboardContent"></div>
+  <input type="password" id="adminPass" placeholder="Enter Password" />
+  <button onclick="loginAdmin()">Login</button>
+  <div id="dashboardContent" style="display:none;"></div>
 </div>
 
 <script>
-// Prevent right-click
 document.addEventListener("contextmenu", e => e.preventDefault());
 
 const years=[2018,2019,2020,2021,2022,2023,2024];
 const demoYears=[2018,2019,2020,2021,2022];
 
-let currentUser = {name:"", phone:"", paid:false, accessExpiry:null};
-
-// Load courses
 function loadCourse(course){
   let html=`<h2>${course} Past Papers</h2>`;
   years.forEach(y=>{
@@ -172,21 +160,42 @@ function loadCourse(course){
   document.getElementById("papers").innerHTML=html;
 }
 
-// Open PDF
 function openPaper(course,year){
-  if(currentUser.accessExpiry && new Date() < new Date(currentUser.accessExpiry)){
-    document.getElementById("viewer-title").innerText=`${course} – ${year} Past Paper`;
-    document.getElementById("pdfFrame").src=`past-papers/${course}/${course}-${year}.pdf#toolbar=0&navpanes=0&scrollbar=0`;
-    document.getElementById("viewer").style.display="block";
-    document.getElementById("viewer").scrollIntoView({behavior:"smooth"});
-  } else { locked(); }
+  fetch('get_users.php')
+  .then(res=>res.json())
+  .then(data=>{
+    const approved=data.approved;
+    let phone=prompt("Enter your phone to access PDFs:");
+    let user=approved.find(u=>u.phone===phone);
+    if(user && new Date(user.accessExpiry) > new Date()){
+      document.getElementById("viewer-title").innerText=`${course} – ${year} Past Paper`;
+      document.getElementById("pdfFrame").src=`past-papers/${course}/${course}-${year}.pdf#toolbar=0&navpanes=0&scrollbar=0`;
+      document.getElementById("viewer").style.display="block";
+      document.getElementById("viewer").scrollIntoView({behavior:"smooth"});
+    } else {
+      alert("🔒 Access denied. Ensure you have paid and are approved.");
+    }
+  });
 }
 
-function locked(){ alert("🔒 Locked. Verify payment via WhatsApp: 0775302886 then admin will unlock for 30 days."); }
+function locked(){alert("🔒 Locked. Pay K25 and WhatsApp admin to activate.");}
 
-// Dictionary + AI
+function submitPayment(){
+  const name=document.getElementById("payName").value.trim();
+  const phone=document.getElementById("payPhone").value.trim();
+  if(!name || !phone){alert("Enter both name and phone."); return;}
+  fetch('update_users.php',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({action:'add', user:{name, phone, time:new Date().toISOString()}})
+  })
+  .then(res=>res.json())
+  .then(data=>{alert("Payment request submitted! Send screenshot to WhatsApp: 0775302886.");})
+  .catch(err=>alert("Error submitting payment."));
+}
+
+/* Dictionary */
 const dictionary={
-  /* MA110 */
   "vector":"A quantity with both magnitude and direction.",
   "scalar":"A quantity with magnitude only.",
   "function":"A rule that assigns each input exactly one output.",
@@ -195,34 +204,24 @@ const dictionary={
   "integration":"Process of finding area under a curve.",
   "matrix":"Rectangular array of numbers.",
   "determinant":"Single value from a square matrix.",
-  "gradient":"Vector of partial derivatives showing slope.",
-  "tangent":"Line that touches a curve at one point.",
-  "continuity":"A function without breaks at a point.",
-  "differential":"An infinitesimal change in a variable.",
-  "series":"Sum of terms of a sequence.",
-  /* PH110 */
   "force":"A push or pull acting on an object.",
-  "mass":"Amount of matter in an object.",
   "velocity":"Speed in a given direction.",
   "acceleration":"Rate of change of velocity.",
   "work":"Force applied over a distance.",
   "power":"Rate of doing work.",
   "energy":"Capacity to do work.",
-  "friction":"Force opposing motion.",
-  "gravity":"Attractive force between masses.",
-  /* CH110 */
   "atom":"Smallest unit of an element.",
   "molecule":"Two or more atoms bonded together.",
   "ionic bond":"Bond formed by electron transfer.",
   "covalent bond":"Bond formed by electron sharing.",
-  /* BI110 */
+  "mole":"Amount of substance containing Avogadro's number.",
+  "acid":"Substance that donates hydrogen ions.",
+  "base":"Substance that accepts hydrogen ions.",
   "cell":"Basic unit of life.",
   "mitosis":"Cell division producing identical cells.",
   "meiosis":"Cell division producing gametes.",
   "photosynthesis":"Process plants use to make food.",
-  "respiration":"Process of releasing energy from food.",
   "enzyme":"Protein that speeds up reactions.",
-  /* CS110 */
   "algorithm":"Step-by-step method to solve a problem.",
   "variable":"Named storage location in a program.",
   "loop":"Code that repeats.",
@@ -240,104 +239,57 @@ function askAI(){
   let response="🤖 Try asking about a known term with 'explain' or 'example'.";
   for(let term in dictionary){
     if(q.includes(term)){
-      response=`💡 ${term.toUpperCase()}\n${dictionary[term]}\n\n📘 Study Tip: Practice using past papers.`;
-      if(q.includes("example")) response+=`\n📌 Example: Apply ${term} step by step.`;
+      response=`💡 ${term.toUpperCase()}\n${dictionary[term]}\n\n📘 Study Tip: Practice this concept using past papers daily.`;
+      if(q.includes("example")){
+        response+=`\n\n📌 Example: Apply ${term} step by step in a real problem.`;
+      }
       break;
     }
   }
   document.getElementById("ai-response").innerText=response;
 }
 
-// PAYMENT & DASHBOARD
-function markPaid(){
-  const name=document.getElementById("payerName").value.trim();
-  const phone=document.getElementById("payerPhone").value.trim();
-  if(name && phone){
-    let pending = JSON.parse(localStorage.getItem("pendingPayments")||"[]");
-    pending.push({name, phone, time:new Date().toISOString()});
-    localStorage.setItem("pendingPayments", JSON.stringify(pending));
-    alert("✅ Payment submitted. Verify screenshot via WhatsApp 0775302886");
-    document.getElementById("payerName").value="";
-    document.getElementById("payerPhone").value="";
-    renderDashboard();
-  } else alert("❌ Enter name and phone number.");
-}
-
-// Admin Login
-function adminLogin(){
-  const pwd=prompt("Enter admin password:");
-  if(pwd==="Pmg76243406.,SILENCE"){
-    document.getElementById("adminDashboard").style.display="block";
-    renderDashboard();
-  } else alert("❌ Wrong password. Access denied.");
-}
-
-// Render Dashboard
-function renderDashboard(){
-  let pending=JSON.parse(localStorage.getItem("pendingPayments")||"[]");
-  let approved=JSON.parse(localStorage.getItem("approvedUsers")||"[]");
-  let html="<h3>Pending Payments</h3>";
-  if(pending.length===0) html+="<p>None</p>";
-  else{
-    html+="<table><tr><th>Name</th><th>Phone</th><th>Time</th><th>Action</th></tr>";
-    pending.forEach((u,i)=>{
-      html+=`<tr><td>${u.name}</td><td>${u.phone}</td><td>${new Date(u.time).toLocaleString()}</td>
-      <td><button onclick="approve(${i})">Approve 30 Days</button></td></tr>`;
-    });
-    html+="</table>";
+/* Admin Dashboard */
+function loginAdmin(){
+  const pass=document.getElementById("adminPass").value;
+  if(pass==="Pmg76243406.,SILENCE"){
+    document.getElementById("dashboardContent").style.display="block";
+    loadDashboard();
+  } else {
+    alert("❌ Wrong password!");
   }
-  html+="<h3>Approved Users</h3>";
-  if(approved.length===0) html+="<p>None</p>";
-  else{
-    html+="<table><tr><th>Name</th><th>Phone</th><th>Access Expires</th></tr>";
-    approved.forEach(u=>{
-      html+=`<tr><td>${u.name}</td><td>${u.phone}</td><td>${new Date(u.accessExpiry).toLocaleString()}</td></tr>`;
+}
+
+function loadDashboard(){
+  fetch('get_users.php')
+  .then(res=>res.json())
+  .then(data=>{
+    let html="<h3>Pending Users</h3>";
+    if(data.pending.length===0) html+="<p>No pending users.</p>";
+    data.pending.forEach(u=>{
+      html+=`<div>${u.name} - ${u.phone} <button onclick="approveUser('${u.phone}')">Approve</button></div>`;
     });
-    html+="</table>";
+    html+="<h3>Approved Users</h3>";
+    if(data.approved.length===0) html+="<p>No approved users.</p>";
+    data.approved.forEach(u=>{
+      html+=`<div>${u.name} - ${u.phone} - Expires: ${new Date(u.accessExpiry).toLocaleDateString()}</div>`;
+    });
+    document.getElementById("dashboardContent").innerHTML=html;
+  });
+}
+
+function approveUser(phone){
+  if(confirm("Approve this user?")){
+    fetch('update_users.php',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({action:'approve', phone})
+    }).then(res=>res.json()).then(data=>{
+      alert("User approved!");
+      loadDashboard();
+    });
   }
-  document.getElementById("dashboardContent").innerHTML=html;
-}
-
-// Approve user
-function approve(index){
-  let pending=JSON.parse(localStorage.getItem("pendingPayments")||"[]");
-  let approved=JSON.parse(localStorage.getItem("approvedUsers")||"[]");
-  let user=pending.splice(index,1)[0];
-  user.accessExpiry=new Date(Date.now()+30*24*60*60*1000); // 30 days
-  approved.push(user);
-  localStorage.setItem("pendingPayments", JSON.stringify(pending));
-  localStorage.setItem("approvedUsers", JSON.stringify(approved));
-  alert(`✅ ${user.name} approved for 30 days.`);
-  renderDashboard();
-}
-
-// EXPORT / IMPORT
-function exportData(){
-  const data={pending:JSON.parse(localStorage.getItem("pendingPayments")||"[]"),
-              approved:JSON.parse(localStorage.getItem("approvedUsers")||"[]")};
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;
-  a.download="PMG_EDU_users.json";
-  a.click();
-  URL.revokeObjectURL(url);
-  alert("Data exported as PMG_EDU_users.json");
-}
-
-function importData(event){
-  const file=event.target.files[0];
-  if(!file) return;
-  const reader=new FileReader();
-  reader.onload=function(e){
-    const data=JSON.parse(e.target.result);
-    localStorage.setItem("pendingPayments",JSON.stringify(data.pending||[]));
-    localStorage.setItem("approvedUsers",JSON.stringify(data.approved||[]));
-    alert("Data imported successfully!");
-    renderDashboard();
-  };
-  reader.readAsText(file);
 }
 </script>
 </body>
-  </html>
+    </html>
