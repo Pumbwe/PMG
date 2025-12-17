@@ -78,7 +78,6 @@ h1{color:#FFD700;font-size:2.5em;margin-bottom:0;}
   padding:15px;border-radius:10px;min-height:80px;
 }
 iframe{border:none;background:#111;}
-/* PMG Watermark */
 body::before{
   content:"PMG™ EDU";
   position:fixed;
@@ -93,6 +92,7 @@ body::before{
 table{width:100%;border-collapse:collapse;margin-top:10px;}
 th,td{padding:8px;border:1px solid #333;text-align:center;}
 th{background:#222;color:#FFD700;}
+button.adminLogin{margin-top:20px;padding:8px 12px;border-radius:8px;border:none;background:#FFD700;color:#111;font-weight:bold;cursor:pointer;}
 </style>
 </head>
 <body>
@@ -139,7 +139,10 @@ th{background:#222;color:#FFD700;}
   <p>WhatsApp Admin: <a href="https://wa.me/260775302886" target="_blank">📲 0775302886</a></p>
 </div>
 
-<div class="section" id="adminDashboard">
+<!-- Admin Login Button -->
+<button class="adminLogin" onclick="adminLogin()">Admin Login</button>
+
+<div class="section" id="adminDashboard" style="display:none;">
   <h2>Admin Dashboard</h2>
   <button onclick="renderDashboard()">Refresh Dashboard</button>
   <button onclick="exportData()">Export Data</button>
@@ -212,9 +215,6 @@ const dictionary={
   "molecule":"Two or more atoms bonded together.",
   "ionic bond":"Bond formed by electron transfer.",
   "covalent bond":"Bond formed by electron sharing.",
-  "mole":"Amount of substance containing Avogadro's number.",
-  "acid":"Substance that donates hydrogen ions.",
-  "base":"Substance that accepts hydrogen ions.",
   /* BI110 */
   "cell":"Basic unit of life.",
   "mitosis":"Cell division producing identical cells.",
@@ -261,6 +261,15 @@ function markPaid(){
     document.getElementById("payerPhone").value="";
     renderDashboard();
   } else alert("❌ Enter name and phone number.");
+}
+
+// Admin Login
+function adminLogin(){
+  const pwd=prompt("Enter admin password:");
+  if(pwd==="Pmg76243406.,SILENCE"){
+    document.getElementById("adminDashboard").style.display="block";
+    renderDashboard();
+  } else alert("❌ Wrong password. Access denied.");
 }
 
 // Render Dashboard
@@ -329,7 +338,6 @@ function importData(event){
   };
   reader.readAsText(file);
 }
-
 </script>
 </body>
-                                                                                                    </html>
+  </html>
