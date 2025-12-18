@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PMG™ EDU | All Courses</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+
 <style>
 body {margin:0;font-family:'Playfair Display', serif;background:#0f0f0f;color:#f0f0f0;text-align:center;padding:20px;position:relative;}
 h1{color:#FFD700;font-size:2.8em;text-shadow:0 0 10px #ffbf00;}
@@ -11,42 +16,26 @@ h1{color:#FFD700;font-size:2.8em;text-shadow:0 0 10px #ffbf00;}
 .watermark {position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-45deg);font-size:6em;color:rgba(200,200,200,0.05);pointer-events:none;user-select:none;z-index:0;font-weight:bold;}
 .creator {position:fixed;bottom:10px;right:15px;font-size:1.2em;color:#FFD700;font-weight:bold;text-shadow:1px 1px 4px #000;z-index:1000;}
 
-/* Courses */
 .courses {display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;max-width:800px;margin:auto;}
 .course {background:#1b1b1b;padding:20px;border-radius:12px;cursor:pointer;transition:all 0.3s ease;}
 .course:hover {transform:translateY(-5px);box-shadow:0 10px 30px rgba(255,215,0,0.3);}
 .course h3{color:#FFD700;}
 
-/* Sections */
 .section {margin-top:30px;background:#1b1b1b;padding:20px;border-radius:12px;max-width:800px;margin:auto;}
 
-/* Buttons */
-button, .paper-btn {font-family:'Playfair Display', serif;border:none;border-radius:12px;padding:12px 20px;font-weight:bold;cursor:pointer;transition:all 0.3s ease;}
-button:hover, .paper-btn:hover {transform:translateY(-3px);}
-.paper-btn {background:linear-gradient(135deg,#4da3ff,#2563eb);color:#fff;margin:5px 0;width:100%;}
-.paper-btn.clicked{background:#555;color:#ccc;}
-.paper-btn.locked{background:#555;color:#ccc;cursor:not-allowed;}
+button,.paper-btn{font-family:'Playfair Display', serif;border:none;border-radius:12px;padding:12px 20px;font-weight:bold;cursor:pointer;transition:all 0.3s ease;}
+button:hover,.paper-btn:hover{transform:translateY(-3px);}
+.paper-btn{background:linear-gradient(135deg,#4da3ff,#2563eb);color:#fff;margin:5px 0;width:100%;}
 
-/* Admin login */
-.admin-login {margin:20px auto; max-width:400px; text-align:center; background:#1b1b1b; padding:15px; border-radius:12px;}
-.admin-login input, .admin-login button {padding:8px;border-radius:8px;border:none;}
-.admin-login input {width:70%; margin:5px 0;}
-.admin-login button {background:#FFD700;color:#111; margin-left:5px;}
-
-/* Dashboard */
-.central-dashboard {position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:95%;max-width:900px;max-height:90vh;overflow-y:auto;background:#1b1a2e;padding:30px;border-radius:25px;box-shadow:0 25px 60px rgba(0,0,0,0.7),0 0 35px rgba(255,140,0,0.3);z-index:999;display:none;}
-.central-dashboard table{width:100%;border-collapse:collapse;color:#fff;}
-.central-dashboard th, .central-dashboard td{border:1px solid #555;padding:8px;}
-.central-dashboard th{background:#333;}
-
-/* Inputs */
-input[type=text], textarea {width:80%; padding:10px; border-radius:10px; border:none; margin:5px 0;}
 iframe{border:none;width:100%;height:600px;}
 
-/* Responsive */
-@media(max-width:768px){h1{font-size:2.2em;}.courses{grid-template-columns:repeat(auto-fit,minmax(100px,1fr));}.central-dashboard{padding:15px;}}
+@media(max-width:768px){
+h1{font-size:2.2em;}
+.courses{grid-template-columns:repeat(auto-fit,minmax(100px,1fr));}
+}
 </style>
 </head>
+
 <body>
 
 <div class="watermark">PMG™ EDU</div>
@@ -54,15 +43,7 @@ iframe{border:none;width:100%;height:600px;}
 
 <h1>PMG™ EDU</h1>
 <div class="quote">“WORK HARDER, NOBODY CARES”</div>
-
-<!-- Admin login -->
-<div class="admin-login">
-  <h2>Admin Login</h2>
-  <input type="password" id="adminPass" placeholder="Enter password">
-  <button onclick="unlockDashboard()">Unlock Dashboard</button>
-</div>
-
-<p>All Courses • Monthly Subscription: <b>K25</b></p>
+<p><b>100% FREE Academic Resources</b></p>
 
 <div class="courses">
   <div class="course" onclick="loadCourse('MA110')"><h3>MA110</h3></div>
@@ -72,132 +53,89 @@ iframe{border:none;width:100%;height:600px;}
   <div class="course" onclick="loadCourse('PH110')"><h3>PH110</h3></div>
 </div>
 
-<div id="papers" class="section"><p>Select a course to view papers.</p></div>
+<div id="papers" class="section">
+  <p>Select a course to view resources.</p>
+</div>
 
 <div id="viewer" class="section" style="display:none;">
   <h2 id="viewer-title"></h2>
   <iframe id="pdfFrame"></iframe>
 </div>
 
-<div class="pay-box section">
-  <h2>Pay K25 Monthly</h2>
-  <p>Send payment screenshot via WhatsApp:</p>
-  <p>📱 <b>0775302886</b></p>
+<!-- Admin Contact -->
+<div class="section">
+  <h2>📞 Contact Admin</h2>
+  <p>For missing papers, notes, or questions:</p>
+  <p><b>Admin (GIDECK): 0775302886</b></p>
   <a href="https://wa.me/260775302886" target="_blank">📲 WhatsApp Admin</a>
-  <p>After payment, submit "I Paid" below:</p>
-  <input type="text" id="userName" placeholder="Your Name">
-  <input type="text" id="userPhone" placeholder="Phone Number">
-  <button onclick="submitPayment()">I Paid</button>
-</div>
-
-<!-- Central dashboard -->
-<div class="central-dashboard" id="centralDash">
-  <h2>Pending Payments</h2>
-  <table id="centralTable">
-    <tr><th>Name</th><th>Phone</th><th>Time</th><th>Action</th></tr>
-  </table>
-  <button onclick="closeCentral()">Close</button>
 </div>
 
 <script>
-document.addEventListener("contextmenu", e=>e.preventDefault());
+document.addEventListener("contextmenu", e => e.preventDefault());
 
-const years=[2018,2019,2020,2021,2022,2023,2024];
-const demoYears=[2020,2021,2022,2023];
-let pendingPayments=[];
-let approvedUsers=[];
+const years = [2018,2019,2020,2021,2022,2023,2024];
 
-// Load courses
+// Notes per course
+const notes = {
+  MA110: [
+    { title: "Introduction to Calculus", file: "intro.pdf" },
+    { title: "Limits & Continuity", file: "chapter1.pdf" }
+  ],
+  BI110: [
+    { title: "Cell Biology Notes", file: "cell.pdf" }
+  ],
+  CH110: [
+    { title: "Atomic Structure", file: "atomic.pdf" }
+  ],
+  CS110: [
+    { title: "C++ Basics", file: "cpp.pdf" }
+  ],
+  PH110: []
+};
+
 function loadCourse(course){
-  let html=`<h2>${course} Past Papers</h2>`;
-  years.forEach(y=>{
-    if(demoYears.includes(y)){
-      html+=`<button class="paper-btn" onclick="openPaper(this,'${course}',${y})">${course} – ${y} (DEMO)</button>`;
-    }else{
-      html+=`<button class="paper-btn locked" onclick="locked()">${course} – ${y} 🔒</button>`;
-    }
+  let html = `<h2>${course} Resources</h2>`;
+
+  html += `<h3>📄 Past Papers</h3>`;
+  years.forEach(year=>{
+    html += `
+      <button class="paper-btn"
+        onclick="openPDF('past-papers/${course}/${course}-${year}.pdf',
+        '${course} – ${year} Past Paper')">
+        ${course} – ${year}
+      </button>`;
   });
-  document.getElementById("papers").innerHTML=html;
+
+  html += `<h3 style="margin-top:20px;">📝 Notes</h3>`;
+  if(notes[course] && notes[course].length > 0){
+    notes[course].forEach(n=>{
+      html += `
+        <button class="paper-btn"
+          onclick="openPDF('notes/${course}/${n.file}',
+          '${course} – ${n.title}')">
+          ${n.title}
+        </button>`;
+    });
+  } else {
+    html += `<p>No notes uploaded yet.</p>`;
+  }
+
+  document.getElementById("papers").innerHTML = html;
 }
 
-// Paper access check
-function openPaper(btn,course,year){
-  const input=prompt("Enter your phone or access code:");
-  const now=new Date();
-  const approved=approvedUsers.find(u=>u.phone===input || u.accessCode===input);
-  if(!approved){
-    alert("🔒 Locked. You need to be approved.");
-    return;
-  }
-  // check expiry
-  if(new Date(approved.expiry) < now){
-    alert("⛔ Access expired. Contact admin.");
-    return;
-  }
-  btn.classList.add("clicked");
-  document.getElementById("viewer-title").innerText=`${course} – ${year} Past Paper`;
-  document.getElementById("pdfFrame").src=`past-papers/${course}/${course}-${year}.pdf#toolbar=0&navpanes=0&scrollbar=0`;
+function openPDF(path,title){
+  document.getElementById("viewer-title").innerText = title;
+  document.getElementById("pdfFrame").src = path + "#toolbar=0&navpanes=0&scrollbar=0";
   document.getElementById("viewer").style.display="block";
   document.getElementById("viewer").scrollIntoView({behavior:"smooth"});
 }
 
-function locked(){alert("🔒 Locked. Pay K25 & WhatsApp admin.");}
-
-// Payment submission
-function submitPayment(){
-  const name=document.getElementById("userName").value.trim();
-  const phone=document.getElementById("userPhone").value.trim();
-  if(!name||!phone){alert("Enter name and phone"); return;}
-  const now=new Date().toISOString();
-  pendingPayments.push({name,phone,time:now});
-  alert("Payment submitted! Admin will approve after screenshot check.");
-  openCentral();
-}
-
-// Dashboard
-function openCentral(){updateCentral();}
-function closeCentral(){document.getElementById("centralDash").style.display="none";}
-function updateCentral(){
-  const container=document.getElementById("centralTable");
-  container.innerHTML=`<tr><th>Name</th><th>Phone</th><th>Time</th><th>Action</th></tr>`;
-  pendingPayments.forEach((u,i)=>{
-    const row=document.createElement("tr");
-    row.innerHTML=`<td>${u.name}</td><td>${u.phone}</td><td>${u.time}</td>
-      <td>
-        <button onclick="approveUser(${i})">Accept</button>
-        <button onclick="deleteRequest(${i})">Delete</button>
-      </td>`;
-    container.appendChild(row);
-  });
-  document.getElementById("centralDash").style.display="block";
-}
-
-function approveUser(index){
-  const user=pendingPayments[index];
-  if(!confirm(`Accept ${user.name}?`)) return;
-  // Generate access code valid 30 days
-  const code="PMGEDU-"+Math.floor(Math.random()*1000000);
-  const expiry=new Date(); expiry.setDate(expiry.getDate()+30);
-  user.accessCode=code;
-  user.expiry=expiry.toISOString();
-  approvedUsers.push(user);
-  pendingPayments.splice(index,1);
-  updateCentral();
-  alert(`${user.name} accepted!\nAccess code: ${code}\nValid until: ${expiry.toLocaleDateString()}`);
-}
-
-function deleteRequest(index){
-  if(!confirm("Delete this request?")) return;
-  pendingPayments.splice(index,1);
-  updateCentral();
-}
-
-// Admin login
-function unlockDashboard(){
-  const pass=document.getElementById("adminPass").value;
-  if(pass!=='Pmg76243406.,SILENCE'){alert("Wrong password"); return;}
-  openCentral();
+// PWA service worker registration
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(() => console.log("Service Worker Registered"));
 }
 </script>
+
 </body>
-      </html>
+  </html>
