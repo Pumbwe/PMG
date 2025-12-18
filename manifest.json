@@ -1,0 +1,22 @@
+{
+  "name": "PMG™ EDU",
+  "short_name": "PMG EDU",
+  "description": "Free academic resources for students: past papers and notes for MA110, BI110, CH110, CS110, PH110",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f0f0f",
+  "theme_color": "#FFD700",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
