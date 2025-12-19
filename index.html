@@ -5,137 +5,158 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PMG™ EDU | All Courses</title>
 
-<!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FFD700">
 
 <style>
-body {margin:0;font-family:'Playfair Display', serif;background:#0f0f0f;color:#f0f0f0;text-align:center;padding:20px;position:relative;}
-h1{color:#FFD700;font-size:2.8em;text-shadow:0 0 10px #ffbf00;}
-.quote{font-size:1.5em;margin:15px auto 30px;color:#ccc;max-width:800px;font-style:italic;font-weight:bold;text-shadow:1px 1px 4px #000;}
-.watermark {position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-45deg);font-size:6em;color:rgba(200,200,200,0.05);pointer-events:none;user-select:none;z-index:0;font-weight:bold;}
-.creator {position:fixed;bottom:10px;right:15px;font-size:1.2em;color:#FFD700;font-weight:bold;text-shadow:1px 1px 4px #000;z-index:1000;}
-
-.courses {display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:15px;max-width:800px;margin:auto;}
-.course {background:#1b1b1b;padding:20px;border-radius:12px;cursor:pointer;transition:all 0.3s ease;}
-.course:hover {transform:translateY(-5px);box-shadow:0 10px 30px rgba(255,215,0,0.3);}
-.course h3{color:#FFD700;}
-
-.section {margin-top:30px;background:#1b1b1b;padding:20px;border-radius:12px;max-width:800px;margin:auto;}
-
-button,.paper-btn{font-family:'Playfair Display', serif;border:none;border-radius:12px;padding:12px 20px;font-weight:bold;cursor:pointer;transition:all 0.3s ease;}
-button:hover,.paper-btn:hover{transform:translateY(-3px);}
-.paper-btn{background:linear-gradient(135deg,#4da3ff,#2563eb);color:#fff;margin:5px 0;width:100%;}
-
-iframe{border:none;width:100%;height:600px;}
-
-@media(max-width:768px){
-h1{font-size:2.2em;}
-.courses{grid-template-columns:repeat(auto-fit,minmax(100px,1fr));}
-}
+body {margin:0;font-family:'Playfair Display', serif;background:#0f0f0f;color:#f0f0f0;text-align:center;padding:20px;}
+h1{color:#FFD700;font-size:2.5em;}
+.section{background:#1b1b1b;padding:20px;border-radius:12px;max-width:900px;margin:20px auto;}
+button{padding:12px 20px;border:none;border-radius:10px;font-weight:bold;cursor:pointer}
+.paper-btn{background:#2563eb;color:#fff;width:100%;margin:5px 0}
+.disabled{opacity:0.4;pointer-events:none}
+.hidden{display:none}
 </style>
 </head>
 
 <body>
 
-<div class="watermark">PMG™ EDU</div>
-<div class="creator">GIDECK</div>
-
 <h1>PMG™ EDU</h1>
-<div class="quote">“WORK HARDER, NOBODY CARES”</div>
-<p><b>100% FREE Academic Resources</b></p>
+<p><b>Demo / Paid Academic Resources</b></p>
 
-<div class="courses">
-  <div class="course" onclick="loadCourse('MA110')"><h3>MA110</h3></div>
-  <div class="course" onclick="loadCourse('BI110')"><h3>BI110</h3></div>
-  <div class="course" onclick="loadCourse('CH110')"><h3>CH110</h3></div>
-  <div class="course" onclick="loadCourse('CS110')"><h3>CS110</h3></div>
-  <div class="course" onclick="loadCourse('PH110')"><h3>PH110</h3></div>
+<!-- AUTH -->
+<div id="auth" class="section">
+  <input id="email" placeholder="Email"><br><br>
+  <input id="password" type="password" placeholder="Password"><br><br>
+  <button onclick="login()">Login</button>
+  <button onclick="register()">Register</button>
 </div>
 
-<div id="papers" class="section">
-  <p>Select a course to view resources.</p>
+<!-- USER -->
+<div id="userPanel" class="section hidden">
+  <p id="statusText"></p>
+  <button onclick="markPaid()">I PAID K20</button>
 </div>
 
-<div id="viewer" class="section" style="display:none;">
-  <h2 id="viewer-title"></h2>
-  <iframe id="pdfFrame"></iframe>
+<!-- COURSES -->
+<div id="content" class="section hidden">
+  <h3>Courses</h3>
+  <button class="paper-btn" onclick="openPDF()">Open Sample PDF</button>
 </div>
 
-<!-- Admin Contact -->
-<div class="section">
-  <h2>📞 Contact Admin</h2>
-  <p>For missing papers, notes, or questions:</p>
-  <p><b>Admin (GIDECK): 0775302886</b></p>
-  <a href="https://wa.me/260775302886" target="_blank">📲 WhatsApp Admin</a>
+<!-- ADMIN -->
+<div id="adminPanel" class="section hidden">
+  <h2>Admin Dashboard</h2>
+  <div id="pendingUsers"></div>
 </div>
 
-<script>
-document.addEventListener("contextmenu", e => e.preventDefault());
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-const years = [2018,2019,2020,2021,2022,2023,2024];
-
-// Notes per course
-const notes = {
-  MA110: [
-    { title: "Introduction to Calculus", file: "intro.pdf" },
-    { title: "Limits & Continuity", file: "chapter1.pdf" }
-  ],
-  BI110: [
-    { title: "Cell Biology Notes", file: "cell.pdf" }
-  ],
-  CH110: [
-    { title: "Atomic Structure", file: "atomic.pdf" }
-  ],
-  CS110: [
-    { title: "C++ Basics", file: "cpp.pdf" }
-  ],
-  PH110: []
+/* 🔴 REPLACE WITH YOUR FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
 };
 
-function loadCourse(course){
-  let html = `<h2>${course} Resources</h2>`;
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-  html += `<h3>📄 Past Papers</h3>`;
-  years.forEach(year=>{
-    html += `
-      <button class="paper-btn"
-        onclick="openPDF('past-papers/${course}/${course}-${year}.pdf',
-        '${course} – ${year} Past Paper')">
-        ${course} – ${year}
-      </button>`;
+/* AUTH */
+window.register = async () => {
+  const email = email.value;
+  const password = password.value;
+  const res = await createUserWithEmailAndPassword(auth, email, password);
+  await setDoc(doc(db,"users",res.user.uid),{
+    email,
+    role:"user",
+    paymentStatus:"trial"
   });
+};
 
-  html += `<h3 style="margin-top:20px;">📝 Notes</h3>`;
-  if(notes[course] && notes[course].length > 0){
-    notes[course].forEach(n=>{
-      html += `
-        <button class="paper-btn"
-          onclick="openPDF('notes/${course}/${n.file}',
-          '${course} – ${n.title}')">
-          ${n.title}
-        </button>`;
-    });
-  } else {
-    html += `<p>No notes uploaded yet.</p>`;
+window.login = async () => {
+  await signInWithEmailAndPassword(auth,email.value,password.value);
+};
+
+/* AUTH STATE */
+onAuthStateChanged(auth, async user=>{
+  if(!user) return;
+  authDiv(false);
+
+  const ref = doc(db,"users",user.uid);
+  const snap = await getDoc(ref);
+  const data = snap.data();
+
+  if(data.role==="admin"){
+    showAdmin();
+  }else{
+    showUser(data.paymentStatus);
   }
+});
 
-  document.getElementById("papers").innerHTML = html;
+function authDiv(show){
+  document.getElementById("auth").classList.toggle("hidden",!show);
 }
 
-function openPDF(path,title){
-  document.getElementById("viewer-title").innerText = title;
-  document.getElementById("pdfFrame").src = path + "#toolbar=0&navpanes=0&scrollbar=0";
-  document.getElementById("viewer").style.display="block";
-  document.getElementById("viewer").scrollIntoView({behavior:"smooth"});
+function showUser(status){
+  userPanel.classList.remove("hidden");
+  content.classList.remove("hidden");
+
+  if(status==="trial"){
+    statusText.innerText="Demo Mode (Locked)";
+    content.classList.add("disabled");
+  }
+  if(status==="pending"){
+    statusText.innerText="Payment Pending Approval";
+    content.classList.add("disabled");
+  }
+  if(status==="approved"){
+    statusText.innerText="Full Access Granted";
+    content.classList.remove("disabled");
+  }
 }
 
-// PWA service worker registration
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js')
-    .then(() => console.log("Service Worker Registered"));
+window.markPaid = async ()=>{
+  const u = auth.currentUser;
+  await updateDoc(doc(db,"users",u.uid),{paymentStatus:"pending"});
+  alert("Payment marked pending");
+};
+
+/* ADMIN */
+async function showAdmin(){
+  adminPanel.classList.remove("hidden");
+  const q = await getDocs(collection(db,"users"));
+  pendingUsers.innerHTML="";
+  q.forEach(d=>{
+    const u=d.data();
+    if(u.paymentStatus==="pending"){
+      pendingUsers.innerHTML+=`
+        <p>${u.email}
+        <button onclick="approve('${d.id}')">Approve</button>
+        <button onclick="removeUser('${d.id}')">Delete</button></p>
+      `;
+    }
+  });
 }
+
+window.approve = async(id)=>{
+  await updateDoc(doc(db,"users",id),{paymentStatus:"approved"});
+  location.reload();
+};
+
+window.removeUser = async(id)=>{
+  await deleteDoc(doc(db,"users",id));
+  location.reload();
+};
+
+window.openPDF=()=>{
+  alert("PDF opens only when approved");
+};
 </script>
 
 </body>
-  </html>
+</html>
