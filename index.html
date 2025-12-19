@@ -16,6 +16,7 @@ button{padding:12px 20px;border:none;border-radius:10px;font-weight:bold;cursor:
 .paper-btn{background:#2563eb;color:#fff;width:100%;margin:5px 0}
 .disabled{opacity:0.4;pointer-events:none}
 .hidden{display:none}
+iframe {border:none;}
 </style>
 </head>
 
@@ -42,6 +43,9 @@ button{padding:12px 20px;border:none;border-radius:10px;font-weight:bold;cursor:
 <div id="content" class="section hidden">
   <h3>Courses</h3>
   <button class="paper-btn" onclick="openPDF()">Open Sample PDF</button>
+  <div id="pdfViewer" class="hidden" style="margin-top:20px;">
+    <iframe id="pdfFrame" width="100%" height="600px"></iframe>
+  </div>
 </div>
 
 <!-- ADMIN -->
@@ -54,41 +58,52 @@ button{padding:12px 20px;border:none;border-radius:10px;font-weight:bold;cursor:
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
 /* 🔴 REPLACE WITH YOUR FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_PROJECT.firebaseapp.com",
   projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
-/* AUTH */
+/* REGISTER USER */
 window.register = async () => {
-  const email = email.value;
-  const password = password.value;
-  const res = await createUserWithEmailAndPassword(auth, email, password);
+  const emailVal = email.value;
+  const passwordVal = password.value;
+  if(!emailVal || !passwordVal){ alert("Enter email and password"); return; }
+  const res = await createUserWithEmailAndPassword(auth, emailVal, passwordVal);
   await setDoc(doc(db,"users",res.user.uid),{
-    email,
-    role:"user",
-    paymentStatus:"trial"
+    email: emailVal,
+    role: "user",
+    paymentStatus: "trial"
   });
+  alert("Registered! Login now.");
 };
 
+/* LOGIN USER */
 window.login = async () => {
-  await signInWithEmailAndPassword(auth,email.value,password.value);
+  const emailVal = email.value;
+  const passwordVal = password.value;
+  if(!emailVal || !passwordVal){ alert("Enter email and password"); return; }
+  await signInWithEmailAndPassword(auth,emailVal,passwordVal);
 };
 
-/* AUTH STATE */
+/* AUTH STATE CHANGE */
 onAuthStateChanged(auth, async user=>{
-  if(!user) return;
+  if(!user) return authDiv(true);
+
   authDiv(false);
 
-  const ref = doc(db,"users",user.uid);
-  const snap = await getDoc(ref);
+  const refUser = doc(db,"users",user.uid);
+  const snap = await getDoc(refUser);
+  if(!snap.exists()){ alert("User record not found!"); return; }
   const data = snap.data();
 
   if(data.role==="admin"){
@@ -98,10 +113,9 @@ onAuthStateChanged(auth, async user=>{
   }
 });
 
-function authDiv(show){
-  document.getElementById("auth").classList.toggle("hidden",!show);
-}
+function authDiv(show){ document.getElementById("auth").classList.toggle("hidden",!show); }
 
+/* SHOW USER PANEL */
 function showUser(status){
   userPanel.classList.remove("hidden");
   content.classList.remove("hidden");
@@ -110,51 +124,72 @@ function showUser(status){
     statusText.innerText="Demo Mode (Locked)";
     content.classList.add("disabled");
   }
-  if(status==="pending"){
+  else if(status==="pending"){
     statusText.innerText="Payment Pending Approval";
     content.classList.add("disabled");
   }
-  if(status==="approved"){
+  else if(status==="approved"){
     statusText.innerText="Full Access Granted";
     content.classList.remove("disabled");
   }
 }
 
+/* MARK PAID BUTTON */
 window.markPaid = async ()=>{
   const u = auth.currentUser;
   await updateDoc(doc(db,"users",u.uid),{paymentStatus:"pending"});
-  alert("Payment marked pending");
+  alert("Payment marked pending. Await admin approval.");
 };
 
-/* ADMIN */
+/* ADMIN DASHBOARD */
 async function showAdmin(){
   adminPanel.classList.remove("hidden");
+  userPanel.classList.add("hidden");
+  content.classList.add("hidden");
+
   const q = await getDocs(collection(db,"users"));
-  pendingUsers.innerHTML="";
+  pendingUsers.innerHTML="<h3>Users</h3>";
+
   q.forEach(d=>{
     const u=d.data();
-    if(u.paymentStatus==="pending"){
-      pendingUsers.innerHTML+=`
-        <p>${u.email}
-        <button onclick="approve('${d.id}')">Approve</button>
-        <button onclick="removeUser('${d.id}')">Delete</button></p>
-      `;
-    }
+    pendingUsers.innerHTML+=`
+      <p>
+        <b>${u.email}</b><br>
+        Status: ${u.paymentStatus}<br>
+        Role: ${u.role}<br>
+        ${u.paymentStatus==="pending" ? `<button onclick="approve('${d.id}')">Approve</button>` : ""}
+        <button onclick="removeUser('${d.id}')">Delete</button>
+      </p><hr>
+    `;
   });
 }
 
+/* APPROVE USER */
 window.approve = async(id)=>{
   await updateDoc(doc(db,"users",id),{paymentStatus:"approved"});
-  location.reload();
+  alert("User approved! They now have full access.");
+  showAdmin();
 };
 
+/* DELETE USER */
 window.removeUser = async(id)=>{
   await deleteDoc(doc(db,"users",id));
-  location.reload();
+  alert("User deleted!");
+  showAdmin();
 };
 
-window.openPDF=()=>{
-  alert("PDF opens only when approved");
+/* OPEN PDF VIEW-ONLY */
+window.openPDF = async ()=>{
+  const u = auth.currentUser;
+  const snap = await getDoc(doc(db,"users",u.uid));
+  if(snap.exists() && snap.data().paymentStatus==="approved"){
+    const pdfRef = ref(storage, 'courses/sample.pdf'); // make sure PDF is uploaded here
+    const url = await getDownloadURL(pdfRef);
+    document.getElementById('pdfViewer').classList.remove('hidden');
+    document.getElementById('pdfFrame').src = url;
+  } else{
+    alert("Access denied. Please pay and wait for approval.");
+  }
 };
 </script>
 
