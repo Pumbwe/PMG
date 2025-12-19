@@ -4,10 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PMG™ EDU | All Courses</title>
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#FFD700">
-
 <style>
 body {margin:0;font-family:'Playfair Display', serif;background:#0f0f0f;color:#f0f0f0;text-align:center;padding:20px;}
 h1{color:#FFD700;font-size:2.5em;}
@@ -19,7 +15,6 @@ button{padding:12px 20px;border:none;border-radius:10px;font-weight:bold;cursor:
 iframe {border:none;}
 </style>
 </head>
-
 <body>
 
 <h1>PMG™ EDU</h1>
@@ -36,7 +31,7 @@ iframe {border:none;}
 <!-- USER -->
 <div id="userPanel" class="section hidden">
   <p id="statusText"></p>
-  <button onclick="markPaid()">I PAID K20</button>
+  <button id="payBtn" onclick="markPaid()">Pay K20 (Airtel: 0775302886 / MTN: 0768497390)</button>
 </div>
 
 <!-- COURSES -->
@@ -60,7 +55,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, on
 import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-/* 🔴 REPLACE WITH YOUR FIREBASE CONFIG */
+/* 🔴 Replace with your Firebase config */
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_PROJECT.firebaseapp.com",
@@ -82,7 +77,8 @@ window.register = async () => {
   await setDoc(doc(db,"users",res.user.uid),{
     email: emailVal,
     role: "user",
-    paymentStatus: "trial"
+    paymentStatus: "trial",
+    trialCount: 5
   });
   alert("Registered! Login now.");
 };
@@ -98,47 +94,82 @@ window.login = async () => {
 /* AUTH STATE CHANGE */
 onAuthStateChanged(auth, async user=>{
   if(!user) return authDiv(true);
-
   authDiv(false);
-
   const refUser = doc(db,"users",user.uid);
   const snap = await getDoc(refUser);
   if(!snap.exists()){ alert("User record not found!"); return; }
   const data = snap.data();
-
-  if(data.role==="admin"){
-    showAdmin();
-  }else{
-    showUser(data.paymentStatus);
-  }
+  if(data.role==="admin"){ showAdmin(); } else { showUser(data); }
 });
 
 function authDiv(show){ document.getElementById("auth").classList.toggle("hidden",!show); }
 
 /* SHOW USER PANEL */
-function showUser(status){
+function showUser(data){
   userPanel.classList.remove("hidden");
   content.classList.remove("hidden");
+  document.getElementById('pdfViewer').classList.add('hidden');
 
-  if(status==="trial"){
-    statusText.innerText="Demo Mode (Locked)";
-    content.classList.add("disabled");
-  }
-  else if(status==="pending"){
+  if(data.paymentStatus==="trial"){
+    if(data.trialCount > 0){
+      statusText.innerText=`Demo Trial (${data.trialCount} remaining)`;
+      document.getElementById('payBtn').classList.add('hidden');
+      content.classList.remove("disabled");
+    } else {
+      statusText.innerText="Trial finished — Please pay to continue";
+      document.getElementById('payBtn').classList.remove('hidden');
+      content.classList.add("disabled");
+    }
+  } else if(data.paymentStatus==="pending"){
     statusText.innerText="Payment Pending Approval";
+    document.getElementById('payBtn').classList.add('hidden');
     content.classList.add("disabled");
-  }
-  else if(status==="approved"){
+  } else if(data.paymentStatus==="approved"){
     statusText.innerText="Full Access Granted";
+    document.getElementById('payBtn').classList.add('hidden');
     content.classList.remove("disabled");
+    document.getElementById('pdfViewer').classList.remove('hidden'); 
+    loadPDF();
   }
 }
 
-/* MARK PAID BUTTON */
+/* OPEN PDF WITH TRIAL COUNT */
+window.openPDF = async ()=>{
+  const u = auth.currentUser;
+  const userRef = doc(db,"users",u.uid);
+  const snap = await getDoc(userRef);
+  if(!snap.exists()) return;
+  const data = snap.data();
+
+  if(data.paymentStatus==="approved"){
+    loadPDF();
+  }
+  else if(data.paymentStatus==="trial" && data.trialCount > 0){
+    // decrease trial count
+    await updateDoc(userRef,{trialCount: data.trialCount - 1 });
+    alert(`Trial view used! ${data.trialCount - 1} remaining.`);
+    showUser({ ...data, trialCount: data.trialCount - 1 });
+    loadPDF();
+  } else {
+    alert("Trial finished — Please pay K20 to continue.\nAirtel: 0775302886\nMTN: 0768497390");
+  }
+};
+
+/* LOAD PDF */
+async function loadPDF(){
+  const pdfRef = ref(storage, 'courses/sample.pdf'); // upload PDF here
+  const url = await getDownloadURL(pdfRef);
+  document.getElementById('pdfViewer').classList.remove('hidden');
+  document.getElementById('pdfFrame').src = url;
+}
+
+/* MARK PAID */
 window.markPaid = async ()=>{
   const u = auth.currentUser;
   await updateDoc(doc(db,"users",u.uid),{paymentStatus:"pending"});
   alert("Payment marked pending. Await admin approval.");
+  const snap = await getDoc(doc(db,"users",u.uid));
+  showUser(snap.data());
 };
 
 /* ADMIN DASHBOARD */
@@ -157,6 +188,7 @@ async function showAdmin(){
         <b>${u.email}</b><br>
         Status: ${u.paymentStatus}<br>
         Role: ${u.role}<br>
+        Trial remaining: ${u.trialCount ?? 0}<br>
         ${u.paymentStatus==="pending" ? `<button onclick="approve('${d.id}')">Approve</button>` : ""}
         <button onclick="removeUser('${d.id}')">Delete</button>
       </p><hr>
@@ -164,34 +196,20 @@ async function showAdmin(){
   });
 }
 
-/* APPROVE USER */
 window.approve = async(id)=>{
   await updateDoc(doc(db,"users",id),{paymentStatus:"approved"});
-  alert("User approved! They now have full access.");
+  alert("User approved!");
   showAdmin();
 };
-
-/* DELETE USER */
 window.removeUser = async(id)=>{
   await deleteDoc(doc(db,"users",id));
   alert("User deleted!");
   showAdmin();
 };
 
-/* OPEN PDF VIEW-ONLY */
-window.openPDF = async ()=>{
-  const u = auth.currentUser;
-  const snap = await getDoc(doc(db,"users",u.uid));
-  if(snap.exists() && snap.data().paymentStatus==="approved"){
-    const pdfRef = ref(storage, 'courses/sample.pdf'); // make sure PDF is uploaded here
-    const url = await getDownloadURL(pdfRef);
-    document.getElementById('pdfViewer').classList.remove('hidden');
-    document.getElementById('pdfFrame').src = url;
-  } else{
-    alert("Access denied. Please pay and wait for approval.");
-  }
-};
+/* DISABLE RIGHT CLICK */
+document.addEventListener('contextmenu', e => e.preventDefault());
 </script>
 
 </body>
-</html>
+  </html>
