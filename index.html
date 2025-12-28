@@ -4,17 +4,48 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PMG™ EDU | All Courses</title>
+
 <style>
-body {margin:0;font-family:'Playfair Display', serif;background:#0f0f0f;color:#f0f0f0;text-align:center;padding:20px;}
-h1{color:#FFD700;font-size:2.5em;}
-.section{background:#1b1b1b;padding:20px;border-radius:12px;max-width:900px;margin:20px auto;}
-button{padding:12px 20px;border:none;border-radius:10px;font-weight:bold;cursor:pointer}
-.paper-btn{background:#2563eb;color:#fff;width:100%;margin:5px 0}
-.disabled{opacity:0.4;pointer-events:none}
-.hidden{display:none}
-iframe {border:none;}
+body {
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#0f0f0f;
+  color:#f0f0f0;
+  text-align:center;
+  padding:20px;
+}
+h1 { color:#FFD700; }
+.section {
+  background:#1b1b1b;
+  padding:20px;
+  border-radius:12px;
+  max-width:900px;
+  margin:20px auto;
+}
+button {
+  padding:12px 20px;
+  border:none;
+  border-radius:10px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.paper-btn {
+  background:#2563eb;
+  color:#fff;
+  width:100%;
+  margin:5px 0;
+}
+.hidden { display:none; }
+.disabled { opacity:0.4; pointer-events:none; }
+iframe { border:none; }
+input {
+  padding:10px;
+  width:80%;
+  max-width:300px;
+}
 </style>
 </head>
+
 <body>
 
 <h1>PMG™ EDU</h1>
@@ -28,16 +59,19 @@ iframe {border:none;}
   <button onclick="register()">Register</button>
 </div>
 
-<!-- USER -->
+<!-- USER PANEL -->
 <div id="userPanel" class="section hidden">
   <p id="statusText"></p>
-  <button id="payBtn" onclick="markPaid()">Pay K20 (Airtel: 0775302886 / MTN: 0768497390)</button>
+  <button id="payBtn" onclick="markPaid()">
+    Pay K20 (Airtel: 0775302886 / MTN: 0768497390)
+  </button>
 </div>
 
-<!-- COURSES -->
+<!-- CONTENT -->
 <div id="content" class="section hidden">
-  <h3>Courses</h3>
-  <button class="paper-btn" onclick="openPDF()">Open Sample PDF</button>
+  <h3>MA110 – Past Papers</h3>
+  <button class="paper-btn" onclick="openPDF()">Open MA110 2019</button>
+
   <div id="pdfViewer" class="hidden" style="margin-top:20px;">
     <iframe id="pdfFrame" width="100%" height="600px"></iframe>
   </div>
@@ -51,31 +85,65 @@ iframe {border:none;}
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  collection,
+  getDocs,
+  deleteDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-/* 🔴 Replace with your Firebase config */
+/* 🔴 PUT YOUR REAL FIREBASE CONFIG HERE */
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com"
+  projectId: "YOUR_PROJECT_ID"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const storage = getStorage(app);
 
-/* REGISTER USER */
+/* UI HELPERS */
+function showAuth(){
+  authDiv.classList.remove("hidden");
+  userPanel.classList.add("hidden");
+  content.classList.add("hidden");
+  adminPanel.classList.add("hidden");
+}
+function showUserUI(){
+  authDiv.classList.add("hidden");
+  userPanel.classList.remove("hidden");
+  content.classList.remove("hidden");
+  adminPanel.classList.add("hidden");
+}
+function showAdminUI(){
+  authDiv.classList.add("hidden");
+  userPanel.classList.add("hidden");
+  content.classList.add("hidden");
+  adminPanel.classList.remove("hidden");
+}
+
+const authDiv = document.getElementById("auth");
+
+/* REGISTER */
 window.register = async () => {
-  const emailVal = email.value;
-  const passwordVal = password.value;
-  if(!emailVal || !passwordVal){ alert("Enter email and password"); return; }
-  const res = await createUserWithEmailAndPassword(auth, emailVal, passwordVal);
+  if(!email.value || !password.value){
+    alert("Enter email and password");
+    return;
+  }
+  const res = await createUserWithEmailAndPassword(auth, email.value, password.value);
   await setDoc(doc(db,"users",res.user.uid),{
-    email: emailVal,
+    email: email.value,
     role: "user",
     paymentStatus: "trial",
     trialCount: 5
@@ -83,132 +151,122 @@ window.register = async () => {
   alert("Registered! Login now.");
 };
 
-/* LOGIN USER */
+/* LOGIN */
 window.login = async () => {
-  const emailVal = email.value;
-  const passwordVal = password.value;
-  if(!emailVal || !passwordVal){ alert("Enter email and password"); return; }
-  await signInWithEmailAndPassword(auth,emailVal,passwordVal);
+  await signInWithEmailAndPassword(auth, email.value, password.value);
 };
 
-/* AUTH STATE CHANGE */
+/* AUTH STATE */
 onAuthStateChanged(auth, async user=>{
-  if(!user) return authDiv(true);
-  authDiv(false);
-  const refUser = doc(db,"users",user.uid);
-  const snap = await getDoc(refUser);
-  if(!snap.exists()){ alert("User record not found!"); return; }
+  if(!user){
+    showAuth();
+    return;
+  }
+  const snap = await getDoc(doc(db,"users",user.uid));
+  if(!snap.exists()){
+    alert("User data missing");
+    return;
+  }
   const data = snap.data();
-  if(data.role==="admin"){ showAdmin(); } else { showUser(data); }
+  if(data.role === "admin"){
+    showAdmin();
+  } else {
+    showUser(data);
+  }
 });
 
-function authDiv(show){ document.getElementById("auth").classList.toggle("hidden",!show); }
-
-/* SHOW USER PANEL */
+/* SHOW USER */
 function showUser(data){
-  userPanel.classList.remove("hidden");
-  content.classList.remove("hidden");
-  document.getElementById('pdfViewer').classList.add('hidden');
+  showUserUI();
+  pdfViewer.classList.add("hidden");
 
-  if(data.paymentStatus==="trial"){
+  if(data.paymentStatus === "trial"){
     if(data.trialCount > 0){
-      statusText.innerText=`Demo Trial (${data.trialCount} remaining)`;
-      document.getElementById('payBtn').classList.add('hidden');
+      statusText.innerText = `Trial Mode (${data.trialCount} views left)`;
+      payBtn.classList.add("hidden");
       content.classList.remove("disabled");
     } else {
-      statusText.innerText="Trial finished — Please pay to continue";
-      document.getElementById('payBtn').classList.remove('hidden');
+      statusText.innerText = "Trial finished — Please pay";
+      payBtn.classList.remove("hidden");
       content.classList.add("disabled");
     }
-  } else if(data.paymentStatus==="pending"){
-    statusText.innerText="Payment Pending Approval";
-    document.getElementById('payBtn').classList.add('hidden');
+  }
+  else if(data.paymentStatus === "pending"){
+    statusText.innerText = "Payment pending approval";
+    payBtn.classList.add("hidden");
     content.classList.add("disabled");
-  } else if(data.paymentStatus==="approved"){
-    statusText.innerText="Full Access Granted";
-    document.getElementById('payBtn').classList.add('hidden');
+  }
+  else if(data.paymentStatus === "approved"){
+    statusText.innerText = "Full Access Granted";
+    payBtn.classList.add("hidden");
     content.classList.remove("disabled");
-    document.getElementById('pdfViewer').classList.remove('hidden'); 
     loadPDF();
   }
 }
 
-/* OPEN PDF WITH TRIAL COUNT */
+/* OPEN PDF */
 window.openPDF = async ()=>{
-  const u = auth.currentUser;
-  const userRef = doc(db,"users",u.uid);
-  const snap = await getDoc(userRef);
-  if(!snap.exists()) return;
+  const user = auth.currentUser;
+  const refUser = doc(db,"users",user.uid);
+  const snap = await getDoc(refUser);
   const data = snap.data();
 
-  if(data.paymentStatus==="approved"){
+  if(data.paymentStatus === "approved"){
     loadPDF();
   }
-  else if(data.paymentStatus==="trial" && data.trialCount > 0){
-    // decrease trial count
-    await updateDoc(userRef,{trialCount: data.trialCount - 1 });
-    alert(`Trial view used! ${data.trialCount - 1} remaining.`);
+  else if(data.paymentStatus === "trial" && data.trialCount > 0){
+    await updateDoc(refUser,{ trialCount: data.trialCount - 1 });
     showUser({ ...data, trialCount: data.trialCount - 1 });
     loadPDF();
-  } else {
-    alert("Trial finished — Please pay K20 to continue.\nAirtel: 0775302886\nMTN: 0768497390");
+  }
+  else{
+    alert("Trial finished. Pay K20 to continue.");
   }
 };
 
-/* LOAD PDF */
-async function loadPDF(){
-  const pdfRef = ref(storage, 'courses/sample.pdf'); // upload PDF here
-  const url = await getDownloadURL(pdfRef);
-  document.getElementById('pdfViewer').classList.remove('hidden');
-  document.getElementById('pdfFrame').src = url;
+/* LOAD PDF (GOOGLE VIEWER + GITHUB) */
+function loadPDF(){
+  const url =
+    "https://docs.google.com/gview?url=https://pumbwe.github.io/PMG/past-papers/MA110/MA110-2019.pdf&embedded=true";
+  pdfViewer.classList.remove("hidden");
+  pdfFrame.src = url;
 }
 
 /* MARK PAID */
 window.markPaid = async ()=>{
   const u = auth.currentUser;
-  await updateDoc(doc(db,"users",u.uid),{paymentStatus:"pending"});
+  await updateDoc(doc(db,"users",u.uid),{ paymentStatus:"pending" });
   alert("Payment marked pending. Await admin approval.");
-  const snap = await getDoc(doc(db,"users",u.uid));
-  showUser(snap.data());
 };
 
-/* ADMIN DASHBOARD */
+/* ADMIN */
 async function showAdmin(){
-  adminPanel.classList.remove("hidden");
-  userPanel.classList.add("hidden");
-  content.classList.add("hidden");
-
+  showAdminUI();
   const q = await getDocs(collection(db,"users"));
-  pendingUsers.innerHTML="<h3>Users</h3>";
-
+  pendingUsers.innerHTML = "<h3>Users</h3>";
   q.forEach(d=>{
-    const u=d.data();
-    pendingUsers.innerHTML+=`
+    const u = d.data();
+    pendingUsers.innerHTML += `
       <p>
         <b>${u.email}</b><br>
         Status: ${u.paymentStatus}<br>
-        Role: ${u.role}<br>
-        Trial remaining: ${u.trialCount ?? 0}<br>
-        ${u.paymentStatus==="pending" ? `<button onclick="approve('${d.id}')">Approve</button>` : ""}
+        <button onclick="approve('${d.id}')">Approve</button>
         <button onclick="removeUser('${d.id}')">Delete</button>
-      </p><hr>
-    `;
+      </p><hr>`;
   });
 }
 
 window.approve = async(id)=>{
-  await updateDoc(doc(db,"users",id),{paymentStatus:"approved"});
-  alert("User approved!");
+  await updateDoc(doc(db,"users",id),{ paymentStatus:"approved" });
   showAdmin();
 };
 window.removeUser = async(id)=>{
   await deleteDoc(doc(db,"users",id));
-  alert("User deleted!");
   showAdmin();
 };
 
 /* DISABLE RIGHT CLICK */
-document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener("contextmenu", e => e.preventDefault());
 </script>
 
 </body>
