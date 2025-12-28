@@ -1,50 +1,66 @@
-
-<!-- Add this where you want notes to appear -->
-<div id="notesSection" class="section hidden">
-  <h3 id="notesTitle"></h3>
-  <div id="notesContent"></div>
-</div>
-
 <script>
-// All notes stored as arrays (can add more content easily)
+// NOTES DATABASE (TEXT BASED FOR NOW – CAN LINK HTML LATER)
 const notes = {
-  MA110: [
-    "Algebra: Linear equations, Quadratics, Polynomials",
-    "Calculus: Limits, Differentiation, Integration",
-    "Functions: Types, Domain & Range, Composition"
-  ],
-  PH110: [
-    "Mechanics: Newton's Laws, Kinematics, Work & Energy",
-    "Optics: Reflection, Refraction, Lenses",
-    "Electricity: Ohm's Law, Circuits, Capacitance"
-  ],
-  LA111: [
-    "English Grammar: Parts of speech, Tenses, Sentence structure",
-    "Essay Writing: Structure, Thesis, Cohesion"
-  ],
-  CH110: [
-    "Atomic Structure: Electron configuration, Quantum numbers",
-    "Chemical Bonding: Ionic, Covalent, Metallic, Lewis structures"
-  ]
+  MA110: {
+    title: "MA110 – Mathematics Notes",
+    items: [
+      "Algebra: Linear equations, Quadratics, Polynomials",
+      "Functions: Types, Domain & Range, Composition",
+      "Trigonometry: Identities, Equations, Graphs",
+      "Sequences & Series: AP, GP",
+      "Calculus: Limits, Differentiation, Integration"
+    ]
+  },
+  PH110: {
+    title: "PH110 – Physics Notes",
+    items: [
+      "Mechanics: Newton’s Laws, Kinematics",
+      "Work, Energy & Power",
+      "Waves & Oscillations",
+      "Optics: Reflection, Refraction",
+      "Electricity: Ohm’s Law, Circuits"
+    ]
+  },
+  LA111: {
+    title: "LA111 – Language & Study Skills",
+    items: [
+      "Parts of Speech & Sentence Structure",
+      "Essay Writing: Thesis & Cohesion",
+      "Academic Writing & Referencing",
+      "Comprehension & Summary Writing"
+    ]
+  },
+  CH110: {
+    title: "CH110 – Chemistry Notes",
+    items: [
+      "Atomic Structure & Periodic Trends",
+      "Chemical Bonding",
+      "Stoichiometry",
+      "States of Matter"
+    ]
+  }
 };
 
-// Function to show notes dynamically
+// SHOW NOTES
 function showNotes(subject) {
-  const notesTitle = document.getElementById('notesTitle');
-  const notesContent = document.getElementById('notesContent');
-  const notesSection = document.getElementById('notesSection');
+  const notesSection = document.getElementById("notesSection");
+  const notesTitle = document.getElementById("notesTitle");
+  const notesContent = document.getElementById("notesContent");
 
   if (!notes[subject]) {
-    notesTitle.innerText = "No Notes Found";
-    notesContent.innerHTML = "<p>Notes for this subject are not available yet.</p>";
+    notesTitle.innerText = "Notes Not Available";
+    notesContent.innerHTML =
+      "<p style='color:#f87171;'>Notes for this subject are coming soon.</p>";
   } else {
-    notesTitle.innerText = `${subject} Notes`;
-    // Convert array to HTML list
-    const htmlList = notes[subject].map(item => `<li>${item}</li>`).join('');
-    notesContent.innerHTML = `<ul>${htmlList}</ul>`;
+    notesTitle.innerText = notes[subject].title;
+
+    const list = notes[subject].items
+      .map(item => `<li style="margin:8px 0;">${item}</li>`)
+      .join("");
+
+    notesContent.innerHTML = `<ul style="text-align:left;">${list}</ul>`;
   }
 
-  // Show the notes section
-  notesSection.classList.remove('hidden');
+  notesSection.classList.remove("hidden");
 }
 </script>
