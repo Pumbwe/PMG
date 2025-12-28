@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MA110 – 2019 Past Paper (Solved)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#0f0f0f;
+  color:#f1f1f1;
+  line-height:1.7;
+  padding:20px;
+}
+h1,h2,h3{
+  color:#FFD700;
+}
+.section{
+  background:#1b1b1b;
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+}
+.math{
+  background:#111;
+  padding:15px;
+  border-left:4px solid #2563eb;
+  margin:10px 0;
+}
+.answer{
+  color:#22c55e;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<h1>MA110 – 2019 Past Paper (Fully Solved)</h1>
+
+<!-- QUESTION 1 -->
+<div class="section">
+<h2>Question 1</h2>
+
+<h3>(a)(i)</h3>
+<p>Let <b>A = {1, 2, 3}</b> and <b>B = {2, 4}</b>. Find <b>A × B</b>.</p>
+
+<div class="math">
+A × B = {(a, b) : a ∈ A, b ∈ B}
+<br><br>
+= {(1,2), (1,4), (2,2), (2,4), (3,2), (3,4)}
+</div>
+
+<p class="answer">Answer: {(1,2), (1,4), (2,2), (2,4), (3,2), (3,4)}</p>
+
+<hr>
+
+<h3>(a)(ii)</h3>
+<p>Prove that <b>(Aᶜ)ᶜ = A</b>.</p>
+
+<div class="math">
+Let x ∈ (Aᶜ)ᶜ  
+<br>
+⇒ x ∉ Aᶜ  
+<br>
+⇒ x ∈ A  
+<br><br>
+Hence (Aᶜ)ᶜ ⊆ A
+<br><br>
+Similarly, if x ∈ A ⇒ x ∉ Aᶜ ⇒ x ∈ (Aᶜ)ᶜ
+</div>
+
+<p class="answer">Therefore, (Aᶜ)ᶜ = A</p>
+
+<hr>
+
+<h3>(b)</h3>
+<p>The operation ★ is defined as:  
+<b>a ★ b = a + 8b</b></p>
+
+<div class="math">
+2 ★ 3 = 2 + 8(3) = 26  
+<br>
+(2 ★ 3) ★ 5 = 26 + 8(5) = 66
+</div>
+
+<p class="answer">Answer: 66</p>
+
+<hr>
+
+<h3>(c)</h3>
+<p>Find k if the remainder when <b>2x³ − 2kx² − 3x − 2</b> is divided by <b>x − 2</b> is 40.</p>
+
+<div class="math">
+By Remainder Theorem:
+<br>
+f(2) = 40
+<br><br>
+2(2³) − 2k(2²) − 3(2) − 2 = 40  
+<br>
+16 − 8k − 6 − 2 = 40  
+<br>
+8 − 8k = 40  
+<br>
+−8k = 32  
+<br>
+k = −4
+</div>
+
+<p class="answer">Answer: k = −4</p>
+
+<hr>
+
+<h3>(d)</h3>
+<p>Given that <b>g ∘ f(x) = x</b> and <b>g(x) = (x + 1)/(x − 1)</b>, find f(x).</p>
+
+<div class="math">
+Let y = f(x)
+<br>
+g(y) = (y + 1)/(y − 1) = x
+<br><br>
+x(y − 1) = y + 1  
+<br>
+xy − x = y + 1  
+<br>
+xy − y = x + 1  
+<br>
+y(x − 1) = x + 1  
+<br>
+y = (x + 1)/(x − 1)
+</div>
+
+<p class="answer">Answer: f(x) = (x + 1)/(x − 1)</p>
+</div>
+
+<!-- QUESTION 2 -->
+<div class="section">
+<h2>Question 2</h2>
+
+<h3>(a)</h3>
+<p>Prove De Morgan’s Law: <b>(A ∪ B)ᶜ = Aᶜ ∩ Bᶜ</b></p>
+
+<div class="math">
+Let x ∈ (A ∪ B)ᶜ  
+<br>
+⇒ x ∉ A ∪ B  
+<br>
+⇒ x ∉ A and x ∉ B  
+<br>
+⇒ x ∈ Aᶜ and x ∈ Bᶜ  
+<br>
+⇒ x ∈ Aᶜ ∩ Bᶜ
+</div>
+
+<p class="answer">Hence proved.</p>
+
+<hr>
+
+<h3>(b)</h3>
+<p>Solve |8x + 3| = |2x − 21|</p>
+
+<div class="math">
+Case 1: 8x + 3 = 2x − 21  
+<br>
+6x = −24 ⇒ x = −4  
+<br><br>
+Case 2: 8x + 3 = −(2x − 21)  
+<br>
+8x + 3 = −2x + 21  
+<br>
+10x = 18 ⇒ x = 9/5
+</div>
+
+<p class="answer">Answer: x = −4 or x = 9/5</p>
+</div>
+
+<!-- QUESTION 3 -->
+<div class="section">
+<h2>Question 3</h2>
+
+<h3>(a)</h3>
+<p>Express 0.121212… as a fraction.</p>
+
+<div class="math">
+Let x = 0.121212…  
+<br>
+100x = 12.1212…  
+<br>
+100x − x = 12  
+<br>
+99x = 12  
+<br>
+x = 4/33
+</div>
+
+<p class="answer">Answer: 4/33</p>
+
+<hr>
+
+<h3>(b)</h3>
+<p>Prove that √2 + √3 is irrational.</p>
+
+<div class="math">
+Assume √2 + √3 is rational.
+<br>
+Squaring gives: 5 + 2√6 is rational.
+<br>
+⇒ √6 is rational (contradiction).
+</div>
+
+<p class="answer">Hence √2 + √3 is irrational.</p>
+</div>
+
+<!-- QUESTION 4 -->
+<div class="section">
+<h2>Question 4</h2>
+
+<h3>(a)</h3>
+<p>Find the vertex and intercepts of f(x) = x² − 6x − 16</p>
+
+<div class="math">
+Vertex:
+<br>
+x = −b/2a = 6/2 = 3  
+<br>
+y = f(3) = −25  
+<br><br>
+Intercepts:
+<br>
+(x − 8)(x + 2) = 0  
+<br>
+x = 8, −2
+</div>
+
+<p class="answer">Vertex: (3, −25), Intercepts: (8,0), (−2,0)</p>
+</div>
+
+<hr>
+
+<p style="text-align:center;color:#aaa;">
+PMG™ EDU © 2025 — Academic Excellence
+</p>
+
+</body>
+</html>
