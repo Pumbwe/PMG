@@ -70,10 +70,19 @@ input {
 <!-- CONTENT -->
 <div id="content" class="section hidden">
   <h3>MA110 – Past Papers</h3>
-  <button class="paper-btn" onclick="openPDF()">Open MA110 2019</button>
 
-  <div id="pdfViewer" class="hidden" style="margin-top:20px;">
-    <iframe id="pdfFrame" width="100%" height="600px"></iframe>
+  <!-- YOU CAN ADD MANY BUTTONS -->
+  <button class="paper-btn" onclick="openPaper('MA110-2019.html')">
+    Open MA110 2019
+  </button>
+
+  <button class="paper-btn" onclick="openPaper('MA110-2019-solutions.html')">
+    Open MA110 2019 – Solutions
+  </button>
+
+  <!-- HTML VIEWER -->
+  <div id="contentViewer" class="hidden" style="margin-top:20px;">
+    <iframe id="contentFrame" width="100%" height="600px"></iframe>
   </div>
 </div>
 
@@ -113,6 +122,16 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+/* UI ELEMENTS */
+const authDiv = document.getElementById("auth");
+const userPanel = document.getElementById("userPanel");
+const content = document.getElementById("content");
+const adminPanel = document.getElementById("adminPanel");
+const contentViewer = document.getElementById("contentViewer");
+const contentFrame = document.getElementById("contentFrame");
+const statusText = document.getElementById("statusText");
+const payBtn = document.getElementById("payBtn");
+
 /* UI HELPERS */
 function showAuth(){
   authDiv.classList.remove("hidden");
@@ -132,8 +151,6 @@ function showAdminUI(){
   content.classList.add("hidden");
   adminPanel.classList.remove("hidden");
 }
-
-const authDiv = document.getElementById("auth");
 
 /* REGISTER */
 window.register = async () => {
@@ -163,10 +180,6 @@ onAuthStateChanged(auth, async user=>{
     return;
   }
   const snap = await getDoc(doc(db,"users",user.uid));
-  if(!snap.exists()){
-    alert("User data missing");
-    return;
-  }
   const data = snap.data();
   if(data.role === "admin"){
     showAdmin();
@@ -178,7 +191,7 @@ onAuthStateChanged(auth, async user=>{
 /* SHOW USER */
 function showUser(data){
   showUserUI();
-  pdfViewer.classList.add("hidden");
+  contentViewer.classList.add("hidden");
 
   if(data.paymentStatus === "trial"){
     if(data.trialCount > 0){
@@ -200,36 +213,34 @@ function showUser(data){
     statusText.innerText = "Full Access Granted";
     payBtn.classList.add("hidden");
     content.classList.remove("disabled");
-    loadPDF();
   }
 }
 
-/* OPEN PDF */
-window.openPDF = async ()=>{
+/* OPEN HTML PAST PAPER */
+window.openPaper = async (file)=>{
   const user = auth.currentUser;
   const refUser = doc(db,"users",user.uid);
   const snap = await getDoc(refUser);
   const data = snap.data();
 
   if(data.paymentStatus === "approved"){
-    loadPDF();
+    loadHTML(file);
   }
   else if(data.paymentStatus === "trial" && data.trialCount > 0){
     await updateDoc(refUser,{ trialCount: data.trialCount - 1 });
     showUser({ ...data, trialCount: data.trialCount - 1 });
-    loadPDF();
+    loadHTML(file);
   }
   else{
     alert("Trial finished. Pay K20 to continue.");
   }
 };
 
-/* LOAD PDF (GOOGLE VIEWER + GITHUB) */
-function loadPDF(){
-  const url =
-    "https://docs.google.com/gview?url=https://pumbwe.github.io/PMG/past-papers/MA110/MA110-2019.pdf&embedded=true";
-  pdfViewer.classList.remove("hidden");
-  pdfFrame.src = url;
+/* LOAD HTML */
+function loadHTML(file){
+  contentViewer.classList.remove("hidden");
+  contentFrame.src =
+    `https://pumbwe.github.io/PMG/past-papers/MA110/${file}`;
 }
 
 /* MARK PAID */
