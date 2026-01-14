@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PMG™ EDU | All Courses</title>
+<title>PMG™ EDU | Legendary Courses</title>
 
 <style>
 body {
@@ -14,13 +14,14 @@ body {
   text-align:center;
   padding:20px;
 }
-h1 { color:#FFD700; }
+h1 { color:#FFD700; font-size:2.5em; }
 .section {
   background:#1b1b1b;
   padding:20px;
   border-radius:12px;
   max-width:900px;
   margin:20px auto;
+  box-shadow:0 0 20px rgba(255,215,0,0.3);
 }
 button {
   padding:12px 20px;
@@ -28,177 +29,142 @@ button {
   border-radius:10px;
   font-weight:bold;
   cursor:pointer;
+  transition:0.3s;
 }
+button:hover { transform:scale(1.05); }
 .paper-btn {
   background:#2563eb;
   color:#fff;
   width:100%;
   margin:5px 0;
 }
-.hidden { display:none; }
 iframe { border:none; }
-input {
-  padding:10px;
-  width:80%;
-  max-width:300px;
+.notes {
+  text-align:left;
+  margin-top:20px;
+  background:#111;
+  padding:15px;
+  border-radius:10px;
 }
+.notes h3 { color:#FFD700; }
+.notes ul, .notes ol { margin-left:20px; }
 </style>
 </head>
 
 <body>
 
 <h1>PMG™ EDU</h1>
-<p><b>Academic Resources</b></p>
-
-<!-- AUTH -->
-<div id="auth" class="section">
-  <input id="email" placeholder="Email"><br><br>
-  <input id="password" type="password" placeholder="Password"><br><br>
-  <button onclick="login()">Login</button>
-  <button onclick="register()">Register</button>
-</div>
-
-<!-- USER PANEL -->
-<div id="userPanel" class="section hidden">
-  <p id="statusText"></p>
-</div>
+<p><b>Legendary Academic Resources</b></p>
 
 <!-- CONTENT -->
-<div id="content" class="section hidden">
-  <h3>MA110 – Past Papers</h3>
+<div id="content" class="section">
+  <h2 style="color:#FFD700;">MA110 – Past Papers</h2>
 
   <button class="paper-btn" onclick="openPaper('MA110-2019.html')">
-    Open MA110 2019
+    MA110 2019 – Paper
   </button>
 
   <button class="paper-btn" onclick="openPaper('MA110-2019-solutions.html')">
-    Open MA110 2019 – Solutions
+    MA110 2019 – Solutions
   </button>
 
-  <!-- NEW SECTION: INDUSTRIAL CHEMISTRY -->
-  <h3 style="margin-top:30px;">Industrial Chemistry Courses</h3>
+  <!-- INDUSTRIAL CHEMISTRY SECTION -->
+  <h2 style="color:#FFD700; margin-top:30px;">Industrial Chemistry Courses</h2>
 
-  <button class="paper-btn" onclick="openPaper('organic-chemistry.html')">
-    Organic Chemistry
+  <h3>Organic Chemistry</h3>
+  <button class="paper-btn" onclick="openPaper('organic-chemistry-papers.html')">
+    Past Papers
+  </button>
+  <button class="paper-btn" onclick="openPaper('organic-chemistry-assignments.html')">
+    Assignments
   </button>
 
-  <button class="paper-btn" onclick="openPaper('analytical-chemistry.html')">
-    Analytical Chemistry
+  <!-- DIRECT NOTES EMBED -->
+  <div class="notes">
+    <h3>Organic Chemistry Notes (CH 260)</h3>
+    <p><b>What is Organic Chemistry?</b><br>
+    It is the study of carbon compounds — their structure, properties, reactions, and uses. Carbon is unique because it can form strong bonds with itself and other elements, and it makes four covalent bonds, giving rise to millions of compounds.</p>
+
+    <h4>Why It Matters</h4>
+    <ul>
+      <li>Basis of life: all living things are made of organic compounds.</li>
+      <li>Applications: plastics, fuels, medicines, electronics, energy storage.</li>
+    </ul>
+
+    <h4>Course Outline (Simplified)</h4>
+    <ol>
+      <li><b>Classification:</b> Sources, naming rules, importance.</li>
+      <li><b>Structure & Bonding:</b> Hybridization, how atoms connect.</li>
+      <li><b>Reaction Mechanisms:</b> Using arrows to show electron movement.</li>
+      <li><b>Reagents:</b> Electrophiles (electron-loving) & nucleophiles (nucleus-loving).</li>
+      <li><b>Stereochemistry I:</b> Isomerism, chirality (mirror-image molecules).</li>
+      <li><b>Stereochemistry II:</b> E/Z naming system.</li>
+      <li><b>Alkanes & Cycloalkanes:</b> Naming, preparation, reactions.</li>
+      <li><b>Arenes:</b> Benzene and aromatic compounds.</li>
+      <li><b>Alkenes:</b> Naming, formation, E1/E2/E1cb reaction mechanisms.</li>
+      <li><b>Dienes & Alkynes:</b> Structures and chemical behavior.</li>
+      <li><b>Halides:</b> Alkyl and aryl halides, preparation and reactions.</li>
+      <li><b>Alcohols:</b> Types, naming, preparation from other compounds.</li>
+    </ol>
+
+    <h4>Study Tips</h4>
+    <ul>
+      <li>Read before class and note main ideas.</li>
+      <li>Summarize lectures within 24 hours.</li>
+      <li>Practice problems independently.</li>
+      <li>Review daily to avoid cramming.</li>
+    </ul>
+
+    <h4>References</h4>
+    <p>Finar, Morrison & Boyd, McMurry, Carey & Giuliano, Eliel & Wilen, Bruce.</p>
+  </div>
+
+  <h3>Analytical Chemistry</h3>
+  <button class="paper-btn" onclick="openPaper('analytical-chemistry-papers.html')">
+    Past Papers
+  </button>
+  <button class="paper-btn" onclick="openPaper('analytical-chemistry-assignments.html')">
+    Assignments
   </button>
 
-  <button class="paper-btn" onclick="openPaper('industrial-chemistry.html')">
-    Industrial Chemistry
+  <h3>Industrial Chemistry</h3>
+  <button class="paper-btn" onclick="openPaper('industrial-chemistry-papers.html')">
+    Past Papers
+  </button>
+  <button class="paper-btn" onclick="openPaper('industrial-chemistry-assignments.html')">
+    Assignments
   </button>
 
-  <button class="paper-btn" onclick="openPaper('industrial-physics.html')">
-    Industrial Physics
+  <h3>Industrial Physics</h3>
+  <button class="paper-btn" onclick="openPaper('industrial-physics-papers.html')">
+    Past Papers
+  </button>
+  <button class="paper-btn" onclick="openPaper('industrial-physics-assignments.html')">
+    Assignments
   </button>
 
-  <button class="paper-btn" onclick="openPaper('industrial-mathematics.html')">
-    Industrial Mathematics – Test Papers & Assignments
+  <h3>Industrial Mathematics</h3>
+  <button class="paper-btn" onclick="openPaper('industrial-mathematics-papers.html')">
+    Test Papers
+  </button>
+  <button class="paper-btn" onclick="openPaper('industrial-mathematics-assignments.html')">
+    Assignments
   </button>
 
   <!-- HTML VIEWER -->
-  <div id="contentViewer" class="hidden" style="margin-top:20px;">
+  <div id="contentViewer" style="margin-top:20px; display:none;">
     <iframe id="contentFrame" width="100%" height="600px"></iframe>
   </div>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-/* 🔴 PUT YOUR REAL FIREBASE CONFIG HERE */
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-/* UI ELEMENTS */
-const authDiv = document.getElementById("auth");
-const userPanel = document.getElementById("userPanel");
-const content = document.getElementById("content");
-const contentViewer = document.getElementById("contentViewer");
-const contentFrame = document.getElementById("contentFrame");
-const statusText = document.getElementById("statusText");
-
-/* UI HELPERS */
-function showAuth(){
-  authDiv.classList.remove("hidden");
-  userPanel.classList.add("hidden");
-  content.classList.add("hidden");
-}
-function showUserUI(){
-  authDiv.classList.add("hidden");
-  userPanel.classList.remove("hidden");
-  content.classList.remove("hidden");
+<script>
+function openPaper(file){
+  document.getElementById("contentViewer").style.display = "block";
+  document.getElementById("contentFrame").src =
+    `https://pumbwe.github.io/PMG/past-papers/${file}`;
 }
 
-/* REGISTER */
-window.register = async () => {
-  if(!email.value || !password.value){
-    alert("Enter email and password");
-    return;
-  }
-  const res = await createUserWithEmailAndPassword(auth, email.value, password.value);
-  await setDoc(doc(db,"users",res.user.uid),{
-    email: email.value,
-    role: "user"
-  });
-  alert("Registered! Login now.");
-};
-
-/* LOGIN */
-window.login = async () => {
-  await signInWithEmailAndPassword(auth, email.value, password.value);
-};
-
-/* AUTH STATE */
-onAuthStateChanged(auth, async user=>{
-  if(!user){
-    showAuth();
-    return;
-  }
-  const snap = await getDoc(doc(db,"users",user.uid));
-  const data = snap.data();
-  showUser(data);
-});
-
-/* SHOW USER */
-function showUser(data){
-  showUserUI();
-  contentViewer.classList.add("hidden");
-  statusText.innerText = `Welcome, ${data.email}`;
-}
-
-/* OPEN HTML PAST PAPER */
-window.openPaper = async (file)=>{
-  loadHTML(file);
-};
-
-/* LOAD HTML */
-function loadHTML(file){
-  contentViewer.classList.remove("hidden");
-  contentFrame.src = `https://pumbwe.github.io/PMG/past-papers/${file}`;
-}
-
-/* DISABLE RIGHT CLICK */
+/* Disable right click */
 document.addEventListener("contextmenu", e => e.preventDefault());
 </script>
 
