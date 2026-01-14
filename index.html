@@ -36,7 +36,6 @@ button {
   margin:5px 0;
 }
 .hidden { display:none; }
-.disabled { opacity:0.4; pointer-events:none; }
 iframe { border:none; }
 input {
   padding:10px;
@@ -49,7 +48,7 @@ input {
 <body>
 
 <h1>PMG™ EDU</h1>
-<p><b>Demo / Paid Academic Resources</b></p>
+<p><b>Academic Resources</b></p>
 
 <!-- AUTH -->
 <div id="auth" class="section">
@@ -62,16 +61,12 @@ input {
 <!-- USER PANEL -->
 <div id="userPanel" class="section hidden">
   <p id="statusText"></p>
-  <button id="payBtn" onclick="markPaid()">
-    Pay K20 (Airtel: 0775302886 / MTN: 0768497390)
-  </button>
 </div>
 
 <!-- CONTENT -->
 <div id="content" class="section hidden">
   <h3>MA110 – Past Papers</h3>
 
-  <!-- YOU CAN ADD MANY BUTTONS -->
   <button class="paper-btn" onclick="openPaper('MA110-2019.html')">
     Open MA110 2019
   </button>
@@ -80,16 +75,33 @@ input {
     Open MA110 2019 – Solutions
   </button>
 
+  <!-- NEW SECTION: INDUSTRIAL CHEMISTRY -->
+  <h3 style="margin-top:30px;">Industrial Chemistry Courses</h3>
+
+  <button class="paper-btn" onclick="openPaper('organic-chemistry.html')">
+    Organic Chemistry
+  </button>
+
+  <button class="paper-btn" onclick="openPaper('analytical-chemistry.html')">
+    Analytical Chemistry
+  </button>
+
+  <button class="paper-btn" onclick="openPaper('industrial-chemistry.html')">
+    Industrial Chemistry
+  </button>
+
+  <button class="paper-btn" onclick="openPaper('industrial-physics.html')">
+    Industrial Physics
+  </button>
+
+  <button class="paper-btn" onclick="openPaper('industrial-mathematics.html')">
+    Industrial Mathematics – Test Papers & Assignments
+  </button>
+
   <!-- HTML VIEWER -->
   <div id="contentViewer" class="hidden" style="margin-top:20px;">
     <iframe id="contentFrame" width="100%" height="600px"></iframe>
   </div>
-</div>
-
-<!-- ADMIN -->
-<div id="adminPanel" class="section hidden">
-  <h2>Admin Dashboard</h2>
-  <div id="pendingUsers"></div>
 </div>
 
 <script type="module">
@@ -104,11 +116,7 @@ import {
   getFirestore,
   doc,
   setDoc,
-  getDoc,
-  updateDoc,
-  collection,
-  getDocs,
-  deleteDoc
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 /* 🔴 PUT YOUR REAL FIREBASE CONFIG HERE */
@@ -126,30 +134,20 @@ const db = getFirestore(app);
 const authDiv = document.getElementById("auth");
 const userPanel = document.getElementById("userPanel");
 const content = document.getElementById("content");
-const adminPanel = document.getElementById("adminPanel");
 const contentViewer = document.getElementById("contentViewer");
 const contentFrame = document.getElementById("contentFrame");
 const statusText = document.getElementById("statusText");
-const payBtn = document.getElementById("payBtn");
 
 /* UI HELPERS */
 function showAuth(){
   authDiv.classList.remove("hidden");
   userPanel.classList.add("hidden");
   content.classList.add("hidden");
-  adminPanel.classList.add("hidden");
 }
 function showUserUI(){
   authDiv.classList.add("hidden");
   userPanel.classList.remove("hidden");
   content.classList.remove("hidden");
-  adminPanel.classList.add("hidden");
-}
-function showAdminUI(){
-  authDiv.classList.add("hidden");
-  userPanel.classList.add("hidden");
-  content.classList.add("hidden");
-  adminPanel.classList.remove("hidden");
 }
 
 /* REGISTER */
@@ -161,9 +159,7 @@ window.register = async () => {
   const res = await createUserWithEmailAndPassword(auth, email.value, password.value);
   await setDoc(doc(db,"users",res.user.uid),{
     email: email.value,
-    role: "user",
-    paymentStatus: "trial",
-    trialCount: 5
+    role: "user"
   });
   alert("Registered! Login now.");
 };
@@ -181,104 +177,30 @@ onAuthStateChanged(auth, async user=>{
   }
   const snap = await getDoc(doc(db,"users",user.uid));
   const data = snap.data();
-  if(data.role === "admin"){
-    showAdmin();
-  } else {
-    showUser(data);
-  }
+  showUser(data);
 });
 
 /* SHOW USER */
 function showUser(data){
   showUserUI();
   contentViewer.classList.add("hidden");
-
-  if(data.paymentStatus === "trial"){
-    if(data.trialCount > 0){
-      statusText.innerText = `Trial Mode (${data.trialCount} views left)`;
-      payBtn.classList.add("hidden");
-      content.classList.remove("disabled");
-    } else {
-      statusText.innerText = "Trial finished — Please pay";
-      payBtn.classList.remove("hidden");
-      content.classList.add("disabled");
-    }
-  }
-  else if(data.paymentStatus === "pending"){
-    statusText.innerText = "Payment pending approval";
-    payBtn.classList.add("hidden");
-    content.classList.add("disabled");
-  }
-  else if(data.paymentStatus === "approved"){
-    statusText.innerText = "Full Access Granted";
-    payBtn.classList.add("hidden");
-    content.classList.remove("disabled");
-  }
+  statusText.innerText = `Welcome, ${data.email}`;
 }
 
 /* OPEN HTML PAST PAPER */
 window.openPaper = async (file)=>{
-  const user = auth.currentUser;
-  const refUser = doc(db,"users",user.uid);
-  const snap = await getDoc(refUser);
-  const data = snap.data();
-
-  if(data.paymentStatus === "approved"){
-    loadHTML(file);
-  }
-  else if(data.paymentStatus === "trial" && data.trialCount > 0){
-    await updateDoc(refUser,{ trialCount: data.trialCount - 1 });
-    showUser({ ...data, trialCount: data.trialCount - 1 });
-    loadHTML(file);
-  }
-  else{
-    alert("Trial finished. Pay K20 to continue.");
-  }
+  loadHTML(file);
 };
 
 /* LOAD HTML */
 function loadHTML(file){
   contentViewer.classList.remove("hidden");
-  contentFrame.src =
-    `https://pumbwe.github.io/PMG/past-papers/MA110/${file}`;
+  contentFrame.src = `https://pumbwe.github.io/PMG/past-papers/${file}`;
 }
-
-/* MARK PAID */
-window.markPaid = async ()=>{
-  const u = auth.currentUser;
-  await updateDoc(doc(db,"users",u.uid),{ paymentStatus:"pending" });
-  alert("Payment marked pending. Await admin approval.");
-};
-
-/* ADMIN */
-async function showAdmin(){
-  showAdminUI();
-  const q = await getDocs(collection(db,"users"));
-  pendingUsers.innerHTML = "<h3>Users</h3>";
-  q.forEach(d=>{
-    const u = d.data();
-    pendingUsers.innerHTML += `
-      <p>
-        <b>${u.email}</b><br>
-        Status: ${u.paymentStatus}<br>
-        <button onclick="approve('${d.id}')">Approve</button>
-        <button onclick="removeUser('${d.id}')">Delete</button>
-      </p><hr>`;
-  });
-}
-
-window.approve = async(id)=>{
-  await updateDoc(doc(db,"users",id),{ paymentStatus:"approved" });
-  showAdmin();
-};
-window.removeUser = async(id)=>{
-  await deleteDoc(doc(db,"users",id));
-  showAdmin();
-};
 
 /* DISABLE RIGHT CLICK */
 document.addEventListener("contextmenu", e => e.preventDefault());
 </script>
 
 </body>
-  </html>
+</html>
