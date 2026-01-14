@@ -1,272 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>PMG™ EDU | Legendary Courses</title>
-
 <style>
   :root{
     --bg:#0f0f0f; --card:#1b1b1b; --ink:#f0f0f0; --gold:#FFD700; --blue:#2563eb;
   }
-  body {
-    margin:0; font-family: Arial, sans-serif; background:var(--bg); color:var(--ink);
-    text-align:center; padding:20px;
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:var(--bg); color:var(--ink); text-align:center; padding:20px;
   }
-  h1 { color:var(--gold); font-size:2.4em; margin:0 0 8px; }
-  .section {
-    background:var(--card); padding:20px; border-radius:12px; max-width:1100px;
-    margin:20px auto; box-shadow:0 0 20px rgba(255,215,0,0.25);
+  h1{ color:var(--gold); font-size:2.2rem; margin:0 0 8px; }
+  .muted{ color:#a9a9a9; font-size:0.95rem; margin-bottom:18px; }
+  .section{ background:var(--card); padding:20px; border-radius:12px; max-width:1100px; margin:18px auto; box-shadow:0 8px 30px rgba(0,0,0,0.6); }
+  .course{ border:1px solid rgba(255,215,0,0.08); border-radius:12px; padding:16px; margin:18px 0; text-align:left; }
+  .course h2{ color:var(--gold); margin:0 0 8px; font-size:1.15rem; }
+  .row{ display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 6px; }
+  button{ padding:10px 14px; border:none; border-radius:10px; font-weight:700; cursor:pointer; transition:all .12s ease; background:var(--blue); color:#fff; }
+  button.ghost{ background:transparent; color:var(--gold); border:1px solid rgba(255,215,0,0.18); }
+  button.ghost:hover{ background:rgba(255,215,0,0.04); }
+  .pill{ background:#111; color:#ddd; border:1px solid #333; border-radius:999px; padding:8px 12px; cursor:pointer; }
+  .pill.active{ background:var(--gold); color:#111; border-color:var(--gold); }
+  .years{ display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
+  .notes{ background:#0b0b0b; border:1px solid #222; border-radius:10px; padding:14px; margin-top:12px; color:#ddd; }
+  .notes h3{ color:var(--gold); margin:6px 0 10px; }
+  .topics{ display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
+  .divider{ height:1px; background:#222; margin:12px 0; }
+  .viewer{ margin-top:16px; display:none; }
+  iframe{ border:none; width:100%; height:640px; border-radius:8px; background:#fff; }
+  ul{ padding-left:18px; margin:6px 0 12px; }
+  li{ margin:6px 0; line-height:1.5; }
+  .small{ font-size:0.92rem; color:#bdbdbd; }
+  @media (max-width:720px){
+    .row{ flex-direction:column; align-items:stretch; }
+    button{ width:100%; }
   }
-  .course {
-    border:1px solid rgba(255,215,0,0.2); border-radius:12px; padding:16px; margin:18px 0;
-    text-align:left;
-  }
-  .course h2 { color:var(--gold); margin:0 0 8px; font-size:1.25em; }
-  .row { display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 6px; }
-  button {
-    padding:12px 16px; border:none; border-radius:10px; font-weight:bold; cursor:pointer;
-    transition:0.2s; background:var(--blue); color:#fff;
-  }
-  button:hover { transform:translateY(-1px); filter:brightness(1.05); }
-  .ghost { background:transparent; color:var(--gold); border:1px solid rgba(255,215,0,0.35); }
-  .ghost:hover { background:rgba(255,215,0,0.08); }
-  .pill { background:#111; color:#ddd; border:1px solid #333; border-radius:999px; padding:8px 12px; cursor:pointer; }
-  .pill.active { background:var(--gold); color:#111; border-color:var(--gold); }
-  .notes {
-    background:#111; border:1px solid #333; border-radius:12px; padding:16px; margin-top:12px;
-  }
-  .notes h3 { color:var(--gold); margin:8px 0; }
-  .notes h4 { color:#ddd; margin:10px 0 6px; }
-  .notes p, .notes ul { line-height:1.6; color:#ddd; }
-  .topics { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
-  .years { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
-  .muted { color:#aaa; font-size:0.95em; }
-  .viewer { margin-top:16px; display:none; }
-  iframe { border:none; width:100%; height:600px; border-radius:10px; }
-  .divider { height:1px; background:#333; margin:14px 0; }
 </style>
 </head>
-
 <body>
+  <h1>PMG™ EDU</h1>
+  <p class="muted"><strong>Legendary Academic Resources</strong> — tests, assignments, lab reports, and topic-based notes</p>
 
-<h1>PMG™ EDU</h1>
-<p class="muted"><b>Legendary Academic Resources</b> — tests, assignments, and topic-based notes</p>
+  <div class="section" id="portal">
 
-<div class="section" id="portal">
-
-  <!-- Global viewer -->
-  <div id="contentViewer" class="viewer">
-    <iframe id="contentFrame"></iframe>
-  </div>
-
-  <!-- FIRST YEAR NQ -->
-  <h2 style="color:var(--gold); margin-top:24px;">FIRST YEAR NQ</h2>
-
-  <!-- MA110 Mathematics -->
-  <div class="course" id="MA110">
-    <h2>MA110 — Mathematics</h2>
-    <div class="row">
-      <button onclick="showYears('MA110')">Tests (2019–2024)</button>
-      <button class="ghost" onclick="showAssignments('MA110')">Assignments</button>
-      <button class="ghost" onclick="showTopics('MA110')">Notes (topics)</button>
-    </div>
-    <div id="MA110-years" class="years" style="display:none;"></div>
-    <div id="MA110-assign" class="notes" style="display:none;">
-      <p class="muted">No assignments uploaded yet. Check back soon.</p>
-    </div>
-    <div id="MA110-topics" class="notes" style="display:none;">
-      <h3>Topics</h3>
-      <p class="muted">No notes added yet for this course.</p>
-    </div>
-  </div>
-
-  <!-- CH110 Chemistry -->
-  <div class="course" id="CH110">
-    <h2>CH110 — Chemistry</h2>
-    <div class="row">
-      <button onclick="showYears('CH110')">Tests (2019–2024)</button>
-      <button class="ghost" onclick="showAssignments('CH110')">Assignments</button>
-      <button class="ghost" onclick="showTopics('CH110')">Notes (topics)</button>
-    </div>
-    <div id="CH110-years" class="years" style="display:none;"></div>
-    <div id="CH110-assign" class="notes" style="display:none;">
-      <p class="muted">No assignments uploaded yet. Check back soon.</p>
-    </div>
-    <div id="CH110-topics" class="notes" style="display:none;">
-      <h3>Topics</h3>
-      <p class="muted">No notes added yet for this course.</p>
-    </div>
-  </div>
-
-  <!-- PH110 Physics -->
-  <div class="course" id="PH110">
-    <h2>PH110 — Physics</h2>
-    <div class="row">
-      <button onclick="showYears('PH110')">Tests (2019–2024)</button>
-      <button class="ghost" onclick="showAssignments('PH110')">Assignments</button>
-      <button class="ghost" onclick="showTopics('PH110')">Notes (topics)</button>
-    </div>
-    <div id="PH110-years" class="years" style="display:none;"></div>
-    <div id="PH110-assign" class="notes" style="display:none;">
-      <p class="muted">No assignments uploaded yet. Check back soon.</p>
-    </div>
-    <div id="PH110-topics" class="notes" style="display:none;">
-      <h3>Topics</h3>
-      <p class="muted">No notes added yet for this course.</p>
-    </div>
-  </div>
-
-  <!-- BI10 Biology -->
-  <div class="course" id="BI10">
-    <h2>BI10 — Biology</h2>
-    <div class="row">
-      <button onclick="showYears('BI10')">Tests (2019–2024)</button>
-      <button class="ghost" onclick="showAssignments('BI10')">Assignments</button>
-      <button class="ghost" onclick="showTopics('BI10')">Notes (topics)</button>
-    </div>
-    <div id="BI10-years" class="years" style="display:none;"></div>
-    <div id="BI10-assign" class="notes" style="display:none;">
-      <p class="muted">No assignments uploaded yet. Check back soon.</p>
-    </div>
-    <div id="BI10-topics" class="notes" style="display:none;">
-      <h3>Topics</h3>
-      <p class="muted">No notes added yet for this course.</p>
-    </div>
-  </div>
-
-  <!-- CS110 Computer Studies -->
-  <div class="course" id="CS110">
-    <h2>CS110 — Computer Studies</h2>
-    <div class="row">
-      <button onclick="showYears('CS110')">Tests (2019–2024)</button>
-      <button class="ghost" onclick="showAssignments('CS110')">Assignments</button>
-      <button class="ghost" onclick="showTopics('CS110')">Notes (topics)</button>
-    </div>
-    <div id="CS110-years" class="years" style="display:none;"></div>
-    <div id="CS110-assign" class="notes" style="display:none;">
-      <p class="muted">No assignments uploaded yet. Check back soon.</p>
-    </div>
-    <div id="CS110-topics" class="notes" style="display:none;">
-      <h3>Topics</h3>
-      <p class="muted">No notes added yet for this course.</p>
-    </div>
-  </div>
-
-  <!-- SECOND YEAR INDUSTRIAL CHEMISTRY -->
-  <h2 style="color:var(--gold); margin-top:24px;">SECOND YEAR INDUSTRIAL CHEMISTRY</h2>
-
-  <!-- CH260 Organic Chemistry -->
-  <div class="course" id="CH260">
-    <h2>CH260 — Organic Chemistry</h2>
-    <div class="row">
-      <button onclick="showYears('CH260')">Tests (2019–2024)</button>
-      <button class="ghost" onclick="showAssignments('CH260')">Assignments</button>
-      <button class="ghost" onclick="showTopics('CH260')">Notes (topics)</button>
+    <!-- Viewer -->
+    <div id="contentViewer" class="viewer" aria-hidden="true">
+      <iframe id="contentFrame" title="Paper viewer"></iframe>
     </div>
 
-    <div id="CH260-years" class="years" style="display:none;"></div>
+    <!-- Industrial Chemistry First Year -->
+    <h2 style="color:var(--gold); margin-top:8px;">Industrial Chemistry First Year</h2>
 
-    <div id="CH260-assign" class="notes" style="display:none;">
-      <p class="muted">No assignments uploaded yet. Check back soon.</p>
-    </div>
-
-    <div id="CH260-topics" class="notes" style="display:none;">
-      <h3>Topics</h3>
-      <div class="topics" id="CH260-topic-pills"></div>
-      <div class="divider"></div>
-      <div id="CH260-topic-content">
-        <p class="muted">Select a topic above to view notes.</p>
+    <!-- CH260 Organic Chemistry -->
+    <div class="course" id="CH260">
+      <h2>CH260 — Organic Chemistry</h2>
+      <div class="row">
+        <button onclick="showYears('CH260')">Tests (2019–2024)</button>
+        <button class="ghost" onclick="showAssignments('CH260')">Assignments</button>
+        <button class="ghost" onclick="showTopics('CH260')">Notes (topics)</button>
+      </div>
+      <div id="CH260-years" class="years" style="display:none;"></div>
+      <div id="CH260-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
+      <div id="CH260-topics" class="notes" style="display:none;">
+        <h3>Topics</h3>
+        <div class="topics" id="CH260-topic-pills"></div>
+        <div class="divider"></div>
+        <div id="CH260-topic-content"><p class="small">Select a topic above to view notes.</p></div>
       </div>
     </div>
-  </div>
 
-  <!-- Analytical Chemistry -->
-  <div class="course" id="AnalyticalChem">
-    <h2>Analytical Chemistry</h2>
-    <div class="row">
-      <button onclick="showYears('AnalyticalChem')">Tests (2019–2024)</button>
-      <button class="ghost" onclick="showAssignments('AnalyticalChem')">Assignments</button>
-      <button class="ghost" onclick="showTopics('AnalyticalChem')">Notes (topics)</button>
+    <!-- Analytical Chemistry -->
+    <div class="course" id="AnalyticalChem">
+      <h2>Analytical Chemistry</h2>
+      <div class="row">
+        <button onclick="showYears('AnalyticalChem')">Tests (2019–2024)</button>
+        <button class="ghost" onclick="showAssignments('AnalyticalChem')">Assignments</button>
+        <button class="ghost" onclick="showTopics('AnalyticalChem')">Notes (topics)</button>
+      </div>
+      <div id="AnalyticalChem-years" class="years" style="display:none;"></div>
+      <div id="AnalyticalChem-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
+      <div id="AnalyticalChem-topics" class="notes" style="display:none;"><h3>Topics</h3><p class="small">No notes added yet.</p></div>
     </div>
-    <div id="AnalyticalChem-years" class="years" style="display:none;"></div>
-    <div id="AnalyticalChem-assign" class="notes" style="display:none;">
-      <p class="muted">No assignments uploaded yet. Check back soon.</p>
-    </div>
-    <div id="AnalyticalChem-topics" class="notes" style="display:none;">
-      <h3>Topics</h3>
-      <p class="muted">No notes added yet for this course.</p>
-    </div>
-  </div>
 
-  <!-- Industrial Chemistry -->
-  <div class="course" id="IndustrialChem">
-    <h2>Industrial Chemistry</h2>
-    <div class="row">
-      <button onclick="showYears('IndustrialChem')">Tests (2019–2024)</button>
-      <button class="ghost" onclick="showAssignments('IndustrialChem')">Assignments</button>
-      <button class="ghost" onclick="showTopics('IndustrialChem')">Notes (topics)</button>
+    <!-- Industrial Chemistry (course) -->
+    <div class="course" id="IndustrialChem">
+      <h2>Industrial Chemistry</h2>
+      <div class="row">
+        <button onclick="showYears('IndustrialChem')">Tests (2019–2024)</button>
+        <button class="ghost" onclick="showAssignments('IndustrialChem')">Assignments</button>
+        <button class="ghost" onclick="showTopics('IndustrialChem')">Notes (topics)</button>
+      </div>
+      <div id="IndustrialChem-years" class="years" style="display:none;"></div>
+      <div id="IndustrialChem-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
+      <div id="IndustrialChem-topics" class="notes" style="display:none;"><h3>Topics</h3><p class="small">No notes added yet.</p></div>
     </div>
-    <div id="IndustrialChem-years" class="years" style="display:none;"></div>
-    <div id="IndustrialChem-assign" class="notes" style="display:none;">
-      <p class="muted">No assignments uploaded yet. Check back soon.</p>
-    </div>
-    <div id="IndustrialChem-topics" class="notes" style="display:none;">
-      <h3>Topics</h3>
-      <p class="muted">No notes added yet for this course.</p>
-    </div>
-  </div>
 
-  <!-- Industrial Physics -->
-  <div class="course" id="IndustrialPhys">
-    <h2>Industrial Physics</h2>
-    <div class="row">
-      <button onclick="showYears('IndustrialPhys')">Tests (2019–2024)</button>
-      <button class="ghost" onclick="showAssignments('IndustrialPhys')">Assignments</button>
-      <button class="ghost" onclick="showTopics('IndustrialPhys')">Notes (topics)</button>
+    <!-- Industrial Physics -->
+    <div class="course" id="IndustrialPhys">
+      <h2>Industrial Physics</h2>
+      <div class="row">
+        <button onclick="showYears('IndustrialPhys')">Tests (2019–2024)</button>
+        <button class="ghost" onclick="showAssignments('IndustrialPhys')">Assignments</button>
+        <button class="ghost" onclick="showTopics('IndustrialPhys')">Notes (topics)</button>
+      </div>
+      <div id="IndustrialPhys-years" class="years" style="display:none;"></div>
+      <div id="IndustrialPhys-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
+      <div id="IndustrialPhys-topics" class="notes" style="display:none;"><h3>Topics</h3><p class="small">No notes added yet.</p></div>
     </div>
-    <div id="IndustrialPhys-years" class="years" style="display:none;"></div>
-    <div id="IndustrialPhys-assign" class="notes" style="display:none;">
-      <p class="muted">No assignments uploaded yet. Check back soon.</p>
-    </div>
-    <div id="IndustrialPhys-topics" class="notes" style="display:none;">
-      <h3>Topics</h3>
-      <p class="muted">No notes added yet for this course.</p>
-    </div>
-  </div>
 
-  <!-- Industrial Mathematics -->
-  <div class="course" id="IndustrialMath">
-    <h2>Industrial Mathematics</h2>
-    <div class="row">
-      <button onclick="showYears('IndustrialMath')">Tests (2019–2024)</button>
-      <button class="ghost" onclick="showAssignments('IndustrialMath')">Assignments</button>
-      <button class="ghost" onclick="showTopics('IndustrialMath')">Notes (topics)</button>
+    <!-- Industrial Mathematics -->
+    <div class="course" id="IndustrialMath">
+      <h2>Industrial Mathematics</h2>
+      <div class="row">
+        <button onclick="showYears('IndustrialMath')">Tests (2019–2024)</button>
+        <button class="ghost" onclick="showAssignments('IndustrialMath')">Assignments</button>
+        <button class="ghost" onclick="showTopics('IndustrialMath')">Notes (topics)</button>
+      </div>
+      <div id="IndustrialMath-years" class="years" style="display:none;"></div>
+      <div id="IndustrialMath-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
+      <div id="IndustrialMath-topics" class="notes" style="display:none;"><h3>Topics</h3><p class="small">No notes added yet.</p></div>
     </div>
-    <div id="IndustrialMath-years" class="years" style="display:none;"></div>
-    <div id="IndustrialMath-assign" class="notes" style="display:none;">
-      <p class="muted">No assignments uploaded yet. Check back soon.</p>
-    </div>
-    <div id="IndustrialMath-topics" class="notes" style="display:none;">
-      <h3>Topics</h3>
-      <p class="muted">No notes added yet for this course.</p>
-    </div>
-  </div>
 
-</div>
+    <!-- First Year NQ -->
+    <h2 style="color:var(--gold); margin-top:24px;">First Year NQ</h2>
+
+    <!-- CH110 Chemistry -->
+    <div class="course" id="CH110">
+      <h2>CH110 — Chemistry</h2>
+      <div class="row">
+        <button onclick="showYears('CH110')">Tests (2019–2024)</button>
+        <button class="ghost" onclick="showAssignments('CH110')">Assignments</button>
+        <button class="ghost" onclick="showTopics('CH110')">Notes (topics)</button>
+        <button class="ghost" onclick="showLabReports('CH110')">Lab Reports</button>
+      </div>
+      <div id="CH110-years" class="years" style="display:none;"></div>
+      <div id="CH110-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
+      <div id="CH110-topics" class="notes" style="display:none;"><h3>Topics</h3><p class="small">No notes added yet.</p></div>
+      <div id="CH110-labs" class="notes" style="display:none;"><h3>Lab Reports</h3><p class="small">No lab reports uploaded yet.</p></div>
+    </div>
+
+    <!-- PH110 Physics -->
+    <div class="course" id="PH110">
+      <h2>PH110 — Physics</h2>
+      <div class="row">
+        <button onclick="showYears('PH110')">Tests (2019–2024)</button>
+        <button class="ghost" onclick="showAssignments('PH110')">Assignments</button>
+        <button class="ghost" onclick="showTopics('PH110')">Notes (topics)</button>
+        <button class="ghost" onclick="showLabReports('PH110')">Lab Reports</button>
+      </div>
+      <div id="PH110-years" class="years" style="display:none;"></div>
+      <div id="PH110-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
+      <div id="PH110-topics" class="notes" style="display:none;"><h3>Topics</h3><p class="small">No notes added yet.</p></div>
+      <div id="PH110-labs" class="notes" style="display:none;"><h3>Lab Reports</h3><p class="small">No lab reports uploaded yet.</p></div>
+    </div>
+
+    <!-- BI10 Biology -->
+    <div class="course" id="BI10">
+      <h2>BI10 — Biology</h2>
+      <div class="row">
+        <button onclick="showYears('BI10')">Tests (2019–2024)</button>
+        <button class="ghost" onclick="showAssignments('BI10')">Assignments</button>
+        <button class="ghost" onclick="showTopics('BI10')">Notes (topics)</button>
+      </div>
+      <div id="BI10-years" class="years" style="display:none;"></div>
+      <div id="BI10-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
+      <div id="BI10-topics" class="notes" style="display:none;"><h3>Topics</h3><p class="small">No notes added yet.</p></div>
+    </div>
+
+    <!-- CS110 Computer Studies -->
+    <div class="course" id="CS110">
+      <h2>CS110 — Computer Studies</h2>
+      <div class="row">
+        <button onclick="showYears('CS110')">Tests (2019–2024)</button>
+        <button class="ghost" onclick="showAssignments('CS110')">Assignments</button>
+        <button class="ghost" onclick="showTopics('CS110')">Notes (topics)</button>
+      </div>
+      <div id="CS110-years" class="years" style="display:none;"></div>
+      <div id="CS110-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
+      <div id="CS110-topics" class="notes" style="display:none;"><h3>Topics</h3><p class="small">No notes added yet.</p></div>
+    </div>
+
+    <!-- MA110 Mathematics -->
+    <div class="course" id="MA110">
+      <h2>MA110 — Mathematics</h2>
+      <div class="row">
+        <button onclick="showYears('MA110')">Tests (2019–2024)</button>
+        <button class="ghost" onclick="showAssignments('MA110')">Assignments</button>
+        <button class="ghost" onclick="showTopics('MA110')">Notes (topics)</button>
+      </div>
+      <div id="MA110-years" class="years" style="display:none;"></div>
+      <div id="MA110-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
+      <div id="MA110-topics" class="notes" style="display:none;"><h3>Topics</h3><p class="small">No notes added yet.</p></div>
+    </div>
+
+    <!-- MA210 Mathematics -->
+    <div class="course" id="MA210">
+      <h2>MA210 — Mathematics</h2>
+      <div class="row">
+        <button onclick="showYears('MA210')">Tests (2019–2024)</button>
+        <button class="ghost" onclick="showAssignments('MA210')">Assignments</button>
+        <button class="ghost" onclick="showTopics('MA210')">Notes (topics)</button>
+      </div>
+      <div id="MA210-years" class="years" style="display:none;"></div>
+      <div id="MA210-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
+      <div id="MA210-topics" class="notes" style="display:none;"><h3>Topics</h3><p class="small">No notes added yet.</p></div>
+    </div>
+
+  </div>
 
 <script>
-  // Base path for hosted papers
+  // Base path for hosted papers (adjust to your hosting)
   const BASE = "https://pumbwe.github.io/PMG/past-papers/";
 
-  // Show tests years (2019–2024) for a course
-  function showYears(courseId){
-    const yearsDiv = document.getElementById(courseId+"-years");
-    const assignDiv = document.getElementById(courseId+"-assign");
-    const topicsDiv = document.getElementById(courseId+"-topics");
-    if(assignDiv) assignDiv.style.display = "none";
-    if(topicsDiv) topicsDiv.style.display = "none";
+  // Utility: hide all course sub-sections for a course
+  function hideCoursePanels(courseId){
+    const ids = ["-years","-assign","-topics","-labs"];
+    ids.forEach(suffix=>{
+      const el = document.getElementById(courseId + suffix);
+      if(el) el.style.display = "none";
+    });
+  }
 
+  // Show years (2019-2024) for a course
+  function showYears(courseId){
+    // hide other panels for that course
+    hideCoursePanels(courseId);
+    const yearsDiv = document.getElementById(courseId + "-years");
+    if(!yearsDiv) return;
     yearsDiv.innerHTML = "";
     yearsDiv.style.display = "flex";
     const years = [2019,2020,2021,2022,2023,2024];
@@ -277,28 +240,26 @@
       pill.onclick = ()=> openPaper(`${courseId}-${y}.html`);
       yearsDiv.appendChild(pill);
     });
+    // hide viewer until a year is clicked
+    const viewer = document.getElementById("contentViewer");
+    if(viewer) viewer.style.display = "none";
   }
 
   // Show assignments placeholder
   function showAssignments(courseId){
-    const yearsDiv = document.getElementById(courseId+"-years");
-    const assignDiv = document.getElementById(courseId+"-assign");
-    const topicsDiv = document.getElementById(courseId+"-topics");
-    if(yearsDiv) yearsDiv.style.display = "none";
-    if(topicsDiv) topicsDiv.style.display = "none";
-    assignDiv.style.display = "block";
+    hideCoursePanels(courseId);
+    const assignDiv = document.getElementById(courseId + "-assign");
+    if(assignDiv) assignDiv.style.display = "block";
   }
 
-  // Show topics; only CH260 has notes now (Bonding & Hybridization)
+  // Show topics; CH260 has Bonding & Hybridization by default
   function showTopics(courseId){
-    const yearsDiv = document.getElementById(courseId+"-years");
-    const assignDiv = document.getElementById(courseId+"-assign");
-    const topicsDiv = document.getElementById(courseId+"-topics");
-    if(yearsDiv) yearsDiv.style.display = "none";
-    if(assignDiv) assignDiv.style.display = "none";
-
+    hideCoursePanels(courseId);
+    const topicsDiv = document.getElementById(courseId + "-topics");
+    if(!topicsDiv) return;
     topicsDiv.style.display = "block";
 
+    // Only CH260 has notes now (Bonding & Hybridization)
     if(courseId === "CH260"){
       const pills = document.getElementById("CH260-topic-pills");
       const content = document.getElementById("CH260-topic-content");
@@ -314,32 +275,113 @@
         pill.className = "pill";
         pill.textContent = t.label;
         pill.onclick = ()=>{
-          [...pills.children].forEach(c=>c.classList.remove("active"));
+          // set active
+          Array.from(pills.children).forEach(c=>c.classList.remove("active"));
           pill.classList.add("active");
           renderCH260Topic(t.id, content);
         };
         pills.appendChild(pill);
       });
 
-      // Default select first topic
+      // default select first
       if(pills.children.length){
         pills.children[0].classList.add("active");
         renderCH260Topic(topics[0].id, content);
       }
     } else {
-      topicsDiv.innerHTML = `
-        <h3>Topics</h3>
-        <p class="muted">No notes added yet for this course. Send me the outline and I’ll embed topic-based notes here.</p>
-      `;
+      // For other courses, keep placeholder text
+      topicsDiv.innerHTML = '<h3>Topics</h3><p class="small">No notes added yet for this course. Send the outline and I will embed topic-based notes here.</p>';
     }
   }
 
-  // Render CH260 topic content (Bonding & Hybridization)
+  // Show lab reports placeholder
+  function showLabReports(courseId){
+    hideCoursePanels(courseId);
+    const labsDiv = document.getElementById(courseId + "-labs");
+    if(labsDiv) labsDiv.style.display = "block";
+  }
+
+  // Render CH260 topic content
   function renderCH260Topic(topicId, container){
     if(topicId === "bonding"){
       container.innerHTML = `
         <h3>Structure & Bonding</h3>
-        <p>Organic molecules are built from covalent bonds. Carbon is central because it forms strong bonds with itself and other elements and can make four covalent bonds, enabling vast structural diversity.</p>
+        <p>Organic molecules are built from covalent bonds between atoms. Carbon is central because it forms strong bonds with itself and other elements and can make four covalent bonds, enabling vast structural diversity.</p>
         <h4>Bond types</h4>
         <ul>
-          <li><b>σ (sigma) bonds:</b> Head-on overlap of orbitals; every single bond is a σ bond.</
+          <li><strong>σ (sigma) bonds:</strong> Head-on overlap of orbitals; every single bond is a σ bond.</li>
+          <li><strong>π (pi) bonds:</strong> Side-by-side overlap of p orbitals; present in double (one π) and triple bonds (two π).</li>
+        </ul>
+        <h4>Electronegativity & polarity</h4>
+        <ul>
+          <li>When atoms with different electronegativities bond, electrons are unequally shared → polar bonds.</li>
+          <li>Polarity influences reactivity: polar bonds are sites for nucleophilic/electrophilic attack.</li>
+        </ul>
+        <h4>Geometry & reactivity</h4>
+        <ul>
+          <li>Geometry (bond angles) arises from hybridization and electron pair repulsion.</li>
+          <li>Strain (angle, torsional, steric) raises energy and often increases reactivity.</li>
+        </ul>
+        <h4>Examples</h4>
+        <ul>
+          <li><strong>Methane (CH₄):</strong> tetrahedral, nonpolar overall; relatively unreactive.</li>
+          <li><strong>Ethene (C₂H₄):</strong> planar around C=C; π bond enables electrophilic addition.</li>
+          <li><strong>Acetylene (C₂H₂):</strong> linear; acidic terminal hydrogen due to high s-character.</li>
+        </ul>
+      `;
+    } else if(topicId === "hybrid"){
+      container.innerHTML = `
+        <h3>Hybridization</h3>
+        <p>Hybridization is the mixing of atomic orbitals on the same atom to form new, equivalent hybrid orbitals that explain molecular geometry and bonding.</p>
+        <h4>Key principles</h4>
+        <ul>
+          <li>The number of hybrid orbitals equals the number of atomic orbitals mixed.</li>
+          <li>Greater s-character brings orbitals closer to the nucleus → stronger, shorter bonds and higher electronegativity.</li>
+          <li>Hybridization occurs during bond formation, not in isolated atoms.</li>
+        </ul>
+        <h4>Types & geometries</h4>
+        <ul>
+          <li><strong>sp:</strong> mix 1s + 1p → 2 hybrids; linear (180°). Example: C in alkynes (HC≡CH).</li>
+          <li><strong>sp²:</strong> mix 1s + 2p → 3 hybrids; trigonal planar (120°). Example: C in alkenes (H₂C=CH₂).</li>
+          <li><strong>sp³:</strong> mix 1s + 3p → 4 hybrids; tetrahedral (109.5°). Example: C in alkanes (CH₄).</li>
+          <li><strong>sp³d:</strong> trigonal bipyramidal (90°, 120°). Example: P in PCl₅.</li>
+          <li><strong>sp³d²:</strong> octahedral (90°). Example: S in SF₆.</li>
+        </ul>
+        <h4>Steric number method</h4>
+        <ul>
+          <li>Steric number = bonded atoms + lone pairs on the central atom.</li>
+          <li>2 → sp (linear), 3 → sp² (trigonal planar), 4 → sp³ (tetrahedral).</li>
+        </ul>
+        <h4>Examples</h4>
+        <ul>
+          <li><strong>CH₄:</strong> C is sp³ (4 σ bonds) → tetrahedral.</li>
+          <li><strong>H₂C=CH₂:</strong> each C is sp² (3 σ + 1 π) → planar around C=C.</li>
+          <li><strong>HC≡CH:</strong> each C is sp (2 σ + 2 π) → linear.</li>
+        </ul>
+        <h4>Why hybridization matters</h4>
+        <ul>
+          <li>Predicts shapes and bond angles accurately.</li>
+          <li>Explains acidity trends (sp > sp² > sp³ for C–H acidity).</li>
+          <li>Guides reactivity—planar sp² centers enable addition; tetrahedral sp³ centers favor substitution.</li>
+        </ul>
+      `;
+    }
+  }
+
+  // Open hosted paper in iframe
+  function openPaper(file){
+    const viewer = document.getElementById("contentViewer");
+    const frame = document.getElementById("contentFrame");
+    if(!viewer || !frame) return;
+    viewer.style.display = "block";
+    frame.src = BASE + file;
+    viewer.scrollIntoView({ behavior:"smooth", block:"start" });
+  }
+
+  // Initialize: nothing auto-opened; CH260 topics prepared when requested
+  (function init(){
+    // no-op for now; UI is event-driven
+  })();
+</script>
+</body>
+</html>
