@@ -60,6 +60,9 @@
     <iframe id="contentFrame"></iframe>
   </div>
 
+  <!-- FIRST YEAR NQ -->
+  <h2 style="color:var(--gold); margin-top:24px;">FIRST YEAR NQ</h2>
+
   <!-- MA110 Mathematics -->
   <div class="course" id="MA110">
     <h2>MA110 — Mathematics</h2>
@@ -78,8 +81,80 @@
     </div>
   </div>
 
-  <!-- Industrial Chemistry umbrella -->
-  <h2 style="color:var(--gold); margin-top:24px;">Industrial Chemistry Courses</h2>
+  <!-- CH110 Chemistry -->
+  <div class="course" id="CH110">
+    <h2>CH110 — Chemistry</h2>
+    <div class="row">
+      <button onclick="showYears('CH110')">Tests (2019–2024)</button>
+      <button class="ghost" onclick="showAssignments('CH110')">Assignments</button>
+      <button class="ghost" onclick="showTopics('CH110')">Notes (topics)</button>
+    </div>
+    <div id="CH110-years" class="years" style="display:none;"></div>
+    <div id="CH110-assign" class="notes" style="display:none;">
+      <p class="muted">No assignments uploaded yet. Check back soon.</p>
+    </div>
+    <div id="CH110-topics" class="notes" style="display:none;">
+      <h3>Topics</h3>
+      <p class="muted">No notes added yet for this course.</p>
+    </div>
+  </div>
+
+  <!-- PH110 Physics -->
+  <div class="course" id="PH110">
+    <h2>PH110 — Physics</h2>
+    <div class="row">
+      <button onclick="showYears('PH110')">Tests (2019–2024)</button>
+      <button class="ghost" onclick="showAssignments('PH110')">Assignments</button>
+      <button class="ghost" onclick="showTopics('PH110')">Notes (topics)</button>
+    </div>
+    <div id="PH110-years" class="years" style="display:none;"></div>
+    <div id="PH110-assign" class="notes" style="display:none;">
+      <p class="muted">No assignments uploaded yet. Check back soon.</p>
+    </div>
+    <div id="PH110-topics" class="notes" style="display:none;">
+      <h3>Topics</h3>
+      <p class="muted">No notes added yet for this course.</p>
+    </div>
+  </div>
+
+  <!-- BI10 Biology -->
+  <div class="course" id="BI10">
+    <h2>BI10 — Biology</h2>
+    <div class="row">
+      <button onclick="showYears('BI10')">Tests (2019–2024)</button>
+      <button class="ghost" onclick="showAssignments('BI10')">Assignments</button>
+      <button class="ghost" onclick="showTopics('BI10')">Notes (topics)</button>
+    </div>
+    <div id="BI10-years" class="years" style="display:none;"></div>
+    <div id="BI10-assign" class="notes" style="display:none;">
+      <p class="muted">No assignments uploaded yet. Check back soon.</p>
+    </div>
+    <div id="BI10-topics" class="notes" style="display:none;">
+      <h3>Topics</h3>
+      <p class="muted">No notes added yet for this course.</p>
+    </div>
+  </div>
+
+  <!-- CS110 Computer Studies -->
+  <div class="course" id="CS110">
+    <h2>CS110 — Computer Studies</h2>
+    <div class="row">
+      <button onclick="showYears('CS110')">Tests (2019–2024)</button>
+      <button class="ghost" onclick="showAssignments('CS110')">Assignments</button>
+      <button class="ghost" onclick="showTopics('CS110')">Notes (topics)</button>
+    </div>
+    <div id="CS110-years" class="years" style="display:none;"></div>
+    <div id="CS110-assign" class="notes" style="display:none;">
+      <p class="muted">No assignments uploaded yet. Check back soon.</p>
+    </div>
+    <div id="CS110-topics" class="notes" style="display:none;">
+      <h3>Topics</h3>
+      <p class="muted">No notes added yet for this course.</p>
+    </div>
+  </div>
+
+  <!-- SECOND YEAR INDUSTRIAL CHEMISTRY -->
+  <h2 style="color:var(--gold); margin-top:24px;">SECOND YEAR INDUSTRIAL CHEMISTRY</h2>
 
   <!-- CH260 Organic Chemistry -->
   <div class="course" id="CH260">
@@ -178,81 +253,6 @@
     </div>
   </div>
 
-  <!-- General Courses -->
-  <h2 style="color:var(--gold); margin-top:24px;">General Courses</h2>
-
-  <!-- CH110 Chemistry -->
-  <div class="course" id="CH110">
-    <h2>CH110 — Chemistry</h2>
-    <div class="row">
-      <button onclick="showYears('CH110')">Tests (2019–2024)</button>
-      <button class="ghost" onclick="showAssignments('CH110')">Assignments</button>
-      <button class="ghost" onclick="showTopics('CH110')">Notes (topics)</button>
-    </div>
-    <div id="CH110-years" class="years" style="display:none;"></div>
-    <div id="CH110-assign" class="notes" style="display:none;">
-      <p class="muted">No assignments uploaded yet. Check back soon.</p>
-    </div>
-    <div id="CH110-topics" class="notes" style="display:none;">
-      <h3>Topics</h3>
-      <p class="muted">No notes added yet for this course.</p>
-    </div>
-  </div>
-
-  <!-- PH110 Physics -->
-  <div class="course" id="PH110">
-    <h2>PH110 — Physics</h2>
-    <div class="row">
-      <button onclick="showYears('PH110')">Tests (2019–2024)</button>
-      <button class="ghost" onclick="showAssignments('PH110')">Assignments</button>
-      <button class="ghost" onclick="showTopics('PH110')">Notes (topics)</button>
-    </div>
-    <div id="PH110-years" class="years" style="display:none;"></div>
-    <div id="PH110-assign" class="notes" style="display:none;">
-      <p class="muted">No assignments uploaded yet. Check back soon.</p>
-    </div>
-    <div id="PH110-topics" class="notes" style="display:none;">
-      <h3>Topics</h3>
-      <p class="muted">No notes added yet for this course.</p>
-    </div>
-  </div>
-
-  <!-- BI10 Biology -->
-  <div class="course" id="BI10">
-    <h2>BI10 — Biology</h2>
-    <div class="row">
-      <button onclick="showYears('BI10')">Tests (2019–2024)</button>
-      <button class="ghost" onclick="showAssignments('BI10')">Assignments</button>
-      <button class="ghost" onclick="showTopics('BI10')">Notes (topics)</button>
-    </div>
-    <div id="BI10-years" class="years" style="display:none;"></div>
-    <div id="BI10-assign" class="notes" style="display:none;">
-      <p class="muted">No assignments uploaded yet. Check back soon.</p>
-    </div>
-    <div id="BI10-topics" class="notes" style="display:none;">
-      <h3>Topics</h3>
-      <p class="muted">No notes added yet for this course.</p>
-    </div>
-  </div>
-
-  <!-- CS110 Computer Studies -->
-  <div class="course" id="CS110">
-    <h2>CS110 — Computer Studies</h2>
-    <div class="row">
-      <button onclick="showYears('CS110')">Tests (2019–2024)</button>
-      <button class="ghost" onclick="showAssignments('CS110')">Assignments</button>
-      <button class="ghost" onclick="showTopics('CS110')">Notes (topics)</button>
-    </div>
-    <div id="CS110-years" class="years" style="display:none;"></div>
-    <div id="CS110-assign" class="notes" style="display:none;">
-      <p class="muted">No assignments uploaded yet. Check back soon.</p>
-    </div>
-    <div id="CS110-topics" class="notes" style="display:none;">
-      <h3>Topics</h3>
-      <p class="muted">No notes added yet for this course.</p>
-    </div>
-  </div>
-
 </div>
 
 <script>
@@ -342,75 +342,4 @@
         <p>Organic molecules are built from covalent bonds. Carbon is central because it forms strong bonds with itself and other elements and can make four covalent bonds, enabling vast structural diversity.</p>
         <h4>Bond types</h4>
         <ul>
-          <li><b>σ (sigma) bonds:</b> Head-on overlap of orbitals; every single bond is a σ bond.</li>
-          <li><b>π (pi) bonds:</b> Side-by-side overlap of p orbitals; present in double (one π) and triple bonds (two π).</li>
-        </ul>
-        <h4>Electronegativity & polarity</h4>
-        <ul>
-          <li>When atoms with different electronegativities bond, electrons are unequally shared → polar bonds.</li>
-          <li>Polarity influences reactivity: polar bonds are sites for nucleophilic/electrophilic attack.</li>
-        </ul>
-        <h4>Geometry & reactivity</h4>
-        <ul>
-          <li>Geometry (bond angles) arises from hybridization and electron pair repulsion.</li>
-          <li>Strain (angle, torsional, steric) raises energy and often increases reactivity.</li>
-        </ul>
-        <h4>Examples</h4>
-        <ul>
-          <li><b>Methane (CH₄):</b> tetrahedral, nonpolar overall; relatively unreactive.</li>
-          <li><b>Ethene (C₂H₄):</b> planar around C=C; π bond enables electrophilic addition.</li>
-          <li><b>Acetylene (C₂H₂):</b> linear; acidic terminal hydrogen due to high s-character.</li>
-        </ul>
-      `;
-    }
-    if(topicId === "hybrid"){
-      container.innerHTML = `
-        <h3>Hybridization</h3>
-        <p>Hybridization is the mixing of atomic orbitals on the same atom to form new, equivalent hybrid orbitals that explain molecular geometry and bonding.</p>
-        <h4>Key principles</h4>
-        <ul>
-          <li>The number of hybrid orbitals equals the number of atomic orbitals mixed.</li>
-          <li>Greater s-character brings orbitals closer to the nucleus → stronger, shorter bonds and higher electronegativity.</li>
-          <li>Hybridization occurs during bond formation, not in isolated atoms.</li>
-        </ul>
-        <h4>Types & geometries</h4>
-        <ul>
-          <li><b>sp:</b> mix 1s + 1p → 2 hybrids; linear (180°). Example: C in alkynes (HC≡CH).</li>
-          <li><b>sp²:</b> mix 1s + 2p → 3 hybrids; trigonal planar (120°). Example: C in alkenes (H₂C=CH₂).</li>
-          <li><b>sp³:</b> mix 1s + 3p → 4 hybrids; tetrahedral (109.5°). Example: C in alkanes (CH₄).</li>
-          <li><b>sp³d:</b> trigonal bipyramidal (90°, 120°). Example: P in PCl₅.</li>
-          <li><b>sp³d²:</b> octahedral (90°). Example: S in SF₆.</li>
-        </ul>
-        <h4>Steric number method</h4>
-        <ul>
-          <li>Steric number = bonded atoms + lone pairs on the central atom.</li>
-          <li>2 → sp (linear), 3 → sp² (trigonal planar), 4 → sp³ (tetrahedral).</li>
-        </ul>
-        <h4>Examples</h4>
-        <ul>
-          <li><b>CH₄:</b> C is sp³ (4 σ bonds) → tetrahedral.</li>
-          <li><b>H₂C=CH₂:</b> each C is sp² (3 σ + 1 π) → planar around C=C.</li>
-          <li><b>HC≡CH:</b> each C is sp (2 σ + 2 π) → linear.</li>
-        </ul>
-        <h4>Why hybridization matters</h4>
-        <ul>
-          <li>Predicts shapes and bond angles accurately.</li>
-          <li>Explains acidity trends (sp > sp² > sp³ for C–H acidity).</li>
-          <li>Guides reactivity—planar sp² centers enable addition; tetrahedral sp³ centers favor substitution.</li>
-        </ul>
-      `;
-    }
-  }
-
-  // Open hosted paper in iframe
-  function openPaper(file){
-    const viewer = document.getElementById("contentViewer");
-    const frame = document.getElementById("contentFrame");
-    viewer.style.display = "block";
-    frame.src = BASE + file;
-    viewer.scrollIntoView({ behavior:"smooth", block:"start" });
-  }
-</script>
-
-</body>
-</html>
+          <li><b>σ (sigma) bonds:</b> Head-on overlap of orbitals; every single bond is a σ bond.</
