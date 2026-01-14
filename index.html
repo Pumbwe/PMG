@@ -46,7 +46,8 @@ iframe { border:none; }
   padding:15px;
   border-radius:10px;
 }
-.notes h3 { color:#FFD700; }
+.notes h2 { color:#FFD700; }
+.notes h3 { color:#FFD700; margin-top:15px; }
 .notes ul, .notes ol { margin-left:20px; }
 </style>
 </head>
@@ -56,117 +57,112 @@ iframe { border:none; }
 <h1>PMG™ EDU</h1>
 <p><b>Legendary Academic Resources</b></p>
 
-<!-- CONTENT -->
 <div id="content" class="section">
+  <!-- MA110 -->
   <h2 style="color:#FFD700;">MA110 – Past Papers</h2>
+  <button class="paper-btn" onclick="openPaper('MA110-2019.html')">MA110 2019 – Paper</button>
+  <button class="paper-btn" onclick="openPaper('MA110-2019-solutions.html')">MA110 2019 – Solutions</button>
 
-  <button class="paper-btn" onclick="openPaper('MA110-2019.html')">
-    MA110 2019 – Paper
-  </button>
-
-  <button class="paper-btn" onclick="openPaper('MA110-2019-solutions.html')">
-    MA110 2019 – Solutions
-  </button>
-
-  <!-- INDUSTRIAL CHEMISTRY SECTION -->
+  <!-- Industrial Chemistry -->
   <h2 style="color:#FFD700; margin-top:30px;">Industrial Chemistry Courses</h2>
 
-  <h3>Organic Chemistry</h3>
-  <button class="paper-btn" onclick="openPaper('organic-chemistry-papers.html')">
-    Past Papers
-  </button>
-  <button class="paper-btn" onclick="openPaper('organic-chemistry-assignments.html')">
-    Assignments
-  </button>
+  <!-- Organic Chemistry -->
+  <h3>Organic Chemistry (CH260)</h3>
+  <button class="paper-btn" onclick="openPaper('organic-chemistry-papers.html')">Past Papers</button>
+  <button class="paper-btn" onclick="openPaper('organic-chemistry-assignments.html')">Assignments</button>
 
-  <!-- DIRECT NOTES EMBED -->
+  <!-- Expanded Notes -->
   <div class="notes">
-    <h3>Organic Chemistry Notes (CH 260)</h3>
-    <p><b>What is Organic Chemistry?</b><br>
-    It is the study of carbon compounds — their structure, properties, reactions, and uses. Carbon is unique because it can form strong bonds with itself and other elements, and it makes four covalent bonds, giving rise to millions of compounds.</p>
+    <h2>Organic Chemistry Notes (CH260)</h2>
 
-    <h4>Why It Matters</h4>
+    <h3>1. Classification</h3>
+    <p>Organic compounds are carbon-based. They are divided into:</p>
     <ul>
-      <li>Basis of life: all living things are made of organic compounds.</li>
-      <li>Applications: plastics, fuels, medicines, electronics, energy storage.</li>
+      <li><b>Hydrocarbons:</b> Alkanes, alkenes, alkynes, aromatics.</li>
+      <li><b>Functionalized compounds:</b> Alcohols, halides, acids, esters, amines.</li>
+      <li><b>Natural sources:</b> Plant oils, animal fats, fossil fuels.</li>
+      <li><b>Importance:</b> Basis of life (DNA, proteins, carbohydrates), fuels, plastics, medicines.</li>
     </ul>
 
-    <h4>Course Outline (Simplified)</h4>
-    <ol>
-      <li><b>Classification:</b> Sources, naming rules, importance.</li>
-      <li><b>Structure & Bonding:</b> Hybridization, how atoms connect.</li>
-      <li><b>Reaction Mechanisms:</b> Using arrows to show electron movement.</li>
-      <li><b>Reagents:</b> Electrophiles (electron-loving) & nucleophiles (nucleus-loving).</li>
-      <li><b>Stereochemistry I:</b> Isomerism, chirality (mirror-image molecules).</li>
-      <li><b>Stereochemistry II:</b> E/Z naming system.</li>
-      <li><b>Alkanes & Cycloalkanes:</b> Naming, preparation, reactions.</li>
-      <li><b>Arenes:</b> Benzene and aromatic compounds.</li>
-      <li><b>Alkenes:</b> Naming, formation, E1/E2/E1cb reaction mechanisms.</li>
-      <li><b>Dienes & Alkynes:</b> Structures and chemical behavior.</li>
-      <li><b>Halides:</b> Alkyl and aryl halides, preparation and reactions.</li>
-      <li><b>Alcohols:</b> Types, naming, preparation from other compounds.</li>
-    </ol>
-
-    <h4>Study Tips</h4>
+    <h3>2. Structure and Bonding</h3>
+    <p>Carbon forms covalent bonds. Hybridization explains geometry:</p>
     <ul>
-      <li>Read before class and note main ideas.</li>
-      <li>Summarize lectures within 24 hours.</li>
-      <li>Practice problems independently.</li>
-      <li>Review daily to avoid cramming.</li>
+      <li><b>sp:</b> Linear, 180°. Example: acetylene (C≡C).</li>
+      <li><b>sp2:</b> Trigonal planar, 120°. Example: ethylene (C=C).</li>
+      <li><b>sp3:</b> Tetrahedral, 109.5°. Example: methane (CH4).</li>
+    </ul>
+    <p>Hybridization determines shape, bond angles, and reactivity.</p>
+
+    <h3>3. Mechanism of Organic Reactions</h3>
+    <p>Organic reactions are explained by electron movement. Curved arrows show how electrons shift:</p>
+    <ul>
+      <li><b>Nucleophilic attack:</b> Electron-rich species attacks electron-deficient center.</li>
+      <li><b>Electrophilic addition:</b> Double bond reacts with electrophile (e.g., HBr + alkene).</li>
+      <li><b>Substitution:</b> SN1 (carbocation intermediate), SN2 (backside attack, inversion).</li>
     </ul>
 
-    <h4>References</h4>
-    <p>Finar, Morrison & Boyd, McMurry, Carey & Giuliano, Eliel & Wilen, Bruce.</p>
-  </div>
+    <h3>4. Types of Reagents</h3>
+    <ul>
+      <li><b>Electrophiles:</b> Electron-deficient, accept electrons. Examples: H+, NO2+, carbocations.</li>
+      <li><b>Nucleophiles:</b> Electron-rich, donate electrons. Examples: OH–, NH3, halide ions.</li>
+    </ul>
 
-  <h3>Analytical Chemistry</h3>
-  <button class="paper-btn" onclick="openPaper('analytical-chemistry-papers.html')">
-    Past Papers
-  </button>
-  <button class="paper-btn" onclick="openPaper('analytical-chemistry-assignments.html')">
-    Assignments
-  </button>
+    <h3>5. Stereochemistry I</h3>
+    <p>Isomerism = same formula, different arrangement.</p>
+    <ul>
+      <li><b>Structural isomers:</b> Different connectivity.</li>
+      <li><b>Stereoisomers:</b> Same connectivity, different spatial arrangement.</li>
+      <li><b>Optical isomers:</b> Mirror images (enantiomers). Important in drug design.</li>
+    </ul>
 
-  <h3>Industrial Chemistry</h3>
-  <button class="paper-btn" onclick="openPaper('industrial-chemistry-papers.html')">
-    Past Papers
-  </button>
-  <button class="paper-btn" onclick="openPaper('industrial-chemistry-assignments.html')">
-    Assignments
-  </button>
+    <h3>6. Stereochemistry II</h3>
+    <p>E/Z system describes double bond geometry:</p>
+    <ul>
+      <li><b>E (entgegen):</b> Higher priority groups on opposite sides.</li>
+      <li><b>Z (zusammen):</b> Higher priority groups on same side.</li>
+    </ul>
 
-  <h3>Industrial Physics</h3>
-  <button class="paper-btn" onclick="openPaper('industrial-physics-papers.html')">
-    Past Papers
-  </button>
-  <button class="paper-btn" onclick="openPaper('industrial-physics-assignments.html')">
-    Assignments
-  </button>
+    <h3>7. Alkanes and Cycloalkanes</h3>
+    <p>Alkanes: saturated hydrocarbons (single bonds). Properties: relatively unreactive, used as fuels.</p>
+    <p>Cycloalkanes: ring structures. Stability depends on ring size (cyclopropane strained, cyclohexane stable).</p>
 
-  <h3>Industrial Mathematics</h3>
-  <button class="paper-btn" onclick="openPaper('industrial-mathematics-papers.html')">
-    Test Papers
-  </button>
-  <button class="paper-btn" onclick="openPaper('industrial-mathematics-assignments.html')">
-    Assignments
-  </button>
+    <h3>8. Conformational Analysis</h3>
+    <p>Cyclohexane adopts chair, boat, twist conformations. Chair is most stable. Substituents prefer equatorial positions to reduce steric hindrance.</p>
 
-  <!-- HTML VIEWER -->
-  <div id="contentViewer" style="margin-top:20px; display:none;">
-    <iframe id="contentFrame" width="100%" height="600px"></iframe>
-  </div>
-</div>
+    <h3>9. Arenes and Aromaticity</h3>
+    <p>Benzene is the classic aromatic compound. Aromaticity requires:</p>
+    <ul>
+      <li>Cyclic, planar structure.</li>
+      <li>Conjugated π system.</li>
+      <li>4n+2 π electrons (Hückel’s rule).</li>
+    </ul>
+    <p>Aromatic compounds undergo substitution (not addition) to preserve stability.</p>
 
-<script>
-function openPaper(file){
-  document.getElementById("contentViewer").style.display = "block";
-  document.getElementById("contentFrame").src =
-    `https://pumbwe.github.io/PMG/past-papers/${file}`;
-}
+    <h3>10. Alkenes</h3>
+    <p>Contain C=C double bonds. Reactions include:</p>
+    <ul>
+      <li>Dehydration of alcohols → alkenes.</li>
+      <li>Dehydrohalogenation of alkyl halides.</li>
+      <li>Mechanisms: E1 (carbocation intermediate), E2 (concerted), E1cb (carbanion intermediate).</li>
+    </ul>
 
-/* Disable right click */
-document.addEventListener("contextmenu", e => e.preventDefault());
-</script>
+    <h3>11. Cycloalkenes, Dienes, and Alkynes</h3>
+    <p>Unsaturated hydrocarbons:</p>
+    <ul>
+      <li>Cycloalkenes: cyclic double bonds.</li>
+      <li>Dienes: two double bonds (conjugated dienes are especially reactive, e.g., Diels–Alder reaction).</li>
+      <li>Alkynes: triple bonds, linear geometry, acidic hydrogen at terminal carbon.</li>
+    </ul>
 
-</body>
-</html>
+    <h3>12. Alkyl Halides</h3>
+    <p>Alkyl halides: carbon bonded to halogen. Prepared by halogenation of alkanes. Reactivity depends on substitution (primary, secondary, tertiary).</p>
+
+    <h3>13. Aryl Halides</h3>
+    <p>Aryl halides: halogen attached to aromatic ring. Undergo substitution reactions (nuclear and side chain). Less reactive than alkyl halides due to resonance stabilization.</p>
+
+    <h3>14. Alcohols</h3>
+    <p>Alcohols: compounds with –OH group. Classified as primary, secondary, tertiary. Prepared by reduction of aldehydes, ketones, carboxylic acids, and esters. Important solvents and intermediates.</p>
+
+    <h3>Study Tips</h3>
+    <ul>
+      <li>Understand hybrid
