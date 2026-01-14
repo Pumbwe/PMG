@@ -1,168 +1,416 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>PMG™ EDU | Legendary Courses</title>
 
 <style>
-body {
-  margin:0;
-  font-family: Arial, sans-serif;
-  background:#0f0f0f;
-  color:#f0f0f0;
-  text-align:center;
-  padding:20px;
-}
-h1 { color:#FFD700; font-size:2.5em; }
-.section {
-  background:#1b1b1b;
-  padding:20px;
-  border-radius:12px;
-  max-width:900px;
-  margin:20px auto;
-  box-shadow:0 0 20px rgba(255,215,0,0.3);
-}
-button {
-  padding:12px 20px;
-  border:none;
-  border-radius:10px;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
-button:hover { transform:scale(1.05); }
-.paper-btn {
-  background:#2563eb;
-  color:#fff;
-  width:100%;
-  margin:5px 0;
-}
-iframe { border:none; }
-.notes {
-  text-align:left;
-  margin-top:20px;
-  background:#111;
-  padding:15px;
-  border-radius:10px;
-}
-.notes h2 { color:#FFD700; }
-.notes h3 { color:#FFD700; margin-top:15px; }
-.notes ul, .notes ol { margin-left:20px; }
+  :root{
+    --bg:#0f0f0f; --card:#1b1b1b; --ink:#f0f0f0; --gold:#FFD700; --blue:#2563eb;
+  }
+  body {
+    margin:0; font-family: Arial, sans-serif; background:var(--bg); color:var(--ink);
+    text-align:center; padding:20px;
+  }
+  h1 { color:var(--gold); font-size:2.4em; margin:0 0 8px; }
+  .section {
+    background:var(--card); padding:20px; border-radius:12px; max-width:1100px;
+    margin:20px auto; box-shadow:0 0 20px rgba(255,215,0,0.25);
+  }
+  .course {
+    border:1px solid rgba(255,215,0,0.2); border-radius:12px; padding:16px; margin:18px 0;
+    text-align:left;
+  }
+  .course h2 { color:var(--gold); margin:0 0 8px; font-size:1.25em; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 6px; }
+  button {
+    padding:12px 16px; border:none; border-radius:10px; font-weight:bold; cursor:pointer;
+    transition:0.2s; background:var(--blue); color:#fff;
+  }
+  button:hover { transform:translateY(-1px); filter:brightness(1.05); }
+  .ghost { background:transparent; color:var(--gold); border:1px solid rgba(255,215,0,0.35); }
+  .ghost:hover { background:rgba(255,215,0,0.08); }
+  .pill { background:#111; color:#ddd; border:1px solid #333; border-radius:999px; padding:8px 12px; cursor:pointer; }
+  .pill.active { background:var(--gold); color:#111; border-color:var(--gold); }
+  .notes {
+    background:#111; border:1px solid #333; border-radius:12px; padding:16px; margin-top:12px;
+  }
+  .notes h3 { color:var(--gold); margin:8px 0; }
+  .notes h4 { color:#ddd; margin:10px 0 6px; }
+  .notes p, .notes ul { line-height:1.6; color:#ddd; }
+  .topics { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
+  .years { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
+  .muted { color:#aaa; font-size:0.95em; }
+  .viewer { margin-top:16px; display:none; }
+  iframe { border:none; width:100%; height:600px; border-radius:10px; }
+  .divider { height:1px; background:#333; margin:14px 0; }
 </style>
 </head>
 
 <body>
 
 <h1>PMG™ EDU</h1>
-<p><b>Legendary Academic Resources</b></p>
+<p class="muted"><b>Legendary Academic Resources</b> — tests, assignments, and topic-based notes</p>
 
-<div id="content" class="section">
-  <!-- MA110 -->
-  <h2 style="color:#FFD700;">MA110 – Past Papers</h2>
-  <button class="paper-btn" onclick="openPaper('MA110-2019.html')">MA110 2019 – Paper</button>
-  <button class="paper-btn" onclick="openPaper('MA110-2019-solutions.html')">MA110 2019 – Solutions</button>
+<div class="section" id="portal">
+
+  <!-- Global viewer -->
+  <div id="contentViewer" class="viewer">
+    <iframe id="contentFrame"></iframe>
+  </div>
+
+  <!-- MA110 Mathematics -->
+  <div class="course" id="MA110">
+    <h2>MA110 — Mathematics</h2>
+    <div class="row">
+      <button onclick="showYears('MA110')">Tests (2019–2024)</button>
+      <button class="ghost" onclick="showAssignments('MA110')">Assignments</button>
+      <button class="ghost" onclick="showTopics('MA110')">Notes (topics)</button>
+    </div>
+    <div id="MA110-years" class="years" style="display:none;"></div>
+    <div id="MA110-assign" class="notes" style="display:none;">
+      <p class="muted">No assignments uploaded yet. Check back soon.</p>
+    </div>
+    <div id="MA110-topics" class="notes" style="display:none;">
+      <h3>Topics</h3>
+      <p class="muted">No notes added yet for this course.</p>
+    </div>
+  </div>
+
+  <!-- Industrial Chemistry umbrella -->
+  <h2 style="color:var(--gold); margin-top:24px;">Industrial Chemistry Courses</h2>
+
+  <!-- CH260 Organic Chemistry -->
+  <div class="course" id="CH260">
+    <h2>CH260 — Organic Chemistry</h2>
+    <div class="row">
+      <button onclick="showYears('CH260')">Tests (2019–2024)</button>
+      <button class="ghost" onclick="showAssignments('CH260')">Assignments</button>
+      <button class="ghost" onclick="showTopics('CH260')">Notes (topics)</button>
+    </div>
+
+    <div id="CH260-years" class="years" style="display:none;"></div>
+
+    <div id="CH260-assign" class="notes" style="display:none;">
+      <p class="muted">No assignments uploaded yet. Check back soon.</p>
+    </div>
+
+    <div id="CH260-topics" class="notes" style="display:none;">
+      <h3>Topics</h3>
+      <div class="topics" id="CH260-topic-pills"></div>
+      <div class="divider"></div>
+      <div id="CH260-topic-content">
+        <p class="muted">Select a topic above to view notes.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analytical Chemistry -->
+  <div class="course" id="AnalyticalChem">
+    <h2>Analytical Chemistry</h2>
+    <div class="row">
+      <button onclick="showYears('AnalyticalChem')">Tests (2019–2024)</button>
+      <button class="ghost" onclick="showAssignments('AnalyticalChem')">Assignments</button>
+      <button class="ghost" onclick="showTopics('AnalyticalChem')">Notes (topics)</button>
+    </div>
+    <div id="AnalyticalChem-years" class="years" style="display:none;"></div>
+    <div id="AnalyticalChem-assign" class="notes" style="display:none;">
+      <p class="muted">No assignments uploaded yet. Check back soon.</p>
+    </div>
+    <div id="AnalyticalChem-topics" class="notes" style="display:none;">
+      <h3>Topics</h3>
+      <p class="muted">No notes added yet for this course.</p>
+    </div>
+  </div>
 
   <!-- Industrial Chemistry -->
-  <h2 style="color:#FFD700; margin-top:30px;">Industrial Chemistry Courses</h2>
+  <div class="course" id="IndustrialChem">
+    <h2>Industrial Chemistry</h2>
+    <div class="row">
+      <button onclick="showYears('IndustrialChem')">Tests (2019–2024)</button>
+      <button class="ghost" onclick="showAssignments('IndustrialChem')">Assignments</button>
+      <button class="ghost" onclick="showTopics('IndustrialChem')">Notes (topics)</button>
+    </div>
+    <div id="IndustrialChem-years" class="years" style="display:none;"></div>
+    <div id="IndustrialChem-assign" class="notes" style="display:none;">
+      <p class="muted">No assignments uploaded yet. Check back soon.</p>
+    </div>
+    <div id="IndustrialChem-topics" class="notes" style="display:none;">
+      <h3>Topics</h3>
+      <p class="muted">No notes added yet for this course.</p>
+    </div>
+  </div>
 
-  <!-- Organic Chemistry -->
-  <h3>Organic Chemistry (CH260)</h3>
-  <button class="paper-btn" onclick="openPaper('organic-chemistry-papers.html')">Past Papers</button>
-  <button class="paper-btn" onclick="openPaper('organic-chemistry-assignments.html')">Assignments</button>
+  <!-- Industrial Physics -->
+  <div class="course" id="IndustrialPhys">
+    <h2>Industrial Physics</h2>
+    <div class="row">
+      <button onclick="showYears('IndustrialPhys')">Tests (2019–2024)</button>
+      <button class="ghost" onclick="showAssignments('IndustrialPhys')">Assignments</button>
+      <button class="ghost" onclick="showTopics('IndustrialPhys')">Notes (topics)</button>
+    </div>
+    <div id="IndustrialPhys-years" class="years" style="display:none;"></div>
+    <div id="IndustrialPhys-assign" class="notes" style="display:none;">
+      <p class="muted">No assignments uploaded yet. Check back soon.</p>
+    </div>
+    <div id="IndustrialPhys-topics" class="notes" style="display:none;">
+      <h3>Topics</h3>
+      <p class="muted">No notes added yet for this course.</p>
+    </div>
+  </div>
 
-  <!-- Expanded Notes -->
-  <div class="notes">
-    <h2>Organic Chemistry Notes (CH260)</h2>
+  <!-- Industrial Mathematics -->
+  <div class="course" id="IndustrialMath">
+    <h2>Industrial Mathematics</h2>
+    <div class="row">
+      <button onclick="showYears('IndustrialMath')">Tests (2019–2024)</button>
+      <button class="ghost" onclick="showAssignments('IndustrialMath')">Assignments</button>
+      <button class="ghost" onclick="showTopics('IndustrialMath')">Notes (topics)</button>
+    </div>
+    <div id="IndustrialMath-years" class="years" style="display:none;"></div>
+    <div id="IndustrialMath-assign" class="notes" style="display:none;">
+      <p class="muted">No assignments uploaded yet. Check back soon.</p>
+    </div>
+    <div id="IndustrialMath-topics" class="notes" style="display:none;">
+      <h3>Topics</h3>
+      <p class="muted">No notes added yet for this course.</p>
+    </div>
+  </div>
 
-    <h3>1. Classification</h3>
-    <p>Organic compounds are carbon-based. They are divided into:</p>
-    <ul>
-      <li><b>Hydrocarbons:</b> Alkanes, alkenes, alkynes, aromatics.</li>
-      <li><b>Functionalized compounds:</b> Alcohols, halides, acids, esters, amines.</li>
-      <li><b>Natural sources:</b> Plant oils, animal fats, fossil fuels.</li>
-      <li><b>Importance:</b> Basis of life (DNA, proteins, carbohydrates), fuels, plastics, medicines.</li>
-    </ul>
+  <!-- General Courses -->
+  <h2 style="color:var(--gold); margin-top:24px;">General Courses</h2>
 
-    <h3>2. Structure and Bonding</h3>
-    <p>Carbon forms covalent bonds. Hybridization explains geometry:</p>
-    <ul>
-      <li><b>sp:</b> Linear, 180°. Example: acetylene (C≡C).</li>
-      <li><b>sp2:</b> Trigonal planar, 120°. Example: ethylene (C=C).</li>
-      <li><b>sp3:</b> Tetrahedral, 109.5°. Example: methane (CH4).</li>
-    </ul>
-    <p>Hybridization determines shape, bond angles, and reactivity.</p>
+  <!-- CH110 Chemistry -->
+  <div class="course" id="CH110">
+    <h2>CH110 — Chemistry</h2>
+    <div class="row">
+      <button onclick="showYears('CH110')">Tests (2019–2024)</button>
+      <button class="ghost" onclick="showAssignments('CH110')">Assignments</button>
+      <button class="ghost" onclick="showTopics('CH110')">Notes (topics)</button>
+    </div>
+    <div id="CH110-years" class="years" style="display:none;"></div>
+    <div id="CH110-assign" class="notes" style="display:none;">
+      <p class="muted">No assignments uploaded yet. Check back soon.</p>
+    </div>
+    <div id="CH110-topics" class="notes" style="display:none;">
+      <h3>Topics</h3>
+      <p class="muted">No notes added yet for this course.</p>
+    </div>
+  </div>
 
-    <h3>3. Mechanism of Organic Reactions</h3>
-    <p>Organic reactions are explained by electron movement. Curved arrows show how electrons shift:</p>
-    <ul>
-      <li><b>Nucleophilic attack:</b> Electron-rich species attacks electron-deficient center.</li>
-      <li><b>Electrophilic addition:</b> Double bond reacts with electrophile (e.g., HBr + alkene).</li>
-      <li><b>Substitution:</b> SN1 (carbocation intermediate), SN2 (backside attack, inversion).</li>
-    </ul>
+  <!-- PH110 Physics -->
+  <div class="course" id="PH110">
+    <h2>PH110 — Physics</h2>
+    <div class="row">
+      <button onclick="showYears('PH110')">Tests (2019–2024)</button>
+      <button class="ghost" onclick="showAssignments('PH110')">Assignments</button>
+      <button class="ghost" onclick="showTopics('PH110')">Notes (topics)</button>
+    </div>
+    <div id="PH110-years" class="years" style="display:none;"></div>
+    <div id="PH110-assign" class="notes" style="display:none;">
+      <p class="muted">No assignments uploaded yet. Check back soon.</p>
+    </div>
+    <div id="PH110-topics" class="notes" style="display:none;">
+      <h3>Topics</h3>
+      <p class="muted">No notes added yet for this course.</p>
+    </div>
+  </div>
 
-    <h3>4. Types of Reagents</h3>
-    <ul>
-      <li><b>Electrophiles:</b> Electron-deficient, accept electrons. Examples: H+, NO2+, carbocations.</li>
-      <li><b>Nucleophiles:</b> Electron-rich, donate electrons. Examples: OH–, NH3, halide ions.</li>
-    </ul>
+  <!-- BI10 Biology -->
+  <div class="course" id="BI10">
+    <h2>BI10 — Biology</h2>
+    <div class="row">
+      <button onclick="showYears('BI10')">Tests (2019–2024)</button>
+      <button class="ghost" onclick="showAssignments('BI10')">Assignments</button>
+      <button class="ghost" onclick="showTopics('BI10')">Notes (topics)</button>
+    </div>
+    <div id="BI10-years" class="years" style="display:none;"></div>
+    <div id="BI10-assign" class="notes" style="display:none;">
+      <p class="muted">No assignments uploaded yet. Check back soon.</p>
+    </div>
+    <div id="BI10-topics" class="notes" style="display:none;">
+      <h3>Topics</h3>
+      <p class="muted">No notes added yet for this course.</p>
+    </div>
+  </div>
 
-    <h3>5. Stereochemistry I</h3>
-    <p>Isomerism = same formula, different arrangement.</p>
-    <ul>
-      <li><b>Structural isomers:</b> Different connectivity.</li>
-      <li><b>Stereoisomers:</b> Same connectivity, different spatial arrangement.</li>
-      <li><b>Optical isomers:</b> Mirror images (enantiomers). Important in drug design.</li>
-    </ul>
+  <!-- CS110 Computer Studies -->
+  <div class="course" id="CS110">
+    <h2>CS110 — Computer Studies</h2>
+    <div class="row">
+      <button onclick="showYears('CS110')">Tests (2019–2024)</button>
+      <button class="ghost" onclick="showAssignments('CS110')">Assignments</button>
+      <button class="ghost" onclick="showTopics('CS110')">Notes (topics)</button>
+    </div>
+    <div id="CS110-years" class="years" style="display:none;"></div>
+    <div id="CS110-assign" class="notes" style="display:none;">
+      <p class="muted">No assignments uploaded yet. Check back soon.</p>
+    </div>
+    <div id="CS110-topics" class="notes" style="display:none;">
+      <h3>Topics</h3>
+      <p class="muted">No notes added yet for this course.</p>
+    </div>
+  </div>
 
-    <h3>6. Stereochemistry II</h3>
-    <p>E/Z system describes double bond geometry:</p>
-    <ul>
-      <li><b>E (entgegen):</b> Higher priority groups on opposite sides.</li>
-      <li><b>Z (zusammen):</b> Higher priority groups on same side.</li>
-    </ul>
+</div>
 
-    <h3>7. Alkanes and Cycloalkanes</h3>
-    <p>Alkanes: saturated hydrocarbons (single bonds). Properties: relatively unreactive, used as fuels.</p>
-    <p>Cycloalkanes: ring structures. Stability depends on ring size (cyclopropane strained, cyclohexane stable).</p>
+<script>
+  // Base path for hosted papers
+  const BASE = "https://pumbwe.github.io/PMG/past-papers/";
 
-    <h3>8. Conformational Analysis</h3>
-    <p>Cyclohexane adopts chair, boat, twist conformations. Chair is most stable. Substituents prefer equatorial positions to reduce steric hindrance.</p>
+  // Show tests years (2019–2024) for a course
+  function showYears(courseId){
+    const yearsDiv = document.getElementById(courseId+"-years");
+    const assignDiv = document.getElementById(courseId+"-assign");
+    const topicsDiv = document.getElementById(courseId+"-topics");
+    if(assignDiv) assignDiv.style.display = "none";
+    if(topicsDiv) topicsDiv.style.display = "none";
 
-    <h3>9. Arenes and Aromaticity</h3>
-    <p>Benzene is the classic aromatic compound. Aromaticity requires:</p>
-    <ul>
-      <li>Cyclic, planar structure.</li>
-      <li>Conjugated π system.</li>
-      <li>4n+2 π electrons (Hückel’s rule).</li>
-    </ul>
-    <p>Aromatic compounds undergo substitution (not addition) to preserve stability.</p>
+    yearsDiv.innerHTML = "";
+    yearsDiv.style.display = "flex";
+    const years = [2019,2020,2021,2022,2023,2024];
+    years.forEach(y=>{
+      const pill = document.createElement("div");
+      pill.className = "pill";
+      pill.textContent = y;
+      pill.onclick = ()=> openPaper(`${courseId}-${y}.html`);
+      yearsDiv.appendChild(pill);
+    });
+  }
 
-    <h3>10. Alkenes</h3>
-    <p>Contain C=C double bonds. Reactions include:</p>
-    <ul>
-      <li>Dehydration of alcohols → alkenes.</li>
-      <li>Dehydrohalogenation of alkyl halides.</li>
-      <li>Mechanisms: E1 (carbocation intermediate), E2 (concerted), E1cb (carbanion intermediate).</li>
-    </ul>
+  // Show assignments placeholder
+  function showAssignments(courseId){
+    const yearsDiv = document.getElementById(courseId+"-years");
+    const assignDiv = document.getElementById(courseId+"-assign");
+    const topicsDiv = document.getElementById(courseId+"-topics");
+    if(yearsDiv) yearsDiv.style.display = "none";
+    if(topicsDiv) topicsDiv.style.display = "none";
+    assignDiv.style.display = "block";
+  }
 
-    <h3>11. Cycloalkenes, Dienes, and Alkynes</h3>
-    <p>Unsaturated hydrocarbons:</p>
-    <ul>
-      <li>Cycloalkenes: cyclic double bonds.</li>
-      <li>Dienes: two double bonds (conjugated dienes are especially reactive, e.g., Diels–Alder reaction).</li>
-      <li>Alkynes: triple bonds, linear geometry, acidic hydrogen at terminal carbon.</li>
-    </ul>
+  // Show topics; only CH260 has notes now (Bonding & Hybridization)
+  function showTopics(courseId){
+    const yearsDiv = document.getElementById(courseId+"-years");
+    const assignDiv = document.getElementById(courseId+"-assign");
+    const topicsDiv = document.getElementById(courseId+"-topics");
+    if(yearsDiv) yearsDiv.style.display = "none";
+    if(assignDiv) assignDiv.style.display = "none";
 
-    <h3>12. Alkyl Halides</h3>
-    <p>Alkyl halides: carbon bonded to halogen. Prepared by halogenation of alkanes. Reactivity depends on substitution (primary, secondary, tertiary).</p>
+    topicsDiv.style.display = "block";
 
-    <h3>13. Aryl Halides</h3>
-    <p>Aryl halides: halogen attached to aromatic ring. Undergo substitution reactions (nuclear and side chain). Less reactive than alkyl halides due to resonance stabilization.</p>
+    if(courseId === "CH260"){
+      const pills = document.getElementById("CH260-topic-pills");
+      const content = document.getElementById("CH260-topic-content");
+      pills.innerHTML = "";
 
-    <h3>14. Alcohols</h3>
-    <p>Alcohols: compounds with –OH group. Classified as primary, secondary, tertiary. Prepared by reduction of aldehydes, ketones, carboxylic acids, and esters. Important solvents and intermediates.</p>
+      const topics = [
+        { id:"bonding", label:"Structure & Bonding" },
+        { id:"hybrid", label:"Hybridization" }
+      ];
 
-    <h3>Study Tips</h3>
-    <ul>
-      <li>Understand hybrid
+      topics.forEach(t=>{
+        const pill = document.createElement("div");
+        pill.className = "pill";
+        pill.textContent = t.label;
+        pill.onclick = ()=>{
+          [...pills.children].forEach(c=>c.classList.remove("active"));
+          pill.classList.add("active");
+          renderCH260Topic(t.id, content);
+        };
+        pills.appendChild(pill);
+      });
+
+      // Default select first topic
+      if(pills.children.length){
+        pills.children[0].classList.add("active");
+        renderCH260Topic(topics[0].id, content);
+      }
+    } else {
+      topicsDiv.innerHTML = `
+        <h3>Topics</h3>
+        <p class="muted">No notes added yet for this course. Send me the outline and I’ll embed topic-based notes here.</p>
+      `;
+    }
+  }
+
+  // Render CH260 topic content (Bonding & Hybridization)
+  function renderCH260Topic(topicId, container){
+    if(topicId === "bonding"){
+      container.innerHTML = `
+        <h3>Structure & Bonding</h3>
+        <p>Organic molecules are built from covalent bonds. Carbon is central because it forms strong bonds with itself and other elements and can make four covalent bonds, enabling vast structural diversity.</p>
+        <h4>Bond types</h4>
+        <ul>
+          <li><b>σ (sigma) bonds:</b> Head-on overlap of orbitals; every single bond is a σ bond.</li>
+          <li><b>π (pi) bonds:</b> Side-by-side overlap of p orbitals; present in double (one π) and triple bonds (two π).</li>
+        </ul>
+        <h4>Electronegativity & polarity</h4>
+        <ul>
+          <li>When atoms with different electronegativities bond, electrons are unequally shared → polar bonds.</li>
+          <li>Polarity influences reactivity: polar bonds are sites for nucleophilic/electrophilic attack.</li>
+        </ul>
+        <h4>Geometry & reactivity</h4>
+        <ul>
+          <li>Geometry (bond angles) arises from hybridization and electron pair repulsion.</li>
+          <li>Strain (angle, torsional, steric) raises energy and often increases reactivity.</li>
+        </ul>
+        <h4>Examples</h4>
+        <ul>
+          <li><b>Methane (CH₄):</b> tetrahedral, nonpolar overall; relatively unreactive.</li>
+          <li><b>Ethene (C₂H₄):</b> planar around C=C; π bond enables electrophilic addition.</li>
+          <li><b>Acetylene (C₂H₂):</b> linear; acidic terminal hydrogen due to high s-character.</li>
+        </ul>
+      `;
+    }
+    if(topicId === "hybrid"){
+      container.innerHTML = `
+        <h3>Hybridization</h3>
+        <p>Hybridization is the mixing of atomic orbitals on the same atom to form new, equivalent hybrid orbitals that explain molecular geometry and bonding.</p>
+        <h4>Key principles</h4>
+        <ul>
+          <li>The number of hybrid orbitals equals the number of atomic orbitals mixed.</li>
+          <li>Greater s-character brings orbitals closer to the nucleus → stronger, shorter bonds and higher electronegativity.</li>
+          <li>Hybridization occurs during bond formation, not in isolated atoms.</li>
+        </ul>
+        <h4>Types & geometries</h4>
+        <ul>
+          <li><b>sp:</b> mix 1s + 1p → 2 hybrids; linear (180°). Example: C in alkynes (HC≡CH).</li>
+          <li><b>sp²:</b> mix 1s + 2p → 3 hybrids; trigonal planar (120°). Example: C in alkenes (H₂C=CH₂).</li>
+          <li><b>sp³:</b> mix 1s + 3p → 4 hybrids; tetrahedral (109.5°). Example: C in alkanes (CH₄).</li>
+          <li><b>sp³d:</b> trigonal bipyramidal (90°, 120°). Example: P in PCl₅.</li>
+          <li><b>sp³d²:</b> octahedral (90°). Example: S in SF₆.</li>
+        </ul>
+        <h4>Steric number method</h4>
+        <ul>
+          <li>Steric number = bonded atoms + lone pairs on the central atom.</li>
+          <li>2 → sp (linear), 3 → sp² (trigonal planar), 4 → sp³ (tetrahedral).</li>
+        </ul>
+        <h4>Examples</h4>
+        <ul>
+          <li><b>CH₄:</b> C is sp³ (4 σ bonds) → tetrahedral.</li>
+          <li><b>H₂C=CH₂:</b> each C is sp² (3 σ + 1 π) → planar around C=C.</li>
+          <li><b>HC≡CH:</b> each C is sp (2 σ + 2 π) → linear.</li>
+        </ul>
+        <h4>Why hybridization matters</h4>
+        <ul>
+          <li>Predicts shapes and bond angles accurately.</li>
+          <li>Explains acidity trends (sp > sp² > sp³ for C–H acidity).</li>
+          <li>Guides reactivity—planar sp² centers enable addition; tetrahedral sp³ centers favor substitution.</li>
+        </ul>
+      `;
+    }
+  }
+
+  // Open hosted paper in iframe
+  function openPaper(file){
+    const viewer = document.getElementById("contentViewer");
+    const frame = document.getElementById("contentFrame");
+    viewer.style.display = "block";
+    frame.src = BASE + file;
+    viewer.scrollIntoView({ behavior:"smooth", block:"start" });
+  }
+</script>
+
+</body>
+</html>
