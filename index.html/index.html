@@ -68,8 +68,8 @@
       70% { transform: scale(1.02); box-shadow: 0 10px 30px 6px rgba(43,156,255,0.06); }
       100% { transform: scale(1); box-shadow: none; }
     }
-    /* Contact bar */
-    .contact-bar{margin-top:12px;padding:10px;border-radius:10px;background:linear-gradient(90deg,rgba(255,215,0,0.06),rgba(43,156,255,0.02));display:flex;align-items:center;gap:12px;border:1px solid rgba(255,255,255,0.02)}
+    /* Footer contact */
+    footer.contact{margin-top:18px;padding:12px;border-radius:10px;background:linear-gradient(90deg,rgba(255,215,0,0.03),rgba(43,156,255,0.02));display:flex;align-items:center;gap:12px;border:1px solid rgba(255,255,255,0.02)}
     .contact-number{font-weight:800;color:#071018;background:#fff;padding:6px 10px;border-radius:8px}
   </style>
 </head>
@@ -85,13 +85,6 @@
       </div>
       <div class="muted">Press <span class="kbd">/</span> to focus search</div>
     </header>
-
-    <!-- Contact bar (WhatsApp) -->
-    <div class="contact-bar" role="region" aria-label="Contact">
-      <div class="muted">For more information on WhatsApp</div>
-      <div class="contact-number">+260 77 530 2886</div>
-      <div style="margin-left:auto" class="muted">Available for enquiries and course support</div>
-    </div>
 
     <div class="layout" role="region" aria-label="Main layout">
       <!-- LEFT: Programs -->
@@ -155,6 +148,13 @@
         </div>
       </aside>
     </div>
+
+    <!-- Footer contact (moved to bottom as requested) -->
+    <footer class="contact" role="contentinfo" aria-label="Contact">
+      <div class="muted">For more information on WhatsApp</div>
+      <div class="contact-number">+260 77 530 2886</div>
+      <div style="margin-left:auto" class="muted">Available for enquiries and course support</div>
+    </footer>
   </div>
 
   <script>
@@ -186,7 +186,9 @@
           courses: [
             { code: "PH110", title: "Physics" },
             { code: "CS110", title: "Computer Studies" },
-            { code: "BI110", title: "Biology" }
+            { code: "BI110", title: "Biology" },
+            { code: "MA110", title: "Mathematics" },
+            { code: "CH110", title: "Chemistry" }
           ],
           style: "nonquota"
         }
