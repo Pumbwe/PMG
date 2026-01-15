@@ -4,822 +4,114 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>PMG™ EDU | Legendary Courses</title>
+
 <style>
-  :root{
-    --bg:#0f0f0f; --card:#1b1b1b; --ink:#f0f0f0; --gold:#FFD700; --blue:#2563eb;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background:var(--bg); color:var(--ink); text-align:center; padding:20px;
-  }
-  h1{ color:var(--gold); font-size:2.2rem; margin:0 0 8px; }
-  .muted{ color:#a9a9a9; font-size:0.95rem; margin-bottom:18px; }
-  .section{ background:var(--card); padding:20px; border-radius:12px; max-width:1100px; margin:18px auto; box-shadow:0 8px 30px rgba(0,0,0,0.6); }
-  .course{ border:1px solid rgba(255,215,0,0.08); border-radius:12px; padding:16px; margin:18px 0; text-align:left; }
-  .course h2{ color:var(--gold); margin:0 0 8px; font-size:1.15rem; }
-  .row{ display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 6px; }
-  button{ padding:10px 14px; border:none; border-radius:10px; font-weight:700; cursor:pointer; transition:all .12s ease; background:var(--blue); color:#fff; }
-  button.ghost{ background:transparent; color:var(--gold); border:1px solid rgba(255,215,0,0.18); }
-  button.ghost:hover{ background:rgba(255,215,0,0.04); }
-  .pill{ background:#111; color:#ddd; border:1px solid #333; border-radius:999px; padding:8px 12px; cursor:pointer; }
-  .pill.active{ background:var(--gold); color:#111; border-color:var(--gold); }
-  .years{ display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
-  .notes{ background:#0b0b0b; border:1px solid #222; border-radius:10px; padding:14px; margin-top:12px; color:#ddd; }
-  .notes h3{ color:var(--gold); margin:6px 0 10px; }
-  .topics{ display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
-  .divider{ height:1px; background:#222; margin:12px 0; }
-  .viewer{ margin-top:16px; display:none; }
-  iframe{ border:none; width:100%; height:640px; border-radius:8px; background:#fff; }
-  ul{ padding-left:18px; margin:6px 0 12px; }
-  li{ margin:6px 0; line-height:1.5; }
-  .small{ font-size:0.92rem; color:#bdbdbd; }
-  .example{ background:#0e0e0e; border-left:4px solid #2563eb; padding:10px; margin:8px 0; color:#e6f0ff; }
-  @media (max-width:720px){
-    .row{ flex-direction:column; align-items:stretch; }
-    button{ width:100%; }
-  }
+:root{
+  --bg:#0f0f0f; --card:#1b1b1b; --ink:#f0f0f0;
+  --gold:#FFD700; --blue:#2563eb;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; font-family:Inter,system-ui;
+  background:var(--bg); color:var(--ink);
+  text-align:center; padding:20px;
+}
+h1{color:var(--gold)}
+.section{background:var(--card);padding:20px;border-radius:12px;max-width:1100px;margin:auto}
+.course{border:1px solid #333;border-radius:12px;padding:16px;margin:16px 0;text-align:left}
+.course h2{color:var(--gold)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+button{padding:10px;border-radius:10px;border:none;font-weight:700;background:var(--blue);color:#fff}
+button.ghost{background:transparent;color:var(--gold);border:1px solid #444}
+.years{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.pill{padding:8px 14px;border-radius:999px;background:#111;border:1px solid #444;cursor:pointer}
+.viewer{display:none;margin-top:20px}
+iframe{width:100%;height:75vh;border:none;border-radius:10px;background:#fff}
 </style>
 </head>
+
 <body>
-  <h1>PMG™ EDU</h1>
-  <p class="muted"><strong>Legendary Academic Resources</strong> — tests, assignments, lab reports, and topic-based notes</p>
 
-  <div class="section" id="portal">
+<h1>PMG™ EDU</h1>
+<p>Legendary Academic Resources</p>
 
-    <!-- Viewer -->
-    <div id="contentViewer" class="viewer" aria-hidden="true">
-      <iframe id="contentFrame" title="Paper viewer"></iframe>
-    </div>
+<div class="section">
 
-    <!-- Industrial Chemistry Second Year -->
-    <h2 style="color:var(--gold); margin-top:8px;">Industrial Chemistry Second Year</h2>
+<div id="contentViewer" class="viewer">
+  <iframe id="contentFrame"></iframe>
+</div>
 
-    <!-- CH260 Organic Chemistry -->
-    <div class="course" id="CH260">
-      <h2>CH260 — Organic Chemistry</h2>
-      <div class="row">
-        <button onclick="showYears('CH260')">Tests (2019–2024)</button>
-        <button class="ghost" onclick="showAssignments('CH260')">Assignments</button>
-        <button class="ghost" onclick="showTopics('CH260')">Notes (topics)</button>
-      </div>
-      <div id="CH260-years" class="years" style="display:none;"></div>
-      <div id="CH260-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
-      <div id="CH260-topics" class="notes" style="display:none;">
-        <h3>Topics</h3>
-        <div class="topics" id="CH260-topic-pills"></div>
-        <div class="divider"></div>
-        <div id="CH260-topic-content"><p class="small">Select a topic above to view notes.</p></div>
-      </div>
-    </div>
+<!-- ================= INDUSTRIAL CHEMISTRY ================= -->
+<h2 style="color:gold">Industrial Chemistry – Second Year</h2>
 
-    <!-- Analytical Chemistry -->
-    <div class="course" id="AnalyticalChem">
-      <h2>Analytical Chemistry</h2>
-      <div class="row">
-        <button onclick="showYears('AnalyticalChem')">Tests (2019–2024)</button>
-        <button class="ghost" onclick="showAssignments('AnalyticalChem')">Assignments</button>
-        <button class="ghost" onclick="showTopics('AnalyticalChem')">Notes (topics)</button>
-      </div>
-      <div id="AnalyticalChem-years" class="years" style="display:none;"></div>
-      <div id="AnalyticalChem-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
-      <div id="AnalyticalChem-topics" class="notes" style="display:none;">
-        <h3>Topics</h3>
-        <div class="topics" id="AnalyticalChem-topic-pills"></div>
-        <div class="divider"></div>
-        <div id="AnalyticalChem-topic-content"><p class="small">Select a topic above to view notes.</p></div>
-      </div>
-    </div>
+<div class="course">
+<h2>CH260 – Organic Chemistry</h2>
+<div class="row">
+  <button onclick="showYears('CH260')">Tests</button>
+</div>
+<div id="CH260-years" class="years"></div>
+</div>
 
-    <!-- Industrial Chemistry (course) -->
-    <div class="course" id="IndustrialChem">
-      <h2>Industrial Chemistry</h2>
-      <div class="row">
-        <button onclick="showYears('IndustrialChem')">Tests (2019–2024)</button>
-        <button class="ghost" onclick="showAssignments('IndustrialChem')">Assignments</button>
-        <button class="ghost" onclick="showTopics('IndustrialChem')">Notes (topics)</button>
-      </div>
-      <div id="IndustrialChem-years" class="years" style="display:none;"></div>
-      <div id="IndustrialChem-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
-      <div id="IndustrialChem-topics" class="notes" style="display:none;">
-        <h3>Topics</h3>
-        <div class="topics" id="IndustrialChem-topic-pills"></div>
-        <div class="divider"></div>
-        <div id="IndustrialChem-topic-content"><p class="small">Select a topic above to view notes.</p></div>
-      </div>
-    </div>
+<!-- ================= FIRST YEAR NQ ================= -->
+<h2 style="color:gold;margin-top:30px">First Year NQ</h2>
 
-    <!-- Industrial Physics -->
-    <div class="course" id="IndustrialPhys">
-      <h2>Industrial Physics</h2>
-      <div class="row">
-        <button onclick="showYears('IndustrialPhys')">Tests (2019–2024)</button>
-        <button class="ghost" onclick="showAssignments('IndustrialPhys')">Assignments</button>
-        <button class="ghost" onclick="showTopics('IndustrialPhys')">Notes (topics)</button>
-      </div>
-      <div id="IndustrialPhys-years" class="years" style="display:none;"></div>
-      <div id="IndustrialPhys-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
-      <div id="IndustrialPhys-topics" class="notes" style="display:none;">
-        <h3>Topics</h3>
-        <div class="topics" id="IndustrialPhys-topic-pills"></div>
-        <div class="divider"></div>
-        <div id="IndustrialPhys-topic-content"><p class="small">Select a topic above to view notes.</p></div>
-      </div>
-    </div>
+<div class="course">
+<h2>BI110 – Biology</h2>
+<div class="row">
+  <button onclick="showYears('BI110')">Tests</button>
+</div>
+<div id="BI110-years" class="years"></div>
+</div>
 
-    <!-- Industrial Mathematics -->
-    <div class="course" id="IndustrialMath">
-      <h2>Industrial Mathematics</h2>
-      <div class="row">
-        <button onclick="showYears('IndustrialMath')">Tests (2019–2024)</button>
-        <button class="ghost" onclick="showAssignments('IndustrialMath')">Assignments</button>
-        <button class="ghost" onclick="showTopics('IndustrialMath')">Notes (topics)</button>
-      </div>
-      <div id="IndustrialMath-years" class="years" style="display:none;"></div>
-      <div id="IndustrialMath-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
-      <div id="IndustrialMath-topics" class="notes" style="display:none;">
-        <h3>Topics</h3>
-        <div class="topics" id="IndustrialMath-topic-pills"></div>
-        <div class="divider"></div>
-        <div id="IndustrialMath-topic-content"><p class="small">Select a topic above to view notes.</p></div>
-      </div>
-    </div>
+<div class="course">
+<h2>CH110 – Chemistry</h2>
+<div class="row">
+  <button onclick="showYears('CH110')">Tests</button>
+</div>
+<div id="CH110-years" class="years"></div>
+</div>
 
-    <!-- MA210 placed under Industrial as requested -->
-    <div class="course" id="MA210">
-      <h2>MA210 — Mathematics (Industrial)</h2>
-      <div class="row">
-        <button onclick="showYears('MA210')">Tests (2019–2024)</button>
-        <button class="ghost" onclick="showAssignments('MA210')">Assignments</button>
-        <button class="ghost" onclick="showTopics('MA210')">Notes (topics)</button>
-      </div>
-      <div id="MA210-years" class="years" style="display:none;"></div>
-      <div id="MA210-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
-      <div id="MA210-topics" class="notes" style="display:none;">
-        <h3>Topics</h3>
-        <div class="topics" id="MA210-topic-pills"></div>
-        <div class="divider"></div>
-        <div id="MA210-topic-content"><p class="small">Select a topic above to view notes.</p></div>
-      </div>
-    </div>
+<div class="course">
+<h2>MA110 – Mathematics</h2>
+<div class="row">
+  <button onclick="showYears('MA110')">Tests</button>
+</div>
+<div id="MA110-years" class="years"></div>
+</div>
 
-    <!-- First Year NQ -->
-    <h2 style="color:var(--gold); margin-top:24px;">First Year NQ</h2>
-
-    <!-- CH110 Chemistry -->
-    <div class="course" id="CH110">
-      <h2>CH110 — Chemistry</h2>
-      <div class="row">
-        <button onclick="showYears('CH110')">Tests (2019–2024)</button>
-        <button class="ghost" onclick="showAssignments('CH110')">Assignments</button>
-        <button class="ghost" onclick="showTopics('CH110')">Notes (topics)</button>
-        <button class="ghost" onclick="showLabReports('CH110')">Lab Reports</button>
-      </div>
-      <div id="CH110-years" class="years" style="display:none;"></div>
-      <div id="CH110-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
-      <div id="CH110-topics" class="notes" style="display:none;">
-        <h3>Topics</h3>
-        <div class="topics" id="CH110-topic-pills"></div>
-        <div class="divider"></div>
-        <div id="CH110-topic-content"><p class="small">Select a topic above to view notes.</p></div>
-      </div>
-      <div id="CH110-labs" class="notes" style="display:none;"><h3>Lab Reports</h3><p class="small">No lab reports uploaded yet.</p></div>
-    </div>
-
-    <!-- PH110 Physics -->
-    <div class="course" id="PH110">
-      <h2>PH110 — Physics</h2>
-      <div class="row">
-        <button onclick="showYears('PH110')">Tests (2019–2024)</button>
-        <button class="ghost" onclick="showAssignments('PH110')">Assignments</button>
-        <button class="ghost" onclick="showTopics('PH110')">Notes (topics)</button>
-        <button class="ghost" onclick="showLabReports('PH110')">Lab Reports</button>
-      </div>
-      <div id="PH110-years" class="years" style="display:none;"></div>
-      <div id="PH110-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
-      <div id="PH110-topics" class="notes" style="display:none;">
-        <h3>Topics</h3>
-        <div class="topics" id="PH110-topic-pills"></div>
-        <div class="divider"></div>
-        <div id="PH110-topic-content"><p class="small">Select a topic above to view notes.</p></div>
-      </div>
-      <div id="PH110-labs" class="notes" style="display:none;"><h3>Lab Reports</h3><p class="small">No lab reports uploaded yet.</p></div>
-    </div>
-
-    <!-- BI10 Biology -->
-    <div class="course" id="BI10">
-      <h2>BI10 — Biology</h2>
-      <div class="row">
-        <button onclick="showYears('BI10')">Tests (2019–2024)</button>
-        <button class="ghost" onclick="showAssignments('BI10')">Assignments</button>
-        <button class="ghost" onclick="showTopics('BI10')">Notes (topics)</button>
-      </div>
-      <div id="BI10-years" class="years" style="display:none;"></div>
-      <div id="BI10-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
-      <div id="BI10-topics" class="notes" style="display:none;">
-        <h3>Topics</h3>
-        <div class="topics" id="BI10-topic-pills"></div>
-        <div class="divider"></div>
-        <div id="BI10-topic-content"><p class="small">Select a topic above to view notes.</p></div>
-      </div>
-    </div>
-
-    <!-- CS110 Computer Studies -->
-    <div class="course" id="CS110">
-      <h2>CS110 — Computer Studies</h2>
-      <div class="row">
-        <button onclick="showYears('CS110')">Tests (2019–2024)</button>
-        <button class="ghost" onclick="showAssignments('CS110')">Assignments</button>
-        <button class="ghost" onclick="showTopics('CS110')">Notes (topics)</button>
-      </div>
-      <div id="CS110-years" class="years" style="display:none;"></div>
-      <div id="CS110-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
-      <div id="CS110-topic" class="notes" style="display:none;">
-        <h3>Topics</h3>
-        <div class="topics" id="CS110-topic-pills"></div>
-        <div class="divider"></div>
-        <div id="CS110-topic-content"><p class="small">Select a topic above to view notes.</p></div>
-      </div>
-    </div>
-
-    <!-- MA110 Mathematics -->
-    <div class="course" id="MA110">
-      <h2>MA110 — Mathematics</h2>
-      <div class="row">
-        <button onclick="showYears('MA110')">Tests (2019–2024)</button>
-        <button class="ghost" onclick="showAssignments('MA110')">Assignments</button>
-        <button class="ghost" onclick="showTopics('MA110')">Notes (topics)</button>
-      </div>
-      <div id="MA110-years" class="years" style="display:none;"></div>
-      <div id="MA110-assign" class="notes" style="display:none;"><p class="small">No assignments uploaded yet.</p></div>
-      <div id="MA110-topics" class="notes" style="display:none;">
-        <h3>Topics</h3>
-        <div class="topics" id="MA110-topic-pills"></div>
-        <div class="divider"></div>
-        <div id="MA110-topic-content"><p class="small">Select a topic above to view notes.</p></div>
-      </div>
-    </div>
-
-  </div>
+</div>
 
 <script>
-  // Base path for hosted papers (adjust to your hosting)
-  const BASE = "https://pumbwe.github.io/PMG/past-papers/";
+/* ========= COURSE → FOLDER MAP ========= */
+const COURSE_PATHS = {
+  CH260: "course/SECOND_YEAR/INDUSTRIAL_CHEMISTRY/CH260/TEST_PAPERS/",
+  BI110: "course/FIRST_YEAR_NQ/BI110/TEST_PAPERS/",
+  CH110: "course/FIRST_YEAR_NQ/CH110/TEST_PAPERS/",
+  MA110: "course/FIRST_YEAR_NQ/MA110/TEST_PAPERS/"
+};
 
-  // Utility: hide all course sub-sections for a course
-  function hideCoursePanels(courseId){
-    const ids = ["-years","-assign","-topics","-labs"];
-    ids.forEach(suffix=>{
-      const el = document.getElementById(courseId + suffix);
-      if(el) el.style.display = "none";
-    });
-  }
+/* ========= SHOW YEARS ========= */
+function showYears(course){
+  const box = document.getElementById(course + "-years");
+  box.innerHTML = "";
+  [2019,2020,2021,2022,2023,2024].forEach(y=>{
+    const p = document.createElement("div");
+    p.className = "pill";
+    p.innerText = y;
+    p.onclick = ()=>openPaper(course, y);
+    box.appendChild(p);
+  });
+}
 
-  // Show years (2019-2024) for a course
-  function showYears(courseId){
-    hideCoursePanels(courseId);
-    const yearsDiv = document.getElementById(courseId + "-years");
-    if(!yearsDiv) return;
-    yearsDiv.innerHTML = "";
-    yearsDiv.style.display = "flex";
-    const years = [2019,2020,2021,2022,2023,2024];
-    years.forEach(y=>{
-      const pill = document.createElement("div");
-      pill.className = "pill";
-      pill.textContent = y;
-      pill.onclick = ()=> openPaper(`${courseId}-${y}.html`);
-      yearsDiv.appendChild(pill);
-    });
-    const viewer = document.getElementById("contentViewer");
-    if(viewer) viewer.style.display = "none";
-  }
-
-  // Show assignments placeholder
-  function showAssignments(courseId){
-    hideCoursePanels(courseId);
-    const assignDiv = document.getElementById(courseId + "-assign");
-    if(assignDiv) assignDiv.style.display = "block";
-  }
-
-  // Show topics; populate notes for each course with examples
-  function showTopics(courseId){
-    hideCoursePanels(courseId);
-    const topicsDiv = document.getElementById(courseId + "-topics");
-    if(!topicsDiv) return;
-    topicsDiv.style.display = "block";
-
-    // CH260: Bonding, Hybridization, Delocalization & Electronic Effects (from uploaded notes)
-    if(courseId === "CH260"){
-      const pills = document.getElementById("CH260-topic-pills");
-      const content = document.getElementById("CH260-topic-content");
-      pills.innerHTML = "";
-
-      const topics = [
-        { id:"bonding", label:"Structure & Bonding" },
-        { id:"hybrid", label:"Hybridization" },
-        { id:"deloc", label:"Delocalization, Inductive & Hyperconjugation" }
-      ];
-
-      topics.forEach(t=>{
-        const pill = document.createElement("div");
-        pill.className = "pill";
-        pill.textContent = t.label;
-        pill.onclick = ()=>{
-          Array.from(pills.children).forEach(c=>c.classList.remove("active"));
-          pill.classList.add("active");
-          renderCH260Topic(t.id, content);
-        };
-        pills.appendChild(pill);
-      });
-
-      // default select first
-      if(pills.children.length){
-        pills.children[0].classList.add("active");
-        renderCH260Topic(topics[0].id, content);
-      }
-      return;
-    }
-
-    // Analytical Chemistry notes
-    if(courseId === "AnalyticalChem"){
-      const pills = document.getElementById("AnalyticalChem-topic-pills");
-      const content = document.getElementById("AnalyticalChem-topic-content");
-      pills.innerHTML = "";
-      const topics = [
-        { id:"aq", label:"Qualitative Analysis" },
-        { id:"qt", label:"Quantitative Methods" },
-        { id:"inst", label:"Instrumentation (UV-Vis, GC, HPLC)" }
-      ];
-      topics.forEach(t=>{
-        const pill = document.createElement("div");
-        pill.className = "pill";
-        pill.textContent = t.label;
-        pill.onclick = ()=>{
-          Array.from(pills.children).forEach(c=>c.classList.remove("active"));
-          pill.classList.add("active");
-          if(t.id==="aq"){
-            content.innerHTML = `<h3>Qualitative Analysis</h3>
-              <p>Identification of ions and functional groups using tests and spot reactions.</p>
-              <div class="example"><strong>Example:</strong> Flame test: Na⁺ → yellow flame; Cu²⁺ → green/blue flame.</div>`;
-          } else if(t.id==="qt"){
-            content.innerHTML = `<h3>Quantitative Methods</h3>
-              <p>Titration principles, gravimetric analysis, and calibration curves.</p>
-              <div class="example"><strong>Example:</strong> Acid–base titration: determine concentration of HCl using NaOH standard solution.</div>`;
-          } else {
-            content.innerHTML = `<h3>Instrumentation</h3>
-              <p>Basics of UV-Vis, GC, HPLC: sample prep, detectors, and interpretation.</p>
-              <div class="example"><strong>Example:</strong> Use GC to separate volatile organics; retention time identifies compounds.</div>`;
-          }
-        };
-        pills.appendChild(pill);
-      });
-      pills.children[0].classList.add("active");
-      pills.children[0].click();
-      return;
-    }
-
-    // IndustrialChem notes
-    if(courseId === "IndustrialChem"){
-      const pills = document.getElementById("IndustrialChem-topic-pills");
-      const content = document.getElementById("IndustrialChem-topic-content");
-      pills.innerHTML = "";
-      const topics = [
-        { id:"proc", label:"Process Chemistry" },
-        { id:"safety", label:"Safety & Waste" },
-        { id:"scale", label:"Scale-up Examples" }
-      ];
-      topics.forEach(t=>{
-        const pill = document.createElement("div");
-        pill.className = "pill";
-        pill.textContent = t.label;
-        pill.onclick = ()=>{
-          Array.from(pills.children).forEach(c=>c.classList.remove("active"));
-          pill.classList.add("active");
-          if(t.id==="proc"){
-            content.innerHTML = `<h3>Process Chemistry</h3>
-              <p>Designing reactions for continuous production, yield optimization, and impurity control.</p>
-              <div class="example"><strong>Example:</strong> Continuous esterification with acid catalyst to produce ethyl acetate at scale.</div>`;
-          } else if(t.id==="safety"){
-            content.innerHTML = `<h3>Safety & Waste</h3>
-              <p>Hazard identification, MSDS, effluent treatment, and solvent recovery.</p>
-              <div class="example"><strong>Example:</strong> Neutralization and biological treatment of acidic effluents before discharge.</div>`;
-          } else {
-            content.innerHTML = `<h3>Scale-up Examples</h3>
-              <p>Heat transfer, mixing, and reaction kinetics considerations when moving from lab to plant.</p>
-              <div class="example"><strong>Example:</strong> Exothermic nitration requires staged addition and cooling to avoid runaway.</div>`;
-          }
-        };
-        pills.appendChild(pill);
-      });
-      pills.children[0].classList.add("active");
-      pills.children[0].click();
-      return;
-    }
-
-    // Industrial Physics notes
-    if(courseId === "IndustrialPhys"){
-      const pills = document.getElementById("IndustrialPhys-topic-pills");
-      const content = document.getElementById("IndustrialPhys-topic-content");
-      pills.innerHTML = "";
-      const topics = [
-        { id:"mech", label:"Mechanics & Materials" },
-        { id:"therm", label:"Thermodynamics" },
-        { id:"elec", label:"Electronics Basics" }
-      ];
-      topics.forEach(t=>{
-        const pill = document.createElement("div");
-        pill.className = "pill";
-        pill.textContent = t.label;
-        pill.onclick = ()=>{
-          Array.from(pills.children).forEach(c=>c.classList.remove("active"));
-          pill.classList.add("active");
-          if(t.id==="mech"){
-            content.innerHTML = `<h3>Mechanics & Materials</h3>
-              <p>Stress, strain, Young's modulus, and material selection for equipment.</p>
-              <div class="example"><strong>Example:</strong> Choosing stainless steel for corrosion resistance in reactors.</div>`;
-          } else if(t.id==="therm"){
-            content.innerHTML = `<h3>Thermodynamics</h3>
-              <p>Energy balances, enthalpy, and phase equilibria relevant to industrial processes.</p>
-              <div class="example"><strong>Example:</strong> Calculating heat duty for a shell-and-tube heat exchanger.</div>`;
-          } else {
-            content.innerHTML = `<h3>Electronics Basics</h3>
-              <p>Sensors, signal conditioning, and control loops used in process instrumentation.</p>
-              <div class="example"><strong>Example:</strong> Using a thermocouple and PID controller to maintain reactor temperature.</div>`;
-          }
-        };
-        pills.appendChild(pill);
-      });
-      pills.children[0].classList.add("active");
-      pills.children[0].click();
-      return;
-    }
-
-    // Industrial Mathematics notes
-    if(courseId === "IndustrialMath"){
-      const pills = document.getElementById("IndustrialMath-topic-pills");
-      const content = document.getElementById("IndustrialMath-topic-content");
-      pills.innerHTML = "";
-      const topics = [
-        { id:"calc", label:"Calculus for Engineers" },
-        { id:"lin", label:"Linear Algebra & Matrices" },
-        { id:"stat", label:"Statistics & Process Control" }
-      ];
-      topics.forEach(t=>{
-        const pill = document.createElement("div");
-        pill.className = "pill";
-        pill.textContent = t.label;
-        pill.onclick = ()=>{
-          Array.from(pills.children).forEach(c=>c.classList.remove("active"));
-          pill.classList.add("active");
-          if(t.id==="calc"){
-            content.innerHTML = `<h3>Calculus for Engineers</h3>
-              <p>Derivatives and integrals applied to rates, accumulation, and optimization.</p>
-              <div class="example"><strong>Example:</strong> Use integration to compute total mass from a variable density profile.</div>`;
-          } else if(t.id==="lin"){
-            content.innerHTML = `<h3>Linear Algebra & Matrices</h3>
-              <p>Solving linear systems, eigenvalues for stability analysis.</p>
-              <div class="example"><strong>Example:</strong> Use matrix methods to solve simultaneous mass-balance equations.</div>`;
-          } else {
-            content.innerHTML = `<h3>Statistics & Process Control</h3>
-              <p>Control charts, process capability, and regression for process improvement.</p>
-              <div class="example"><strong>Example:</strong> Construct an X̄-R chart to monitor batch-to-batch variation.</div>`;
-          }
-        };
-        pills.appendChild(pill);
-      });
-      pills.children[0].classList.add("active");
-      pills.children[0].click();
-      return;
-    }
-
-    // MA210 (Industrial math) notes
-    if(courseId === "MA210"){
-      const pills = document.getElementById("MA210-topic-pills");
-      const content = document.getElementById("MA210-topic-content");
-      pills.innerHTML = "";
-      const topics = [
-        { id:"ode", label:"ODEs & Modelling" },
-        { id:"num", label:"Numerical Methods" }
-      ];
-      topics.forEach(t=>{
-        const pill = document.createElement("div");
-        pill.className = "pill";
-        pill.textContent = t.label;
-        pill.onclick = ()=>{
-          Array.from(pills.children).forEach(c=>c.classList.remove("active"));
-          pill.classList.add("active");
-          if(t.id==="ode"){
-            content.innerHTML = `<h3>ODEs & Modelling</h3>
-              <p>Ordinary differential equations for dynamic systems and reactor models.</p>
-              <div class="example"><strong>Example:</strong> CSTR mass balance: dC/dt = (C_in - C)/τ - kC.</div>`;
-          } else {
-            content.innerHTML = `<h3>Numerical Methods</h3>
-              <p>Root finding, numerical integration, and finite differences for engineering problems.</p>
-              <div class="example"><strong>Example:</strong> Use Euler or Runge-Kutta to simulate transient reactor behavior.</div>`;
-          }
-        };
-        pills.appendChild(pill);
-      });
-      pills.children[0].classList.add("active");
-      pills.children[0].click();
-      return;
-    }
-
-    // CH110 notes (First Year)
-    if(courseId === "CH110"){
-      const pills = document.getElementById("CH110-topic-pills");
-      const content = document.getElementById("CH110-topic-content");
-      pills.innerHTML = "";
-      const topics = [
-        { id:"atoms", label:"Atomic Structure" },
-        { id:"stoich", label:"Stoichiometry" },
-        { id:"bond", label:"Bonding Basics" }
-      ];
-      topics.forEach(t=>{
-        const pill = document.createElement("div");
-        pill.className = "pill";
-        pill.textContent = t.label;
-        pill.onclick = ()=>{
-          Array.from(pills.children).forEach(c=>c.classList.remove("active"));
-          pill.classList.add("active");
-          if(t.id==="atoms"){
-            content.innerHTML = `<h3>Atomic Structure</h3>
-              <p>Protons, neutrons, electrons, shells, and periodic trends.</p>
-              <div class="example"><strong>Example:</strong> Electron configuration of O: 1s² 2s² 2p⁴.</div>`;
-          } else if(t.id==="stoich"){
-            content.innerHTML = `<h3>Stoichiometry</h3>
-              <p>Mole concept, limiting reagent, and yield calculations.</p>
-              <div class="example"><strong>Example:</strong> Calculate product mass from given reactant amounts using molar ratios.</div>`;
-          } else {
-            content.innerHTML = `<h3>Bonding Basics</h3>
-              <p>Introduction to ionic, covalent, and metallic bonding.</p>
-              <div class="example"><strong>Example:</strong> NaCl is ionic; H₂ is covalent.</div>`;
-          }
-        };
-        pills.appendChild(pill);
-      });
-      pills.children[0].classList.add("active");
-      pills.children[0].click();
-      return;
-    }
-
-    // PH110 notes
-    if(courseId === "PH110"){
-      const pills = document.getElementById("PH110-topic-pills");
-      const content = document.getElementById("PH110-topic-content");
-      pills.innerHTML = "";
-      const topics = [
-        { id:"mech", label:"Mechanics" },
-        { id:"waves", label:"Waves & Optics" },
-        { id:"elec", label:"Electricity" }
-      ];
-      topics.forEach(t=>{
-        const pill = document.createElement("div");
-        pill.className = "pill";
-        pill.textContent = t.label;
-        pill.onclick = ()=>{
-          Array.from(pills.children).forEach(c=>c.classList.remove("active"));
-          pill.classList.add("active");
-          if(t.id==="mech"){
-            content.innerHTML = `<h3>Mechanics</h3>
-              <p>Newton's laws, kinematics, and energy.</p>
-              <div class="example"><strong>Example:</strong> Use F=ma to compute acceleration from applied force and mass.</div>`;
-          } else if(t.id==="waves"){
-            content.innerHTML = `<h3>Waves & Optics</h3>
-              <p>Wave properties, interference, and basic optics.</p>
-              <div class="example"><strong>Example:</strong> Double-slit interference pattern spacing depends on wavelength and slit separation.</div>`;
-          } else {
-            content.innerHTML = `<h3>Electricity</h3>
-              <p>Ohm's law, circuits, and basic electromagnetism.</p>
-              <div class="example"><strong>Example:</strong> Series resistors: R_total = R1 + R2 + ...</div>`;
-          }
-        };
-        pills.appendChild(pill);
-      });
-      pills.children[0].classList.add("active");
-      pills.children[0].click();
-      return;
-    }
-
-    // BI10 notes
-    if(courseId === "BI10"){
-      const pills = document.getElementById("BI10-topic-pills");
-      const content = document.getElementById("BI10-topic-content");
-      pills.innerHTML = "";
-      const topics = [
-        { id:"cell", label:"Cell Structure" },
-        { id:"gen", label:"Genetics Basics" }
-      ];
-      topics.forEach(t=>{
-        const pill = document.createElement("div");
-        pill.className = "pill";
-        pill.textContent = t.label;
-        pill.onclick = ()=>{
-          Array.from(pills.children).forEach(c=>c.classList.remove("active"));
-          pill.classList.add("active");
-          if(t.id==="cell"){
-            content.innerHTML = `<h3>Cell Structure</h3>
-              <p>Prokaryotic vs eukaryotic cells, organelles and functions.</p>
-              <div class="example"><strong>Example:</strong> Mitochondria produce ATP via oxidative phosphorylation.</div>`;
-          } else {
-            content.innerHTML = `<h3>Genetics Basics</h3>
-              <p>DNA, genes, Mendelian inheritance.</p>
-              <div class="example"><strong>Example:</strong> Punnett square for monohybrid cross (Aa x Aa).</div>`;
-          }
-        };
-        pills.appendChild(pill);
-      });
-      pills.children[0].classList.add("active");
-      pills.children[0].click();
-      return;
-    }
-
-    // CS110 notes
-    if(courseId === "CS110"){
-      const pills = document.getElementById("CS110-topic-pills");
-      const content = document.getElementById("CS110-topic-content");
-      pills.innerHTML = "";
-      const topics = [
-        { id:"prog", label:"Programming Basics" },
-        { id:"alg", label:"Algorithms & Data Structures" }
-      ];
-      topics.forEach(t=>{
-        const pill = document.createElement("div");
-        pill.className = "pill";
-        pill.textContent = t.label;
-        pill.onclick = ()=>{
-          Array.from(pills.children).forEach(c=>c.classList.remove("active"));
-          pill.classList.add("active");
-          if(t.id==="prog"){
-            content.innerHTML = `<h3>Programming Basics</h3>
-              <p>Variables, control flow, functions.</p>
-              <div class="example"><strong>Example:</strong> Write a loop to sum numbers 1..n.</div>`;
-          } else {
-            content.innerHTML = `<h3>Algorithms & Data Structures</h3>
-              <p>Arrays, lists, sorting, and search algorithms.</p>
-              <div class="example"><strong>Example:</strong> Binary search on a sorted array runs in O(log n).</div>`;
-          }
-        };
-        pills.appendChild(pill);
-      });
-      pills.children[0].classList.add("active");
-      pills.children[0].click();
-      return;
-    }
-
-    // MA110 notes
-    if(courseId === "MA110"){
-      const pills = document.getElementById("MA110-topic-pills");
-      const content = document.getElementById("MA110-topic-content");
-      pills.innerHTML = "";
-      const topics = [
-        { id:"alg", label:"Algebra" },
-        { id:"calc", label:"Calculus" }
-      ];
-      topics.forEach(t=>{
-        const pill = document.createElement("div");
-        pill.className = "pill";
-        pill.textContent = t.label;
-        pill.onclick = ()=>{
-          Array.from(pills.children).forEach(c=>c.classList.remove("active"));
-          pill.classList.add("active");
-          if(t.id==="alg"){
-            content.innerHTML = `<h3>Algebra</h3>
-              <p>Equations, inequalities, and functions.</p>
-              <div class="example"><strong>Example:</strong> Solve 2x+3=11 → x=4.</div>`;
-          } else {
-            content.innerHTML = `<h3>Calculus</h3>
-              <p>Limits, derivatives, and integrals.</p>
-              <div class="example"><strong>Example:</strong> Derivative of x² is 2x.</div>`;
-          }
-        };
-        pills.appendChild(pill);
-      });
-      pills.children[0].classList.add("active");
-      pills.children[0].click();
-      return;
-    }
-
-    // Default placeholder
-    topicsDiv.innerHTML = '<h3>Topics</h3><p class="small">No notes added yet for this course. Send the outline and I will embed topic-based notes here.</p>';
-  }
-
-  // Show lab reports placeholder
-  function showLabReports(courseId){
-    hideCoursePanels(courseId);
-    const labsDiv = document.getElementById(courseId + "-labs");
-    if(labsDiv) labsDiv.style.display = "block";
-  }
-
-  // Render CH260 topic content (Bonding, Hybridization, Delocalization & Electronic Effects)
-  function renderCH260Topic(topicId, container){
-    if(topicId === "bonding"){
-      container.innerHTML = `
-        <h3>Structure & Bonding</h3>
-        <p>Organic molecules are built from covalent bonds. Carbon forms four covalent bonds enabling diverse structures.</p>
-        <h4>Bond types</h4>
-        <ul>
-          <li><strong>σ (sigma) bonds:</strong> Head-on overlap; single bonds are σ.</li>
-          <li><strong>π (pi) bonds:</strong> Side-by-side overlap of p orbitals; present in double and triple bonds.</li>
-        </ul>
-        <div class="example"><strong>Example:</strong> Ethane (C₂H₆) has C–C σ bond; ethene (C₂H₄) has one σ and one π bond between carbons.</div>
-      `;
-    } else if(topicId === "hybrid"){
-      container.innerHTML = `
-        <h3>Hybridization</h3>
-        <p>Hybrid orbitals explain geometry and bond angles.</p>
-        <h4>Common types</h4>
-        <ul>
-          <li><strong>sp³:</strong> tetrahedral, 109.5° (e.g., CH₄).</li>
-          <li><strong>sp²:</strong> trigonal planar, 120° (e.g., C in C=C).</li>
-          <li><strong>sp:</strong> linear, 180° (e.g., C in C≡C).</li>
-        </ul>
-        <div class="example"><strong>Example:</strong> In ethene each carbon is sp²; the unhybridized p orbitals form the π bond.</div>
-      `;
-    } else if(topicId === "deloc"){
-      container.innerHTML = `
-        <h3>Localized vs Delocalized Bonds, Inductive Effect, Hyperconjugation, Charge Transfer</h3>
-
-        <h4>Localized vs Delocalized</h4>
-        <p><strong>Localized</strong> electrons are confined to a bond or lone pair. <strong>Delocalized</strong> electrons are spread across several atoms (conjugation/resonance).</p>
-        <div class="example"><strong>Example:</strong> Benzene: π electrons are delocalized over six carbons, giving aromatic stability.</div>
-
-        <h4>Inductive Effect</h4>
-        <p>Transmission of electron density through σ bonds due to electronegativity differences (–I or +I).</p>
-        <div class="example"><strong>Example:</strong> A –NO₂ group withdraws electron density (–I), stabilizing adjacent positive charges.</div>
-
-        <h4>Hyperconjugation</h4>
-        <p>Stabilization by overlap of σ (C–H or C–C) with adjacent empty/partially filled p or π orbitals; explains carbocation stability.</p>
-        <div class="example"><strong>Example:</strong> Tertiary carbocations are more stable than primary due to more hyperconjugative C–H bonds.</div>
-
-        <h4>Charge Transfer</h4>
-        <p>Partial electron transfer between donor and acceptor molecules or parts of a molecule; important in complexes and materials.</p>
-        <div class="example"><strong>Example:</strong> Donor–acceptor complexes show new absorption bands (color changes) due to charge-transfer transitions.</div>
-      `;
-    }
-  }
-
-  // Open hosted paper in iframe
-  function openPaper(file){
-    const viewer = document.getElementById("contentViewer");
-    const frame = document.getElementById("contentFrame");
-    if(!viewer || !frame) return;
-    viewer.style.display = "block";
-    frame.src = BASE + file;
-    viewer.scrollIntoView({ behavior:"smooth", block:"start" });
-  }
-
-  // Initialize topic pills for courses that have static topic lists (so user can click Notes immediately)
-  (function init(){
-    // Prepare CH260 topics (so Notes button shows populated pills quickly)
-    const ch260Topics = ["Structure & Bonding","Hybridization","Localized vs Delocalized & Electronic Effects"];
-    const ch260Pills = document.getElementById("CH260-topic-pills");
-    if(ch260Pills){
-      ch260Pills.innerHTML = "";
-      ch260Topics.forEach((t, i)=>{
-        const pill = document.createElement("div");
-        pill.className = "pill";
-        pill.textContent = t;
-        pill.onclick = ()=> {
-          Array.from(ch260Pills.children).forEach(c=>c.classList.remove("active"));
-          pill.classList.add("active");
-          const ids = ["bonding","hybrid","deloc"];
-          renderCH260Topic(ids[i], document.getElementById("CH260-topic-content"));
-        };
-        ch260Pills.appendChild(pill);
-      });
-    }
-
-    // Prepare simple topic pills for other courses (one or two starter topics)
-    const simpleTopics = {
-      "AnalyticalChem-topic-pills":["Qualitative Analysis","Quantitative Methods","Instrumentation"],
-      "IndustrialChem-topic-pills":["Process Chemistry","Safety & Waste","Scale-up"],
-      "IndustrialPhys-topic-pills":["Mechanics & Materials","Thermodynamics","Electronics"],
-      "IndustrialMath-topic-pills":["Calculus","Linear Algebra","Statistics"],
-      "MA210-topic-pills":["ODEs & Modelling","Numerical Methods"],
-      "CH110-topic-pills":["Atomic Structure","Stoichiometry","Bonding Basics"],
-      "PH110-topic-pills":["Mechanics","Waves & Optics","Electricity"],
-      "BI10-topic-pills":["Cell Structure","Genetics Basics"],
-      "CS110-topic-pills":["Programming Basics","Algorithms"],
-      "MA110-topic-pills":["Algebra","Calculus"]
-    };
-    Object.keys(simpleTopics).forEach(key=>{
-      const container = document.getElementById(key);
-      if(!container) return;
-      container.innerHTML = "";
-      simpleTopics[key].forEach((t, idx)=>{
-        const pill = document.createElement("div");
-        pill.className = "pill";
-        pill.textContent = t;
-        pill.onclick = ()=> {
-          // simulate clicking Notes to render content via showTopics
-          const courseId = key.split("-topic-pills")[0];
-          showTopics(courseId);
-        };
-        container.appendChild(pill);
-      });
-    });
-  })();
+/* ========= OPEN HTML PAPER ========= */
+function openPaper(course, year){
+  const viewer = document.getElementById("contentViewer");
+  const frame = document.getElementById("contentFrame");
+  frame.src = COURSE_PATHS[course] + year + ".html";
+  viewer.style.display = "block";
+  viewer.scrollIntoView({behavior:"smooth"});
+}
 </script>
+
 </body>
 </html>
