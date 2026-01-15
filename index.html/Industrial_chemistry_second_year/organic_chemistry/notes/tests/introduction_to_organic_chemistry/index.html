@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Introduction to Organic Chemistry — Notes</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    /* Small page-specific tweaks */
+    .note-figure { background: rgba(255,255,255,0.02); border-radius:10px; padding:12px; text-align:center; color:var(--muted); }
+    .qa { margin-top:18px; padding:12px; border-left:4px solid var(--gold); background:rgba(255,215,0,0.02); }
+    table.simple { width:100%; border-collapse:collapse; margin-top:12px; }
+    table.simple th, table.simple td { border:1px solid rgba(255,255,255,0.04); padding:8px; text-align:left; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="card">
+      <h1 class="glow">Introduction to Organic Chemistry</h1>
+      <p class="small-note">Lecture notes: atomic theory, electrons &amp; orbitals, shells, subshells, and electron configuration.</p>
+    </header>
+
+    <section class="card" style="margin-top:18px;">
+      <h2>What is an atom?</h2>
+      <p>
+        An atom is the smallest unit of matter that retains the chemical properties of an element.
+        Atoms are made of three main subatomic particles: <strong>protons</strong>, <strong>neutrons</strong>, and <strong>electrons</strong>.
+        Protons and neutrons form the <em>nucleus</em>, while electrons occupy regions around the nucleus.
+      </p>
+
+      <div class="note-figure" aria-hidden="true">
+        <!-- Replace with an actual image if available -->
+        <strong>Figure:</strong> schematic: nucleus (protons &amp; neutrons) and electron shells (K, L, ...).
+      </div>
+
+      <h3>Key points</h3>
+      <ul>
+        <li>Protons carry positive charge; electrons carry negative charge.</li>
+        <li>In a neutral atom, number of protons = number of electrons.</li>
+        <li>Neutrons are neutral and contribute to mass but not charge.</li>
+      </ul>
+    </section>
+
+    <section class="card" style="margin-top:18px;">
+      <h2>Atomic number and mass number</h2>
+      <p><strong>Atomic number (Z)</strong> = number of protons in the nucleus. All atoms of an element share the same Z.</p>
+      <p><strong>Mass number (A)</strong> = total number of protons + neutrons.</p>
+
+      <h3>Calculate subatomic particles</h3>
+      <p>Given atomic number and mass number:</p>
+      <ul>
+        <li>Number of protons = atomic number (Z)</li>
+        <li>Number of electrons = atomic number (Z) (for neutral atoms)</li>
+        <li>Number of neutrons = mass number (A) − atomic number (Z)</li>
+      </ul>
+
+      <div class="qa">
+        <strong>Example</strong><br />
+        The atomic number of sodium is 11 and its mass number is 23.
+        <ul>
+          <li>Protons = 11</li>
+          <li>Electrons = 11</li>
+          <li>Neutrons = 23 − 11 = 12</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:18px;">
+      <h2>Electrons and orbitals</h2>
+      <p>
+        Electrons determine chemical bonding and reactivity. They exhibit <strong>wave–particle duality</strong>.
+        Orbitals are mathematical functions (from quantum mechanics) that describe regions of high probability where electrons are found.
+      </p>
+
+      <h3>Important orbital types</h3>
+      <ul>
+        <li><strong>s</strong> orbital — spherical (one orbital per s subshell)</li>
+        <li><strong>p</strong> orbitals — dumbbell-shaped (three orbitals per p subshell)</li>
+        <li><strong>d</strong> and <strong>f</strong> — more complex shapes (five and seven orbitals respectively)</li>
+      </ul>
+
+      <div class="note-figure" aria-hidden="true">
+        <strong>Figure:</strong> 1s, 2s, 2p (px, py, pz) orbital sketches (replace with images if available).
+      </div>
+
+      <h3>Quantum numbers (brief)</h3>
+      <ul>
+        <li><strong>n</strong> — principal quantum number (shell)</li>
+        <li><strong>l</strong> — angular momentum quantum number (subshell: s=0, p=1, d=2, f=3)</li>
+        <li><strong>m<sub>l</sub></strong> — magnetic quantum number (orbital within subshell)</li>
+        <li><strong>m<sub>s</sub></strong> — spin quantum number (±½)</li>
+      </ul>
+    </section>
+
+    <section class="card" style="margin-top:18px;">
+      <h2>Shells, subshells and orbitals</h2>
+      <p>
+        <strong>Shell</strong> (n) — energy level (K, L, M, ...). Each shell contains subshells.
+        <strong>Subshell</strong> (s, p, d, f) — set of orbitals with same l value.
+        <strong>Orbital</strong> — region that can hold up to 2 electrons.
+      </p>
+
+      <table class="simple" aria-label="Maximum electrons per shell">
+        <thead>
+          <tr>
+            <th>Principal quantum number (n)</th>
+            <th>Maximum electrons</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>n = 1</td><td>2</td></tr>
+          <tr><td>n = 2</td><td>8</td></tr>
+          <tr><td>n = 3</td><td>18</td></tr>
+          <tr><td>n = 4</td><td>32</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Subshell capacities</h3>
+      <table class="simple" aria-label="Subshell capacities">
+        <thead>
+          <tr><th>Subshell</th><th>Orbitals</th><th>Max electrons</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>s</td><td>1</td><td>2</td></tr>
+          <tr><td>p</td><td>3</td><td>6</td></tr>
+          <tr><td>d</td><td>5</td><td>10</td></tr>
+          <tr><td>f</td><td>7</td><td>14</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card" style="margin-top:18px;">
+      <h2>Electron configuration</h2>
+      <p>
+        Electron configuration describes how electrons occupy orbitals. Example for carbon:
+      </p>
+      <pre style="background:rgba(255,255,255,0.02); padding:12px; border-radius:8px;">C: 1s² 2s² 2p²  (or [He] 2s² 2p²)</pre>
+
+      <p>
+        Remember: electrons fill orbitals following the Aufbau principle, Hund's rule, and the Pauli exclusion principle.
+      </p>
+
+      <h3>Valence electrons</h3>
+      <p>
+        Valence electrons are the outermost electrons involved in bonding. For carbon, valence electrons = 4 (2s² 2p²), so valency = 4.
+      </p>
+    </section>
+
+    <section class="card" style="margin-top:18px;">
+      <h2>Practice questions</h2>
+
+      <div class="qa">
+        <strong>Question 1</strong><br />
+        The atomic number of sodium is 11 and its mass number is 23. Calculate the number of protons, neutrons and electrons.
+        <div style="margin-top:8px;">
+          <strong>Answer</strong>
+          <ul>
+            <li>Protons = 11</li>
+            <li>Electrons = 11</li>
+            <li>Neutrons = 23 − 11 = 12</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa" style="margin-top:12px;">
+        <strong>Question 2</strong><br />
+        Write the electron configuration for magnesium (atomic number 12).
+        <div style="margin-top:8px;">
+          <strong>Answer</strong>
+          <p>Mg: 1s² 2s² 2p⁶ 3s² (or [Ne] 3s²)</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="card" style="margin-top:18px;">
+      <a class="btn" href="../../index.html">Back to Organic Chemistry</a>
+      <a class="btn" href="/Industrial_chemistry_second_year/index.html">Back to Program</a>
+      <a class="btn" href="/index.html">Back to Portal</a>
+    </footer>
+  </main>
+</body>
+</html>
