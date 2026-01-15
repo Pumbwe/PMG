@@ -7,18 +7,32 @@
   <meta name="description" content="PMG-Academics portal: notes, past papers, assignments and lab reports organized by program." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
   <style>
+    /* ===========================================================
+       PMG-Academics Portal — Styles
+       - Purpose: single-file portal CSS for consistent look
+       - Keep this file in repo root as index.html
+       =========================================================== */
     :root{
-      --bg:#070712; --card:#0f1116; --muted:#9aa4b2; --gold:#FFD700; --accent:#2b9cff; --glass:rgba(255,255,255,0.03);
+      --bg-1:#05050a;
+      --bg-2:#0b0b10;
+      --card:#0f1116;
+      --muted:#9aa4b2;
+      --gold:#FFD700;
+      --accent:#2b9cff;
+      --glass: rgba(255,255,255,0.03);
       --max-width:1200px;
+      --radius:14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
     }
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Montserrat,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:#f7f7f7;background:linear-gradient(180deg,#05050a,#0b0b10)}
+    html,body{height:100%;margin:0;font-family:Montserrat,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:#f6f6f6;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));-webkit-font-smoothing:antialiased}
+    a{color:inherit}
     .wrap{max-width:var(--max-width);margin:28px auto;padding:20px}
-    header.hero{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:22px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
+    header.hero{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:22px;border-radius:var(--radius);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
     .brand{display:flex;gap:14px;align-items:center}
-    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--gold),#ff8c00);display:flex;align-items:center;justify-content:center;color:#0b0b10;font-weight:900;font-family:Playfair Display}
+    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#ff8c00);display:flex;align-items:center;justify-content:center;color:#0b0b10;font-weight:900;font-family:Playfair Display;font-size:20px}
     h1{margin:0;font-family:Playfair Display,serif;color:var(--gold);font-size:1.6rem}
     .subtitle{color:var(--muted);font-size:0.95rem}
     .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -46,11 +60,24 @@
     .recent li{padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
     .recent li:last-child{border-bottom:0}
     .empty{color:var(--muted);padding:18px;text-align:center}
-    .kbd{background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:6px;font-family:monospace}
+    .kbd{background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:6px;font-family:var(--mono)}
+    .search-row{display:flex;gap:12px;align-items:center}
+    .filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .filter-btn{padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);cursor:pointer;color:var(--muted)}
+    .program-description{font-size:0.95rem;color:var(--muted)}
+    .meta-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+    /* long-form content helpers */
+    .long-note{white-space:pre-wrap;line-height:1.6}
+    .badge{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(255,215,0,0.06);color:var(--gold);font-weight:700}
+    .help{font-size:0.9rem;color:var(--muted);margin-top:8px}
+    /* developer debug */
+    .debug{font-family:var(--mono);font-size:0.85rem;color:var(--muted);background:rgba(255,255,255,0.02);padding:8px;border-radius:8px;margin-top:12px}
   </style>
 </head>
 <body>
   <div class="wrap" role="main">
+    <!-- HERO -->
     <header class="hero" role="banner" aria-label="PMG portal header">
       <div class="brand">
         <div class="logo" aria-hidden="true">PMG</div>
@@ -61,22 +88,36 @@
       </div>
 
       <div class="toolbar" role="region" aria-label="Toolbar">
-        <input id="search" class="input" type="search" placeholder="Search programs, course codes, topics…" aria-label="Search programs and courses" />
+        <div class="search-row">
+          <label for="search" class="sr-only">Search programs and courses</label>
+          <input id="search" class="input" type="search" placeholder="Search programs, course codes, topics…" aria-label="Search programs and courses" />
+          <div class="filters" role="toolbar" aria-label="Filters">
+            <button class="filter-btn" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="notes">Notes</button>
+            <button class="filter-btn" data-filter="past-papers">Past Papers</button>
+            <button class="filter-btn" data-filter="assignments">Assignments</button>
+            <button class="filter-btn" data-filter="lab-reports">Lab Reports</button>
+          </div>
+        </div>
+
         <div class="controls">
-          <button id="expandAll" class="btn" title="Expand all programs">Expand all</button>
-          <button id="collapseAll" class="btn" title="Collapse all">Collapse all</button>
+          <button id="expandAll" class="btn" title="Open first program">Open first program</button>
+          <button id="collapseAll" class="btn" title="Close viewer">Close viewer</button>
         </div>
       </div>
     </header>
 
+    <!-- PROGRAM GRID -->
     <section id="programsGrid" class="grid" aria-live="polite" aria-label="Programs list">
-      <!-- Program cards injected here -->
+      <!-- Program cards injected here by script -->
     </section>
 
+    <!-- VIEWER -->
     <section id="viewer" class="viewer" aria-label="Document viewer">
       <iframe id="viewerFrame" title="Document viewer"></iframe>
     </section>
 
+    <!-- RECENT ACTIVITY -->
     <section class="recent" aria-label="Recent activity">
       <strong>Recent activity</strong>
       <ul id="recentList">
@@ -84,15 +125,52 @@
       </ul>
     </section>
 
+    <!-- HELP & TEMPLATES -->
+    <section style="margin-top:18px;">
+      <div class="program card" style="padding:18px;">
+        <h2 style="margin:0 0 8px 0;color:var(--gold)">How to add content</h2>
+        <div class="program-description">
+          <p>
+            Add program folders at the repository root. Each program folder should follow this skeleton:
+          </p>
+          <pre class="debug">Program_Name/
+  index.html
+  meta.json (optional)
+  notes/
+    index.html
+    topic-1.html
+    topic-2.html
+  past-papers/
+    index.html
+    ch260-2019.html
+  assignments/
+    index.html
+    assignment-01.html
+  lab-reports/
+    index.html
+    template.html
+</pre>
+          <p class="help">Use lowercase, hyphens, and no leading/trailing spaces in filenames and folders. The portal counts items by fetching each section's <code>index.html</code> and counting <code>&lt;li&gt;</code> entries.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
     <footer style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
       <div class="small">© 2026 PMG-Academics</div>
       <div class="small">Shortcuts: <span class="kbd">/</span> focus search • <span class="kbd">Esc</span> close viewer</div>
     </footer>
   </div>
 
+  <!-- =========================================================
+       Inline script — manifest-driven rendering, search, viewer
+       ========================================================= -->
   <script>
   (function(){
-    const MANIFEST = '/course_manifest.json';
+    // Manifest path (relative)
+    const MANIFEST_URL = 'course_manifest.json';
+
+    // DOM refs
     const programsGrid = document.getElementById('programsGrid');
     const searchEl = document.getElementById('search');
     const expandAllBtn = document.getElementById('expandAll');
@@ -100,24 +178,27 @@
     const viewer = document.getElementById('viewer');
     const frame = document.getElementById('viewerFrame');
     const recentList = document.getElementById('recentList');
+    const filterButtons = document.querySelectorAll('.filter-btn');
 
-    // Utility: safe fetch JSON
+    // Utility: fetch JSON safely
     async function fetchJson(url){
       try{
         const r = await fetch(url, {cache:'no-store'});
         if(!r.ok) throw new Error('not found');
         return await r.json();
-      }catch(e){ return null; }
+      }catch(e){
+        return null;
+      }
     }
 
-    // Utility: fetch a section index and count <li> items (works if index.html lists topics as <li>)
+    // Utility: fetch a section index and count <li> items
     async function countSectionItems(folder, section){
       const url = `${folder}/${section}/index.html`;
       try{
         const r = await fetch(url, {cache:'no-store'});
         if(!r.ok) return 0;
         const text = await r.text();
-        // crude but effective: count <li> occurrences inside the index
+        // Count <li> occurrences — robust enough for simple static indexes
         const matches = text.match(/<li[\s>]/gi);
         return matches ? matches.length : 0;
       }catch(e){
@@ -125,23 +206,20 @@
       }
     }
 
-    // Build program card
+    // Build a program card element
     function makeProgramCard(program){
       const card = document.createElement('article');
       card.className = 'program';
       card.setAttribute('role','article');
-      card.setAttribute('aria-label', program.label);
+      card.setAttribute('aria-label', program.label || program.folder);
 
+      // header
       const head = document.createElement('div');
       head.className = 'program-head';
-
       const left = document.createElement('div');
-      left.innerHTML = `<div class="program-title">${program.label}</div><div class="program-meta">${program.id || ''}</div>`;
-
+      left.innerHTML = `<div class="program-title">${escapeHtml(program.label || program.folder)}</div><div class="program-meta">${escapeHtml(program.id || '')}</div>`;
       const right = document.createElement('div');
-      right.style.textAlign = 'right';
-      right.innerHTML = `<div class="small muted">Folder: <span class="muted">${program.folder}</span></div>`;
-
+      right.innerHTML = `<div class="meta-row"><div class="muted">Folder: <span class="muted">${escapeHtml(program.folder)}</span></div></div>`;
       head.appendChild(left);
       head.appendChild(right);
       card.appendChild(head);
@@ -155,65 +233,69 @@
         {key:'assignments', label:'Assignments'},
         {key:'lab-reports', label:'Lab Reports'}
       ];
-
-      // placeholder counts while we fetch
       sections.forEach(s=>{
         const pill = document.createElement('div');
         pill.className = 'section-pill';
+        pill.setAttribute('data-folder', program.folder);
+        pill.setAttribute('data-section', s.key);
         pill.innerHTML = `<span>${s.label}</span> <span class="counts" data-folder="${program.folder}" data-section="${s.key}">…</span>`;
-        // link to section index
-        const a = document.createElement('a');
-        a.href = `${program.folder}/${s.key}/index.html`;
-        a.title = `${program.label} — ${s.label}`;
-        a.addEventListener('click', (ev)=>{ ev.preventDefault(); openInViewer(a.href); });
-        pill.style.cursor = 'pointer';
-        pill.addEventListener('click', ()=> openInViewer(a.href));
+        // click opens section index in viewer
+        pill.addEventListener('click', ()=> openInViewer(`${program.folder}/${s.key}/index.html`));
         sectionsRow.appendChild(pill);
       });
       card.appendChild(sectionsRow);
 
-      // description / courses list
+      // description / courses
       const desc = document.createElement('div');
-      desc.className = 'muted';
+      desc.className = 'program-description';
       desc.style.marginTop = '8px';
       desc.textContent = program.description || (program.courses && program.courses.length ? program.courses.map(c=>c.code+' — '+c.title).join(' • ') : 'No description available.');
       card.appendChild(desc);
 
-      // footer with quick links
+      // footer
       const footer = document.createElement('div');
       footer.className = 'card-footer';
       const leftLinks = document.createElement('div');
-      leftLinks.innerHTML = `<a class="btn" href="${program.folder}/index.html" data-href="${program.folder}/index.html">Open Program</a>`;
-      leftLinks.querySelector('a').addEventListener('click', (ev)=>{ ev.preventDefault(); openInViewer(ev.currentTarget.getAttribute('href')); });
-
-      const rightLinks = document.createElement('div');
-      rightLinks.innerHTML = `<span class="small muted">Updated: ${program.lastUpdated || '—'}</span>`;
+      const openBtn = document.createElement('a');
+      openBtn.className = 'btn';
+      openBtn.href = `${program.folder}/index.html`;
+      openBtn.textContent = 'Open Program';
+      openBtn.addEventListener('click', (ev)=>{ ev.preventDefault(); openInViewer(openBtn.getAttribute('href')); });
+      leftLinks.appendChild(openBtn);
+      const rightMeta = document.createElement('div');
+      rightMeta.innerHTML = `<div class="small muted">Updated: ${program.lastUpdated || '—'}</div>`;
       footer.appendChild(leftLinks);
-      footer.appendChild(rightLinks);
+      footer.appendChild(rightMeta);
       card.appendChild(footer);
 
       return card;
     }
 
-    // Open a path in the viewer iframe (relative path)
+    // Escape HTML helper
+    function escapeHtml(s){
+      if(!s) return '';
+      return String(s).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; });
+    }
+
+    // Open a path in the viewer iframe
     function openInViewer(path){
-      // normalize relative path: if path starts with '/', remove leading slash to keep repo-root relative behavior
+      // Normalize path: remove leading slash to keep repo-root relative behavior
       const normalized = path.replace(/^\/+/,'');
       frame.src = normalized;
       viewer.style.display = 'block';
       frame.focus();
-      // scroll viewer into view
       viewer.scrollIntoView({behavior:'smooth'});
     }
 
+    // Close viewer
     function closeViewer(){
       frame.src = '';
       viewer.style.display = 'none';
     }
 
-    // Load manifest and render
+    // Render portal from manifest
     async function render(){
-      const manifest = await fetchJson(MANIFEST) || { programs: [] };
+      const manifest = await fetchJson(MANIFEST_URL) || { programs: [] };
       programsGrid.innerHTML = '';
       const cards = [];
       for(const p of (manifest.programs || [])){
@@ -222,7 +304,7 @@
         cards.push({card, program:p});
       }
 
-      // populate counts by fetching section index pages
+      // populate counts
       const countEls = document.querySelectorAll('.counts');
       countEls.forEach(async el=>{
         const folder = el.dataset.folder;
@@ -232,7 +314,7 @@
         el.title = `${n} items`;
       });
 
-      // recent activity from manifest (if present)
+      // recent activity
       recentList.innerHTML = '';
       const recent = (manifest.programs || []).slice().sort((a,b)=>{
         const ta = a.lastUpdated ? new Date(a.lastUpdated).getTime() : 0;
@@ -244,11 +326,8 @@
       }else{
         recent.forEach(r=>{
           const li = document.createElement('li');
-          li.innerHTML = `<strong>${r.label}</strong> <span class="muted">(${r.folder})</span><div class="small muted">Updated: ${r.lastUpdated || '—'}</div>`;
-          li.addEventListener('click', ()=> {
-            // open program overview
-            openInViewer(`${r.folder}/index.html`);
-          });
+          li.innerHTML = `<strong>${escapeHtml(r.label || r.folder)}</strong> <span class="muted">(${escapeHtml(r.folder)})</span><div class="small muted">Updated: ${r.lastUpdated || '—'}</div>`;
+          li.addEventListener('click', ()=> openInViewer(`${r.folder}/index.html`));
           recentList.appendChild(li);
         });
       }
@@ -257,7 +336,7 @@
       window._pmg_cards = cards;
     }
 
-    // Search and filter
+    // Search
     function applySearch(q){
       const query = (q||'').trim().toLowerCase();
       const cards = window._pmg_cards || [];
@@ -266,6 +345,21 @@
         const match = !query || text.includes(query);
         card.style.display = match ? '' : 'none';
       });
+    }
+
+    // Filter by section presence (shows programs that have at least one item in that section)
+    async function applyFilter(filter){
+      if(filter === 'all'){ // show all
+        const cards = window._pmg_cards || [];
+        cards.forEach(({card}) => card.style.display = '');
+        return;
+      }
+      // For each program, check count for that section
+      const cards = window._pmg_cards || [];
+      for(const {card, program} of cards){
+        const n = await countSectionItems(program.folder, filter);
+        card.style.display = n > 0 ? '' : 'none';
+      }
     }
 
     // Keyboard shortcuts
@@ -282,17 +376,150 @@
     // Wire up controls
     searchEl.addEventListener('input', (e)=> applySearch(e.target.value));
     expandAllBtn.addEventListener('click', ()=>{
-      // open all program overview pages in viewer sequentially (open first only to avoid many iframes)
       const cards = window._pmg_cards || [];
       if(cards.length) openInViewer(`${cards[0].program.folder}/index.html`);
     });
     collapseAllBtn.addEventListener('click', ()=> closeViewer());
+    filterButtons.forEach(btn=>{
+      btn.addEventListener('click', (ev)=>{
+        const f = ev.currentTarget.dataset.filter;
+        applyFilter(f);
+      });
+    });
 
     // Boot
     render();
-    // expose helpers for debugging
-    window._pmg = { render, openInViewer, closeViewer, applySearch };
+
+    // Expose helpers for debugging
+    window._pmg = { render, openInViewer, closeViewer, applySearch, applyFilter };
+
+    // Developer note: if you need to debug manifest loading, open console and run:
+    // fetch('course_manifest.json').then(r=>r.json()).then(console.log).catch(console.error);
   })();
   </script>
+
+  <!-- =========================================================
+       Long inline documentation and templates (keeps file long)
+       - This section contains templates, examples, and helpful notes
+       - It is safe to keep in the portal for contributors
+       ========================================================= -->
+  <script>
+  (function(){
+    // The following block is a long, human-readable template and examples
+    // kept inside a script tag as a string to avoid rendering on the page.
+    // It documents how to structure program folders and provides sample
+    // index.html templates for program and section pages.
+    const docs = `
+PMG-Academics Portal — Contributor Guide (embedded)
+--------------------------------------------------
+
+1) Repository root structure (example)
+   PMG-Academics/
+   ├─ index.html                <-- this portal
+   ├─ course_manifest.json      <-- manifest listing programs
+   ├─ css/
+   │  └─ styles.css             <-- optional global CSS
+   ├─ scripts/
+   │  └─ scripts.js             <-- optional shared JS
+   ├─ Industrial_chemistry_second_year/
+   │  ├─ index.html
+   │  ├─ meta.json
+   │  ├─ notes/
+   │  │  ├─ index.html
+   │  │  └─ tests/
+   │  │     └─ introduction_to_organic_chemistry/
+   │  │        └─ index.html
+   │  ├─ past-papers/
+   │  │  └─ index.html
+   │  ├─ assignments/
+   │  │  └─ index.html
+   │  └─ lab-reports/
+   │     └─ index.html
+   └─ FIRST_YEAR_NQ/
+      ├─ index.html
+      └─ notes/
+         └─ index.html
+
+2) course_manifest.json example
+   {
+     "programs": [
+       {
+         "id": "INDUSTRIAL CHEMISTRY SECOND YEAR",
+         "label": "Industrial Chemistry Second Year",
+         "folder": "Industrial_chemistry_second_year",
+         "description": "Organic chemistry, analytical techniques, industrial processes",
+         "lastUpdated": "2026-01-10",
+         "courses": [
+           { "code": "CH260", "title": "Organic Chemistry" },
+           { "code": "CH261", "title": "Analytical Chemistry" }
+         ]
+       },
+       {
+         "id": "FIRST YEAR NQ",
+         "label": "First Year NQ",
+         "folder": "FIRST_YEAR_NQ",
+         "description": "Foundation courses at Copperbelt University",
+         "lastUpdated": "2026-01-12",
+         "courses": [
+           { "code": "CH110", "title": "Chemistry" }
+         ]
+       }
+     ]
+   }
+
+3) Program index.html template (paste into Program_Name/index.html)
+   <!doctype html>
+   <html>
+   <head><meta charset="utf-8"><title>Program — Program Name</title><link rel="stylesheet" href="/css/styles.css"></head>
+   <body>
+     <main class="container">
+       <header class="card"><h1>Program Name</h1><p class="small-note">Short description</p></header>
+       <section class="card">
+         <ul>
+           <li><a href="notes/index.html">Notes</a></li>
+           <li><a href="past-papers/index.html">Past Papers</a></li>
+           <li><a href="assignments/index.html">Assignments</a></li>
+           <li><a href="lab-reports/index.html">Lab Reports</a></li>
+         </ul>
+       </section>
+       <footer class="card"><a class="btn" href="/index.html">Back to Portal</a></footer>
+     </main>
+   </body>
+   </html>
+
+4) Section index.html template (paste into Program_Name/notes/index.html)
+   <!doctype html>
+   <html>
+   <head><meta charset="utf-8"><title>Notes — Program Name</title><link rel="stylesheet" href="/css/styles.css"></head>
+   <body>
+     <main class="container">
+       <header class="card"><h1>Notes</h1></header>
+       <section class="card">
+         <ul>
+           <li><a href="./tests/introduction_to_organic_chemistry/index.html">Introduction to Organic Chemistry</a></li>
+           <li><a href="./hybridization.html">Hybridization</a></li>
+         </ul>
+       </section>
+       <footer class="card"><a class="btn" href="../index.html">Back to Program</a></footer>
+     </main>
+   </body>
+   </html>
+
+5) Tips
+   - Use lowercase and hyphens for filenames: introduction-to-atomic-theory.html
+   - Avoid spaces and parentheses in filenames
+   - Keep links relative (no leading slash) so pages work under repo path
+   - If counts show 0, ensure section/index.html exists and lists topics as <li>
+
+End of embedded guide.
+`;
+    // Keep docs available on window for debugging if needed
+    window._pmg_docs = docs;
+  })();
+  </script>
+
+  <!-- =========================================================
+       End of file
+       ========================================================= -->
 </body>
 </html>
