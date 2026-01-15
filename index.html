@@ -4,186 +4,107 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>PMG™ EDU — Portal</title>
-
-  <!-- Shared theme (your golden/dark stylesheet) -->
   <link rel="stylesheet" href="css/styles.css" />
-
   <style>
-    /* Small page-specific tweaks to complement your main stylesheet */
-    .hero {
-      padding: 48px 24px;
-      text-align: center;
-      margin-top: 8px;
-    }
-    .grid {
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:20px;
-      align-items:start;
-    }
+    .hero{ padding:40px 20px; text-align:center; }
+    .grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start; }
     @media (max-width:900px){ .grid{ grid-template-columns:1fr; } }
-    .course-list { display:flex; flex-direction:column; gap:10px; margin:12px 0; }
-    .course-link { color:var(--text); text-decoration:none; display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); }
-    .course-link:hover { transform: translateY(-6px); box-shadow: 0 18px 45px rgba(255,215,0,0.08); }
-    .summary { font-size:0.98rem; color:var(--text); line-height:1.5; }
-    .meta { color:var(--muted); font-size:0.92rem; margin-top:8px; }
-    .viewer-wrap { margin-top:18px; }
-    .small-note { font-size:0.92rem; color:var(--muted); margin-top:8px; }
+    .course-list{ display:flex; flex-direction:column; gap:10px; margin:12px 0; }
+    .course-link{ color:var(--text); text-decoration:none; display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); }
+    .course-link:hover{ transform: translateY(-6px); box-shadow: 0 18px 45px rgba(255,215,0,0.08); }
+    .summary{ font-size:0.98rem; color:var(--text); line-height:1.5; }
+    .meta{ color:var(--muted); font-size:0.92rem; }
+    .viewer-wrap{ margin-top:18px; }
+    .small-note{ font-size:0.92rem; color:var(--muted); margin-top:8px; }
+    .pill { display:inline-block; padding:6px 10px; border-radius:999px; background:#0b0b0b; color:var(--text); border:1px solid rgba(255,255,255,0.03); font-weight:700; margin-right:8px; cursor:pointer; }
   </style>
 </head>
 <body>
-  <!-- faint watermark (keeps your brand vibe) -->
   <div class="faint-logo">PMG</div>
 
   <header class="container hero">
     <h1 class="glow">PMG™ EDU</h1>
-    <p class="small-note">Legendary courses, organized. Click a course to open its dedicated page (tests, notes, assignments, lab reports).</p>
+    <p class="small-note">Portal to course pages. Each course page holds tests, notes, and assignments so the main portal stays clean.</p>
   </header>
 
   <main class="container">
 
-    <!-- Industrial Chemistry Second Year -->
     <section class="section card" aria-labelledby="industrial-heading">
       <h2 id="industrial-heading">Industrial Chemistry — Second Year</h2>
-
       <div class="grid">
         <div>
           <div class="course-list">
-            <a class="course-link" href="course/INDUSTRIAL CHEMISTRY SECOND YEAR/CH260.html">
-              <span>CH260 — Organic Chemistry</span>
-              <span class="meta">Open page →</span>
-            </a>
-
-            <a class="course-link" href="course/INDUSTRIAL CHEMISTRY SECOND YEAR/AnalyticalChem.html">
-              <span>Analytical Chemistry</span>
-              <span class="meta">Open page →</span>
-            </a>
-
-            <a class="course-link" href="course/INDUSTRIAL CHEMISTRY SECOND YEAR/IndustrialChem.html">
-              <span>Industrial Chemistry</span>
-              <span class="meta">Open page →</span>
-            </a>
-
-            <a class="course-link" href="course/INDUSTRIAL CHEMISTRY SECOND YEAR/IndustrialPhys.html">
-              <span>Industrial Physics</span>
-              <span class="meta">Open page →</span>
-            </a>
-
-            <a class="course-link" href="course/INDUSTRIAL CHEMISTRY SECOND YEAR/IndustrialMath.html">
-              <span>Industrial Mathematics</span>
-              <span class="meta">Open page →</span>
-            </a>
-
-            <a class="course-link" href="course/INDUSTRIAL CHEMISTRY SECOND YEAR/MA210.html">
-              <span>MA210 — Mathematics (Industrial)</span>
-              <span class="meta">Open page →</span>
-            </a>
+            <a class="course-link" href="course/INDUSTRIAL CHEMISTRY SECOND YEAR/CH260.html"><span>CH260 — Organic Chemistry</span><span class="meta">Open page →</span></a>
+            <a class="course-link" href="course/INDUSTRIAL CHEMISTRY SECOND YEAR/AnalyticalChem.html"><span>Analytical Chemistry</span><span class="meta">Open page →</span></a>
+            <a class="course-link" href="course/INDUSTRIAL CHEMISTRY SECOND YEAR/IndustrialChem.html"><span>Industrial Chemistry</span><span class="meta">Open page →</span></a>
+            <a class="course-link" href="course/INDUSTRIAL CHEMISTRY SECOND YEAR/IndustrialPhys.html"><span>Industrial Physics</span><span class="meta">Open page →</span></a>
+            <a class="course-link" href="course/INDUSTRIAL CHEMISTRY SECOND YEAR/IndustrialMath.html"><span>Industrial Mathematics</span><span class="meta">Open page →</span></a>
+            <a class="course-link" href="course/INDUSTRIAL CHEMISTRY SECOND YEAR/MA210.html"><span>MA210 — Mathematics (Industrial)</span><span class="meta">Open page →</span></a>
           </div>
-
-          <p class="small-note">Tip: edit each course's HTML inside its folder. Keep shared styles in <code>css/styles.css</code> and shared scripts in <code>scripts/scripts.js</code>.</p>
+          <p class="small-note">Edit each course file inside its folder. Keep shared CSS at <code>css/styles.css</code> and shared JS at <code>scripts/scripts.js</code>.</p>
         </div>
 
         <div>
-          <h3 class="glow">Quick notes — Organic & Electronic Effects</h3>
-          <p class="summary">
-            <strong>Localized vs Delocalized bonds:</strong> Localized electrons sit in a single bond or lone pair; delocalized electrons (π systems) spread across several atoms and stabilize molecules (e.g., benzene).
-          </p>
-          <p class="summary">
-            <strong>Inductive effect:</strong> Electron withdrawal or donation transmitted through σ bonds due to electronegativity differences (–I or +I). It weakens with distance and affects acidity and stability.
-          </p>
-          <p class="summary">
-            <strong>Hyperconjugation:</strong> Stabilization by overlap of σ (C–H/C–C) with adjacent empty/partially filled p or π orbitals — explains carbocation stability (3° &gt; 2° &gt; 1°).
-          </p>
-          <div class="example"><strong>Example:</strong> Tertiary carbocations are stabilized by more hyperconjugative C–H bonds than primary carbocations.</div>
+          <h3 class="glow">Quick study notes</h3>
+          <p class="summary"><strong>Delocalization:</strong> π electrons spread across atoms stabilize molecules; benzene is a classic example.</p>
+          <p class="summary"><strong>Inductive effect:</strong> Electron withdrawal or donation through σ bonds; affects acidity and reactivity.</p>
+          <p class="summary"><strong>Hyperconjugation:</strong> Stabilization by overlap of σ bonds with adjacent empty orbitals; explains carbocation stability.</p>
+          <div class="example"><strong>Example:</strong> Tertiary carbocations are more stable than primary due to hyperconjugation and inductive donation.</div>
         </div>
       </div>
     </section>
 
-    <!-- First Year NQ -->
     <section class="section card" aria-labelledby="firstyear-heading">
       <h2 id="firstyear-heading">First Year NQ</h2>
-
       <div class="grid">
         <div>
           <div class="course-list">
-            <a class="course-link" href="course/FIRST YEAR NQ/CH110.html">
-              <span>CH110 — Chemistry</span>
-              <span class="meta">Open page →</span>
-            </a>
-
-            <a class="course-link" href="course/FIRST YEAR NQ/PH110.html">
-              <span>PH110 — Physics</span>
-              <span class="meta">Open page →</span>
-            </a>
-
-            <a class="course-link" href="course/FIRST YEAR NQ/BI10.html">
-              <span>BI10 — Biology</span>
-              <span class="meta">Open page →</span>
-            </a>
-
-            <a class="course-link" href="course/FIRST YEAR NQ/CS110.html">
-              <span>CS110 — Computer Studies</span>
-              <span class="meta">Open page →</span>
-            </a>
-
-            <a class="course-link" href="course/FIRST YEAR NQ/MA110.html">
-              <span>MA110 — Mathematics</span>
-              <span class="meta">Open page →</span>
-            </a>
+            <a class="course-link" href="course/FIRST YEAR NQ/CH110.html"><span>CH110 — Chemistry</span><span class="meta">Open page →</span></a>
+            <a class="course-link" href="course/FIRST YEAR NQ/PH110.html"><span>PH110 — Physics</span><span class="meta">Open page →</span></a>
+            <a class="course-link" href="course/FIRST YEAR NQ/BI10.html"><span>BI10 — Biology</span><span class="meta">Open page →</span></a>
+            <a class="course-link" href="course/FIRST YEAR NQ/CS110.html"><span>CS110 — Computer Studies</span><span class="meta">Open page →</span></a>
+            <a class="course-link" href="course/FIRST YEAR NQ/MA110.html"><span>MA110 — Mathematics</span><span class="meta">Open page →</span></a>
           </div>
-
-          <p class="small-note">If a course page is missing, create a file named exactly as the link (case sensitive) inside the folder shown above.</p>
+          <p class="small-note">If a course page is missing, create a file with the exact name shown inside the folder.</p>
         </div>
 
         <div>
-          <h3 class="glow">Quick notes — Analytical Chemistry</h3>
-          <p class="summary">
-            Analytical chemistry is the science of chemical measurement. It splits into <strong>qualitative</strong> (what is present) and <strong>quantitative</strong> (how much). Classical methods (gravimetric, volumetric) and instrumental methods (spectroscopy, chromatography) are both essential.
-          </p>
-          <div class="example"><strong>Example:</strong> Use a UV‑Vis calibration curve to determine unknown concentration from measured absorbance.</div>
-          <p class="meta">Careers: QC labs, environmental monitoring, forensics, pharma, food testing, research.</p>
+          <h3 class="glow">Analytical Chemistry summary</h3>
+          <p class="summary">Analytical chemistry measures what is in a sample and how much. It includes qualitative tests (what) and quantitative methods (how much) using classical and instrumental techniques.</p>
+          <div class="example"><strong>Example:</strong> Use a UV‑Vis calibration curve to determine concentration from absorbance.</div>
         </div>
       </div>
     </section>
 
-    <!-- Viewer and quick actions -->
     <section class="section card viewer-wrap" aria-labelledby="viewer-heading">
-      <h2 id="viewer-heading">Quick Viewer & Actions</h2>
-
-      <p class="small-note">Open a test or note from a course page to preview it here. Use the course pages to manage tests, notes, assignments, and lab reports independently.</p>
-
+      <h2 id="viewer-heading">Quick Viewer</h2>
+      <p class="small-note">Open a test or note from a course page to preview it here.</p>
       <div id="viewer" class="viewer">
         <iframe id="viewerFrame" src="" title="Document viewer"></iframe>
       </div>
-
       <div style="margin-top:14px;">
         <button id="open-sample" class="btn">Open Sample CH260 2019</button>
-        <span class="small-note" style="margin-left:12px;">(Replace sample links with your actual file paths inside course folders.)</span>
+        <span class="small-note" style="margin-left:12px;">Replace sample path with your actual file path inside the course folder.</span>
       </div>
     </section>
 
-    <!-- Repo housekeeping -->
     <section class="section card" aria-labelledby="housekeeping-heading">
-      <h2 id="housekeeping-heading">Repository housekeeping</h2>
+      <h2 id="housekeeping-heading">Housekeeping</h2>
       <ul class="small-note">
-        <li>Shared stylesheet: <code>css/styles.css</code> — keep theme changes here.</li>
-        <li>Shared scripts: <code>scripts/scripts.js</code> — put `showYears`, `showTopics`, `openPaper` here and include it on each course page.</li>
-        <li>Folder names are case sensitive. If you rename folders, update the links in this file.</li>
+        <li>Shared stylesheet: <code>css/styles.css</code></li>
+        <li>Shared scripts: <code>scripts/scripts.js</code></li>
+        <li>Folder names are case sensitive. Update links if you rename folders.</li>
       </ul>
     </section>
 
   </main>
 
   <footer>
-    <p>PMG™ EDU — organized, fast, and legendary. Keep course pages focused: tests, notes, assignments, lab reports — one HTML per course.</p>
+    <p>PMG™ EDU — organized, fast, and legendary.</p>
   </footer>
 
-  <!-- Shared scripts (create scripts/scripts.js with the functions we discussed) -->
   <script src="scripts/scripts.js"></script>
-
   <script>
-    // Small inline helpers so the viewer button works immediately.
-    // Replace the sample path below with a real file path inside your repo if available.
     document.getElementById('open-sample').addEventListener('click', function(){
       const sample = 'course/INDUSTRIAL CHEMISTRY SECOND YEAR/CH260/tests/CH260-2019.pdf';
       const viewer = document.getElementById('viewer');
