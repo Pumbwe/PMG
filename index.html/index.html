@@ -3,92 +3,100 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PMG-Academics — CBU Programs</title>
-  <meta name="description" content="Portal for Copperbelt University programs — click a program to view courses, then notes, past papers, assignments, lab reports." />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <title>PMG-Academics — CBU Legendary Portal</title>
+  <meta name="description" content="Copperbelt University portal — professional UI, program badges, counts, courses, notes, past papers (2019-2025), assignments, lab reports." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#070712;
-      --panel:#0f1116;
-      --muted:#9aa4b2;
-      --gold:#FFD700;
+      --bg-1:#05050a; --bg-2:#0b0b10; --card:#0f1116; --muted:#9aa4b2;
+      --gold:#FFD166; --accent:#2b9cff; --glass: rgba(255,255,255,0.03);
       --industrial-grad: linear-gradient(135deg,#ff8c00,#ffd700);
       --nonquota-grad: linear-gradient(135deg,#00c2b8,#0077c8);
-      --blue:#2b9cff;
-      --glass: rgba(255,255,255,0.03);
-      --radius:14px;
-      --maxw:1200px;
+      --radius:14px; --maxw:1200px;
     }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Montserrat,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:linear-gradient(180deg,#05050a,#0b0b10);color:#f6f6f6;-webkit-font-smoothing:antialiased}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:#eef2f7;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));-webkit-font-smoothing:antialiased}
     .wrap{max-width:var(--maxw);margin:28px auto;padding:20px}
     header{display:flex;align-items:center;justify-content:space-between;gap:12px}
     .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:56px;height:56px;border-radius:12px;background:var(--industrial-grad);display:flex;align-items:center;justify-content:center;color:#0b0b10;font-weight:900;font-family:Playfair Display}
+    .logo{width:64px;height:64px;border-radius:12px;background:var(--industrial-grad);display:flex;align-items:center;justify-content:center;color:#071018;font-weight:900;font-family:Playfair Display}
     h1{margin:0;font-family:Playfair Display,serif;color:var(--gold);font-size:1.6rem}
     .subtitle{color:var(--muted);font-size:0.95rem}
     .layout{display:grid;grid-template-columns:320px 1fr 420px;gap:18px;margin-top:18px}
     @media (max-width:1100px){ .layout{grid-template-columns:1fr} .right-panel{order:3} }
     .panel{background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.005));padding:14px;border-radius:var(--radius);border:1px solid rgba(255,255,255,0.03)}
-    .program-list{display:flex;flex-direction:column;gap:8px}
-    .program-btn{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.03);cursor:pointer;transition:all .18s;color:inherit}
-    .program-btn:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.6)}
-    /* standout styles for specific programs */
-    .program-btn.industrial{border-color:rgba(255,140,0,0.18); background:linear-gradient(90deg, rgba(255,140,0,0.06), rgba(255,215,0,0.02));}
-    .program-btn.nonquota{border-color:rgba(0,194,184,0.12); background:linear-gradient(90deg, rgba(0,194,184,0.06), rgba(0,119,200,0.02));}
-    /* active (fully colored) */
-    .program-btn.active.industrial{background:var(--industrial-grad); color:#071018; border-color:rgba(255,140,0,0.28); box-shadow:0 12px 30px rgba(255,140,0,0.06)}
-    .program-btn.active.nonquota{background:var(--nonquota-grad); color:#071018; border-color:rgba(0,119,200,0.28); box-shadow:0 12px 30px rgba(0,119,200,0.06)}
-    .program-title{font-weight:700}
-    .program-sub{font-size:0.9rem;color:var(--muted)}
+    .search-row{display:flex;gap:8px;align-items:center}
+    .input{flex:1;padding:10px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.04);color:inherit}
+    .btn{padding:8px 12px;border-radius:10px;background:linear-gradient(135deg,var(--gold),#ff8c00);color:#071018;font-weight:800;border:0;cursor:pointer}
+    .program-list{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+    .program-btn{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:transparent;border:1px solid rgba(255,255,255,0.03);cursor:pointer;transition:transform .18s, box-shadow .18s, background .18s}
+    .program-btn:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,0.6)}
+    .program-badge{min-width:56px;text-align:center;padding:8px;border-radius:10px;font-weight:800}
+    .program-meta{flex:1;text-align:left}
+    .program-title{font-weight:800}
+    .program-sub{color:var(--muted);font-size:0.9rem;margin-top:4px}
+    /* standout program styles */
+    .program-btn.industrial .program-badge{background:var(--industrial-grad);color:#071018}
+    .program-btn.nonquota .program-badge{background:var(--nonquota-grad);color:#071018}
+    /* active state */
+    .program-btn.active{background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-color:rgba(255,255,255,0.06)}
+    .program-btn.active .program-title{color:var(--accent)}
+    .counts-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .count-pill{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);font-weight:700;color:var(--muted)}
     .courses{margin-top:12px;display:none;flex-direction:column;gap:8px}
     .courses.open{display:flex}
-    .course-item{padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.02);cursor:pointer;border:1px solid rgba(255,255,255,0.02)}
-    .course-item:hover{background:rgba(255,255,255,0.03)}
-    .course-item.active{background:linear-gradient(90deg,rgba(43,156,255,0.12),rgba(43,156,255,0.06));border-color:rgba(43,156,255,0.12)}
+    .course-item{padding:10px;border-radius:10px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.02);cursor:pointer}
+    .course-item:hover{background:rgba(255,255,255,0.02)}
+    .course-item.active{outline:3px solid rgba(43,156,255,0.12)}
     .sections{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
-    .section-btn{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);cursor:pointer}
-    .section-btn.active{background:var(--blue);color:#fff;border-color:rgba(255,255,255,0.06)}
-    .viewer{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);display:none}
+    .section-btn{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);cursor:pointer}
+    .section-btn.active{background:var(--accent);color:#fff;border-color:rgba(255,255,255,0.06)}
+    .viewer{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);display:none;margin-top:12px}
     .viewer iframe{width:100%;height:640px;border:0;background:#fff}
-    .right-panel .box{margin-bottom:12px}
     .years{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
     .year-btn{padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);cursor:pointer}
-    .year-btn.active{background:linear-gradient(90deg,var(--blue),#1b6fd6);color:#fff}
+    .year-btn.active{background:linear-gradient(90deg,var(--accent),#1b6fd6);color:#fff}
     .list{margin-top:12px}
-    .list a{display:block;padding:8px;border-radius:8px;text-decoration:none;color:inherit;background:rgba(255,255,255,0.01);margin-bottom:6px;border:1px solid rgba(255,255,255,0.02)}
+    .list a{display:block;padding:10px;border-radius:10px;text-decoration:none;color:inherit;background:rgba(255,255,255,0.01);margin-bottom:8px;border:1px solid rgba(255,255,255,0.02)}
+    .status-card{margin-top:12px;padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02)}
+    .status-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .status-item{padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.02);font-weight:700}
     .empty{color:var(--muted);padding:12px;text-align:center}
-    .search{margin-top:12px;display:flex;gap:8px}
-    .input{flex:1;padding:10px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.04);color:inherit}
-    .btn{padding:8px 12px;border-radius:10px;background:linear-gradient(135deg,var(--gold),#ff8c00);color:#0b0b10;font-weight:700;border:0;cursor:pointer}
-    .small{font-size:0.9rem;color:var(--muted)}
-    .breadcrumb{font-size:0.9rem;color:var(--muted);margin-bottom:8px}
-    .faint{color:rgba(255,255,255,0.03);font-size:8rem;position:fixed;right:10px;bottom:10px;pointer-events:none;user-select:none}
+    .muted{color:var(--muted)}
+    .kbd{background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:6px;font-family:monospace}
+    /* micro animation for "you have" pulse */
+    .pulse { animation: pulse 1.2s ease-out; }
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(43,156,255,0.18); }
+      70% { transform: scale(1.02); box-shadow: 0 10px 30px 6px rgba(43,156,255,0.06); }
+      100% { transform: scale(1); box-shadow: none; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="wrap" role="main">
     <header>
       <div class="brand">
-        <div class="logo">PMG</div>
+        <div class="logo" aria-hidden="true">PMG</div>
         <div>
           <h1>PMG-Academics</h1>
-          <div class="subtitle">Copperbelt University — Programs, Courses, Notes & Past Papers</div>
+          <div class="subtitle">Copperbelt University — Legendary portal for programs, courses and resources</div>
         </div>
       </div>
-      <div class="small">Press <span style="background:rgba(255,255,255,0.04);padding:4px 6px;border-radius:6px">/</span> to focus search</div>
+      <div class="muted">Press <span class="kbd">/</span> to focus search</div>
     </header>
 
     <div class="layout" role="region" aria-label="Main layout">
       <!-- LEFT: Programs -->
       <aside class="panel" aria-label="Programs panel">
-        <div class="breadcrumb">CBU Programs</div>
-        <div class="search">
+        <div class="breadcrumb muted">CBU Programs</div>
+
+        <div class="search-row" style="margin-top:10px">
           <input id="search" class="input" placeholder="Filter programs or courses…" aria-label="Search programs and courses">
           <button id="clear" class="btn" title="Clear">Clear</button>
         </div>
 
-        <div style="margin-top:12px" class="program-list" id="programList" role="list">
+        <div class="program-list" id="programList" role="list" aria-live="polite">
           <!-- program buttons injected here -->
         </div>
       </aside>
@@ -98,17 +106,24 @@
         <div class="panel" aria-live="polite">
           <div class="breadcrumb" id="breadcrumb">Select a program</div>
 
-          <div id="coursesWrap" class="coursesWrap">
-            <div id="courses" class="courses" aria-label="Courses list">
-              <!-- courses injected here -->
-            </div>
+          <div id="coursesWrap">
+            <div id="courses" class="courses" aria-label="Courses list"></div>
 
-            <div id="sections" class="sections" aria-label="Sections" style="margin-top:12px;display:none">
+            <div id="sections" class="sections" aria-label="Sections" style="display:none">
               <button class="section-btn" data-section="notes">Notes</button>
               <button class="section-btn" data-section="past-papers">Past Papers</button>
               <button class="section-btn" data-section="assignments">Assignments</button>
               <button class="section-btn" data-section="lab-reports">Lab Reports</button>
             </div>
+          </div>
+
+          <div id="status" class="status-card" style="display:none">
+            <div class="status-row">
+              <div class="status-item" id="youHave">You have <strong id="totalItems">0</strong> items</div>
+              <div class="status-item muted" id="lastUpdated">Updated: —</div>
+              <div style="margin-left:auto"><button id="openProgram" class="btn">Open Program</button></div>
+            </div>
+            <div class="counts-row" id="countsRow" style="margin-top:10px"></div>
           </div>
 
           <div id="contentArea" style="margin-top:14px">
@@ -117,69 +132,35 @@
           </div>
         </div>
 
-        <div id="viewer" class="viewer" style="margin-top:12px">
+        <div id="viewer" class="viewer" aria-hidden="true">
           <iframe id="viewerFrame" title="Document viewer"></iframe>
         </div>
       </main>
 
-      <!-- RIGHT: Past papers years & quick links -->
+      <!-- RIGHT: Past papers years & preview -->
       <aside class="panel right-panel" aria-label="Details panel">
-        <div class="box">
-          <div class="small">Past Papers — Years</div>
-          <div class="years" id="years">
-            <!-- years 2019-2025 -->
-          </div>
-        </div>
+        <div class="small muted">Past Papers — Years</div>
+        <div class="years" id="years" aria-hidden="true"></div>
 
-        <div class="box">
-          <div class="small">Quick links</div>
-          <div style="margin-top:8px">
-            <a id="openPortal" class="btn" href="index.html">Open Portal Root</a>
-          </div>
-        </div>
-
-        <div class="box">
-          <div class="small">Preview</div>
+        <div style="margin-top:12px">
+          <div class="small muted">Preview</div>
           <div id="preview" class="list"></div>
         </div>
       </aside>
     </div>
-
-    <div class="faint">CBU</div>
   </div>
 
   <script>
   (function(){
-    // Manifest with updated program labels (Industrial and Non Quota)
+    // Default manifest (short program names and style markers)
     const DEFAULT_MANIFEST = {
       programs: [
-        {
-          id: "INDUSTRIAL",
-          label: "Industrial",
-          folder: "Industrial_chemistry_second_year",
-          description: "Industrial program",
-          lastUpdated: "2026-01-10",
-          courses: [
-            { code: "CH260", title: "Organic Chemistry" },
-            { code: "CH261", title: "Analytical Chemistry" }
-          ],
-          style: "industrial" // custom marker for standout color
-        },
-        {
-          id: "NON QUOTA",
-          label: "Non Quota",
-          folder: "NON_QUOTA",
-          description: "Non quota program",
-          lastUpdated: "2026-01-12",
-          courses: [
-            { code: "CH110", title: "Chemistry" },
-            { code: "MA110", title: "Mathematics" }
-          ],
-          style: "nonquota" // custom marker for standout color
-        }
+        { id: "INDUSTRIAL", label: "Industrial", folder: "Industrial_chemistry_second_year", description: "Industrial", lastUpdated: "2026-01-10", courses:[{code:"CH260",title:"Organic Chemistry"},{code:"CH261",title:"Analytical Chemistry"}], style:"industrial" },
+        { id: "NON_QUOTA", label: "Non Quota", folder: "NON_QUOTA", description: "Non Quota", lastUpdated: "2026-01-12", courses:[{code:"CH110",title:"Chemistry"},{code:"MA110",title:"Mathematics"}], style:"nonquota" }
       ]
     };
 
+    // DOM refs
     const programListEl = document.getElementById('programList');
     const coursesEl = document.getElementById('courses');
     const sectionsEl = document.getElementById('sections');
@@ -190,6 +171,12 @@
     const previewEl = document.getElementById('preview');
     const viewer = document.getElementById('viewer');
     const viewerFrame = document.getElementById('viewerFrame');
+    const statusCard = document.getElementById('status');
+    const youHaveEl = document.getElementById('youHave');
+    const totalItemsEl = document.getElementById('totalItems');
+    const countsRow = document.getElementById('countsRow');
+    const lastUpdatedEl = document.getElementById('lastUpdated');
+    const openProgramBtn = document.getElementById('openProgram');
     const searchInput = document.getElementById('search');
     const clearBtn = document.getElementById('clear');
 
@@ -199,7 +186,7 @@
     let activeSection = null;
     let activeYear = null;
 
-    // Try to load external manifest if present
+    // Try to load course_manifest.json if present
     async function loadManifest(){
       try{
         const r = await fetch('course_manifest.json', {cache:'no-store'});
@@ -207,11 +194,25 @@
         const data = await r.json();
         if(data && data.programs && data.programs.length) manifest = data;
       }catch(e){
-        // fallback to DEFAULT_MANIFEST
+        // fallback to default
       }
     }
 
-    // Render program buttons with standout colors for marked programs
+    // Count items in a section by fetching its index.html and counting <li>
+    async function countSectionItems(folder, section){
+      const url = `${folder}/${section}/index.html`;
+      try{
+        const r = await fetch(url, {cache:'no-store'});
+        if(!r.ok) return 0;
+        const text = await r.text();
+        const matches = text.match(/<li[\s>]/gi);
+        return matches ? matches.length : 0;
+      }catch(e){
+        return 0;
+      }
+    }
+
+    // Render program buttons
     function renderPrograms(filter){
       programListEl.innerHTML = '';
       const q = (filter||'').trim().toLowerCase();
@@ -220,24 +221,36 @@
         if(q && !text.includes(q)) return;
         const btn = document.createElement('button');
         btn.className = 'program-btn';
-        if(p.style === 'industrial') btn.classList.add('industrial');
-        if(p.style === 'nonquota') btn.classList.add('nonquota');
-        btn.setAttribute('role','listitem');
-        btn.innerHTML = `<div style="width:10px;height:10px;border-radius:4px;background:linear-gradient(90deg,var(--gold),#ff8c00)"></div>
-                         <div style="text-align:left">
-                           <div class="program-title">${p.label}</div>
-                           <div class="program-sub">${p.description || ''}</div>
-                         </div>`;
+        if(p.style) btn.classList.add(p.style);
+        btn.innerHTML = `
+          <div class="program-badge">${p.label.split(' ').map(s=>s[0]).join('')}</div>
+          <div class="program-meta">
+            <div class="program-title">${p.label}</div>
+            <div class="program-sub">${p.description || ''}</div>
+          </div>
+        `;
         btn.addEventListener('click', ()=> selectProgram(p, btn));
         programListEl.appendChild(btn);
+
+        // fetch counts and show small pills inside the button (non-blocking)
+        (async ()=>{
+          const notes = await countSectionItems(p.folder, 'notes');
+          const papers = await countSectionItems(p.folder, 'past-papers');
+          const assigns = await countSectionItems(p.folder, 'assignments');
+          const labs = await countSectionItems(p.folder, 'lab-reports');
+          const pill = document.createElement('div');
+          pill.style.marginLeft = '8px';
+          pill.innerHTML = `<span class="count-pill">N:${notes}</span> <span class="count-pill">P:${papers}</span>`;
+          pill.style.fontSize = '0.85rem';
+          btn.appendChild(pill);
+        })();
       });
     }
 
+    // Select program
     function selectProgram(p, btnEl){
-      // clear previous active
       document.querySelectorAll('.program-btn').forEach(b=>b.classList.remove('active'));
       btnEl.classList.add('active');
-      if(p.style) btnEl.classList.add(p.style); // ensure style class present
       activeProgram = p;
       breadcrumbEl.textContent = `CBU Programs › ${p.label}`;
       renderCourses(p);
@@ -246,9 +259,33 @@
       contentListEl.innerHTML = ''; emptyEl.style.display = 'block';
       previewEl.innerHTML = '';
       viewer.style.display = 'none';
+      statusCard.style.display = 'block';
+      lastUpdatedEl.textContent = `Updated: ${p.lastUpdated || '—'}`;
+      openProgramBtn.onclick = ()=> openViewer(`${p.folder}/index.html`);
+      // populate "you have" counts and animate
+      (async ()=>{
+        const notes = await countSectionItems(p.folder, 'notes');
+        const papers = await countSectionItems(p.folder, 'past-papers');
+        const assigns = await countSectionItems(p.folder, 'assignments');
+        const labs = await countSectionItems(p.folder, 'lab-reports');
+        const total = notes + papers + assigns + labs;
+        totalItemsEl.textContent = total;
+        // build counts row
+        countsRow.innerHTML = '';
+        [['Notes',notes],['Past Papers',papers],['Assignments',assigns],['Lab Reports',labs]].forEach(([label,n])=>{
+          const el = document.createElement('div');
+          el.className = 'count-pill';
+          el.textContent = `${label}: ${n}`;
+          countsRow.appendChild(el);
+        });
+        // pulse animation to draw attention
+        countsRow.classList.add('pulse');
+        setTimeout(()=> countsRow.classList.remove('pulse'), 1200);
+      })();
       previewLink(`${p.folder}/index.html`);
     }
 
+    // Render courses
     function renderCourses(program){
       coursesEl.innerHTML = '';
       coursesEl.classList.add('open');
@@ -262,6 +299,7 @@
       sectionsEl.style.display = 'flex';
     }
 
+    // Select course
     function selectCourse(program, course, itemEl){
       document.querySelectorAll('.course-item').forEach(i=>i.classList.remove('active'));
       itemEl.classList.add('active');
@@ -272,6 +310,7 @@
       previewLink(`${program.folder}/notes/index.html`);
     }
 
+    // Show section
     async function showSection(section){
       activeSection = section;
       document.querySelectorAll('.section-btn').forEach(b=> b.classList.toggle('active', b.dataset.section === section));
@@ -283,7 +322,7 @@
         yearsEl.innerHTML = '';
       }
       if(!activeProgram || !activeCourse){ emptyEl.style.display = 'block'; return; }
-      const folder = activeProgram.folder + '/' + section;
+      const folder = `${activeProgram.folder}/${section}`;
       const indexUrl = `${folder}/index.html`;
       try{
         const r = await fetch(indexUrl, {cache:'no-store'});
@@ -309,6 +348,7 @@
       }
     }
 
+    // Render years 2019-2025
     function renderYears(){
       yearsEl.innerHTML = '';
       for(let y=2019;y<=2025;y++){
@@ -318,9 +358,11 @@
         btn.addEventListener('click', ()=> selectYear(y));
         yearsEl.appendChild(btn);
       }
+      yearsEl.setAttribute('aria-hidden','false');
     }
 
-    async function selectYear(y){
+    // Select year and list past papers
+    function selectYear(y){
       activeYear = y;
       document.querySelectorAll('.year-btn').forEach(b=>b.classList.toggle('active', Number(b.textContent) === y));
       if(!activeProgram) return;
@@ -342,6 +384,7 @@
       });
     }
 
+    // Preview link
     function previewLink(path){
       previewEl.innerHTML = '';
       const a = document.createElement('a');
@@ -351,13 +394,16 @@
       previewEl.appendChild(a);
     }
 
+    // Open viewer
     function openViewer(path){
       const normalized = path.replace(/^\/+/,'');
       viewerFrame.src = normalized;
       viewer.style.display = 'block';
+      viewer.setAttribute('aria-hidden','false');
       viewer.scrollIntoView({behavior:'smooth'});
     }
 
+    // Resolve relative hrefs
     function resolvePath(folder, href){
       if(href.startsWith('http') || href.startsWith('/')) return href.replace(/^\/+/,'');
       if(href.startsWith('./')) return folder + '/' + href.slice(2);
@@ -365,31 +411,20 @@
       return folder + '/' + href;
     }
 
-    document.querySelectorAll('.section-btn').forEach(b=>{
-      b.addEventListener('click', ()=> showSection(b.dataset.section));
-    });
-
+    // Wire up UI
+    document.querySelectorAll('.section-btn').forEach(b=> b.addEventListener('click', ()=> showSection(b.dataset.section)));
     searchInput.addEventListener('input', ()=> renderPrograms(searchInput.value));
     clearBtn.addEventListener('click', ()=> { searchInput.value=''; renderPrograms(''); });
+    document.addEventListener('keydown', (e)=>{ if(e.key === '/' && !e.metaKey && !e.ctrlKey){ e.preventDefault(); searchInput.focus(); } if(e.key === 'Escape'){ viewer.style.display='none'; viewerFrame.src=''; } });
 
-    document.addEventListener('keydown', (e)=>{
-      if(e.key === '/' && !e.metaKey && !e.ctrlKey){
-        e.preventDefault(); searchInput.focus();
-      }
-      if(e.key === 'Escape'){
-        viewer.style.display = 'none';
-        viewerFrame.src = '';
-      }
-    });
-
-    yearsEl.innerHTML = '<div class="small muted">Select Past Papers to show years</div>';
-
+    // Boot
     (async function boot(){
       await loadManifest();
       renderPrograms();
     })();
 
-    window._pmg = { manifest, renderPrograms, selectProgram, selectCourse: (p,c)=>selectCourse(p,c,document.querySelector('.course-item')), openViewer };
+    // Expose for debugging
+    window._pmg = { manifest, renderPrograms, selectProgram: (p,btn)=>selectProgram(p,btn), openViewer };
   })();
   </script>
 </body>
