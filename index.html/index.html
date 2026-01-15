@@ -8,25 +8,39 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#070712; --panel:#0f1116; --muted:#9aa4b2; --gold:#FFD700; --blue:#2b9cff;
-      --glass: rgba(255,255,255,0.03); --radius:14px; --maxw:1200px;
+      --bg:#070712;
+      --panel:#0f1116;
+      --muted:#9aa4b2;
+      --gold:#FFD700;
+      --industrial-grad: linear-gradient(135deg,#ff8c00,#ffd700);
+      --nonquota-grad: linear-gradient(135deg,#00c2b8,#0077c8);
+      --blue:#2b9cff;
+      --glass: rgba(255,255,255,0.03);
+      --radius:14px;
+      --maxw:1200px;
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:Montserrat,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:linear-gradient(180deg,#05050a,#0b0b10);color:#f6f6f6;-webkit-font-smoothing:antialiased}
     .wrap{max-width:var(--maxw);margin:28px auto;padding:20px}
     header{display:flex;align-items:center;justify-content:space-between;gap:12px}
     .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#ff8c00);display:flex;align-items:center;justify-content:center;color:#0b0b10;font-weight:900;font-family:Playfair Display}
+    .logo{width:56px;height:56px;border-radius:12px;background:var(--industrial-grad);display:flex;align-items:center;justify-content:center;color:#0b0b10;font-weight:900;font-family:Playfair Display}
     h1{margin:0;font-family:Playfair Display,serif;color:var(--gold);font-size:1.6rem}
     .subtitle{color:var(--muted);font-size:0.95rem}
     .layout{display:grid;grid-template-columns:320px 1fr 420px;gap:18px;margin-top:18px}
-    @media (max-width:1100px){ .layout{grid-template-columns:1fr; } .right-panel{order:3} }
+    @media (max-width:1100px){ .layout{grid-template-columns:1fr} .right-panel{order:3} }
     .panel{background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.005));padding:14px;border-radius:var(--radius);border:1px solid rgba(255,255,255,0.03)}
     .program-list{display:flex;flex-direction:column;gap:8px}
-    .program-btn{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.03);cursor:pointer;transition:all .18s}
+    .program-btn{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.03);cursor:pointer;transition:all .18s;color:inherit}
     .program-btn:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.6)}
-    .program-btn.active{background:linear-gradient(90deg,var(--blue),#1b6fd6);border-color:rgba(43,156,255,0.18);color:#fff}
+    /* standout styles for specific programs */
+    .program-btn.industrial{border-color:rgba(255,140,0,0.18); background:linear-gradient(90deg, rgba(255,140,0,0.06), rgba(255,215,0,0.02));}
+    .program-btn.nonquota{border-color:rgba(0,194,184,0.12); background:linear-gradient(90deg, rgba(0,194,184,0.06), rgba(0,119,200,0.02));}
+    /* active (fully colored) */
+    .program-btn.active.industrial{background:var(--industrial-grad); color:#071018; border-color:rgba(255,140,0,0.28); box-shadow:0 12px 30px rgba(255,140,0,0.06)}
+    .program-btn.active.nonquota{background:var(--nonquota-grad); color:#071018; border-color:rgba(0,119,200,0.28); box-shadow:0 12px 30px rgba(0,119,200,0.06)}
     .program-title{font-weight:700}
+    .program-sub{font-size:0.9rem;color:var(--muted)}
     .courses{margin-top:12px;display:none;flex-direction:column;gap:8px}
     .courses.open{display:flex}
     .course-item{padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.02);cursor:pointer;border:1px solid rgba(255,255,255,0.02)}
@@ -62,7 +76,7 @@
           <div class="subtitle">Copperbelt University — Programs, Courses, Notes & Past Papers</div>
         </div>
       </div>
-      <div class="small">Press <span class="small" style="background:rgba(255,255,255,0.04);padding:4px 6px;border-radius:6px">/</span> to focus search</div>
+      <div class="small">Press <span style="background:rgba(255,255,255,0.04);padding:4px 6px;border-radius:6px">/</span> to focus search</div>
     </header>
 
     <div class="layout" role="region" aria-label="Main layout">
@@ -136,30 +150,32 @@
 
   <script>
   (function(){
-    // Default programs (used if course_manifest.json missing)
+    // Manifest with updated program labels (Industrial and Non Quota)
     const DEFAULT_MANIFEST = {
       programs: [
         {
-          id: "INDUSTRIAL CHEMISTRY SECOND YEAR",
-          label: "Industrial Chemistry Second Year",
+          id: "INDUSTRIAL",
+          label: "Industrial",
           folder: "Industrial_chemistry_second_year",
-          description: "Organic chemistry, analytical techniques, industrial processes",
+          description: "Industrial program",
           lastUpdated: "2026-01-10",
           courses: [
             { code: "CH260", title: "Organic Chemistry" },
             { code: "CH261", title: "Analytical Chemistry" }
-          ]
+          ],
+          style: "industrial" // custom marker for standout color
         },
         {
-          id: "FIRST YEAR NQ",
-          label: "First Year NQ",
-          folder: "FIRST_YEAR_NQ",
-          description: "Foundation courses at Copperbelt University",
+          id: "NON QUOTA",
+          label: "Non Quota",
+          folder: "NON_QUOTA",
+          description: "Non quota program",
           lastUpdated: "2026-01-12",
           courses: [
             { code: "CH110", title: "Chemistry" },
             { code: "MA110", title: "Mathematics" }
-          ]
+          ],
+          style: "nonquota" // custom marker for standout color
         }
       ]
     };
@@ -183,7 +199,7 @@
     let activeSection = null;
     let activeYear = null;
 
-    // Load manifest if available
+    // Try to load external manifest if present
     async function loadManifest(){
       try{
         const r = await fetch('course_manifest.json', {cache:'no-store'});
@@ -191,11 +207,11 @@
         const data = await r.json();
         if(data && data.programs && data.programs.length) manifest = data;
       }catch(e){
-        // use default manifest
+        // fallback to DEFAULT_MANIFEST
       }
     }
 
-    // Render program buttons
+    // Render program buttons with standout colors for marked programs
     function renderPrograms(filter){
       programListEl.innerHTML = '';
       const q = (filter||'').trim().toLowerCase();
@@ -204,77 +220,68 @@
         if(q && !text.includes(q)) return;
         const btn = document.createElement('button');
         btn.className = 'program-btn';
+        if(p.style === 'industrial') btn.classList.add('industrial');
+        if(p.style === 'nonquota') btn.classList.add('nonquota');
         btn.setAttribute('role','listitem');
-        btn.innerHTML = `<div style="width:10px;height:10px;border-radius:4px;background:linear-gradient(90deg,var(--gold),#ff8c00)"></div><div><div class="program-title">${p.label}</div><div class="small muted">${p.description || ''}</div></div>`;
+        btn.innerHTML = `<div style="width:10px;height:10px;border-radius:4px;background:linear-gradient(90deg,var(--gold),#ff8c00)"></div>
+                         <div style="text-align:left">
+                           <div class="program-title">${p.label}</div>
+                           <div class="program-sub">${p.description || ''}</div>
+                         </div>`;
         btn.addEventListener('click', ()=> selectProgram(p, btn));
         programListEl.appendChild(btn);
       });
     }
 
-    // Select program
     function selectProgram(p, btnEl){
       // clear previous active
       document.querySelectorAll('.program-btn').forEach(b=>b.classList.remove('active'));
       btnEl.classList.add('active');
+      if(p.style) btnEl.classList.add(p.style); // ensure style class present
       activeProgram = p;
       breadcrumbEl.textContent = `CBU Programs › ${p.label}`;
       renderCourses(p);
-      // reset lower selections
       activeCourse = null; activeSection = null; activeYear = null;
       sectionsEl.style.display = 'none';
       contentListEl.innerHTML = ''; emptyEl.style.display = 'block';
       previewEl.innerHTML = '';
       viewer.style.display = 'none';
-      // open program index in preview if exists
       previewLink(`${p.folder}/index.html`);
     }
 
-    // Render courses for program
     function renderCourses(program){
       coursesEl.innerHTML = '';
       coursesEl.classList.add('open');
-      program.courses.forEach(c=>{
+      (program.courses || []).forEach(c=>{
         const item = document.createElement('div');
         item.className = 'course-item';
         item.textContent = `${c.code} — ${c.title}`;
         item.addEventListener('click', ()=> selectCourse(program, c, item));
         coursesEl.appendChild(item);
       });
-      // show sections
       sectionsEl.style.display = 'flex';
     }
 
-    // Select course
     function selectCourse(program, course, itemEl){
-      // mark active
       document.querySelectorAll('.course-item').forEach(i=>i.classList.remove('active'));
       itemEl.classList.add('active');
       activeCourse = course;
       breadcrumbEl.textContent = `CBU Programs › ${program.label} › ${course.code}`;
-      // show sections and default to Notes
-      activeSection = null; activeYear = null;
       document.querySelectorAll('.section-btn').forEach(b=>b.classList.remove('active'));
-      // show content placeholder
       showSection('notes');
-      // preview course index if exists
       previewLink(`${program.folder}/notes/index.html`);
     }
 
-    // Show a section (notes, past-papers, assignments, lab-reports)
     async function showSection(section){
       activeSection = section;
-      // highlight section button
       document.querySelectorAll('.section-btn').forEach(b=> b.classList.toggle('active', b.dataset.section === section));
-      // clear content list
       contentListEl.innerHTML = '';
       emptyEl.style.display = 'none';
-      // If past-papers, show years
       if(section === 'past-papers'){
         renderYears();
       } else {
         yearsEl.innerHTML = '';
       }
-      // Try to fetch the section index and list items
       if(!activeProgram || !activeCourse){ emptyEl.style.display = 'block'; return; }
       const folder = activeProgram.folder + '/' + section;
       const indexUrl = `${folder}/index.html`;
@@ -282,12 +289,10 @@
         const r = await fetch(indexUrl, {cache:'no-store'});
         if(!r.ok) throw new Error('no index');
         const text = await r.text();
-        // crude parse: find <li> elements and extract inner text and href
         const parser = new DOMParser();
         const doc = parser.parseFromString(text, 'text/html');
         const lis = doc.querySelectorAll('li a');
         if(lis.length === 0){
-          // fallback: show raw index link
           contentListEl.innerHTML = `<a href="${indexUrl}" class="btn" onclick="event.preventDefault(); openViewer('${indexUrl}')">Open section index</a>`;
           return;
         }
@@ -300,12 +305,10 @@
           contentListEl.appendChild(link);
         });
       }catch(e){
-        // no index found — show message and a link to create one
         contentListEl.innerHTML = `<div class="empty">No index found for this section. Create <code>${folder}/index.html</code> with a list of topics.</div>`;
       }
     }
 
-    // Render years 2019-2025 for past papers
     function renderYears(){
       yearsEl.innerHTML = '';
       for(let y=2019;y<=2025;y++){
@@ -317,15 +320,11 @@
       }
     }
 
-    // Select year and list past papers for that year
     async function selectYear(y){
       activeYear = y;
       document.querySelectorAll('.year-btn').forEach(b=>b.classList.toggle('active', Number(b.textContent) === y));
-      // show list of past papers for the selected year
       if(!activeProgram) return;
       const folder = `${activeProgram.folder}/past-papers`;
-      // convention: files named like ch260-2019.html or ch260-2019.pdf (we use html)
-      // We'll attempt to list common course codes from manifest for this program
       contentListEl.innerHTML = '';
       const codes = (activeProgram.courses || []).map(c=>c.code.toLowerCase());
       if(codes.length === 0){
@@ -343,7 +342,6 @@
       });
     }
 
-    // Preview link (shows in preview panel)
     function previewLink(path){
       previewEl.innerHTML = '';
       const a = document.createElement('a');
@@ -353,7 +351,6 @@
       previewEl.appendChild(a);
     }
 
-    // Open viewer iframe
     function openViewer(path){
       const normalized = path.replace(/^\/+/,'');
       viewerFrame.src = normalized;
@@ -361,24 +358,20 @@
       viewer.scrollIntoView({behavior:'smooth'});
     }
 
-    // Resolve relative hrefs against folder
     function resolvePath(folder, href){
       if(href.startsWith('http') || href.startsWith('/')) return href.replace(/^\/+/,'');
       if(href.startsWith('./')) return folder + '/' + href.slice(2);
-      if(href.startsWith('../')) return folder + '/' + href; // crude
+      if(href.startsWith('../')) return folder + '/' + href;
       return folder + '/' + href;
     }
 
-    // Wire up section buttons
     document.querySelectorAll('.section-btn').forEach(b=>{
       b.addEventListener('click', ()=> showSection(b.dataset.section));
     });
 
-    // Search and clear
     searchInput.addEventListener('input', ()=> renderPrograms(searchInput.value));
     clearBtn.addEventListener('click', ()=> { searchInput.value=''; renderPrograms(''); });
 
-    // Keyboard: focus search with '/'
     document.addEventListener('keydown', (e)=>{
       if(e.key === '/' && !e.metaKey && !e.ctrlKey){
         e.preventDefault(); searchInput.focus();
@@ -389,18 +382,13 @@
       }
     });
 
-    // Initialize years area (empty until past-papers selected)
     yearsEl.innerHTML = '<div class="small muted">Select Past Papers to show years</div>';
 
-    // Boot
     (async function boot(){
       await loadManifest();
       renderPrograms();
-      // pre-create years buttons but hidden until past-papers selected
-      // (we create them dynamically in renderYears)
     })();
 
-    // Expose for debugging
     window._pmg = { manifest, renderPrograms, selectProgram, selectCourse: (p,c)=>selectCourse(p,c,document.querySelector('.course-item')), openViewer };
   })();
   </script>
