@@ -3,523 +3,406 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PMG-Academics — Portal</title>
-  <meta name="description" content="PMG-Academics portal: notes, past papers, assignments and lab reports organized by program." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <title>PMG-Academics — CBU Programs</title>
+  <meta name="description" content="Portal for Copperbelt University programs — click a program to view courses, then notes, past papers, assignments, lab reports." />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    /* ===========================================================
-       PMG-Academics Portal — Styles
-       - Purpose: single-file portal CSS for consistent look
-       - Keep this file in repo root as index.html
-       =========================================================== */
     :root{
-      --bg-1:#05050a;
-      --bg-2:#0b0b10;
-      --card:#0f1116;
-      --muted:#9aa4b2;
-      --gold:#FFD700;
-      --accent:#2b9cff;
-      --glass: rgba(255,255,255,0.03);
-      --max-width:1200px;
-      --radius:14px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+      --bg:#070712; --panel:#0f1116; --muted:#9aa4b2; --gold:#FFD700; --blue:#2b9cff;
+      --glass: rgba(255,255,255,0.03); --radius:14px; --maxw:1200px;
     }
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Montserrat,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:#f6f6f6;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));-webkit-font-smoothing:antialiased}
-    a{color:inherit}
-    .wrap{max-width:var(--max-width);margin:28px auto;padding:20px}
-    header.hero{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:22px;border-radius:var(--radius);background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
-    .brand{display:flex;gap:14px;align-items:center}
-    .logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#ff8c00);display:flex;align-items:center;justify-content:center;color:#0b0b10;font-weight:900;font-family:Playfair Display;font-size:20px}
+    body{margin:0;font-family:Montserrat,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:linear-gradient(180deg,#05050a,#0b0b10);color:#f6f6f6;-webkit-font-smoothing:antialiased}
+    .wrap{max-width:var(--maxw);margin:28px auto;padding:20px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#ff8c00);display:flex;align-items:center;justify-content:center;color:#0b0b10;font-weight:900;font-family:Playfair Display}
     h1{margin:0;font-family:Playfair Display,serif;color:var(--gold);font-size:1.6rem}
     .subtitle{color:var(--muted);font-size:0.95rem}
-    .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .input{padding:10px 12px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.04);color:inherit;min-width:260px}
-    .btn{padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#ff8c00);color:#0b0b10;font-weight:800;text-decoration:none;border:0;cursor:pointer}
-    .muted{color:var(--muted)}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
-    @media (max-width:980px){ .grid{grid-template-columns:repeat(2,1fr)} }
-    @media (max-width:640px){ .grid{grid-template-columns:1fr} .input{min-width:140px} }
-    .program{background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.005));padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;gap:12px}
-    .program-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .program-title{font-weight:800;color:var(--gold)}
-    .program-meta{color:var(--muted);font-size:0.9rem}
-    .sections{display:flex;gap:8px;flex-wrap:wrap}
-    .section-pill{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);font-weight:700;color:var(--muted);display:inline-flex;gap:8px;align-items:center}
-    .section-pill a{color:inherit;text-decoration:none}
-    .counts{font-weight:800;color:#fff}
-    .card-footer{display:flex;justify-content:space-between;align-items:center;gap:12px}
-    .viewer{margin-top:18px;border-radius:12px;overflow:hidden;display:none;border:1px solid rgba(255,255,255,0.03)}
+    .layout{display:grid;grid-template-columns:320px 1fr 420px;gap:18px;margin-top:18px}
+    @media (max-width:1100px){ .layout{grid-template-columns:1fr; } .right-panel{order:3} }
+    .panel{background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(255,255,255,0.005));padding:14px;border-radius:var(--radius);border:1px solid rgba(255,255,255,0.03)}
+    .program-list{display:flex;flex-direction:column;gap:8px}
+    .program-btn{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.03);cursor:pointer;transition:all .18s}
+    .program-btn:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.6)}
+    .program-btn.active{background:linear-gradient(90deg,var(--blue),#1b6fd6);border-color:rgba(43,156,255,0.18);color:#fff}
+    .program-title{font-weight:700}
+    .courses{margin-top:12px;display:none;flex-direction:column;gap:8px}
+    .courses.open{display:flex}
+    .course-item{padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.02);cursor:pointer;border:1px solid rgba(255,255,255,0.02)}
+    .course-item:hover{background:rgba(255,255,255,0.03)}
+    .course-item.active{background:linear-gradient(90deg,rgba(43,156,255,0.12),rgba(43,156,255,0.06));border-color:rgba(43,156,255,0.12)}
+    .sections{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+    .section-btn{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);cursor:pointer}
+    .section-btn.active{background:var(--blue);color:#fff;border-color:rgba(255,255,255,0.06)}
+    .viewer{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);display:none}
     .viewer iframe{width:100%;height:640px;border:0;background:#fff}
-    .search-hint{font-size:0.9rem;color:var(--muted)}
-    .controls{display:flex;gap:8px;align-items:center}
+    .right-panel .box{margin-bottom:12px}
+    .years{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+    .year-btn{padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);cursor:pointer}
+    .year-btn.active{background:linear-gradient(90deg,var(--blue),#1b6fd6);color:#fff}
+    .list{margin-top:12px}
+    .list a{display:block;padding:8px;border-radius:8px;text-decoration:none;color:inherit;background:rgba(255,255,255,0.01);margin-bottom:6px;border:1px solid rgba(255,255,255,0.02)}
+    .empty{color:var(--muted);padding:12px;text-align:center}
+    .search{margin-top:12px;display:flex;gap:8px}
+    .input{flex:1;padding:10px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.04);color:inherit}
+    .btn{padding:8px 12px;border-radius:10px;background:linear-gradient(135deg,var(--gold),#ff8c00);color:#0b0b10;font-weight:700;border:0;cursor:pointer}
     .small{font-size:0.9rem;color:var(--muted)}
-    .recent{margin-top:18px;padding:12px;border-radius:12px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.02)}
-    .recent li{padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
-    .recent li:last-child{border-bottom:0}
-    .empty{color:var(--muted);padding:18px;text-align:center}
-    .kbd{background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:6px;font-family:var(--mono)}
-    .search-row{display:flex;gap:12px;align-items:center}
-    .filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    .filter-btn{padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);cursor:pointer;color:var(--muted)}
-    .program-description{font-size:0.95rem;color:var(--muted)}
-    .meta-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
-    /* long-form content helpers */
-    .long-note{white-space:pre-wrap;line-height:1.6}
-    .badge{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(255,215,0,0.06);color:var(--gold);font-weight:700}
-    .help{font-size:0.9rem;color:var(--muted);margin-top:8px}
-    /* developer debug */
-    .debug{font-family:var(--mono);font-size:0.85rem;color:var(--muted);background:rgba(255,255,255,0.02);padding:8px;border-radius:8px;margin-top:12px}
+    .breadcrumb{font-size:0.9rem;color:var(--muted);margin-bottom:8px}
+    .faint{color:rgba(255,255,255,0.03);font-size:8rem;position:fixed;right:10px;bottom:10px;pointer-events:none;user-select:none}
   </style>
 </head>
 <body>
-  <div class="wrap" role="main">
-    <!-- HERO -->
-    <header class="hero" role="banner" aria-label="PMG portal header">
+  <div class="wrap">
+    <header>
       <div class="brand">
-        <div class="logo" aria-hidden="true">PMG</div>
+        <div class="logo">PMG</div>
         <div>
           <h1>PMG-Academics</h1>
-          <div class="subtitle">Notes • Past Papers • Assignments • Lab Reports — manifest-driven portal</div>
+          <div class="subtitle">Copperbelt University — Programs, Courses, Notes & Past Papers</div>
         </div>
       </div>
+      <div class="small">Press <span class="small" style="background:rgba(255,255,255,0.04);padding:4px 6px;border-radius:6px">/</span> to focus search</div>
+    </header>
 
-      <div class="toolbar" role="region" aria-label="Toolbar">
-        <div class="search-row">
-          <label for="search" class="sr-only">Search programs and courses</label>
-          <input id="search" class="input" type="search" placeholder="Search programs, course codes, topics…" aria-label="Search programs and courses" />
-          <div class="filters" role="toolbar" aria-label="Filters">
-            <button class="filter-btn" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="notes">Notes</button>
-            <button class="filter-btn" data-filter="past-papers">Past Papers</button>
-            <button class="filter-btn" data-filter="assignments">Assignments</button>
-            <button class="filter-btn" data-filter="lab-reports">Lab Reports</button>
+    <div class="layout" role="region" aria-label="Main layout">
+      <!-- LEFT: Programs -->
+      <aside class="panel" aria-label="Programs panel">
+        <div class="breadcrumb">CBU Programs</div>
+        <div class="search">
+          <input id="search" class="input" placeholder="Filter programs or courses…" aria-label="Search programs and courses">
+          <button id="clear" class="btn" title="Clear">Clear</button>
+        </div>
+
+        <div style="margin-top:12px" class="program-list" id="programList" role="list">
+          <!-- program buttons injected here -->
+        </div>
+      </aside>
+
+      <!-- CENTER: Courses and sections -->
+      <main>
+        <div class="panel" aria-live="polite">
+          <div class="breadcrumb" id="breadcrumb">Select a program</div>
+
+          <div id="coursesWrap" class="coursesWrap">
+            <div id="courses" class="courses" aria-label="Courses list">
+              <!-- courses injected here -->
+            </div>
+
+            <div id="sections" class="sections" aria-label="Sections" style="margin-top:12px;display:none">
+              <button class="section-btn" data-section="notes">Notes</button>
+              <button class="section-btn" data-section="past-papers">Past Papers</button>
+              <button class="section-btn" data-section="assignments">Assignments</button>
+              <button class="section-btn" data-section="lab-reports">Lab Reports</button>
+            </div>
+          </div>
+
+          <div id="contentArea" style="margin-top:14px">
+            <div id="contentList" class="list"></div>
+            <div id="empty" class="empty">Choose a program and course to see content.</div>
           </div>
         </div>
 
-        <div class="controls">
-          <button id="expandAll" class="btn" title="Open first program">Open first program</button>
-          <button id="collapseAll" class="btn" title="Close viewer">Close viewer</button>
+        <div id="viewer" class="viewer" style="margin-top:12px">
+          <iframe id="viewerFrame" title="Document viewer"></iframe>
         </div>
-      </div>
-    </header>
+      </main>
 
-    <!-- PROGRAM GRID -->
-    <section id="programsGrid" class="grid" aria-live="polite" aria-label="Programs list">
-      <!-- Program cards injected here by script -->
-    </section>
-
-    <!-- VIEWER -->
-    <section id="viewer" class="viewer" aria-label="Document viewer">
-      <iframe id="viewerFrame" title="Document viewer"></iframe>
-    </section>
-
-    <!-- RECENT ACTIVITY -->
-    <section class="recent" aria-label="Recent activity">
-      <strong>Recent activity</strong>
-      <ul id="recentList">
-        <li class="empty">No recent updates found in manifest.</li>
-      </ul>
-    </section>
-
-    <!-- HELP & TEMPLATES -->
-    <section style="margin-top:18px;">
-      <div class="program card" style="padding:18px;">
-        <h2 style="margin:0 0 8px 0;color:var(--gold)">How to add content</h2>
-        <div class="program-description">
-          <p>
-            Add program folders at the repository root. Each program folder should follow this skeleton:
-          </p>
-          <pre class="debug">Program_Name/
-  index.html
-  meta.json (optional)
-  notes/
-    index.html
-    topic-1.html
-    topic-2.html
-  past-papers/
-    index.html
-    ch260-2019.html
-  assignments/
-    index.html
-    assignment-01.html
-  lab-reports/
-    index.html
-    template.html
-</pre>
-          <p class="help">Use lowercase, hyphens, and no leading/trailing spaces in filenames and folders. The portal counts items by fetching each section's <code>index.html</code> and counting <code>&lt;li&gt;</code> entries.</p>
+      <!-- RIGHT: Past papers years & quick links -->
+      <aside class="panel right-panel" aria-label="Details panel">
+        <div class="box">
+          <div class="small">Past Papers — Years</div>
+          <div class="years" id="years">
+            <!-- years 2019-2025 -->
+          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- FOOTER -->
-    <footer style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-      <div class="small">© 2026 PMG-Academics</div>
-      <div class="small">Shortcuts: <span class="kbd">/</span> focus search • <span class="kbd">Esc</span> close viewer</div>
-    </footer>
+        <div class="box">
+          <div class="small">Quick links</div>
+          <div style="margin-top:8px">
+            <a id="openPortal" class="btn" href="index.html">Open Portal Root</a>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="small">Preview</div>
+          <div id="preview" class="list"></div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="faint">CBU</div>
   </div>
 
-  <!-- =========================================================
-       Inline script — manifest-driven rendering, search, viewer
-       ========================================================= -->
   <script>
   (function(){
-    // Manifest path (relative)
-    const MANIFEST_URL = 'course_manifest.json';
+    // Default programs (used if course_manifest.json missing)
+    const DEFAULT_MANIFEST = {
+      programs: [
+        {
+          id: "INDUSTRIAL CHEMISTRY SECOND YEAR",
+          label: "Industrial Chemistry Second Year",
+          folder: "Industrial_chemistry_second_year",
+          description: "Organic chemistry, analytical techniques, industrial processes",
+          lastUpdated: "2026-01-10",
+          courses: [
+            { code: "CH260", title: "Organic Chemistry" },
+            { code: "CH261", title: "Analytical Chemistry" }
+          ]
+        },
+        {
+          id: "FIRST YEAR NQ",
+          label: "First Year NQ",
+          folder: "FIRST_YEAR_NQ",
+          description: "Foundation courses at Copperbelt University",
+          lastUpdated: "2026-01-12",
+          courses: [
+            { code: "CH110", title: "Chemistry" },
+            { code: "MA110", title: "Mathematics" }
+          ]
+        }
+      ]
+    };
 
-    // DOM refs
-    const programsGrid = document.getElementById('programsGrid');
-    const searchEl = document.getElementById('search');
-    const expandAllBtn = document.getElementById('expandAll');
-    const collapseAllBtn = document.getElementById('collapseAll');
+    const programListEl = document.getElementById('programList');
+    const coursesEl = document.getElementById('courses');
+    const sectionsEl = document.getElementById('sections');
+    const contentListEl = document.getElementById('contentList');
+    const emptyEl = document.getElementById('empty');
+    const breadcrumbEl = document.getElementById('breadcrumb');
+    const yearsEl = document.getElementById('years');
+    const previewEl = document.getElementById('preview');
     const viewer = document.getElementById('viewer');
-    const frame = document.getElementById('viewerFrame');
-    const recentList = document.getElementById('recentList');
-    const filterButtons = document.querySelectorAll('.filter-btn');
+    const viewerFrame = document.getElementById('viewerFrame');
+    const searchInput = document.getElementById('search');
+    const clearBtn = document.getElementById('clear');
 
-    // Utility: fetch JSON safely
-    async function fetchJson(url){
+    let manifest = DEFAULT_MANIFEST;
+    let activeProgram = null;
+    let activeCourse = null;
+    let activeSection = null;
+    let activeYear = null;
+
+    // Load manifest if available
+    async function loadManifest(){
       try{
-        const r = await fetch(url, {cache:'no-store'});
-        if(!r.ok) throw new Error('not found');
-        return await r.json();
+        const r = await fetch('course_manifest.json', {cache:'no-store'});
+        if(!r.ok) throw new Error('no manifest');
+        const data = await r.json();
+        if(data && data.programs && data.programs.length) manifest = data;
       }catch(e){
-        return null;
+        // use default manifest
       }
     }
 
-    // Utility: fetch a section index and count <li> items
-    async function countSectionItems(folder, section){
-      const url = `${folder}/${section}/index.html`;
-      try{
-        const r = await fetch(url, {cache:'no-store'});
-        if(!r.ok) return 0;
-        const text = await r.text();
-        // Count <li> occurrences — robust enough for simple static indexes
-        const matches = text.match(/<li[\s>]/gi);
-        return matches ? matches.length : 0;
-      }catch(e){
-        return 0;
-      }
-    }
-
-    // Build a program card element
-    function makeProgramCard(program){
-      const card = document.createElement('article');
-      card.className = 'program';
-      card.setAttribute('role','article');
-      card.setAttribute('aria-label', program.label || program.folder);
-
-      // header
-      const head = document.createElement('div');
-      head.className = 'program-head';
-      const left = document.createElement('div');
-      left.innerHTML = `<div class="program-title">${escapeHtml(program.label || program.folder)}</div><div class="program-meta">${escapeHtml(program.id || '')}</div>`;
-      const right = document.createElement('div');
-      right.innerHTML = `<div class="meta-row"><div class="muted">Folder: <span class="muted">${escapeHtml(program.folder)}</span></div></div>`;
-      head.appendChild(left);
-      head.appendChild(right);
-      card.appendChild(head);
-
-      // sections row
-      const sectionsRow = document.createElement('div');
-      sectionsRow.className = 'sections';
-      const sections = [
-        {key:'notes', label:'Notes'},
-        {key:'past-papers', label:'Past Papers'},
-        {key:'assignments', label:'Assignments'},
-        {key:'lab-reports', label:'Lab Reports'}
-      ];
-      sections.forEach(s=>{
-        const pill = document.createElement('div');
-        pill.className = 'section-pill';
-        pill.setAttribute('data-folder', program.folder);
-        pill.setAttribute('data-section', s.key);
-        pill.innerHTML = `<span>${s.label}</span> <span class="counts" data-folder="${program.folder}" data-section="${s.key}">…</span>`;
-        // click opens section index in viewer
-        pill.addEventListener('click', ()=> openInViewer(`${program.folder}/${s.key}/index.html`));
-        sectionsRow.appendChild(pill);
+    // Render program buttons
+    function renderPrograms(filter){
+      programListEl.innerHTML = '';
+      const q = (filter||'').trim().toLowerCase();
+      manifest.programs.forEach(p=>{
+        const text = (p.label + ' ' + (p.courses||[]).map(c=>c.code+' '+c.title).join(' ')).toLowerCase();
+        if(q && !text.includes(q)) return;
+        const btn = document.createElement('button');
+        btn.className = 'program-btn';
+        btn.setAttribute('role','listitem');
+        btn.innerHTML = `<div style="width:10px;height:10px;border-radius:4px;background:linear-gradient(90deg,var(--gold),#ff8c00)"></div><div><div class="program-title">${p.label}</div><div class="small muted">${p.description || ''}</div></div>`;
+        btn.addEventListener('click', ()=> selectProgram(p, btn));
+        programListEl.appendChild(btn);
       });
-      card.appendChild(sectionsRow);
-
-      // description / courses
-      const desc = document.createElement('div');
-      desc.className = 'program-description';
-      desc.style.marginTop = '8px';
-      desc.textContent = program.description || (program.courses && program.courses.length ? program.courses.map(c=>c.code+' — '+c.title).join(' • ') : 'No description available.');
-      card.appendChild(desc);
-
-      // footer
-      const footer = document.createElement('div');
-      footer.className = 'card-footer';
-      const leftLinks = document.createElement('div');
-      const openBtn = document.createElement('a');
-      openBtn.className = 'btn';
-      openBtn.href = `${program.folder}/index.html`;
-      openBtn.textContent = 'Open Program';
-      openBtn.addEventListener('click', (ev)=>{ ev.preventDefault(); openInViewer(openBtn.getAttribute('href')); });
-      leftLinks.appendChild(openBtn);
-      const rightMeta = document.createElement('div');
-      rightMeta.innerHTML = `<div class="small muted">Updated: ${program.lastUpdated || '—'}</div>`;
-      footer.appendChild(leftLinks);
-      footer.appendChild(rightMeta);
-      card.appendChild(footer);
-
-      return card;
     }
 
-    // Escape HTML helper
-    function escapeHtml(s){
-      if(!s) return '';
-      return String(s).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; });
+    // Select program
+    function selectProgram(p, btnEl){
+      // clear previous active
+      document.querySelectorAll('.program-btn').forEach(b=>b.classList.remove('active'));
+      btnEl.classList.add('active');
+      activeProgram = p;
+      breadcrumbEl.textContent = `CBU Programs › ${p.label}`;
+      renderCourses(p);
+      // reset lower selections
+      activeCourse = null; activeSection = null; activeYear = null;
+      sectionsEl.style.display = 'none';
+      contentListEl.innerHTML = ''; emptyEl.style.display = 'block';
+      previewEl.innerHTML = '';
+      viewer.style.display = 'none';
+      // open program index in preview if exists
+      previewLink(`${p.folder}/index.html`);
     }
 
-    // Open a path in the viewer iframe
-    function openInViewer(path){
-      // Normalize path: remove leading slash to keep repo-root relative behavior
+    // Render courses for program
+    function renderCourses(program){
+      coursesEl.innerHTML = '';
+      coursesEl.classList.add('open');
+      program.courses.forEach(c=>{
+        const item = document.createElement('div');
+        item.className = 'course-item';
+        item.textContent = `${c.code} — ${c.title}`;
+        item.addEventListener('click', ()=> selectCourse(program, c, item));
+        coursesEl.appendChild(item);
+      });
+      // show sections
+      sectionsEl.style.display = 'flex';
+    }
+
+    // Select course
+    function selectCourse(program, course, itemEl){
+      // mark active
+      document.querySelectorAll('.course-item').forEach(i=>i.classList.remove('active'));
+      itemEl.classList.add('active');
+      activeCourse = course;
+      breadcrumbEl.textContent = `CBU Programs › ${program.label} › ${course.code}`;
+      // show sections and default to Notes
+      activeSection = null; activeYear = null;
+      document.querySelectorAll('.section-btn').forEach(b=>b.classList.remove('active'));
+      // show content placeholder
+      showSection('notes');
+      // preview course index if exists
+      previewLink(`${program.folder}/notes/index.html`);
+    }
+
+    // Show a section (notes, past-papers, assignments, lab-reports)
+    async function showSection(section){
+      activeSection = section;
+      // highlight section button
+      document.querySelectorAll('.section-btn').forEach(b=> b.classList.toggle('active', b.dataset.section === section));
+      // clear content list
+      contentListEl.innerHTML = '';
+      emptyEl.style.display = 'none';
+      // If past-papers, show years
+      if(section === 'past-papers'){
+        renderYears();
+      } else {
+        yearsEl.innerHTML = '';
+      }
+      // Try to fetch the section index and list items
+      if(!activeProgram || !activeCourse){ emptyEl.style.display = 'block'; return; }
+      const folder = activeProgram.folder + '/' + section;
+      const indexUrl = `${folder}/index.html`;
+      try{
+        const r = await fetch(indexUrl, {cache:'no-store'});
+        if(!r.ok) throw new Error('no index');
+        const text = await r.text();
+        // crude parse: find <li> elements and extract inner text and href
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, 'text/html');
+        const lis = doc.querySelectorAll('li a');
+        if(lis.length === 0){
+          // fallback: show raw index link
+          contentListEl.innerHTML = `<a href="${indexUrl}" class="btn" onclick="event.preventDefault(); openViewer('${indexUrl}')">Open section index</a>`;
+          return;
+        }
+        lis.forEach(a=>{
+          const href = a.getAttribute('href') || a.getAttribute('data-href') || a.textContent.trim();
+          const link = document.createElement('a');
+          link.href = href;
+          link.textContent = a.textContent.trim();
+          link.addEventListener('click', (ev)=>{ ev.preventDefault(); openViewer(resolvePath(folder, href)); });
+          contentListEl.appendChild(link);
+        });
+      }catch(e){
+        // no index found — show message and a link to create one
+        contentListEl.innerHTML = `<div class="empty">No index found for this section. Create <code>${folder}/index.html</code> with a list of topics.</div>`;
+      }
+    }
+
+    // Render years 2019-2025 for past papers
+    function renderYears(){
+      yearsEl.innerHTML = '';
+      for(let y=2019;y<=2025;y++){
+        const btn = document.createElement('button');
+        btn.className = 'year-btn';
+        btn.textContent = y;
+        btn.addEventListener('click', ()=> selectYear(y));
+        yearsEl.appendChild(btn);
+      }
+    }
+
+    // Select year and list past papers for that year
+    async function selectYear(y){
+      activeYear = y;
+      document.querySelectorAll('.year-btn').forEach(b=>b.classList.toggle('active', Number(b.textContent) === y));
+      // show list of past papers for the selected year
+      if(!activeProgram) return;
+      const folder = `${activeProgram.folder}/past-papers`;
+      // convention: files named like ch260-2019.html or ch260-2019.pdf (we use html)
+      // We'll attempt to list common course codes from manifest for this program
+      contentListEl.innerHTML = '';
+      const codes = (activeProgram.courses || []).map(c=>c.code.toLowerCase());
+      if(codes.length === 0){
+        contentListEl.innerHTML = `<div class="empty">No course codes found for this program to generate year links.</div>`;
+        return;
+      }
+      codes.forEach(code=>{
+        const filename = `${code}-${y}.html`;
+        const path = `${folder}/${filename}`;
+        const a = document.createElement('a');
+        a.href = path;
+        a.textContent = `${code.toUpperCase()} — Past Paper ${y}`;
+        a.addEventListener('click', (ev)=>{ ev.preventDefault(); openViewer(path); });
+        contentListEl.appendChild(a);
+      });
+    }
+
+    // Preview link (shows in preview panel)
+    function previewLink(path){
+      previewEl.innerHTML = '';
+      const a = document.createElement('a');
+      a.href = path;
+      a.textContent = `Preview: ${path}`;
+      a.addEventListener('click', (ev)=>{ ev.preventDefault(); openViewer(path); });
+      previewEl.appendChild(a);
+    }
+
+    // Open viewer iframe
+    function openViewer(path){
       const normalized = path.replace(/^\/+/,'');
-      frame.src = normalized;
+      viewerFrame.src = normalized;
       viewer.style.display = 'block';
-      frame.focus();
       viewer.scrollIntoView({behavior:'smooth'});
     }
 
-    // Close viewer
-    function closeViewer(){
-      frame.src = '';
-      viewer.style.display = 'none';
+    // Resolve relative hrefs against folder
+    function resolvePath(folder, href){
+      if(href.startsWith('http') || href.startsWith('/')) return href.replace(/^\/+/,'');
+      if(href.startsWith('./')) return folder + '/' + href.slice(2);
+      if(href.startsWith('../')) return folder + '/' + href; // crude
+      return folder + '/' + href;
     }
 
-    // Render portal from manifest
-    async function render(){
-      const manifest = await fetchJson(MANIFEST_URL) || { programs: [] };
-      programsGrid.innerHTML = '';
-      const cards = [];
-      for(const p of (manifest.programs || [])){
-        const card = makeProgramCard(p);
-        programsGrid.appendChild(card);
-        cards.push({card, program:p});
-      }
+    // Wire up section buttons
+    document.querySelectorAll('.section-btn').forEach(b=>{
+      b.addEventListener('click', ()=> showSection(b.dataset.section));
+    });
 
-      // populate counts
-      const countEls = document.querySelectorAll('.counts');
-      countEls.forEach(async el=>{
-        const folder = el.dataset.folder;
-        const section = el.dataset.section;
-        const n = await countSectionItems(folder, section);
-        el.textContent = n;
-        el.title = `${n} items`;
-      });
+    // Search and clear
+    searchInput.addEventListener('input', ()=> renderPrograms(searchInput.value));
+    clearBtn.addEventListener('click', ()=> { searchInput.value=''; renderPrograms(''); });
 
-      // recent activity
-      recentList.innerHTML = '';
-      const recent = (manifest.programs || []).slice().sort((a,b)=>{
-        const ta = a.lastUpdated ? new Date(a.lastUpdated).getTime() : 0;
-        const tb = b.lastUpdated ? new Date(b.lastUpdated).getTime() : 0;
-        return tb - ta;
-      }).slice(0,8);
-      if(recent.length === 0){
-        recentList.innerHTML = '<li class="empty">No recent updates found in manifest.</li>';
-      }else{
-        recent.forEach(r=>{
-          const li = document.createElement('li');
-          li.innerHTML = `<strong>${escapeHtml(r.label || r.folder)}</strong> <span class="muted">(${escapeHtml(r.folder)})</span><div class="small muted">Updated: ${r.lastUpdated || '—'}</div>`;
-          li.addEventListener('click', ()=> openInViewer(`${r.folder}/index.html`));
-          recentList.appendChild(li);
-        });
-      }
-
-      // store for search
-      window._pmg_cards = cards;
-    }
-
-    // Search
-    function applySearch(q){
-      const query = (q||'').trim().toLowerCase();
-      const cards = window._pmg_cards || [];
-      cards.forEach(({card, program})=>{
-        const text = (program.label + ' ' + (program.courses||[]).map(c=>c.code+' '+c.title).join(' ')).toLowerCase();
-        const match = !query || text.includes(query);
-        card.style.display = match ? '' : 'none';
-      });
-    }
-
-    // Filter by section presence (shows programs that have at least one item in that section)
-    async function applyFilter(filter){
-      if(filter === 'all'){ // show all
-        const cards = window._pmg_cards || [];
-        cards.forEach(({card}) => card.style.display = '');
-        return;
-      }
-      // For each program, check count for that section
-      const cards = window._pmg_cards || [];
-      for(const {card, program} of cards){
-        const n = await countSectionItems(program.folder, filter);
-        card.style.display = n > 0 ? '' : 'none';
-      }
-    }
-
-    // Keyboard shortcuts
+    // Keyboard: focus search with '/'
     document.addEventListener('keydown', (e)=>{
       if(e.key === '/' && !e.metaKey && !e.ctrlKey){
-        e.preventDefault();
-        searchEl.focus();
+        e.preventDefault(); searchInput.focus();
       }
       if(e.key === 'Escape'){
-        closeViewer();
+        viewer.style.display = 'none';
+        viewerFrame.src = '';
       }
     });
 
-    // Wire up controls
-    searchEl.addEventListener('input', (e)=> applySearch(e.target.value));
-    expandAllBtn.addEventListener('click', ()=>{
-      const cards = window._pmg_cards || [];
-      if(cards.length) openInViewer(`${cards[0].program.folder}/index.html`);
-    });
-    collapseAllBtn.addEventListener('click', ()=> closeViewer());
-    filterButtons.forEach(btn=>{
-      btn.addEventListener('click', (ev)=>{
-        const f = ev.currentTarget.dataset.filter;
-        applyFilter(f);
-      });
-    });
+    // Initialize years area (empty until past-papers selected)
+    yearsEl.innerHTML = '<div class="small muted">Select Past Papers to show years</div>';
 
     // Boot
-    render();
+    (async function boot(){
+      await loadManifest();
+      renderPrograms();
+      // pre-create years buttons but hidden until past-papers selected
+      // (we create them dynamically in renderYears)
+    })();
 
-    // Expose helpers for debugging
-    window._pmg = { render, openInViewer, closeViewer, applySearch, applyFilter };
-
-    // Developer note: if you need to debug manifest loading, open console and run:
-    // fetch('course_manifest.json').then(r=>r.json()).then(console.log).catch(console.error);
+    // Expose for debugging
+    window._pmg = { manifest, renderPrograms, selectProgram, selectCourse: (p,c)=>selectCourse(p,c,document.querySelector('.course-item')), openViewer };
   })();
   </script>
-
-  <!-- =========================================================
-       Long inline documentation and templates (keeps file long)
-       - This section contains templates, examples, and helpful notes
-       - It is safe to keep in the portal for contributors
-       ========================================================= -->
-  <script>
-  (function(){
-    // The following block is a long, human-readable template and examples
-    // kept inside a script tag as a string to avoid rendering on the page.
-    // It documents how to structure program folders and provides sample
-    // index.html templates for program and section pages.
-    const docs = `
-PMG-Academics Portal — Contributor Guide (embedded)
---------------------------------------------------
-
-1) Repository root structure (example)
-   PMG-Academics/
-   ├─ index.html                <-- this portal
-   ├─ course_manifest.json      <-- manifest listing programs
-   ├─ css/
-   │  └─ styles.css             <-- optional global CSS
-   ├─ scripts/
-   │  └─ scripts.js             <-- optional shared JS
-   ├─ Industrial_chemistry_second_year/
-   │  ├─ index.html
-   │  ├─ meta.json
-   │  ├─ notes/
-   │  │  ├─ index.html
-   │  │  └─ tests/
-   │  │     └─ introduction_to_organic_chemistry/
-   │  │        └─ index.html
-   │  ├─ past-papers/
-   │  │  └─ index.html
-   │  ├─ assignments/
-   │  │  └─ index.html
-   │  └─ lab-reports/
-   │     └─ index.html
-   └─ FIRST_YEAR_NQ/
-      ├─ index.html
-      └─ notes/
-         └─ index.html
-
-2) course_manifest.json example
-   {
-     "programs": [
-       {
-         "id": "INDUSTRIAL CHEMISTRY SECOND YEAR",
-         "label": "Industrial Chemistry Second Year",
-         "folder": "Industrial_chemistry_second_year",
-         "description": "Organic chemistry, analytical techniques, industrial processes",
-         "lastUpdated": "2026-01-10",
-         "courses": [
-           { "code": "CH260", "title": "Organic Chemistry" },
-           { "code": "CH261", "title": "Analytical Chemistry" }
-         ]
-       },
-       {
-         "id": "FIRST YEAR NQ",
-         "label": "First Year NQ",
-         "folder": "FIRST_YEAR_NQ",
-         "description": "Foundation courses at Copperbelt University",
-         "lastUpdated": "2026-01-12",
-         "courses": [
-           { "code": "CH110", "title": "Chemistry" }
-         ]
-       }
-     ]
-   }
-
-3) Program index.html template (paste into Program_Name/index.html)
-   <!doctype html>
-   <html>
-   <head><meta charset="utf-8"><title>Program — Program Name</title><link rel="stylesheet" href="/css/styles.css"></head>
-   <body>
-     <main class="container">
-       <header class="card"><h1>Program Name</h1><p class="small-note">Short description</p></header>
-       <section class="card">
-         <ul>
-           <li><a href="notes/index.html">Notes</a></li>
-           <li><a href="past-papers/index.html">Past Papers</a></li>
-           <li><a href="assignments/index.html">Assignments</a></li>
-           <li><a href="lab-reports/index.html">Lab Reports</a></li>
-         </ul>
-       </section>
-       <footer class="card"><a class="btn" href="/index.html">Back to Portal</a></footer>
-     </main>
-   </body>
-   </html>
-
-4) Section index.html template (paste into Program_Name/notes/index.html)
-   <!doctype html>
-   <html>
-   <head><meta charset="utf-8"><title>Notes — Program Name</title><link rel="stylesheet" href="/css/styles.css"></head>
-   <body>
-     <main class="container">
-       <header class="card"><h1>Notes</h1></header>
-       <section class="card">
-         <ul>
-           <li><a href="./tests/introduction_to_organic_chemistry/index.html">Introduction to Organic Chemistry</a></li>
-           <li><a href="./hybridization.html">Hybridization</a></li>
-         </ul>
-       </section>
-       <footer class="card"><a class="btn" href="../index.html">Back to Program</a></footer>
-     </main>
-   </body>
-   </html>
-
-5) Tips
-   - Use lowercase and hyphens for filenames: introduction-to-atomic-theory.html
-   - Avoid spaces and parentheses in filenames
-   - Keep links relative (no leading slash) so pages work under repo path
-   - If counts show 0, ensure section/index.html exists and lists topics as <li>
-
-End of embedded guide.
-`;
-    // Keep docs available on window for debugging if needed
-    window._pmg_docs = docs;
-  })();
-  </script>
-
-  <!-- =========================================================
-       End of file
-       ========================================================= -->
 </body>
 </html>
