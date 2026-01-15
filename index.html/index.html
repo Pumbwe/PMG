@@ -1,444 +1,246 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- =========================================================
-       PMG-Academics — Premium Portal
-       - Self-contained index.html (inline CSS + JS)
-       - Manifest-driven (course_manifest.json)
-       - Scales to 50+ programs
-       - Accessibility, keyboard navigation, search, viewer
-       ========================================================= -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PMG-Academics — Portal</title>
-  <meta name="description" content="Notes, past papers, assignments, and lab reports organized by program." />
-  <meta name="theme-color" content="#0f0f1a" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <title>Introduction to Organic Chemistry — Notes</title>
+
+  <!-- Use a relative path so the page works when nested in program folders -->
+  <link rel="stylesheet" href="../../../../css/styles.css" />
+
+  <meta name="description" content="Introduction to Organic Chemistry — atomic theory, electrons & orbitals, shells, subshells, and electron configuration." />
   <style>
-    :root{
-      --bg:#0b0b10;
-      --bg2:#0f0f1a;
-      --card:#141423;
-      --muted:#9aa4b2;
-      --gold:#FFD700;
-      --gold-2:#FF8C00;
-      --royal:#2b9cff;
-      --text:#fdfcf6;
-      --glass: rgba(255,255,255,0.03);
-      --max-width:1200px;
-      --border: rgba(255,215,0,0.06);
-      --border-soft: rgba(255,255,255,0.06);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: radial-gradient(1200px 600px at 20% 10%, rgba(43,156,255,0.08), transparent 60%), linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-    .container{max-width:var(--max-width);margin:0 auto;padding:28px;position:relative;z-index:1}
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:18px;
-      padding:22px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 30px rgba(43,156,255,0.03);
-      border:1px solid var(--border);
-    }
-    .hero{ text-align:left; padding:28px 22px; margin-bottom:18px; }
-    h1,h2,h3{ font-family: "Playfair Display", serif; color:var(--gold); margin:0 0 10px 0; text-shadow: 0 0 10px rgba(255,215,0,0.12); }
-    h1{ font-size:2.6rem; letter-spacing:1px }
-    h2{ font-size:1.6rem }
-    h3{ font-size:1.25rem }
-    .small-note{ color:var(--muted); font-size:0.95rem }
-    .btn{
-      display:inline-block;
-      padding:10px 18px;
-      border-radius:14px;
-      background: linear-gradient(135deg,var(--gold),var(--gold-2));
-      color:#0f0f1a;
-      font-weight:800;
-      text-decoration:none;
-      box-shadow: 0 10px 30px rgba(255,215,0,0.12), 0 0 18px rgba(43,156,255,0.04);
-      transition: transform .22s ease, box-shadow .22s ease;
-    }
-    .btn:hover{ transform: translateY(-6px); box-shadow: 0 22px 60px rgba(255,215,0,0.22), 0 0 40px rgba(43,156,255,0.08); }
-    .btn-mini{
-      padding:8px 12px; border-radius:10px;
-      background: linear-gradient(135deg,var(--gold),var(--gold-2));
-      color:#0f0f1a; text-decoration:none; font-weight:800;
-      display:inline-block;
-    }
-    .toolbar{
-      display:flex; gap:12px; align-items:center; flex-wrap:wrap;
-      margin-top:12px;
-    }
-    .input{
-      background: rgba(255,255,255,0.06);
-      border:1px solid var(--border-soft);
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:12px;
-      outline:none;
-      width:280px;
-    }
-    .input:focus{ border-color: var(--gold); box-shadow: 0 0 0 3px rgba(255,215,0,0.15); }
-    .program-card{ margin:18px 0; padding:16px; border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); border:1px solid var(--border); }
-    .program-header{ display:flex; justify-content:space-between; align-items:center; gap:12px; cursor:pointer; padding:6px 4px; }
-    .program-title{ font-family:"Playfair Display", serif; color:var(--gold); font-size:1.1rem; }
-    .chev{ transition: transform .25s ease; color:var(--muted); font-weight:800; }
-    .sections{ margin-top:12px; display:none; gap:12px; }
-    .sections.open{ display:block; }
-    .section-block{ padding:12px; border-radius:10px; background:rgba(11,11,11,0.6); border:1px solid rgba(255,255,255,0.02); }
-    .section-head{ display:flex; justify-content:space-between; align-items:center; }
-    .course-row{ display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px dashed rgba(255,255,255,0.02); }
-    .course-row:last-child{ border-bottom:0; }
-    .course-title{ color:var(--text); font-weight:700; }
-    .viewer{ margin-top:18px; display:none; border-radius:12px; overflow:hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.7); }
-    .viewer iframe{ width:100%; height:720px; border:0; display:block; background:#fff; }
-    .grid-2{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
-    .grid-3{ display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; }
-    .badge{ display:inline-block; padding:4px 8px; border-radius:999px; background:rgba(255,215,0,0.12); color:var(--gold); font-weight:700; font-size:0.8rem; }
-    .muted{ color:var(--muted) }
-    .faint-logo{
-      font-size:9.5rem;
-      color: rgba(255,215,0,0.03);
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%,-50%) rotate(-30deg);
-      z-index:0;
-      pointer-events:none;
-      user-select:none;
-    }
-    .footer{
-      margin-top:24px;
-      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
-      font-size:0.9rem; color:var(--muted);
-    }
-    .kbd{ background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); padding:2px 6px; border-radius:6px; font-family:monospace; }
-    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+    /* Page-specific tweaks */
+    .note-figure { background: rgba(255,255,255,0.02); border-radius:10px; padding:12px; text-align:center; color:var(--muted); margin:12px 0; }
+    .qa { margin-top:18px; padding:12px; border-left:4px solid var(--gold); background:rgba(255,215,0,0.02); }
+    table.simple { width:100%; border-collapse:collapse; margin-top:12px; }
+    table.simple th, table.simple td { border:1px solid rgba(255,255,255,0.04); padding:8px; text-align:left; }
+    .toc { margin:12px 0 18px 0; padding:12px; background:rgba(255,255,255,0.02); border-radius:10px; }
+    .toc a { display:block; color:var(--royal); text-decoration:none; margin:6px 0; }
+    .meta-row { display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:8px; }
+    .download { margin-left:auto; }
+    .breadcrumb { font-size:0.95rem; color:var(--muted); margin-bottom:12px; }
+    .anchor { color:var(--muted); text-decoration:none; margin-left:8px; font-size:0.9rem; }
     @media (max-width:900px){
-      .viewer iframe{ height:520px }
-      h1{ font-size:2rem }
-      .container{ padding:18px }
-      .grid-3{ grid-template-columns: 1fr; }
-      .grid-2{ grid-template-columns: 1fr; }
+      .meta-row { flex-direction:column; align-items:flex-start; }
     }
   </style>
 </head>
 <body>
-  <!-- Watermark -->
-  <div class="faint-logo" aria-hidden="true">PMG</div>
+  <main class="container" id="content">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../../../index.html">Portal</a> ›
+      <a href="../../../index.html">Industrial Chemistry</a> ›
+      <a href="../../index.html">Organic Chemistry</a> ›
+      <span>Introduction to Organic Chemistry</span>
+    </nav>
 
-  <main class="container" role="main">
-    <!-- Hero -->
-    <header class="hero card" role="banner" aria-label="Portal header">
-      <h1 class="glow">PMG-Academics</h1>
-      <p class="small-note">Programs with Notes, Past Papers, Assignments, and Lab Reports. Click a program to expand. Use search to filter.</p>
+    <header class="card" role="banner">
+      <h1 class="glow">Introduction to Organic Chemistry</h1>
+      <p class="small-note">Lecture notes: atomic theory, electrons &amp; orbitals, shells, subshells, and electron configuration.</p>
 
-      <!-- Toolbar: search + quick actions -->
-      <div class="toolbar" role="region" aria-label="Toolbar">
-        <label for="search" class="sr-only">Search programs and courses</label>
-        <input id="search" class="input" type="search" placeholder="Search programs or courses…" aria-label="Search programs or courses" />
-        <button id="expandAll" class="btn" type="button" aria-expanded="false">Expand all</button>
-        <button id="collapseAll" class="btn" type="button">Collapse all</button>
-        <a class="btn" href="Industrial_chemistry_second_year/index.html">Industrial program page</a>
-        <a class="btn" href="FIRST_YEAR_NQ/index.html">First Year NQ page</a>
+      <div class="meta-row">
+        <div class="muted">Source: Lecture notes (2022)</div>
+        <div class="muted">Format: HTML</div>
+        <div class="download">
+          <!-- If you uploaded the original PDF into this folder, name it exactly and the link will work -->
+          <a class="btn" href="1.1LECTURE NOTES_INTRODUCTION TO ATOMIC THEORY_2022 (8).pdf" target="_blank" rel="noopener">Download original PDF</a>
+        </div>
       </div>
-      <p class="small-note">Tip: Press <span class="kbd">/</span> to focus search, <span class="kbd">Enter</span> to open highlighted item.</p>
     </header>
 
-    <!-- Programs container -->
-    <section id="programs" aria-label="Programs list"></section>
+    <!-- Table of contents for quick navigation -->
+    <aside class="toc card" aria-label="Table of contents">
+      <strong>Contents</strong>
+      <a href="#what-is-an-atom">What is an atom?</a>
+      <a href="#atomic-number">Atomic number and mass number</a>
+      <a href="#electrons-orbitals">Electrons and orbitals</a>
+      <a href="#shells-subshells">Shells, subshells and orbitals</a>
+      <a href="#electron-configuration">Electron configuration</a>
+      <a href="#practice-questions">Practice questions</a>
+    </aside>
 
-    <!-- Viewer -->
-    <section id="viewer" class="viewer card" aria-label="Document viewer" style="display:none;">
-      <h2 class="small-note">Viewer</h2>
-      <iframe id="viewerFrame" src="" title="Document viewer"></iframe>
+    <section id="what-is-an-atom" class="card" style="margin-top:18px;">
+      <h2>What is an atom? <a class="anchor" href="#what-is-an-atom">#</a></h2>
+      <p>
+        An atom is the smallest unit of matter that retains the chemical properties of an element.
+        Atoms are made of three main subatomic particles: <strong>protons</strong>, <strong>neutrons</strong>, and <strong>electrons</strong>.
+        Protons and neutrons form the <em>nucleus</em>, while electrons occupy regions around the nucleus.
+      </p>
+
+      <div class="note-figure" aria-hidden="true">
+        <!-- Replace with an actual image if available -->
+        <strong>Figure:</strong> schematic: nucleus (protons &amp; neutrons) and electron shells (K, L, ...).
+      </div>
+
+      <h3>Key points</h3>
+      <ul>
+        <li>Protons carry positive charge; electrons carry negative charge.</li>
+        <li>In a neutral atom, number of protons = number of electrons.</li>
+        <li>Neutrons are neutral and contribute to mass but not charge.</li>
+      </ul>
     </section>
 
-    <!-- Quick links / helpful cards -->
-    <section class="grid-3" aria-label="Quick links">
-      <div class="card">
-        <h3>Structure</h3>
-        <p class="muted">Each program folder contains <span class="badge">notes</span>, <span class="badge">past-papers</span>, <span class="badge">assignments</span>, <span class="badge">lab-reports</span>.</p>
-      </div>
-      <div class="card">
-        <h3>Naming rules</h3>
+    <section id="atomic-number" class="card" style="margin-top:18px;">
+      <h2>Atomic number and mass number <a class="anchor" href="#atomic-number">#</a></h2>
+      <p><strong>Atomic number (Z)</strong> = number of protons in the nucleus. All atoms of an element share the same Z.</p>
+      <p><strong>Mass number (A)</strong> = total number of protons + neutrons.</p>
+
+      <h3>Calculate subatomic particles</h3>
+      <p>Given atomic number and mass number:</p>
+      <ul>
+        <li>Number of protons = atomic number (Z)</li>
+        <li>Number of electrons = atomic number (Z) (for neutral atoms)</li>
+        <li>Number of neutrons = mass number (A) − atomic number (Z)</li>
+      </ul>
+
+      <div class="qa" aria-live="polite">
+        <strong>Example</strong><br />
+        The atomic number of sodium is 11 and its mass number is 23.
         <ul>
-          <li>Notes: <code>topic-name.html</code></li>
-          <li>Papers: <code>coursecode-YYYY.pdf</code></li>
-          <li>Assignments: <code>assignment-01.html</code></li>
-          <li>Lab: <code>template.html</code></li>
+          <li>Protons = 11</li>
+          <li>Electrons = 11</li>
+          <li>Neutrons = 23 − 11 = 12</li>
         </ul>
       </div>
-      <div class="card">
-        <h3>Contributing</h3>
-        <p class="muted">Add files to the correct subfolder, update <code>course_manifest.json</code>, commit with clear messages.</p>
+    </section>
+
+    <section id="electrons-orbitals" class="card" style="margin-top:18px;">
+      <h2>Electrons and orbitals <a class="anchor" href="#electrons-orbitals">#</a></h2>
+      <p>
+        Electrons determine chemical bonding and reactivity. They exhibit <strong>wave–particle duality</strong>.
+        Orbitals are mathematical functions (from quantum mechanics) that describe regions of high probability where electrons are found.
+      </p>
+
+      <h3>Important orbital types</h3>
+      <ul>
+        <li><strong>s</strong> orbital — spherical (one orbital per s subshell)</li>
+        <li><strong>p</strong> orbitals — dumbbell-shaped (three orbitals per p subshell)</li>
+        <li><strong>d</strong> and <strong>f</strong> — more complex shapes (five and seven orbitals respectively)</li>
+      </ul>
+
+      <div class="note-figure" aria-hidden="true">
+        <strong>Figure:</strong> 1s, 2s, 2p (px, py, pz) orbital sketches (replace with images if available).
+      </div>
+
+      <h3>Quantum numbers (brief)</h3>
+      <ul>
+        <li><strong>n</strong> — principal quantum number (shell)</li>
+        <li><strong>l</strong> — angular momentum quantum number (subshell: s=0, p=1, d=2, f=3)</li>
+        <li><strong>m<sub>l</sub></strong> — magnetic quantum number (orbital within subshell)</li>
+        <li><strong>m<sub>s</sub></strong> — spin quantum number (±½)</li>
+      </ul>
+    </section>
+
+    <section id="shells-subshells" class="card" style="margin-top:18px;">
+      <h2>Shells, subshells and orbitals <a class="anchor" href="#shells-subshells">#</a></h2>
+      <p>
+        <strong>Shell</strong> (n) — energy level (K, L, M, ...). Each shell contains subshells.
+        <strong>Subshell</strong> (s, p, d, f) — set of orbitals with same l value.
+        <strong>Orbital</strong> — region that can hold up to 2 electrons.
+      </p>
+
+      <table class="simple" aria-label="Maximum electrons per shell">
+        <thead>
+          <tr>
+            <th>Principal quantum number (n)</th>
+            <th>Maximum electrons</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>n = 1</td><td>2</td></tr>
+          <tr><td>n = 2</td><td>8</td></tr>
+          <tr><td>n = 3</td><td>18</td></tr>
+          <tr><td>n = 4</td><td>32</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Subshell capacities</h3>
+      <table class="simple" aria-label="Subshell capacities">
+        <thead>
+          <tr><th>Subshell</th><th>Orbitals</th><th>Max electrons</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>s</td><td>1</td><td>2</td></tr>
+          <tr><td>p</td><td>3</td><td>6</td></tr>
+          <tr><td>d</td><td>5</td><td>10</td></tr>
+          <tr><td>f</td><td>7</td><td>14</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="electron-configuration" class="card" style="margin-top:18px;">
+      <h2>Electron configuration <a class="anchor" href="#electron-configuration">#</a></h2>
+      <p>
+        Electron configuration describes how electrons occupy orbitals. Example for carbon:
+      </p>
+      <pre style="background:rgba(255,255,255,0.02); padding:12px; border-radius:8px;">C: 1s² 2s² 2p²  (or [He] 2s² 2p²)</pre>
+
+      <p>
+        Remember: electrons fill orbitals following the Aufbau principle, Hund's rule, and the Pauli exclusion principle.
+      </p>
+
+      <h3>Valence electrons</h3>
+      <p>
+        Valence electrons are the outermost electrons involved in bonding. For carbon, valence electrons = 4 (2s² 2p²), so valency = 4.
+      </p>
+    </section>
+
+    <section id="practice-questions" class="card" style="margin-top:18px;">
+      <h2>Practice questions <a class="anchor" href="#practice-questions">#</a></h2>
+
+      <div class="qa" aria-live="polite">
+        <strong>Question 1</strong><br />
+        The atomic number of sodium is 11 and its mass number is 23. Calculate the number of protons, neutrons and electrons.
+        <div style="margin-top:8px;">
+          <strong>Answer</strong>
+          <ul>
+            <li>Protons = 11</li>
+            <li>Electrons = 11</li>
+            <li>Neutrons = 23 − 11 = 12</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="qa" style="margin-top:12px;">
+        <strong>Question 2</strong><br />
+        Write the electron configuration for magnesium (atomic number 12).
+        <div style="margin-top:8px;">
+          <strong>Answer</strong>
+          <p>Mg: 1s² 2s² 2p⁶ 3s² (or [Ne] 3s²)</p>
+        </div>
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-      <div>© 2026 PMG-Academics</div>
-      <div>Theme: Gold/Blue/Black • Static portal</div>
-      <div><span class="kbd">Esc</span> closes viewer</div>
+    <footer class="card" style="margin-top:18px;">
+      <a class="btn" href="../../index.html">Back to Organic Chemistry</a>
+      <a class="btn" href="../../../index.html">Back to Program</a>
+      <a class="btn" href="../../../../index.html">Back to Portal</a>
     </footer>
   </main>
 
-  <!-- =========================================================
-       Inline Script — Manifest-driven rendering, search, viewer
-       ========================================================= -->
   <script>
+    // Smooth scrolling for table of contents and anchors
     (function(){
-      const MANIFEST_URL = '/course_manifest.json';
-      const programsEl = document.getElementById('programs');
-      const searchEl = document.getElementById('search');
-      const expandAllBtn = document.getElementById('expandAll');
-      const collapseAllBtn = document.getElementById('collapseAll');
-      const viewer = document.getElementById('viewer');
-      const frame = document.getElementById('viewerFrame');
-
-      // Accessibility helpers
-      function el(tag, cls, html){
-        const d = document.createElement(tag);
-        if(cls) d.className = cls;
-        if(html !== undefined) d.innerHTML = html;
-        return d;
-      }
-      function openInViewer(path){
-        if(!frame || !viewer) return window.open(path, '_blank');
-        frame.src = path;
-        viewer.style.display = 'block';
-        frame.scrollIntoView({behavior:'smooth'});
-      }
-      function closeViewer(){
-        if(!viewer) return;
-        viewer.style.display = 'none';
-        frame.src = '';
-      }
-      document.addEventListener('keydown', (e)=>{
-        if(e.key === 'Escape') closeViewer();
-        if(e.key === '/' && !e.ctrlKey && !e.metaKey){
+      document.querySelectorAll('.toc a, .anchor').forEach(function(link){
+        link.addEventListener('click', function(e){
+          var href = this.getAttribute('href');
+          if(!href || href.indexOf('#') !== 0) return;
           e.preventDefault();
-          searchEl && searchEl.focus();
-        }
+          var target = document.querySelector(href);
+          if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+          // update hash without jumping
+          history.replaceState(null, '', href);
+        });
       });
 
-      // Fetch manifest
-      async function loadManifest(){
-        try{
-          const r = await fetch(MANIFEST_URL, {cache:'no-store'});
-          if(!r.ok) throw new Error('Manifest not found');
-          return await r.json();
-        }catch(e){
-          console.warn('Manifest load failed', e);
-          return { programs: [] };
+      // keyboard: press 'b' to go back to program (convenience)
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'b' && !e.metaKey && !e.ctrlKey && !e.altKey){
+          window.location.href = '../../../index.html';
         }
-      }
-
-      // Build a program card
-      function buildProgramCard(program){
-        const card = el('div','program-card');
-        card.setAttribute('role','region');
-        card.setAttribute('aria-label', program.label);
-
-        const header = el('div','program-header');
-        header.setAttribute('role','button');
-        header.setAttribute('tabindex','0');
-        header.setAttribute('aria-expanded','false');
-
-        const title = el('div','program-title', program.label);
-        const chev = el('div','chev','▶');
-        header.appendChild(title);
-        header.appendChild(chev);
-
-        const sections = el('div','sections');
-        const sectionDefs = [
-          {key:'notes', label:'Notes'},
-          {key:'past-papers', label:'Past Papers'},
-          {key:'assignments', label:'Assignments'},
-          {key:'lab-reports', label:'Lab Reports'}
-        ];
-
-        sectionDefs.forEach(s=>{
-          const block = el('div','section-block');
-          const head = el('div','section-head');
-          head.appendChild(el('h3',null, s.label));
-          const openAll = el('a','btn-mini','Open index');
-          const folder = `${program.folder}/${s.key}`;
-          const href = `${folder}/index.html`;
-          openAll.href = href;
-          openAll.addEventListener('click', (ev)=>{ ev.preventDefault(); openInViewer(href); });
-          head.appendChild(openAll);
-          block.appendChild(head);
-
-          // Course rows
-          const list = el('div',null,'');
-          (program.courses || []).forEach(course=>{
-            const row = el('div','course-row');
-            const left = el('div','course-title', `<strong>${course.code}</strong> — ${course.title}`);
-            const link = el('a','btn-mini', s.label);
-            link.href = href; // points to section index; you can change to specific files later
-            link.addEventListener('click', (ev)=>{ ev.preventDefault(); openInViewer(href); });
-            row.appendChild(left);
-            row.appendChild(link);
-            list.appendChild(row);
-          });
-          block.appendChild(list);
-          sections.appendChild(block);
-        });
-
-        // Toggle behavior
-        function toggle(open){
-          const isOpen = open ?? !sections.classList.contains('open');
-          sections.classList.toggle('open', isOpen);
-          header.setAttribute('aria-expanded', String(isOpen));
-          chev.style.transform = isOpen ? 'rotate(90deg)' : 'rotate(0deg)';
-        }
-        header.addEventListener('click', ()=> toggle());
-        header.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') toggle(); });
-
-        card.appendChild(header);
-        card.appendChild(sections);
-        return { card, toggle };
-      }
-
-      // Render portal
-      async function renderPortal(){
-        programsEl.innerHTML = '';
-        const manifest = await loadManifest();
-        const cards = [];
-        (manifest.programs || []).forEach(program=>{
-          const { card, toggle } = buildProgramCard(program);
-          cards.push({ card, toggle, program });
-          programsEl.appendChild(card);
-        });
-
-        // Search filter
-        function applySearch(q){
-          const query = (q || '').trim().toLowerCase();
-          cards.forEach(({ card, program, toggle })=>{
-            const text = (program.label + ' ' + (program.courses||[]).map(c=>c.code + ' ' + c.title).join(' ')).toLowerCase();
-            const match = !query || text.includes(query);
-            card.style.display = match ? '' : 'none';
-            if(match && query) toggle(true);
-          });
-        }
-        searchEl.addEventListener('input', (e)=> applySearch(e.target.value));
-        expandAllBtn.addEventListener('click', ()=>{
-          cards.forEach(c=> c.toggle(true));
-          expandAllBtn.setAttribute('aria-expanded','true');
-        });
-        collapseAllBtn.addEventListener('click', ()=>{
-          cards.forEach(c=> c.toggle(false));
-          expandAllBtn.setAttribute('aria-expanded','false');
-        });
-      }
-
-      // Boot
-      renderPortal();
-      // Expose for debugging
-      window._pmg = { renderPortal, openInViewer };
+      });
     })();
   </script>
-
-  <!-- =========================================================
-       Inline Documentation (for contributors)
-       ========================================================= -->
-  <!--
-    HOW THIS PORTAL WORKS
-    ---------------------
-    - The portal reads /course_manifest.json at runtime.
-    - Each program entry must include:
-        {
-          "id": "INDUSTRIAL CHEMISTRY SECOND YEAR",
-          "label": "Industrial Chemistry Second Year",
-          "folder": "Industrial_chemistry_second_year",
-          "courses": [
-            { "code": "CH260", "title": "CH260 — Organic Chemistry" },
-            { "code": "AnalyticalChem", "title": "Analytical Chemistry" }
-          ]
-        }
-    - The program folder must contain:
-        Industrial_chemistry_second_year/
-          notes/index.html
-          past-papers/index.html
-          assignments/index.html
-          lab-reports/index.html
-          index.html (optional program overview)
-    - The portal builds links to:
-        /Industrial_chemistry_second_year/notes/index.html
-        /Industrial_chemistry_second_year/past-papers/index.html
-        /Industrial_chemistry_second_year/assignments/index.html
-        /Industrial_chemistry_second_year/lab-reports/index.html
-
-    ADDING A NEW PROGRAM (50+ scale)
-    --------------------------------
-    1) Create folder: New_Program_Name/
-       Subfolders: notes/, past-papers/, assignments/, lab-reports/
-       Add index.html in each subfolder.
-    2) Update course_manifest.json:
-       {
-         "id": "NEW PROGRAM NAME",
-         "label": "New Program Name",
-         "folder": "New_Program_Name",
-         "courses": [
-           { "code": "NP101", "title": "Intro Course" }
-         ]
-       }
-    3) Commit and push. The portal will render it automatically.
-
-    NAMING RULES
-    ------------
-    - Program folder: underscores or hyphens, no leading/trailing spaces.
-    - Notes files: topic-name.html (lowercase, hyphens).
-    - Past papers: coursecode-YYYY.pdf (lowercase).
-    - Assignments: assignment-01.html, assignment-01-solution.pdf.
-    - Lab reports: template.html, sample-report.html.
-
-    ACCESSIBILITY & KEYBOARD
-    ------------------------
-    - Press '/' to focus search.
-    - Press 'Enter' on a program header to expand/collapse.
-    - Press 'Esc' to close the viewer.
-
-    TROUBLESHOOTING
-    ---------------
-    - If a program doesn’t open, check:
-      * course_manifest.json path and JSON validity.
-      * Program folder exists and contains subfolder index.html files.
-      * No trailing spaces in folder names.
-    - Use a local static server to test:
-      python -m http.server 8000
-      Open http://localhost:8000/index.html
-
-    FUTURE AUTOMATION IDEAS
-    -----------------------
-    - Generate subfolder index.html files from directory listings.
-    - Add meta.json per program with coordinator, credits, tags.
-    - Add search across topics and PDFs via a small index.
-    - Add breadcrumb navigation inside subfolder index pages.
-
-    SECURITY & SERVICE WORKERS
-    --------------------------
-    - If using Firebase messaging, keep a single Firebase-messaging-sw.js at the correct public root.
-    - Avoid duplicate service workers; they can conflict.
-
-    CONTRIBUTION GUIDELINES
-    -----------------------
-    - Keep commit messages descriptive (e.g., "Add analytical-chemistry notes page").
-    - Update README with structure and naming rules.
-    - Validate links after adding files.
-
-    COPYRIGHT
-    ---------
-    - © 2026 PMG-Academics. License: MIT (see LICENSE).
-  -->
 </body>
 </html>
