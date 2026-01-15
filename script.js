@@ -1,142 +1,136 @@
-<script>
-/* ===== NOTES DATABASE =====
-   Items can be strings or objects: { title: "Topic", href: "path/to/file.html" }
-*/
-const notes = {
-  MA110: {
-    title: "MA110 – Mathematics Notes",
-    items: [
-      "Algebra: Linear equations, Quadratics, Polynomials",
-      "Functions: Types, Domain & Range, Composition",
-      "Trigonometry: Identities, Equations, Graphs",
-      "Sequences & Series: AP, GP",
-      "Calculus: Limits, Differentiation, Integration"
-    ]
-  },
-  PH110: {
-    title: "PH110 – Physics Notes",
-    items: [
-      "Mechanics: Newton’s Laws, Kinematics",
-      "Work, Energy & Power",
-      "Waves & Oscillations",
-      "Optics: Reflection, Refraction",
-      "Electricity: Ohm’s Law, Circuits"
-    ]
-  },
-  LA111: {
-    title: "LA111 – Language & Study Skills",
-    items: [
-      "Parts of Speech & Sentence Structure",
-      "Essay Writing: Thesis & Cohesion",
-      "Academic Writing & Referencing",
-      "Comprehension & Summary Writing"
-    ]
-  },
-  CH110: {
-    title: "CH110 – Chemistry Notes",
-    items: [
-      "Atomic Structure & Periodic Trends",
-      "Chemical Bonding",
-      "Stoichiometry",
-      "States of Matter"
-    ]
-  }
-};
-
-/* ===== Utility: normalize subject keys ===== */
-function normalizeKey(key) {
-  if (!key && key !== 0) return "";
-  return String(key).replace(/\s+/g, "").toUpperCase();
-}
-
-/* ===== Find note entry by flexible key (accepts spaces/case) ===== */
-function findNoteEntry(subject) {
-  const key = normalizeKey(subject);
-  // Try direct match first
-  if (notes[key]) return notes[key];
-  // Try scanning keys (in case original keys include different formatting)
-  for (const k of Object.keys(notes)) {
-    if (normalizeKey(k) === key) return notes[k];
-  }
-  return null;
-}
-
-/* ===== Render a single note item (string or {title, href}) ===== */
-function renderNoteItem(item) {
-  if (!item) return "";
-  if (typeof item === "string") {
-    return `<li style="margin:8px 0;">${escapeHtml(item)}</li>`;
-  }
-  if (typeof item === "object" && item.title) {
-    const title = escapeHtml(item.title);
-    if (item.href) {
-      const href = escapeHtml(item.href);
-      return `<li style="margin:8px 0;"><a href="${href}" target="_blank" rel="noopener noreferrer" style="color:inherit; text-decoration:underline;">${title}</a></li>`;
+// Shared UI functions and notes database for PMG portal
+(function(){
+  /* ===== Notes database (editable) =====
+     Each course key maps to { title, items: [string | {title, href}] }
+     Add or edit entries to populate showNotes behavior.
+  */
+  const notesDB = {
+    MA110: {
+      title: "MA110 – Mathematics Notes",
+      items: [
+        "Algebra: Linear equations, Quadratics, Polynomials",
+        "Functions: Types, Domain & Range, Composition",
+        "Trigonometry: Identities, Equations, Graphs",
+        "Sequences & Series: AP, GP",
+        "Calculus: Limits, Differentiation, Integration"
+      ]
+    },
+    PH110: {
+      title: "PH110 – Physics Notes",
+      items: [
+        "Mechanics: Newton’s Laws, Kinematics",
+        "Work, Energy & Power",
+        "Waves & Oscillations",
+        "Optics: Reflection, Refraction",
+        "Electricity: Ohm’s Law, Circuits"
+      ]
+    },
+    CH110: {
+      title: "CH110 – Chemistry Notes",
+      items: [
+        "Atomic Structure & Periodic Trends",
+        "Chemical Bonding",
+        "Stoichiometry",
+        "States of Matter"
+      ]
+    },
+    CH260: {
+      title: "CH260 – Organic Chemistry Notes",
+      items: [
+        { title: "Structure and Bonding", href: "course/INDUSTRIAL CHEMISTRY SECOND YEAR/CH260/notes/structure.html" },
+        { title: "Hybridization", href: "course/INDUSTRIAL CHEMISTRY SECOND YEAR/CH260/notes/hybridization.html" },
+        { title: "Inductive Effect", href: "course/INDUSTRIAL CHEMISTRY SECOND YEAR/CH260/notes/inductive.html" }
+      ]
     }
-    return `<li style="margin:8px 0;">${title}</li>`;
-  }
-  return "";
-}
+  };
 
-/* ===== Basic HTML escape to avoid accidental injection ===== */
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
+  /* ===== Utility helpers ===== */
+  function safeId(id){ return String(id || '').replace(/\s+/g,'').replace(/[^\w\-]/g,''); }
 
-/* ===== SHOW NOTES =====
-   subject: string like "CH110", "CH 110", "ch110"
-*/
-function showNotes(subject) {
-  const notesSection = document.getElementById("notesSection");
-  const notesTitle = document.getElementById("notesTitle");
-  const notesContent = document.getElementById("notesContent");
-
-  // Safety: ensure DOM elements exist
-  if (!notesSection || !notesTitle || !notesContent) {
-    console.warn("Notes UI elements missing: ensure #notesSection, #notesTitle, #notesContent exist.");
-    return;
+  function openPaper(url){
+    const viewer = document.getElementById('viewer');
+    const frame = document.getElementById('viewerFrame');
+    if(!frame) return window.open(url, '_blank');
+    frame.src = url;
+    viewer.style.display = 'block';
+    frame.focus();
   }
 
-  const entry = findNoteEntry(subject);
-
-  if (!entry) {
-    notesTitle.innerText = "Notes Not Available";
-    notesContent.innerHTML = "<p style='color:#f87171;'>Notes for this subject are coming soon.</p>";
-    notesSection.classList.remove("hidden");
-    return;
+  function renderPill(text, onClick){
+    const btn = document.createElement('button');
+    btn.className = 'pill';
+    btn.textContent = text;
+    btn.onclick = onClick;
+    return btn;
   }
 
-  notesTitle.innerText = entry.title || "Notes";
-  const listHtml = (entry.items || [])
-    .map(renderNoteItem)
-    .join("");
-
-  notesContent.innerHTML = `<ul style="text-align:left; padding-left:18px;">${listHtml}</ul>`;
-  notesSection.classList.remove("hidden");
-  // Optionally focus the notes section for accessibility
-  notesSection.setAttribute("tabindex", "-1");
-  notesSection.focus({ preventScroll: true });
-}
-
-/* ===== CLOSE NOTES ===== */
-function closeNotes() {
-  const notesSection = document.getElementById("notesSection");
-  if (notesSection) {
-    notesSection.classList.add("hidden");
+  /* ===== showYears: populate a container with year pills
+     containerId: DOM id where pills will be appended
+     basePath: path to course folder that contains tests (e.g., "course/INDUSTRIAL CHEMISTRY SECOND YEAR/CH260")
+     years: array of years or default [2019..2024]
+  */
+  function showYears(containerId, basePath, years){
+    const container = document.getElementById(containerId);
+    if(!container) return;
+    container.innerHTML = '';
+    const list = years && years.length ? years : [2019,2020,2021,2022,2023,2024];
+    list.forEach(y=>{
+      const pill = renderPill(y, ()=> openPaper(`${basePath}/tests/${basePath.split('/').pop()}-${y}.pdf`));
+      container.appendChild(pill);
+    });
   }
-}
 
-/* ===== Expose functions globally for inline handlers ===== */
-window.showNotes = showNotes;
-window.closeNotes = closeNotes;
+  /* ===== showNotes: populate a container with topic pills from notesDB
+     containerId: DOM id where notes will be shown
+     courseKey: key used in notesDB (e.g., "CH260")
+  */
+  function showNotes(containerId, courseKey){
+    const container = document.getElementById(containerId);
+    if(!container) return;
+    container.innerHTML = '';
+    const entry = notesDB[courseKey];
+    if(!entry){
+      container.innerHTML = '<p class="small">Notes not available yet for this course.</p>';
+      return;
+    }
+    const title = document.createElement('h3');
+    title.textContent = entry.title;
+    container.appendChild(title);
 
-/* ===== Example: how to add a linked note item dynamically =====
-   notes['CH260'] = notes['CH260'] || { title: 'CH260', items: [] };
-   notes['CH260'].items.push({ title: 'Hybridization', href: 'course/INDUSTRIAL CHEMISTRY SECOND YEAR/CH260/notes/hybridization.html' });
-*/
-</script>
+    const topicsDiv = document.createElement('div');
+    topicsDiv.className = 'topics';
+    (entry.items || []).forEach(item=>{
+      if(typeof item === 'string'){
+        const pill = renderPill(item, ()=>{ /* no link */ });
+        topicsDiv.appendChild(pill);
+      } else if(item && item.title){
+        const pill = renderPill(item.title, ()=> openPaper(item.href));
+        topicsDiv.appendChild(pill);
+      }
+    });
+    container.appendChild(topicsDiv);
+  }
+
+  /* ===== initCourse: helper to initialize a course page
+     courseId: short id like "CH260"
+     basePath: full path to course folder (no trailing slash)
+     opts: { years: [...], topics: [...] } optional
+     Expected DOM ids on course page:
+       - `${courseId}-years` (container for year pills)
+       - `${courseId}-notes` (container for notes/topics)
+  */
+  function initCourse(courseId, basePath, opts){
+    const yearsId = `${courseId}-years`;
+    const notesId = `${courseId}-notes`;
+    if(document.getElementById(yearsId)) showYears(yearsId, basePath, (opts && opts.years) || undefined);
+    if(document.getElementById(notesId)) showNotes(notesId, courseId);
+  }
+
+  /* ===== Expose functions globally ===== */
+  window.openPaper = openPaper;
+  window.showYears = showYears;
+  window.showNotes = showNotes;
+  window.initCourse = initCourse;
+  window.notesDB = notesDB;
+
+})();
