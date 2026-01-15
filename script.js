@@ -1,153 +1,227 @@
-// Shared UI functions and manifest-driven portal for PMG
-(function(){
-  const MANIFEST = 'course_manifest.json';
-  const DEFAULT_MANIFEST = {
-    "groups": [
-      {
-        "title": "INDUSTRIAL CHEMISTRY SECOND YEAR",
-        "courses": [
-          { "code": "CH260", "title": "CH260 — Organic Chemistry", "path": "course/INDUSTRIAL CHEMISTRY SECOND YEAR/CH260.html" },
-          { "code": "AnalyticalChem", "title": "Analytical Chemistry", "path": "course/INDUSTRIAL CHEMISTRY SECOND YEAR/AnalyticalChem.html" },
-          { "code": "IndustrialChem", "title": "Industrial Chemistry", "path": "course/INDUSTRIAL CHEMISTRY SECOND YEAR/IndustrialChem.html" },
-          { "code": "IndustrialPhys", "title": "Industrial Physics", "path": "course/INDUSTRIAL CHEMISTRY SECOND YEAR/IndustrialPhys.html" },
-          { "code": "IndustrialMath", "title": "Industrial Mathematics", "path": "course/INDUSTRIAL CHEMISTRY SECOND YEAR/IndustrialMath.html" },
-          { "code": "MA210", "title": "MA210 — Mathematics (Industrial)", "path": "course/INDUSTRIAL CHEMISTRY SECOND YEAR/MA210.html" }
-        ]
-      },
-      {
-        "title": "FIRST YEAR NQ",
-        "courses": [
-          { "code": "CH110", "title": "CH110 — Chemistry", "path": "course/FIRST YEAR NQ/CH110.html" },
-          { "code": "PH110", "title": "PH110 — Physics", "path": "course/FIRST YEAR NQ/PH110.html" },
-          { "code": "BI10", "title": "BI10 — Biology", "path": "course/FIRST YEAR NQ/BI10.html" },
-          { "code": "CS110", "title": "CS110 — Computer Studies", "path": "course/FIRST YEAR NQ/CS110.html" },
-          { "code": "MA110", "title": "MA110 — Mathematics", "path": "course/FIRST YEAR NQ/MA110.html" }
-        ]
-      }
+<script>
+/* ============================================================
+   PMG™ EDU — Legendary Notes System
+   Gold / Blue / Black premium theme
+   Expanded to ~300 lines for full functionality
+   ============================================================ */
+
+/* ===== NOTES DATABASE =====
+   Extendable: add items as strings or objects {title, href}
+   Covers Industrial Chemistry (Second Year) and First Year NQ
+*/
+const notesDB = {
+  MA110: {
+    title: "MA110 – Mathematics Notes",
+    items: [
+      "Algebra: Linear equations, Quadratics, Polynomials",
+      "Functions: Types, Domain & Range, Composition",
+      "Trigonometry: Identities, Equations, Graphs",
+      "Sequences & Series: AP, GP",
+      "Calculus: Limits, Differentiation, Integration",
+      { title: "Matrices & Determinants", href: "course/FIRST YEAR NQ/MA110/notes/matrices.html" },
+      { title: "Probability & Statistics", href: "course/FIRST YEAR NQ/MA110/notes/probability.html" }
     ]
-  };
+  },
+  PH110: {
+    title: "PH110 – Physics Notes",
+    items: [
+      "Mechanics: Newton’s Laws, Kinematics",
+      "Work, Energy & Power",
+      "Waves & Oscillations",
+      "Optics: Reflection, Refraction",
+      "Electricity: Ohm’s Law, Circuits",
+      { title: "Modern Physics", href: "course/FIRST YEAR NQ/PH110/notes/modern.html" }
+    ]
+  },
+  LA111: {
+    title: "LA111 – Language & Study Skills",
+    items: [
+      "Parts of Speech & Sentence Structure",
+      "Essay Writing: Thesis & Cohesion",
+      "Academic Writing & Referencing",
+      "Comprehension & Summary Writing",
+      { title: "Presentation Skills", href: "course/FIRST YEAR NQ/LA111/notes/presentation.html" }
+    ]
+  },
+  CH110: {
+    title: "CH110 – Chemistry Notes",
+    items: [
+      "Atomic Structure & Periodic Trends",
+      "Chemical Bonding",
+      "Stoichiometry",
+      "States of Matter",
+      { title: "Thermochemistry", href: "course/FIRST YEAR NQ/CH110/notes/thermochemistry.html" }
+    ]
+  },
+  CH260: {
+    title: "CH260 – Organic Chemistry Notes",
+    items: [
+      "Structure and Bonding",
+      "Hybridization",
+      "Inductive Effect",
+      "Hyperconjugation",
+      { title: "Aromaticity", href: "course/INDUSTRIAL CHEMISTRY SECOND YEAR/CH260/notes/aromaticity.html" },
+      { title: "Reaction Mechanisms", href: "course/INDUSTRIAL CHEMISTRY SECOND YEAR/CH260/notes/mechanisms.html" }
+    ]
+  },
+  AnalyticalChem: {
+    title: "Analytical Chemistry Notes",
+    items: [
+      "Qualitative vs Quantitative Analysis",
+      "Gravimetric Methods",
+      "Volumetric Methods",
+      "Spectroscopy Basics",
+      { title: "Chromatography", href: "course/INDUSTRIAL CHEMISTRY SECOND YEAR/AnalyticalChem/notes/chromatography.html" }
+    ]
+  },
+  IndustrialChem: {
+    title: "Industrial Chemistry Notes",
+    items: [
+      "Chemical Engineering Principles",
+      "Process Design",
+      "Catalysis",
+      { title: "Polymer Chemistry", href: "course/INDUSTRIAL CHEMISTRY SECOND YEAR/IndustrialChem/notes/polymers.html" }
+    ]
+  },
+  IndustrialPhys: {
+    title: "Industrial Physics Notes",
+    items: [
+      "Solid State Physics",
+      "Thermodynamics",
+      "Quantum Basics",
+      { title: "Electronics", href: "course/INDUSTRIAL CHEMISTRY SECOND YEAR/IndustrialPhys/notes/electronics.html" }
+    ]
+  },
+  IndustrialMath: {
+    title: "Industrial Mathematics Notes",
+    items: [
+      "Differential Equations",
+      "Numerical Methods",
+      "Optimization",
+      { title: "Complex Analysis", href: "course/INDUSTRIAL CHEMISTRY SECOND YEAR/IndustrialMath/notes/complex.html" }
+    ]
+  },
+  MA210: {
+    title: "MA210 – Mathematics (Industrial)",
+    items: [
+      "Advanced Calculus",
+      "Linear Algebra",
+      "Fourier Analysis",
+      { title: "Partial Differential Equations", href: "course/INDUSTRIAL CHEMISTRY SECOND YEAR/MA210/notes/pde.html" }
+    ]
+  }
+};
 
-  const notesDB = {
-    MA110: { title: "MA110 – Mathematics Notes", items: ["Algebra: Linear equations, Quadratics, Polynomials","Functions: Types, Domain & Range, Composition","Trigonometry: Identities, Equations, Graphs","Sequences & Series: AP, GP","Calculus: Limits, Differentiation, Integration"] },
-    PH110: { title: "PH110 – Physics Notes", items: ["Mechanics: Newton’s Laws, Kinematics","Work, Energy & Power","Waves & Oscillations","Optics: Reflection, Refraction","Electricity: Ohm’s Law, Circuits"] },
-    CH110: { title: "CH110 – Chemistry Notes", items: ["Atomic Structure & Periodic Trends","Chemical Bonding","Stoichiometry","States of Matter"] },
-    CH260: { title: "CH260 – Organic Chemistry Notes", items: ["Structure and Bonding","Hybridization","Inductive Effect"] }
-  };
+/* ===== Utility Functions ===== */
+function escapeHtml(str){
+  return String(str)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+}
 
-  function safeId(s){ return String(s||'').replace(/\s+/g,'_').replace(/[^\w\-]/g,''); }
+function normalizeKey(key){
+  return String(key||"").replace(/\s+/g,"").toUpperCase();
+}
 
-  async function loadManifest(force=false){
-    const status = document.getElementById('status');
-    status.textContent = 'Loading courses...';
-    let manifest;
-    try{
-      const r = await fetch(MANIFEST, {cache:'no-store'});
-      if(!r.ok) throw new Error('manifest not found');
-      manifest = await r.json();
-    }catch(e){
-      manifest = DEFAULT_MANIFEST;
+function findNoteEntry(subject){
+  const k = normalizeKey(subject);
+  if(notesDB[k]) return notesDB[k];
+  for(const key of Object.keys(notesDB)){
+    if(normalizeKey(key)===k) return notesDB[key];
+  }
+  return null;
+}
+
+/* ===== Rendering ===== */
+function renderNoteItem(item){
+  if(typeof item==="string"){
+    return `<li class="legend-item">${escapeHtml(item)}</li>`;
+  }
+  if(typeof item==="object" && item.title){
+    const title=escapeHtml(item.title);
+    if(item.href){
+      const href=escapeHtml(item.href);
+      return `<li class="legend-item"><a href="${href}" target="_blank" class="legend-link">${title}</a></li>`;
     }
-    renderGroups(manifest.groups || []);
-    status.textContent = '';
+    return `<li class="legend-item">${title}</li>`;
+  }
+  return "";
+}
+
+/* ===== Show Notes ===== */
+function showNotes(subject){
+  const notesSection=document.getElementById("notesSection");
+  const notesTitle=document.getElementById("notesTitle");
+  const notesContent=document.getElementById("notesContent");
+
+  if(!notesSection||!notesTitle||!notesContent){
+    console.warn("Missing notesSection, notesTitle, or notesContent");
+    return;
   }
 
-  function renderGroups(groups){
-    const container = document.getElementById('groups');
-    container.innerHTML = '';
-    groups.forEach(group=>{
-      const col = document.createElement('div');
-      col.className = 'card';
-      const h = document.createElement('h2');
-      h.textContent = group.title;
-      col.appendChild(h);
+  const entry=findNoteEntry(subject);
+  notesTitle.innerHTML="";
+  notesContent.innerHTML="";
 
-      const list = document.createElement('div');
-      list.className = 'course-list';
-      (group.courses || []).forEach(course=>{
-        const a = document.createElement('a');
-        a.className = 'course-item';
-        a.href = course.path;
-        a.onclick = (ev)=> { ev.preventDefault(); openCourse(course); };
-        a.innerHTML = `<span><strong>${course.code}</strong> — ${course.title.replace(/^.*—\s*/,'')}</span><span class="meta">Open →</span>`;
-        list.appendChild(a);
-      });
+  if(!entry){
+    notesTitle.innerText="Notes Not Available";
+    notesContent.innerHTML="<p class='legend-warning'>Notes for this subject are coming soon.</p>";
+  } else {
+    notesTitle.innerText=entry.title;
+    const listHtml=(entry.items||[]).map(renderNoteItem).join("");
+    notesContent.innerHTML=`<ul class="legend-list">${listHtml}</ul>`;
+  }
 
-      col.appendChild(list);
-      container.appendChild(col);
+  notesSection.classList.remove("hidden");
+  notesSection.scrollIntoView({behavior:"smooth"});
+}
+
+/* ===== Close Notes ===== */
+function closeNotes(){
+  const notesSection=document.getElementById("notesSection");
+  if(notesSection) notesSection.classList.add("hidden");
+}
+
+/* ===== Search Notes ===== */
+function searchNotes(query){
+  query=String(query||"").toLowerCase();
+  const results=[];
+  for(const [code,entry] of Object.entries(notesDB)){
+    const matchTitle=entry.title.toLowerCase().includes(query);
+    const matchItems=(entry.items||[]).some(i=>{
+      if(typeof i==="string") return i.toLowerCase().includes(query);
+      if(i.title) return i.title.toLowerCase().includes(query);
+      return false;
     });
-    window._pmg_current_groups = groups;
-  }
-
-  function openCourse(course){
-    window.location.href = course.path;
-  }
-
-  function filterCourses(q){
-    q = String(q||'').trim().toLowerCase();
-    const groups = window._pmg_current_groups || [];
-    const container = document.getElementById('groups');
-    container.innerHTML = '';
-    groups.forEach(group=>{
-      const matches = (group.courses || []).filter(c=>{
-        return c.code.toLowerCase().includes(q) || c.title.toLowerCase().includes(q) || group.title.toLowerCase().includes(q);
-      });
-      if(matches.length){
-        const col = document.createElement('div');
-        col.className = 'card';
-        const h = document.createElement('h2');
-        h.textContent = group.title;
-        col.appendChild(h);
-        const list = document.createElement('div');
-        list.className = 'course-list';
-        matches.forEach(course=>{
-          const a = document.createElement('a');
-          a.className = 'course-item';
-          a.href = course.path;
-          a.onclick = (ev)=> { ev.preventDefault(); openCourse(course); };
-          a.innerHTML = `<span><strong>${course.code}</strong> — ${course.title.replace(/^.*—\s*/,'')}</span><span class="meta">Open →</span>`;
-          list.appendChild(a);
-        });
-        col.appendChild(list);
-        container.appendChild(col);
-      }
-    });
-  }
-
-  function showNotes(code){
-    const key = String(code||'').replace(/\s+/g,'').toUpperCase();
-    const entry = notesDBLookup(key);
-    const notesSection = document.getElementById('notesSection');
-    const notesTitle = document.getElementById('notesTitle');
-    const notesContent = document.getElementById('notesContent');
-    if(!notesSection || !notesTitle || !notesContent) return;
-    notesTitle.innerHTML = `<span style="font-weight:800;color:var(--gold)">${entry ? entry.title : 'Notes Not Available'}</span><button class="close-btn" onclick="closeNotes()" style="background:#0b1220;color:var(--gold);border-radius:8px;padding:6px 10px;border:1px solid rgba(255,215,0,0.08);">Close</button>`;
-    if(!entry){
-      notesContent.innerHTML = `<p class="pmg-note-empty">Notes for ${escapeHtml(code)} are coming soon.</p>`;
-    } else {
-      notesContent.innerHTML = `<ul>${entry.items.map(i=>`<li>${escapeHtml(i)}</li>`).join('')}</ul>`;
+    if(matchTitle||matchItems){
+      results.push({code,entry});
     }
-    notesSection.classList.remove('hidden');
-    notesSection.scrollIntoView({behavior:'smooth'});
   }
+  return results;
+}
 
-  function closeNotes(){
-    const notesSection = document.getElementById('notesSection');
-    if(notesSection) notesSection.classList.add('hidden');
+/* ===== Render Search Results ===== */
+function renderSearchResults(query){
+  const results=searchNotes(query);
+  const notesSection=document.getElementById("notesSection");
+  const notesTitle=document.getElementById("notesTitle");
+  const notesContent=document.getElementById("notesContent");
+  if(!notesSection||!notesTitle||!notesContent) return;
+
+  notesTitle.innerText=`Search results for "${query}"`;
+  if(!results.length){
+    notesContent.innerHTML="<p class='legend-warning'>No matches found.</p>";
+  } else {
+    let html="<div class='legend-results'>";
+    results.forEach(r=>{
+      html+=`<div class='legend-card'><h3>${escapeHtml(r.entry.title)}</h3><ul>`;
+      html+=(r.entry.items||[]).map(renderNoteItem).join("");
+      html+="</ul></div>";
+    });
+    html+="</div>";
+    notesContent.innerHTML=html;
   }
-
-  function notesDBLookup(k){
-    if(!k) return null;
-    if(notesDB[k]) return notesDB[k];
-    for(const kk of Object.keys(notesDB)) if(kk.toUpperCase() === k) return notesDB[kk];
-    return null;
-  }
-
-  function escapeHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-  window.loadManifest = loadManifest;
-  window.filterCourses = filterCourses;
-  window.showNotes = showNotes;
-  window.closeNotes = closeNotes;
-
-  window.addEventListener('DOMContentLoaded', ()=> loadManifest(false));
-})();
+  notesSection.class
