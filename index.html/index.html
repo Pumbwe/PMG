@@ -35,10 +35,8 @@
     .program-meta{flex:1;text-align:left}
     .program-title{font-weight:800}
     .program-sub{color:var(--muted);font-size:0.9rem;margin-top:4px}
-    /* standout program styles */
     .program-btn.industrial .program-badge{background:var(--industrial-grad);color:#071018}
     .program-btn.nonquota .program-badge{background:var(--nonquota-grad);color:#071018}
-    /* active state */
     .program-btn.active{background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-color:rgba(255,255,255,0.06)}
     .program-btn.active .program-title{color:var(--accent)}
     .counts-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
@@ -64,13 +62,15 @@
     .empty{color:var(--muted);padding:12px;text-align:center}
     .muted{color:var(--muted)}
     .kbd{background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:6px;font-family:monospace}
-    /* micro animation for "you have" pulse */
     .pulse { animation: pulse 1.2s ease-out; }
     @keyframes pulse {
       0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(43,156,255,0.18); }
       70% { transform: scale(1.02); box-shadow: 0 10px 30px 6px rgba(43,156,255,0.06); }
       100% { transform: scale(1); box-shadow: none; }
     }
+    /* Contact bar */
+    .contact-bar{margin-top:12px;padding:10px;border-radius:10px;background:linear-gradient(90deg,rgba(255,215,0,0.06),rgba(43,156,255,0.02));display:flex;align-items:center;gap:12px;border:1px solid rgba(255,255,255,0.02)}
+    .contact-number{font-weight:800;color:#071018;background:#fff;padding:6px 10px;border-radius:8px}
   </style>
 </head>
 <body>
@@ -85,6 +85,13 @@
       </div>
       <div class="muted">Press <span class="kbd">/</span> to focus search</div>
     </header>
+
+    <!-- Contact bar (WhatsApp) -->
+    <div class="contact-bar" role="region" aria-label="Contact">
+      <div class="muted">For more information on WhatsApp</div>
+      <div class="contact-number">+260 77 530 2886</div>
+      <div style="margin-left:auto" class="muted">Available for enquiries and course support</div>
+    </div>
 
     <div class="layout" role="region" aria-label="Main layout">
       <!-- LEFT: Programs -->
@@ -152,11 +159,37 @@
 
   <script>
   (function(){
-    // Default manifest (short program names and style markers)
+    // Manifest with updated program labels, standout styles, and exact course lists per user request
     const DEFAULT_MANIFEST = {
       programs: [
-        { id: "INDUSTRIAL", label: "Industrial", folder: "Industrial_chemistry_second_year", description: "Industrial", lastUpdated: "2026-01-10", courses:[{code:"CH260",title:"Organic Chemistry"},{code:"CH261",title:"Analytical Chemistry"}], style:"industrial" },
-        { id: "NON_QUOTA", label: "Non Quota", folder: "NON_QUOTA", description: "Non Quota", lastUpdated: "2026-01-12", courses:[{code:"CH110",title:"Chemistry"},{code:"MA110",title:"Mathematics"}], style:"nonquota" }
+        {
+          id: "INDUSTRIAL",
+          label: "Industrial",
+          folder: "Industrial_chemistry_second_year",
+          description: "Industrial",
+          lastUpdated: "2026-01-10",
+          courses: [
+            { code: "ICH210", title: "Industrial Chemistry" },
+            { code: "ICH240", title: "Analytical Chemistry" },
+            { code: "IPH210", title: "Industrial Physics" },
+            { code: "IMA210", title: "Industrial Maths" },
+            { code: "CH260", title: "Organic Chemistry" }
+          ],
+          style: "industrial"
+        },
+        {
+          id: "NON_QUOTA",
+          label: "Non Quota",
+          folder: "NON_QUOTA",
+          description: "Non Quota",
+          lastUpdated: "2026-01-12",
+          courses: [
+            { code: "PH110", title: "Physics" },
+            { code: "CS110", title: "Computer Studies" },
+            { code: "BI110", title: "Biology" }
+          ],
+          style: "nonquota"
+        }
       ]
     };
 
@@ -172,7 +205,6 @@
     const viewer = document.getElementById('viewer');
     const viewerFrame = document.getElementById('viewerFrame');
     const statusCard = document.getElementById('status');
-    const youHaveEl = document.getElementById('youHave');
     const totalItemsEl = document.getElementById('totalItems');
     const countsRow = document.getElementById('countsRow');
     const lastUpdatedEl = document.getElementById('lastUpdated');
@@ -186,7 +218,7 @@
     let activeSection = null;
     let activeYear = null;
 
-    // Try to load course_manifest.json if present
+    // Try to load course_manifest.json if present (keeps user override)
     async function loadManifest(){
       try{
         const r = await fetch('course_manifest.json', {cache:'no-store'});
@@ -270,7 +302,6 @@
         const labs = await countSectionItems(p.folder, 'lab-reports');
         const total = notes + papers + assigns + labs;
         totalItemsEl.textContent = total;
-        // build counts row
         countsRow.innerHTML = '';
         [['Notes',notes],['Past Papers',papers],['Assignments',assigns],['Lab Reports',labs]].forEach(([label,n])=>{
           const el = document.createElement('div');
@@ -278,7 +309,6 @@
           el.textContent = `${label}: ${n}`;
           countsRow.appendChild(el);
         });
-        // pulse animation to draw attention
         countsRow.classList.add('pulse');
         setTimeout(()=> countsRow.classList.remove('pulse'), 1200);
       })();
