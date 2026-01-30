@@ -208,8 +208,9 @@ footer span{color:var(--accent);font-weight:600;}
 </footer>
 
 <script>
-const BASE="https://pumbwe.github.io/PMG/past-papers/";
+const BASE="https://pumbwe.github.io/PMG/";
 
+// Programmes and courses
 const programmes={
   nonquota:{
     year:"First Year",
@@ -277,58 +278,4 @@ function showResourceDetail(code,resource){
   const main=document.getElementById("mainContent");
   if(resource==="Test Papers"){
     main.innerHTML=`<div class="section-title">
-      <h2>${code} — ${resource}</h2>
-      <p>Select a year to view past tests</p>
-    </div>
-    <div class="actions" id="yearButtons"></div>`;
-    const container=document.getElementById("yearButtons");
-    testYears.forEach(year=>{
-      const btn=document.createElement("button");
-      btn.className="btn primary year-btn";
-      btn.innerText=year;
-      btn.onclick=()=>openViewer(`${code}-${year}.html`);
-      container.appendChild(btn);
-    });
-  } else if(resource==="Assignments"){
-    main.innerHTML=`<div class="section-title">
-      <h2>${code} — ${resource}</h2>
-      <p>Select an assignment by year</p>
-      <div class="actions" id="assignments"></div>
-    </div>`;
-    const container=document.getElementById("assignments");
-    testYears.forEach(year=>{
-      const btn=document.createElement("button");
-      btn.className="btn year-btn";
-      btn.innerText=`${year} Assignment`;
-      btn.onclick=()=>openViewer(`${code}-assignment-${year}.html`);
-      container.appendChild(btn);
-    });
-  } else if(resource==="Notes"){
-    main.innerHTML=`<div class="section-title">
-      <h2>${code} — ${resource}</h2>
-      <p>Structured topic notes for ${code}</p>
-      <div class="actions" id="notes"></div>
-    </div>`;
-    const container=document.getElementById("notes");
-    for(let t=1;t<=15;t++){
-      const btn=document.createElement("button");
-      btn.className="btn year-btn";
-      btn.innerText=`Topic ${t}`;
-      btn.onclick=()=>openViewer(`${code}-topic${t}.html`);
-      container.appendChild(btn);
-    }
-  }
-}
-
-// Open viewer
-function openViewer(file){
-  const viewer=document.getElementById("viewerSection");
-  const frame=document.getElementById("viewerFrame");
-  viewer.style.display="block";
-  frame.src=BASE+file;
-  viewer.scrollIntoView({behavior:"smooth"});
-}
-</script>
-
-</body>
-   </html>
+      <h2>${code} — ${
