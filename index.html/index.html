@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Academic Notes Portal | First Year</title>
+<title>Academic Notes Portal | First & Second Year</title>
 
 <style>
-/* =========================
-   GLOBAL THEME VARIABLES
-   ========================= */
+/* =========================================================
+   THEME VARIABLES
+   ========================================================= */
 :root{
   --bg-main:#0b0e14;
   --bg-panel:#121826;
@@ -19,31 +18,29 @@
   --accent:#facc15;
   --accent-2:#38bdf8;
   --border:#1f2937;
-  --success:#22c55e;
-  --danger:#ef4444;
   --radius:14px;
 }
 
-/* =========================
-   RESET & BASE
-   ========================= */
+/* =========================================================
+   RESET
+   ========================================================= */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   margin:0;
-  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:"Segoe UI",system-ui,sans-serif;
   background:linear-gradient(180deg,#0b0e14,#020617);
   color:var(--ink-main);
 }
 
-/* =========================
-   TOP NAV BAR
-   ========================= */
+/* =========================================================
+   NAVBAR
+   ========================================================= */
 nav{
   position:sticky;
   top:0;
   z-index:1000;
-  background:rgba(2,6,23,0.8);
+  background:rgba(2,6,23,0.85);
   backdrop-filter:blur(10px);
   border-bottom:1px solid var(--border);
 }
@@ -68,11 +65,11 @@ nav{
 }
 .nav-links a:hover{color:var(--accent)}
 
-/* =========================
-   HERO HEADER
-   ========================= */
+/* =========================================================
+   HERO
+   ========================================================= */
 header{
-  padding:70px 20px 60px;
+  padding:80px 20px 60px;
   text-align:center;
 }
 header h1{
@@ -81,105 +78,105 @@ header h1{
   color:var(--accent);
 }
 header p{
-  max-width:800px;
-  margin:12px auto 0;
+  max-width:850px;
+  margin:14px auto 0;
   color:var(--ink-soft);
   line-height:1.6;
 }
 
-/* =========================
-   STATS BAR
-   ========================= */
-.stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:16px;
-  max-width:1200px;
-  margin:30px auto 0;
-  padding:0 20px;
-}
-.stat{
-  background:var(--bg-panel);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:18px;
-}
-.stat h3{
-  margin:0;
-  font-size:1.8em;
-  color:var(--accent);
-}
-.stat p{
-  margin:6px 0 0;
-  font-size:0.9em;
-  color:var(--ink-soft);
-}
-
-/* =========================
-   MAIN CONTAINER
-   ========================= */
+/* =========================================================
+   MAIN
+   ========================================================= */
 main{
   max-width:1400px;
-  margin:60px auto;
+  margin:40px auto;
   padding:0 20px;
 }
 
-/* =========================
-   SECTION HEADERS
-   ========================= */
-.section-title{
-  margin:60px 0 20px;
-  padding-left:10px;
-  border-left:4px solid var(--accent);
+/* =========================================================
+   PROGRAM SELECTOR
+   ========================================================= */
+.program-selector{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:24px;
+  margin-top:50px;
 }
-.section-title h2{
+.program{
+  background:linear-gradient(180deg,var(--bg-panel),var(--bg-soft));
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:40px 30px;
+  text-align:center;
+  cursor:pointer;
+  transition:.3s;
+}
+.program:hover{
+  transform:translateY(-6px);
+  border-color:var(--accent);
+}
+.program h2{
   margin:0;
-  font-size:1.8em;
+  color:var(--accent);
 }
+.program p{
+  margin-top:10px;
+  color:var(--ink-soft);
+  font-size:0.95em;
+}
+
+/* =========================================================
+   SECTIONS (HIDDEN BY DEFAULT)
+   ========================================================= */
+.section{
+  display:none;
+  margin-top:70px;
+  animation:fadeUp .6s ease;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.section-title{
+  border-left:4px solid var(--accent);
+  padding-left:12px;
+  margin-bottom:25px;
+}
+.section-title h2{margin:0}
 .section-title p{
-  margin:6px 0 0;
+  margin-top:6px;
   color:var(--ink-soft);
 }
 
-/* =========================
+/* =========================================================
    COURSE GRID
-   ========================= */
+   ========================================================= */
 .course-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
   gap:22px;
 }
 .course{
-  background:linear-gradient(180deg,var(--bg-panel),var(--bg-soft));
+  background:var(--bg-panel);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:20px;
-  position:relative;
-  overflow:hidden;
+  padding:22px;
 }
-.course::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(120deg,transparent,rgba(250,204,21,0.08),transparent);
-  opacity:0;
-  transition:.3s;
-}
-.course:hover::after{opacity:1}
 .course h3{
   margin:0;
-  font-size:1.2em;
   color:var(--accent);
 }
 .course p{
-  margin:6px 0 12px;
+  margin:8px 0 14px;
   color:var(--ink-soft);
   font-size:0.9em;
 }
 
-/* =========================
+/* =========================================================
    BUTTONS
-   ========================= */
+   ========================================================= */
 .actions{
   display:flex;
   gap:10px;
@@ -196,18 +193,18 @@ main{
 }
 .btn.primary{
   background:var(--accent-2);
-  border-color:transparent;
   color:#020617;
+  border:none;
   font-weight:600;
 }
-.btn:hover{filter:brightness(1.1)}
+.btn:hover{filter:brightness(1.15)}
 
-/* =========================
+/* =========================================================
    VIEWER
-   ========================= */
+   ========================================================= */
 .viewer{
   display:none;
-  margin-top:40px;
+  margin-top:50px;
   background:var(--bg-panel);
   border:1px solid var(--border);
   border-radius:var(--radius);
@@ -220,11 +217,11 @@ iframe{
   border-radius:10px;
 }
 
-/* =========================
+/* =========================================================
    FOOTER
-   ========================= */
+   ========================================================= */
 footer{
-  margin-top:80px;
+  margin-top:100px;
   border-top:1px solid var(--border);
   padding:30px 20px;
   text-align:center;
@@ -241,164 +238,68 @@ footer span{color:var(--accent)}
   <div class="nav-wrap">
     <div class="brand">ACADEMIC NOTES PORTAL</div>
     <div class="nav-links">
-      <a href="#nonquota">NON-QUOTA</a>
-      <a href="#industrial">Industrial Chemistry</a>
+      <a href="#programs">Programs</a>
       <a href="#viewer">Viewer</a>
     </div>
   </div>
 </nav>
 
 <header>
-  <h1>First Year Academic Resources</h1>
+  <h1>Academic Notes Portal</h1>
   <p>
-    Official repository for first-year students.  
-    Centralized access to tests, assignments, and structured topic-based notes  
-    for NON-QUOTA and Industrial Chemistry programmes.
+    Official structured repository for university students.  
+    Select a programme to access organized notes, assignments, and past examination papers.
   </p>
-
-  <div class="stats">
-    <div class="stat">
-      <h3>10+</h3>
-      <p>Core Courses</p>
-    </div>
-    <div class="stat">
-      <h3>2019–2024</h3>
-      <p>Past Papers Coverage</p>
-    </div>
-    <div class="stat">
-      <h3>Structured</h3>
-      <p>Topic-Based Notes</p>
-    </div>
-    <div class="stat">
-      <h3>Official</h3>
-      <p>Academic Layout</p>
-    </div>
-  </div>
 </header>
 
 <main>
 
-<!-- ================= NON-QUOTA ================= -->
-<section id="nonquota">
+<!-- PROGRAM SELECT -->
+<section id="programs" class="program-selector">
+  <div class="program" onclick="showNonQuota()">
+    <h2>NON-QUOTA</h2>
+    <p>First Year — General foundational courses</p>
+  </div>
+
+  <div class="program" onclick="showIndustrial()">
+    <h2>INDUSTRIAL CHEMISTRY</h2>
+    <p>Second Year — Core chemistry specialization</p>
+  </div>
+</section>
+
+<!-- NON-QUOTA -->
+<section id="nonquota" class="section">
   <div class="section-title">
     <h2>NON-QUOTA — First Year</h2>
-    <p>General foundational courses</p>
+    <p>Foundational university courses</p>
   </div>
 
   <div class="course-grid">
-    <div class="course">
-      <h3>MA110 — Mathematics</h3>
-      <p>Calculus, algebra, and analytical foundations.</p>
-      <div class="actions">
-        <button class="btn primary" onclick="openPaper('MA110-2024.html')">Past Tests</button>
-        <button class="btn">Assignments</button>
-        <button class="btn">Topics</button>
-      </div>
-    </div>
-
-    <div class="course">
-      <h3>CH110 — Chemistry</h3>
-      <p>Atomic structure, bonding, and basic chemistry.</p>
-      <div class="actions">
-        <button class="btn primary" onclick="openPaper('CH110-2024.html')">Past Tests</button>
-        <button class="btn">Assignments</button>
-        <button class="btn">Topics</button>
-      </div>
-    </div>
-
-    <div class="course">
-      <h3>PH110 — Physics</h3>
-      <p>Mechanics, energy, and physical principles.</p>
-      <div class="actions">
-        <button class="btn primary" onclick="openPaper('PH110-2024.html')">Past Tests</button>
-        <button class="btn">Assignments</button>
-        <button class="btn">Topics</button>
-      </div>
-    </div>
-
-    <div class="course">
-      <h3>BI110 — Biology</h3>
-      <p>Cell biology, life processes, and classification.</p>
-      <div class="actions">
-        <button class="btn primary" onclick="openPaper('BI110-2024.html')">Past Tests</button>
-        <button class="btn">Assignments</button>
-        <button class="btn">Topics</button>
-      </div>
-    </div>
-
-    <div class="course">
-      <h3>CS110 — Computer Studies</h3>
-      <p>Programming basics and computational thinking.</p>
-      <div class="actions">
-        <button class="btn primary" onclick="openPaper('CS110-2024.html')">Past Tests</button>
-        <button class="btn">Assignments</button>
-        <button class="btn">Topics</button>
-      </div>
-    </div>
+    <div class="course"><h3>MA110 — Mathematics</h3></div>
+    <div class="course"><h3>CH110 — Chemistry</h3></div>
+    <div class="course"><h3>PH110 — Physics</h3></div>
+    <div class="course"><h3>BI110 — Biology</h3></div>
+    <div class="course"><h3>CS110 — Computer Studies</h3></div>
   </div>
 </section>
 
-<!-- ================= INDUSTRIAL ================= -->
-<section id="industrial">
+<!-- INDUSTRIAL -->
+<section id="industrial" class="section">
   <div class="section-title">
-    <h2>Industrial Chemistry — First Year</h2>
-    <p>Programme-specific core chemistry courses</p>
+    <h2>Industrial Chemistry — Second Year</h2>
+    <p>Programme-specific core courses</p>
   </div>
 
   <div class="course-grid">
-    <div class="course">
-      <h3>CH210 — Industrial Chemistry</h3>
-      <p>Chemical processes and industrial applications.</p>
-      <div class="actions">
-        <button class="btn primary" onclick="openPaper('CH210-2024.html')">Past Tests</button>
-        <button class="btn">Assignments</button>
-        <button class="btn">Topics</button>
-      </div>
-    </div>
-
-    <div class="course">
-      <h3>CH260 — Organic Chemistry</h3>
-      <p>Structure, bonding, and organic reactions.</p>
-      <div class="actions">
-        <button class="btn primary" onclick="openPaper('CH260-2024.html')">Past Tests</button>
-        <button class="btn">Assignments</button>
-        <button class="btn">Topics</button>
-      </div>
-    </div>
-
-    <div class="course">
-      <h3>CH240 — Analytical Chemistry</h3>
-      <p>Quantitative and qualitative chemical analysis.</p>
-      <div class="actions">
-        <button class="btn primary" onclick="openPaper('CH240-2024.html')">Past Tests</button>
-        <button class="btn">Assignments</button>
-        <button class="btn">Topics</button>
-      </div>
-    </div>
-
-    <div class="course">
-      <h3>PH210 — Physics</h3>
-      <p>Applied physics for industrial systems.</p>
-      <div class="actions">
-        <button class="btn primary" onclick="openPaper('PH210-2024.html')">Past Tests</button>
-        <button class="btn">Assignments</button>
-        <button class="btn">Topics</button>
-      </div>
-    </div>
-
-    <div class="course">
-      <h3>MA210 — Mathematics</h3>
-      <p>Advanced mathematics for chemical sciences.</p>
-      <div class="actions">
-        <button class="btn primary" onclick="openPaper('MA210-2024.html')">Past Tests</button>
-        <button class="btn">Assignments</button>
-        <button class="btn">Topics</button>
-      </div>
-    </div>
+    <div class="course"><h3>CH210 — Industrial Chemistry</h3></div>
+    <div class="course"><h3>CH260 — Organic Chemistry</h3></div>
+    <div class="course"><h3>CH240 — Analytical Chemistry</h3></div>
+    <div class="course"><h3>PH210 — Physics</h3></div>
+    <div class="course"><h3>MA210 — Mathematics</h3></div>
   </div>
 </section>
 
-<!-- ================= VIEWER ================= -->
+<!-- VIEWER -->
 <section id="viewer">
   <div class="viewer" id="contentViewer">
     <iframe id="contentFrame"></iframe>
@@ -408,22 +309,27 @@ footer span{color:var(--accent)}
 </main>
 
 <footer>
-  <span>Academic Notes Portal</span> • First Year Repository  
-  <br>
-  Built for structured learning, revision, and academic excellence.
+  <span>Academic Notes Portal</span> • Structured University Repository
 </footer>
 
 <script>
-const BASE = "https://pumbwe.github.io/PMG/past-papers/";
+function hideAll(){
+  document.getElementById("nonquota").style.display="none";
+  document.getElementById("industrial").style.display="none";
+}
 
-function openPaper(file){
-  const viewer = document.getElementById("contentViewer");
-  const frame = document.getElementById("contentFrame");
-  viewer.style.display = "block";
-  frame.src = BASE + file;
-  viewer.scrollIntoView({behavior:"smooth"});
+function showNonQuota(){
+  hideAll();
+  document.getElementById("nonquota").style.display="block";
+  document.getElementById("nonquota").scrollIntoView({behavior:"smooth"});
+}
+
+function showIndustrial(){
+  hideAll();
+  document.getElementById("industrial").style.display="block";
+  document.getElementById("industrial").scrollIntoView({behavior:"smooth"});
 }
 </script>
 
 </body>
-  </html>
+     </html>
