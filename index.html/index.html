@@ -3,12 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Academic Notes Portal | First & Second Year</title>
-
+<title>Academic Notes Portal | God Level</title>
 <style>
-/* =========================================================
-   THEME VARIABLES
-   ========================================================= */
 :root{
   --bg-main:#0b0e14;
   --bg-panel:#121826;
@@ -17,31 +13,26 @@
   --ink-soft:#9ca3af;
   --accent:#facc15;
   --accent-2:#38bdf8;
+  --accent-3:#a78bfa;
   --border:#1f2937;
   --radius:14px;
 }
 
-/* =========================================================
-   RESET
-   ========================================================= */
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
 body{
   margin:0;
-  font-family:"Segoe UI",system-ui,sans-serif;
+  font-family:"Segoe UI",sans-serif;
   background:linear-gradient(180deg,#0b0e14,#020617);
   color:var(--ink-main);
+  transition:all .3s ease;
 }
 
-/* =========================================================
-   NAVBAR
-   ========================================================= */
+/* NAVBAR */
 nav{
   position:sticky;
   top:0;
   z-index:1000;
   background:rgba(2,6,23,0.85);
-  backdrop-filter:blur(10px);
+  backdrop-filter:blur(12px);
   border-bottom:1px solid var(--border);
 }
 .nav-wrap{
@@ -53,134 +44,83 @@ nav{
   align-items:center;
 }
 .brand{
-  font-weight:800;
+  font-weight:900;
   letter-spacing:1px;
   color:var(--accent);
+  font-size:1.4em;
+  text-shadow:0 0 5px var(--accent);
 }
 .nav-links a{
   color:var(--ink-soft);
-  margin-left:18px;
+  margin-left:20px;
   text-decoration:none;
-  font-size:0.9em;
+  font-weight:500;
+  transition:.3s;
 }
-.nav-links a:hover{color:var(--accent)}
+.nav-links a:hover{color:var(--accent);transform:scale(1.05);}
 
-/* =========================================================
-   HERO
-   ========================================================= */
-header{
-  padding:80px 20px 60px;
-  text-align:center;
-}
-header h1{
-  font-size:3em;
-  margin:0;
-  color:var(--accent);
-}
-header p{
-  max-width:850px;
-  margin:14px auto 0;
-  color:var(--ink-soft);
-  line-height:1.6;
-}
-
-/* =========================================================
-   MAIN
-   ========================================================= */
+/* MAIN CONTENT */
 main{
   max-width:1400px;
-  margin:40px auto;
+  margin:60px auto;
   padding:0 20px;
 }
 
-/* =========================================================
-   PROGRAM SELECTOR
-   ========================================================= */
-.program-selector{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:24px;
-  margin-top:50px;
-}
-.program{
-  background:linear-gradient(180deg,var(--bg-panel),var(--bg-soft));
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:40px 30px;
-  text-align:center;
-  cursor:pointer;
-  transition:.3s;
-}
-.program:hover{
-  transform:translateY(-6px);
-  border-color:var(--accent);
-}
-.program h2{
-  margin:0;
-  color:var(--accent);
-}
-.program p{
-  margin-top:10px;
-  color:var(--ink-soft);
-  font-size:0.95em;
-}
-
-/* =========================================================
-   SECTIONS (HIDDEN BY DEFAULT)
-   ========================================================= */
-.section{
-  display:none;
-  margin-top:70px;
-  animation:fadeUp .6s ease;
-}
-
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(30px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
 .section-title{
-  border-left:4px solid var(--accent);
-  padding-left:12px;
-  margin-bottom:25px;
+  margin:40px 0 20px;
 }
-.section-title h2{margin:0}
+.section-title h2{
+  margin:0;
+  font-size:2em;
+  color:var(--accent);
+  text-shadow:0 0 5px var(--accent-2);
+}
 .section-title p{
-  margin-top:6px;
+  margin:6px 0 14px;
   color:var(--ink-soft);
+  font-size:1em;
 }
 
-/* =========================================================
-   COURSE GRID
-   ========================================================= */
+/* GRID */
 .course-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:22px;
 }
-.course{
-  background:var(--bg-panel);
+
+/* COURSE / RESOURCE BUTTONS */
+.course, .resource, .year-btn{
+  background:linear-gradient(145deg,var(--bg-panel),var(--bg-soft));
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:22px;
+  padding:18px;
+  cursor:pointer;
+  transition:all .3s ease;
+  box-shadow:0 0 5px rgba(0,0,0,0.4);
 }
-.course h3{
+.course:hover, .resource:hover, .year-btn:hover{
+  filter:brightness(1.15);
+  transform:translateY(-4px);
+  box-shadow:0 0 15px rgba(250,204,21,0.5);
+}
+.course h3, .resource h3{
   margin:0;
-  color:var(--accent);
+  font-size:1.2em;
+  color:var(--accent-2);
+  text-shadow:0 0 3px var(--accent);
 }
-.course p{
-  margin:8px 0 14px;
+.course p, .resource p{
+  margin:6px 0 0;
   color:var(--ink-soft);
   font-size:0.9em;
 }
 
-/* =========================================================
-   BUTTONS
-   ========================================================= */
+/* ACTION BUTTONS */
 .actions{
   display:flex;
-  gap:10px;
   flex-wrap:wrap;
+  gap:10px;
+  margin-top:12px;
 }
 .btn{
   padding:10px 14px;
@@ -188,27 +128,33 @@ main{
   border:1px solid var(--border);
   background:#020617;
   color:var(--ink-main);
-  cursor:pointer;
   font-size:0.85em;
+  cursor:pointer;
+  transition:.3s;
+  box-shadow:0 0 3px rgba(0,0,0,0.4);
 }
 .btn.primary{
   background:var(--accent-2);
   color:#020617;
-  border:none;
+  border-color:transparent;
   font-weight:600;
 }
-.btn:hover{filter:brightness(1.15)}
+.btn:hover{
+  filter:brightness(1.2);
+  transform:scale(1.05);
+  box-shadow:0 0 15px var(--accent-2);
+}
 
-/* =========================================================
-   VIEWER
-   ========================================================= */
+/* VIEWER */
 .viewer{
   display:none;
-  margin-top:50px;
+  margin-top:30px;
   background:var(--bg-panel);
   border:1px solid var(--border);
   border-radius:var(--radius);
   padding:16px;
+  box-shadow:0 0 15px rgba(0,0,0,0.6);
+  animation:fadeIn 0.4s ease forwards;
 }
 iframe{
   width:100%;
@@ -216,120 +162,173 @@ iframe{
   border:none;
   border-radius:10px;
 }
+@keyframes fadeIn{
+  0%{opacity:0;transform:translateY(10px);}
+  100%{opacity:1;transform:translateY(0);}
+}
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
+/* FOOTER */
 footer{
-  margin-top:100px;
+  margin-top:80px;
   border-top:1px solid var(--border);
   padding:30px 20px;
   text-align:center;
   color:var(--ink-soft);
   font-size:0.85em;
 }
-footer span{color:var(--accent)}
+footer span{color:var(--accent);font-weight:600;}
 </style>
 </head>
-
 <body>
 
 <nav>
   <div class="nav-wrap">
     <div class="brand">ACADEMIC NOTES PORTAL</div>
     <div class="nav-links">
-      <a href="#programs">Programs</a>
-      <a href="#viewer">Viewer</a>
+      <a onclick="showProgramme('nonquota')">NON-QUOTA</a>
+      <a onclick="showProgramme('industrial')">Industrial Chemistry</a>
     </div>
   </div>
 </nav>
 
-<header>
-  <h1>Academic Notes Portal</h1>
-  <p>
-    Official structured repository for university students.  
-    Select a programme to access organized notes, assignments, and past examination papers.
-  </p>
-</header>
-
-<main>
-
-<!-- PROGRAM SELECT -->
-<section id="programs" class="program-selector">
-  <div class="program" onclick="showNonQuota()">
-    <h2>NON-QUOTA</h2>
-    <p>First Year — General foundational courses</p>
-  </div>
-
-  <div class="program" onclick="showIndustrial()">
-    <h2>INDUSTRIAL CHEMISTRY</h2>
-    <p>Second Year — Core chemistry specialization</p>
-  </div>
-</section>
-
-<!-- NON-QUOTA -->
-<section id="nonquota" class="section">
+<main id="mainContent">
   <div class="section-title">
-    <h2>NON-QUOTA — First Year</h2>
-    <p>Foundational university courses</p>
+    <h2>Welcome to the Legendary Portal</h2>
+    <p>Click a programme above to explore courses, test papers, assignments, and structured notes. Every click takes you deeper into knowledge.</p>
   </div>
-
-  <div class="course-grid">
-    <div class="course"><h3>MA110 — Mathematics</h3></div>
-    <div class="course"><h3>CH110 — Chemistry</h3></div>
-    <div class="course"><h3>PH110 — Physics</h3></div>
-    <div class="course"><h3>BI110 — Biology</h3></div>
-    <div class="course"><h3>CS110 — Computer Studies</h3></div>
-  </div>
-</section>
-
-<!-- INDUSTRIAL -->
-<section id="industrial" class="section">
-  <div class="section-title">
-    <h2>Industrial Chemistry — Second Year</h2>
-    <p>Programme-specific core courses</p>
-  </div>
-
-  <div class="course-grid">
-    <div class="course"><h3>CH210 — Industrial Chemistry</h3></div>
-    <div class="course"><h3>CH260 — Organic Chemistry</h3></div>
-    <div class="course"><h3>CH240 — Analytical Chemistry</h3></div>
-    <div class="course"><h3>PH210 — Physics</h3></div>
-    <div class="course"><h3>MA210 — Mathematics</h3></div>
-  </div>
-</section>
-
-<!-- VIEWER -->
-<section id="viewer">
-  <div class="viewer" id="contentViewer">
-    <iframe id="contentFrame"></iframe>
-  </div>
-</section>
-
 </main>
 
+<section class="viewer" id="viewerSection">
+  <iframe id="viewerFrame"></iframe>
+</section>
+
 <footer>
-  <span>Academic Notes Portal</span> • Structured University Repository
+  <span>Academic Notes Portal</span> • Legendary Edition<br>
+  Built for structured learning, revision, and God-level academic flow.
 </footer>
 
 <script>
-function hideAll(){
-  document.getElementById("nonquota").style.display="none";
-  document.getElementById("industrial").style.display="none";
+const BASE="https://pumbwe.github.io/PMG/past-papers/";
+
+const programmes={
+  nonquota:{
+    year:"First Year",
+    courses:{
+      MA110:"Mathematics",
+      CH110:"Chemistry",
+      PH110:"Physics",
+      BI110:"Biology",
+      CS110:"Computer Studies"
+    }
+  },
+  industrial:{
+    year:"Second Year",
+    courses:{
+      CH210:"Industrial Chemistry",
+      CH260:"Organic Chemistry",
+      CH240:"Analytical Chemistry",
+      PH210:"Physics",
+      MA210:"Mathematics"
+    }
+  }
+};
+
+const testYears=[2019,2020,2021,2022,2023,2024,2025];
+
+// Show programmes → courses
+function showProgramme(programme){
+  const main=document.getElementById("mainContent");
+  main.innerHTML=`<div class="section-title">
+      <h2>${programme.toUpperCase()} — ${programmes[programme].year}</h2>
+      <p>Select a course to access resources</p>
+    </div>
+    <div class="course-grid" id="courseGrid"></div>`;
+  const grid=document.getElementById("courseGrid");
+  const courses=programmes[programme].courses;
+  for(const code in courses){
+    const div=document.createElement("div");
+    div.className="course";
+    div.innerHTML=`<h3>${code} — ${courses[code]}</h3><p>Click to view resources</p>`;
+    div.onclick=()=>showResources(code,courses[code]);
+    grid.appendChild(div);
+  }
 }
 
-function showNonQuota(){
-  hideAll();
-  document.getElementById("nonquota").style.display="block";
-  document.getElementById("nonquota").scrollIntoView({behavior:"smooth"});
+// Show resources → Test Papers, Assignments, Notes
+function showResources(code,name){
+  const main=document.getElementById("mainContent");
+  main.innerHTML=`<div class="section-title">
+      <h2>${code} — ${name}</h2>
+      <p>Select a resource type</p>
+    </div>
+    <div class="course-grid" id="resourceGrid"></div>`;
+  const grid=document.getElementById("resourceGrid");
+  ["Test Papers","Assignments","Notes"].forEach(res=>{
+    const div=document.createElement("div");
+    div.className="resource";
+    div.innerHTML=`<h3>${res}</h3><p>Click to open ${res.toLowerCase()}</p>`;
+    div.onclick=()=>showResourceDetail(code,res);
+    grid.appendChild(div);
+  });
 }
 
-function showIndustrial(){
-  hideAll();
-  document.getElementById("industrial").style.display="block";
-  document.getElementById("industrial").scrollIntoView({behavior:"smooth"});
+// Show years/topics for each resource
+function showResourceDetail(code,resource){
+  const main=document.getElementById("mainContent");
+  if(resource==="Test Papers"){
+    main.innerHTML=`<div class="section-title">
+      <h2>${code} — ${resource}</h2>
+      <p>Select a year to view past tests</p>
+    </div>
+    <div class="actions" id="yearButtons"></div>`;
+    const container=document.getElementById("yearButtons");
+    testYears.forEach(year=>{
+      const btn=document.createElement("button");
+      btn.className="btn primary year-btn";
+      btn.innerText=year;
+      btn.onclick=()=>openViewer(`${code}-${year}.html`);
+      container.appendChild(btn);
+    });
+  } else if(resource==="Assignments"){
+    main.innerHTML=`<div class="section-title">
+      <h2>${code} — ${resource}</h2>
+      <p>Select an assignment by year</p>
+      <div class="actions" id="assignments"></div>
+    </div>`;
+    const container=document.getElementById("assignments");
+    testYears.forEach(year=>{
+      const btn=document.createElement("button");
+      btn.className="btn year-btn";
+      btn.innerText=`${year} Assignment`;
+      btn.onclick=()=>openViewer(`${code}-assignment-${year}.html`);
+      container.appendChild(btn);
+    });
+  } else if(resource==="Notes"){
+    main.innerHTML=`<div class="section-title">
+      <h2>${code} — ${resource}</h2>
+      <p>Structured topic notes for ${code}</p>
+      <div class="actions" id="notes"></div>
+    </div>`;
+    const container=document.getElementById("notes");
+    for(let t=1;t<=15;t++){
+      const btn=document.createElement("button");
+      btn.className="btn year-btn";
+      btn.innerText=`Topic ${t}`;
+      btn.onclick=()=>openViewer(`${code}-topic${t}.html`);
+      container.appendChild(btn);
+    }
+  }
+}
+
+// Open viewer
+function openViewer(file){
+  const viewer=document.getElementById("viewerSection");
+  const frame=document.getElementById("viewerFrame");
+  viewer.style.display="block";
+  frame.src=BASE+file;
+  viewer.scrollIntoView({behavior:"smooth"});
 }
 </script>
 
 </body>
-     </html>
+   </html>
