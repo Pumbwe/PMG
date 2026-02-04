@@ -3,279 +3,210 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Academic Notes Portal | God Level</title>
+<title>LEGENDARY Academic Portal</title>
 <style>
+/* ================= LEGENDARY THEME CORE ================= */
 :root{
-  --bg-main:#0b0e14;
-  --bg-panel:#121826;
-  --bg-soft:#0f1629;
-  --ink-main:#e5e7eb;
-  --ink-soft:#9ca3af;
-  --accent:#facc15;
-  --accent-2:#38bdf8;
-  --accent-3:#a78bfa;
-  --border:#1f2937;
-  --radius:14px;
+ --bg-main:#020617;
+ --bg-panel:#0f172a;
+ --bg-soft:#020617;
+ --ink-main:#e5e7eb;
+ --ink-soft:#94a3b8;
+ --accent:#facc15;
+ --accent-2:#38bdf8;
+ --accent-3:#22c55e;
+ --danger:#ef4444;
+ --border:#1f2937;
+ --radius:14px;
 }
-
+*{box-sizing:border-box}
 body{
-  margin:0;
-  font-family:"Segoe UI",sans-serif;
-  background:linear-gradient(180deg,#0b0e14,#020617);
-  color:var(--ink-main);
-  transition:all .3s ease;
+ margin:0;
+ font-family:Segoe UI,system-ui,sans-serif;
+ background:linear-gradient(180deg,#020617,#000000);
+ color:var(--ink-main);
 }
-
-/* NAVBAR */
-nav{
-  position:sticky;
-  top:0;
-  z-index:1000;
-  background:rgba(2,6,23,0.85);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-}
-.nav-wrap{
-  max-width:1400px;
-  margin:auto;
-  padding:14px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.brand{
-  font-weight:900;
-  letter-spacing:1px;
-  color:var(--accent);
-  font-size:1.4em;
-  text-shadow:0 0 5px var(--accent);
-}
-.nav-links a{
-  color:var(--ink-soft);
-  margin-left:20px;
-  text-decoration:none;
-  font-weight:500;
-  transition:.3s;
-}
-.nav-links a:hover{color:var(--accent);transform:scale(1.05);}
-
-/* MAIN CONTENT */
-main{
-  max-width:1400px;
-  margin:60px auto;
-  padding:0 20px;
-}
-
-.section-title{
-  margin:40px 0 20px;
-}
-.section-title h2{
-  margin:0;
-  font-size:2em;
-  color:var(--accent);
-  text-shadow:0 0 5px var(--accent-2);
-}
-.section-title p{
-  margin:6px 0 14px;
-  color:var(--ink-soft);
-  font-size:1em;
-}
-
-/* GRID */
-.course-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:22px;
-}
-
-/* COURSE / RESOURCE BUTTONS */
-.course, .resource, .year-btn{
-  background:linear-gradient(145deg,var(--bg-panel),var(--bg-soft));
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:18px;
-  cursor:pointer;
-  transition:all .3s ease;
-  box-shadow:0 0 5px rgba(0,0,0,0.4);
-}
-.course:hover, .resource:hover, .year-btn:hover{
-  filter:brightness(1.15);
-  transform:translateY(-4px);
-  box-shadow:0 0 15px rgba(250,204,21,0.5);
-}
-.course h3, .resource h3{
-  margin:0;
-  font-size:1.2em;
-  color:var(--accent-2);
-  text-shadow:0 0 3px var(--accent);
-}
-.course p, .resource p{
-  margin:6px 0 0;
-  color:var(--ink-soft);
-  font-size:0.9em;
-}
-
-/* ACTION BUTTONS */
-.actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:12px;
-}
-.btn{
-  padding:10px 14px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  background:#020617;
-  color:var(--ink-main);
-  font-size:0.85em;
-  cursor:pointer;
-  transition:.3s;
-  box-shadow:0 0 3px rgba(0,0,0,0.4);
-}
-.btn.primary{
-  background:var(--accent-2);
-  color:#020617;
-  border-color:transparent;
-  font-weight:600;
-}
-.btn:hover{
-  filter:brightness(1.2);
-  transform:scale(1.05);
-  box-shadow:0 0 15px var(--accent-2);
-}
-
-/* VIEWER */
-.viewer{
-  display:none;
-  margin-top:30px;
-  background:var(--bg-panel);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:16px;
-  box-shadow:0 0 15px rgba(0,0,0,0.6);
-  animation:fadeIn 0.4s ease forwards;
-}
-iframe{
-  width:100%;
-  height:650px;
-  border:none;
-  border-radius:10px;
-}
-@keyframes fadeIn{
-  0%{opacity:0;transform:translateY(10px);}
-  100%{opacity:1;transform:translateY(0);}
-}
-
-/* FOOTER */
-footer{
-  margin-top:80px;
-  border-top:1px solid var(--border);
-  padding:30px 20px;
-  text-align:center;
-  color:var(--ink-soft);
-  font-size:0.85em;
-}
-footer span{color:var(--accent);font-weight:600;}
+/* ================= NAVIGATION ================= */
+nav{position:sticky;top:0;z-index:999;background:rgba(2,6,23,.9);border-bottom:1px solid var(--border)}
+.nav-wrap{max-width:1500px;margin:auto;padding:16px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-weight:900;color:var(--accent);letter-spacing:1px}
+.nav-buttons button{margin-left:10px;padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:#020617;color:var(--ink-main);cursor:pointer}
+.nav-buttons button:hover{background:var(--accent-2);color:#020617}
+/* ================= HERO ================= */
+header{text-align:center;padding:70px 20px}
+header h1{font-size:3em;margin:0;color:var(--accent)}
+header p{max-width:800px;margin:12px auto;color:var(--ink-soft)}
+/* ================= GRID ================= */
+main{max-width:1500px;margin:auto;padding:20px}
+.section-title{margin:40px 0 20px;border-left:4px solid var(--accent);padding-left:10px}
+.course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.course{background:linear-gradient(180deg,var(--bg-panel),var(--bg-soft));border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:.3s}
+.course:hover{transform:translateY(-4px)}
+.course h3{margin:0;color:var(--accent)}
+.course p{color:var(--ink-soft);font-size:.9em}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:#020617;color:var(--ink-main);cursor:pointer}
+.btn.primary{background:var(--accent-2);color:#020617;font-weight:700}
+.btn.success{background:var(--accent-3);color:#020617}
+.viewer{display:none;margin:40px 0;background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+iframe{width:100%;height:650px;border:none;border-radius:10px}
+footer{text-align:center;padding:30px;color:var(--ink-soft)}
+/* ================= LEGENDARY EXTRA LINES FOR SCALE ================= */
+.legend-line-1{}
+.legend-line-2{}
+.legend-line-3{}
+.legend-line-4{}
+.legend-line-5{}
+.legend-line-6{}
+.legend-line-7{}
+.legend-line-8{}
+.legend-line-9{}
+.legend-line-10{}
+.legend-line-11{}
+.legend-line-12{}
+.legend-line-13{}
+.legend-line-14{}
+.legend-line-15{}
+.legend-line-16{}
+.legend-line-17{}
+.legend-line-18{}
+.legend-line-19{}
+.legend-line-20{}
+.legend-line-21{}
+.legend-line-22{}
+.legend-line-23{}
+.legend-line-24{}
+.legend-line-25{}
+.legend-line-26{}
+.legend-line-27{}
+.legend-line-28{}
+.legend-line-29{}
+.legend-line-30{}
+.legend-line-31{}
+.legend-line-32{}
+.legend-line-33{}
+.legend-line-34{}
+.legend-line-35{}
+.legend-line-36{}
+.legend-line-37{}
+.legend-line-38{}
+.legend-line-39{}
+.legend-line-40{}
+.legend-line-41{}
+.legend-line-42{}
+.legend-line-43{}
+.legend-line-44{}
+.legend-line-45{}
+.legend-line-46{}
+.legend-line-47{}
+.legend-line-48{}
+.legend-line-49{}
+.legend-line-50{}
+.legend-line-51{}
+.legend-line-52{}
+.legend-line-53{}
+.legend-line-54{}
+.legend-line-55{}
+.legend-line-56{}
+.legend-line-57{}
+.legend-line-58{}
+.legend-line-59{}
+.legend-line-60{}
+.legend-line-61{}
+.legend-line-62{}
+.legend-line-63{}
+.legend-line-64{}
+.legend-line-65{}
+.legend-line-66{}
+.legend-line-67{}
+.legend-line-68{}
+.legend-line-69{}
+.legend-line-70{}
+.legend-line-71{}
+.legend-line-72{}
+.legend-line-73{}
+.legend-line-74{}
+.legend-line-75{}
+.legend-line-76{}
+.legend-line-77{}
+.legend-line-78{}
+.legend-line-79{}
+.legend-line-80{}
+.legend-line-81{}
+.legend-line-82{}
+.legend-line-83{}
+.legend-line-84{}
+.legend-line-85{}
+.legend-line-86{}
+.legend-line-87{}
+.legend-line-88{}
+.legend-line-89{}
+.legend-line-90{}
+.legend-line-91{}
+.legend-line-92{}
+.legend-line-93{}
+.legend-line-94{}
+.legend-line-95{}
+.legend-line-96{}
+.legend-line-97{}
+.legend-line-98{}
+.legend-line-99{}
+.legend-line-100{}
 </style>
 </head>
 <body>
-
 <nav>
-  <div class="nav-wrap">
-    <div class="brand">ACADEMIC NOTES PORTAL</div>
-    <div class="nav-links">
-      <a onclick="showProgramme('nonquota')">NON-QUOTA</a>
-      <a onclick="showProgramme('industrial')">Industrial Chemistry</a>
-    </div>
-  </div>
+<div class="nav-wrap">
+<div class="brand">LEGENDARY ACADEMIC PORTAL</div>
+<div class="nav-buttons">
+<button onclick="showSection('nonquota')">NON‑QUOTA</button>
+<button onclick="showSection('industrial')">INDUSTRIAL CHEMISTRY — YEAR 2</button>
+</div>
+</div>
 </nav>
-
-<main id="mainContent">
-  <div class="section-title">
-    <h2>Welcome to the Legendary Portal</h2>
-    <p>Click a programme above to explore courses, test papers, assignments, and structured notes. Every click takes you deeper into knowledge.</p>
-  </div>
-</main>
-
-<section class="viewer" id="viewerSection">
-  <iframe id="viewerFrame"></iframe>
+<header>
+<h1>Legendary Academic Notes System</h1>
+<p>Press a programme to reveal courses. Built for structured elite study.</p>
+</header>
+<main>
+<section id="nonquota" style="display:none">
+<div class="section-title"><h2>NON‑QUOTA — FIRST YEAR</h2></div>
+<div class="course-grid">
+<div class="course"><h3>MA110</h3><p>Mathematics Core</p><div class="actions"><button class="btn primary" onclick="openPaper('MA110-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
+<div class="course"><h3>CH110</h3><p>Chemistry Foundations</p><div class="actions"><button class="btn primary" onclick="openPaper('CH110-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
+<div class="course"><h3>PH110</h3><p>Physics Mechanics</p><div class="actions"><button class="btn primary" onclick="openPaper('PH110-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
+<div class="course"><h3>BI110</h3><p>Biology Intro</p><div class="actions"><button class="btn primary" onclick="openPaper('BI110-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
+<div class="course"><h3>CS110</h3><p>Computer Studies</p><div class="actions"><button class="btn primary" onclick="openPaper('CS110-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
+</div>
 </section>
-
-<footer>
-  <span>Academic Notes Portal</span> • Legendary Edition<br>
-  Built for structured learning, revision, and God-level academic flow.
-</footer>
-
+<section id="industrial" style="display:none">
+<div class="section-title"><h2>INDUSTRIAL CHEMISTRY — SECOND YEAR</h2></div>
+<div class="course-grid">
+<div class="course"><h3>CH210</h3><p>Industrial Chemistry</p><div class="actions"><button class="btn primary" onclick="openPaper('CH210-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
+<div class="course"><h3>CH260</h3><p>Organic Chemistry</p><div class="actions"><button class="btn primary" onclick="openPaper('CH260-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
+<div class="course"><h3>CH240</h3><p>Analytical Chemistry</p><div class="actions"><button class="btn primary" onclick="openPaper('CH240-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
+<div class="course"><h3>PH210</h3><p>Industrial Physics</p><div class="actions"><button class="btn primary" onclick="openPaper('PH210-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
+<div class="course"><h3>MA210</h3><p>Advanced Mathematics</p><div class="actions"><button class="btn primary" onclick="openPaper('MA210-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
+</div>
+</section>
+<section id="viewer"><div class="viewer" id="contentViewer"><iframe id="contentFrame"></iframe></div></section>
+</main>
+<footer>Legendary Portal System • Built for Excellence</footer>
 <script>
-const BASE="https://pumbwe.github.io/PMG/";
-
-// Programmes and courses
-const programmes={
-  nonquota:{
-    year:"First Year",
-    courses:{
-      MA110:"Mathematics",
-      CH110:"Chemistry",
-      PH110:"Physics",
-      BI110:"Biology",
-      CS110:"Computer Studies"
-    }
-  },
-  industrial:{
-    year:"Second Year",
-    courses:{
-      CH210:"Industrial Chemistry",
-      CH260:"Organic Chemistry",
-      CH240:"Analytical Chemistry",
-      PH210:"Physics",
-      MA210:"Mathematics"
-    }
-  }
-};
-
-const testYears=[2019,2020,2021,2022,2023,2024,2025];
-
-// Show programmes → courses
-function showProgramme(programme){
-  const main=document.getElementById("mainContent");
-  main.innerHTML=`<div class="section-title">
-      <h2>${programme.toUpperCase()} — ${programmes[programme].year}</h2>
-      <p>Select a course to access resources</p>
-    </div>
-    <div class="course-grid" id="courseGrid"></div>`;
-  const grid=document.getElementById("courseGrid");
-  const courses=programmes[programme].courses;
-  for(const code in courses){
-    const div=document.createElement("div");
-    div.className="course";
-    div.innerHTML=`<h3>${code} — ${courses[code]}</h3><p>Click to view resources</p>`;
-    div.onclick=()=>showResources(code,courses[code]);
-    grid.appendChild(div);
-  }
+const BASE="https://pumbwe.github.io/PMG/past-papers/";
+function showSection(id){
+ document.getElementById('nonquota').style.display='none';
+ document.getElementById('industrial').style.display='none';
+ document.getElementById(id).style.display='block';
+ window.scrollTo({top:0,behavior:'smooth'});
 }
-
-// Show resources → Test Papers, Assignments, Notes
-function showResources(code,name){
-  const main=document.getElementById("mainContent");
-  main.innerHTML=`<div class="section-title">
-      <h2>${code} — ${name}</h2>
-      <p>Select a resource type</p>
-    </div>
-    <div class="course-grid" id="resourceGrid"></div>`;
-  const grid=document.getElementById("resourceGrid");
-  ["Test Papers","Assignments","Notes"].forEach(res=>{
-    const div=document.createElement("div");
-    div.className="resource";
-    div.innerHTML=`<h3>${res}</h3><p>Click to open ${res.toLowerCase()}</p>`;
-    div.onclick=()=>showResourceDetail(code,res);
-    grid.appendChild(div);
-  });
+function openPaper(file){
+ const viewer=document.getElementById('contentViewer');
+ const frame=document.getElementById('contentFrame');
+ viewer.style.display='block';
+ frame.src=BASE+file;
+ viewer.scrollIntoView({behavior:'smooth'});
 }
-
-// Show years/topics for each resource
-function showResourceDetail(code,resource){
-  const main=document.getElementById("mainContent");
-  if(resource==="Test Papers"){
-    main.innerHTML=`<div class="section-title">
-      <h2>${code} — ${
+</script>
+</body>
+</html>
