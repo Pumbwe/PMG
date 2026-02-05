@@ -3,211 +3,203 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LEGENDARY Academic Portal</title>
+<title>PMG MAX CBU PORTAL</title>
+
 <style>
-/* ================= LEGENDARY THEME CORE ================= */
 :root{
- --bg-main:#020617;
- --bg-panel:#0f172a;
- --bg-soft:#020617;
- --ink-main:#e5e7eb;
- --ink-soft:#94a3b8;
- --accent:#facc15;
- --accent-2:#38bdf8;
- --accent-3:#22c55e;
- --danger:#ef4444;
- --border:#1f2937;
- --radius:14px;
+--bg:#020617;
+--panel:#0f172a;
+--accent:#2563eb;
+--gold:#facc15;
+--text:#e5e7eb;
 }
-*{box-sizing:border-box}
 body{
- margin:0;
- font-family:Segoe UI,system-ui,sans-serif;
- background:linear-gradient(180deg,#020617,#000000);
- color:var(--ink-main);
+margin:0;
+font-family:Segoe UI;
+background:var(--bg);
+color:var(--text);
 }
-/* ================= NAVIGATION ================= */
-nav{position:sticky;top:0;z-index:999;background:rgba(2,6,23,.9);border-bottom:1px solid var(--border)}
-.nav-wrap{max-width:1500px;margin:auto;padding:16px;display:flex;justify-content:space-between;align-items:center}
-.brand{font-weight:900;color:var(--accent);letter-spacing:1px}
-.nav-buttons button{margin-left:10px;padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:#020617;color:var(--ink-main);cursor:pointer}
-.nav-buttons button:hover{background:var(--accent-2);color:#020617}
-/* ================= HERO ================= */
-header{text-align:center;padding:70px 20px}
-header h1{font-size:3em;margin:0;color:var(--accent)}
-header p{max-width:800px;margin:12px auto;color:var(--ink-soft)}
-/* ================= GRID ================= */
-main{max-width:1500px;margin:auto;padding:20px}
-.section-title{margin:40px 0 20px;border-left:4px solid var(--accent);padding-left:10px}
-.course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
-.course{background:linear-gradient(180deg,var(--bg-panel),var(--bg-soft));border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:.3s}
-.course:hover{transform:translateY(-4px)}
-.course h3{margin:0;color:var(--accent)}
-.course p{color:var(--ink-soft);font-size:.9em}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-.btn{padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:#020617;color:var(--ink-main);cursor:pointer}
-.btn.primary{background:var(--accent-2);color:#020617;font-weight:700}
-.btn.success{background:var(--accent-3);color:#020617}
-.viewer{display:none;margin:40px 0;background:var(--bg-panel);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
-iframe{width:100%;height:650px;border:none;border-radius:10px}
-footer{text-align:center;padding:30px;color:var(--ink-soft)}
-/* ================= LEGENDARY EXTRA LINES FOR SCALE ================= */
-.legend-line-1{}
-.legend-line-2{}
-.legend-line-3{}
-.legend-line-4{}
-.legend-line-5{}
-.legend-line-6{}
-.legend-line-7{}
-.legend-line-8{}
-.legend-line-9{}
-.legend-line-10{}
-.legend-line-11{}
-.legend-line-12{}
-.legend-line-13{}
-.legend-line-14{}
-.legend-line-15{}
-.legend-line-16{}
-.legend-line-17{}
-.legend-line-18{}
-.legend-line-19{}
-.legend-line-20{}
-.legend-line-21{}
-.legend-line-22{}
-.legend-line-23{}
-.legend-line-24{}
-.legend-line-25{}
-.legend-line-26{}
-.legend-line-27{}
-.legend-line-28{}
-.legend-line-29{}
-.legend-line-30{}
-.legend-line-31{}
-.legend-line-32{}
-.legend-line-33{}
-.legend-line-34{}
-.legend-line-35{}
-.legend-line-36{}
-.legend-line-37{}
-.legend-line-38{}
-.legend-line-39{}
-.legend-line-40{}
-.legend-line-41{}
-.legend-line-42{}
-.legend-line-43{}
-.legend-line-44{}
-.legend-line-45{}
-.legend-line-46{}
-.legend-line-47{}
-.legend-line-48{}
-.legend-line-49{}
-.legend-line-50{}
-.legend-line-51{}
-.legend-line-52{}
-.legend-line-53{}
-.legend-line-54{}
-.legend-line-55{}
-.legend-line-56{}
-.legend-line-57{}
-.legend-line-58{}
-.legend-line-59{}
-.legend-line-60{}
-.legend-line-61{}
-.legend-line-62{}
-.legend-line-63{}
-.legend-line-64{}
-.legend-line-65{}
-.legend-line-66{}
-.legend-line-67{}
-.legend-line-68{}
-.legend-line-69{}
-.legend-line-70{}
-.legend-line-71{}
-.legend-line-72{}
-.legend-line-73{}
-.legend-line-74{}
-.legend-line-75{}
-.legend-line-76{}
-.legend-line-77{}
-.legend-line-78{}
-.legend-line-79{}
-.legend-line-80{}
-.legend-line-81{}
-.legend-line-82{}
-.legend-line-83{}
-.legend-line-84{}
-.legend-line-85{}
-.legend-line-86{}
-.legend-line-87{}
-.legend-line-88{}
-.legend-line-89{}
-.legend-line-90{}
-.legend-line-91{}
-.legend-line-92{}
-.legend-line-93{}
-.legend-line-94{}
-.legend-line-95{}
-.legend-line-96{}
-.legend-line-97{}
-.legend-line-98{}
-.legend-line-99{}
-.legend-line-100{}
+header{
+background:black;
+padding:25px;
+text-align:center;
+border-bottom:2px solid var(--gold);
+}
+nav{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+justify-content:center;
+padding:15px;
+background:#000814;
+}
+nav button{
+background:var(--panel);
+border:none;
+padding:10px 16px;
+color:white;
+cursor:pointer;
+border-radius:8px;
+font-weight:bold;
+}
+nav button:hover{
+background:var(--accent);
+transform:scale(1.05);
+}
+.section{
+display:none;
+padding:20px;
+max-width:1200px;
+margin:auto;
+}
+.section.active{display:block}
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:15px;
+}
+.card{
+background:var(--panel);
+padding:16px;
+border-radius:12px;
+}
+.card button{
+width:100%;
+padding:10px;
+background:var(--accent);
+border:none;
+border-radius:6px;
+color:white;
+cursor:pointer;
+}
+.viewer{
+width:100%;
+height:550px;
+border:none;
+margin-top:20px;
+background:white;
+}
 </style>
-</head>
-<body>
-<nav>
-<div class="nav-wrap">
-<div class="brand">LEGENDARY ACADEMIC PORTAL</div>
-<div class="nav-buttons">
-<button onclick="showSection('nonquota')">NON‑QUOTA</button>
-<button onclick="showSection('industrial')">INDUSTRIAL CHEMISTRY — YEAR 2</button>
-</div>
-</div>
-</nav>
-<header>
-<h1>Legendary Academic Notes System</h1>
-<p>Press a programme to reveal courses. Built for structured elite study.</p>
-</header>
-<main>
-<section id="nonquota" style="display:none">
-<div class="section-title"><h2>NON‑QUOTA — FIRST YEAR</h2></div>
-<div class="course-grid">
-<div class="course"><h3>MA110</h3><p>Mathematics Core</p><div class="actions"><button class="btn primary" onclick="openPaper('MA110-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
-<div class="course"><h3>CH110</h3><p>Chemistry Foundations</p><div class="actions"><button class="btn primary" onclick="openPaper('CH110-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
-<div class="course"><h3>PH110</h3><p>Physics Mechanics</p><div class="actions"><button class="btn primary" onclick="openPaper('PH110-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
-<div class="course"><h3>BI110</h3><p>Biology Intro</p><div class="actions"><button class="btn primary" onclick="openPaper('BI110-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
-<div class="course"><h3>CS110</h3><p>Computer Studies</p><div class="actions"><button class="btn primary" onclick="openPaper('CS110-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
-</div>
-</section>
-<section id="industrial" style="display:none">
-<div class="section-title"><h2>INDUSTRIAL CHEMISTRY — SECOND YEAR</h2></div>
-<div class="course-grid">
-<div class="course"><h3>CH210</h3><p>Industrial Chemistry</p><div class="actions"><button class="btn primary" onclick="openPaper('CH210-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
-<div class="course"><h3>CH260</h3><p>Organic Chemistry</p><div class="actions"><button class="btn primary" onclick="openPaper('CH260-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
-<div class="course"><h3>CH240</h3><p>Analytical Chemistry</p><div class="actions"><button class="btn primary" onclick="openPaper('CH240-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
-<div class="course"><h3>PH210</h3><p>Industrial Physics</p><div class="actions"><button class="btn primary" onclick="openPaper('PH210-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
-<div class="course"><h3>MA210</h3><p>Advanced Mathematics</p><div class="actions"><button class="btn primary" onclick="openPaper('MA210-2024.html')">Past Tests</button><button class="btn">Assignments</button><button class="btn success">Topics</button></div></div>
-</div>
-</section>
-<section id="viewer"><div class="viewer" id="contentViewer"><iframe id="contentFrame"></iframe></div></section>
-</main>
-<footer>Legendary Portal System • Built for Excellence</footer>
+
 <script>
-const BASE="https://pumbwe.github.io/PMG/past-papers/";
 function showSection(id){
- document.getElementById('nonquota').style.display='none';
- document.getElementById('industrial').style.display='none';
- document.getElementById(id).style.display='block';
- window.scrollTo({top:0,behavior:'smooth'});
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
 }
-function openPaper(file){
- const viewer=document.getElementById('contentViewer');
- const frame=document.getElementById('contentFrame');
- viewer.style.display='block';
- frame.src=BASE+file;
- viewer.scrollIntoView({behavior:'smooth'});
+function openPage(path){
+document.getElementById('viewer').src=path;
 }
 </script>
+</head>
+
+<body>
+
+<header>
+<h1>🔥 PMG MAX LEGENDARY CBU PORTAL 🔥</h1>
+<p>Engineering • Industrial Chemistry • Non-Quota Elite Study System</p>
+</header>
+
+<nav>
+<button onclick="showSection('home')">Home</button>
+<button onclick="showSection('years')">Years</button>
+<button onclick="showSection('courses')">Courses</button>
+<button onclick="showSection('tests')">Tests</button>
+<button onclick="showSection('industrial')">Industrial Chemistry</button>
+</nav>
+
+<section id="home" class="section active">
+<h2>Non Quota System</h2>
+<p>
+Non quota students at Copperbelt University pay full tuition but receive
+the same lectures, labs and degrees. Many engineering and industrial chemistry
+students are under non quota. It allows serious students to enter programs
+without GRZ sponsorship.
+</p>
+</section>
+
+<section id="years" class="section">
+<h2>Past Papers 2019-2025</h2>
+<div class="grid">
+
+<div class="card"><h3>2019 CH110</h3><button onclick="openPage('files/2019_ch110.html')">Open</button></div>
+<div class="card"><h3>2019 PH110</h3><button onclick="openPage('files/2019_ph110.html')">Open</button></div>
+<div class="card"><h3>2019 BI110</h3><button onclick="openPage('files/2019_bi110.html')">Open</button></div>
+
+<div class="card"><h3>2020 CH110</h3><button onclick="openPage('files/2020_ch110.html')">Open</button></div>
+<div class="card"><h3>2020 PH110</h3><button onclick="openPage('files/2020_ph110.html')">Open</button></div>
+<div class="card"><h3>2020 BI110</h3><button onclick="openPage('files/2020_bi110.html')">Open</button></div>
+
+<div class="card"><h3>2021 CH110</h3><button onclick="openPage('files/2021_ch110.html')">Open</button></div>
+<div class="card"><h3>2021 PH110</h3><button onclick="openPage('files/2021_ph110.html')">Open</button></div>
+<div class="card"><h3>2021 BI110</h3><button onclick="openPage('files/2021_bi110.html')">Open</button></div>
+
+<div class="card"><h3>2022 CH110</h3><button onclick="openPage('files/2022_ch110.html')">Open</button></div>
+<div class="card"><h3>2022 PH110</h3><button onclick="openPage('files/2022_ph110.html')">Open</button></div>
+<div class="card"><h3>2022 BI110</h3><button onclick="openPage('files/2022_bi110.html')">Open</button></div>
+
+<div class="card"><h3>2023 CH110</h3><button onclick="openPage('files/2023_ch110.html')">Open</button></div>
+<div class="card"><h3>2023 PH110</h3><button onclick="openPage('files/2023_ph110.html')">Open</button></div>
+<div class="card"><h3>2023 BI110</h3><button onclick="openPage('files/2023_bi110.html')">Open</button></div>
+
+<div class="card"><h3>2024 CH110</h3><button onclick="openPage('files/2024_ch110.html')">Open</button></div>
+<div class="card"><h3>2024 PH110</h3><button onclick="openPage('files/2024_ph110.html')">Open</button></div>
+<div class="card"><h3>2024 BI110</h3><button onclick="openPage('files/2024_bi110.html')">Open</button></div>
+
+<div class="card"><h3>2025 CH110</h3><button onclick="openPage('files/2025_ch110.html')">Open</button></div>
+<div class="card"><h3>2025 PH110</h3><button onclick="openPage('files/2025_ph110.html')">Open</button></div>
+<div class="card"><h3>2025 BI110</h3><button onclick="openPage('files/2025_bi110.html')">Open</button></div>
+
+</div>
+</section>
+
+<section id="courses" class="section">
+<h2>Courses</h2>
+<div class="grid">
+
+<div class="card"><h3>Mathematics</h3><button onclick="openPage('courses/math.html')">Open</button></div>
+<div class="card"><h3>Physics</h3><button onclick="openPage('courses/physics.html')">Open</button></div>
+<div class="card"><h3>Chemistry</h3><button onclick="openPage('courses/chemistry.html')">Open</button></div>
+<div class="card"><h3>Biology</h3><button onclick="openPage('courses/biology.html')">Open</button></div>
+<div class="card"><h3>Electrical Engineering</h3><button onclick="openPage('courses/ee.html')">Open</button></div>
+<div class="card"><h3>Industrial Chemistry</h3><button onclick="openPage('courses/industrial.html')">Open</button></div>
+
+</div>
+</section>
+
+<section id="tests" class="section">
+<h2>Test Center</h2>
+<div class="grid">
+
+<div class="card"><h3>CH110 Test</h3><button onclick="openPage('tests/ch110.html')">Open</button></div>
+<div class="card"><h3>PH110 Test</h3><button onclick="openPage('tests/ph110.html')">Open</button></div>
+<div class="card"><h3>BI110 Test</h3><button onclick="openPage('tests/bi110.html')">Open</button></div>
+<div class="card"><h3>CS110 Test</h3><button onclick="openPage('tests/cs110.html')">Open</button></div>
+<div class="card"><h3>EE110 Test</h3><button onclick="openPage('tests/ee110.html')">Open</button></div>
+
+</div>
+</section>
+
+<section id="industrial" class="section">
+<h2>Industrial Chemistry</h2>
+
+<p>
+Industrial chemistry at CBU trains students for large scale chemical production,
+mining chemistry, cement manufacturing, environmental monitoring and
+industrial process control.
+</p>
+
+<ul>
+<li>Mopani Copper Mines – Process Chemist</li>
+<li>KCM – Metallurgical Chemist</li>
+<li>Zambian Breweries – Quality Control</li>
+<li>Trade Kings – Production Chemist</li>
+<li>Lafarge Cement – Process Analyst</li>
+<li>Environmental Council – Environmental Chemist</li>
+</ul>
+
+</section>
+
+<iframe id="viewer" class="viewer"></iframe>
+
 </body>
  </html>
- 
