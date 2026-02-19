@@ -1,1122 +1,673 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PMG MAX CBU PORTAL — Ultra Legendary 1000+ Lines</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>PMG MAX CBU PORTAL — Super Legendary</title>
 
-  <!--
-    ULTRA LEGENDARY PORTAL
-    - This file is intentionally long (1000+ lines) to meet the user's request.
-    - It contains a fully functional single-page portal layout:
-      * Header and navigation
-      * Home, Years, Courses, Tests, Industrial sections
-      * Two special quick buttons: Non Quota and Industrial Chemistry 2nd Year
-      * Courses show Past Papers, Notes, Assignments tabs
-      * Viewer iframe to preview HTML files
-    - Replace placeholder file paths with your real HTML files in /files/, /courses/, /tests/
-    - Accessibility, keyboard shortcuts, animations, and many comments included
-    - The file is verbose by design: extra comments, repeated sample entries, and extended CSS/JS
-  -->
+<style>
+:root{
+  --bg: #020617;
+  --panel: #0f172a;
+  --accent: #2563eb;        /* blue accent */
+  --gold: #facc15;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --glass: rgba(255,255,255,0.03);
+  --card-glow: 0 6px 24px rgba(37,99,235,0.12);
+  --radius: 12px;
+}
 
-  <style>
-    /* =========================================================================
-       LEGENDARY THEME — Extended tokens and variables
-       ========================================================================= */
-    :root{
-      /* Core background and surfaces */
-      --bg-ink: #020317;
-      --bg-deep: linear-gradient(180deg,#020317 0%, #07102a 60%);
-      --panel: #07122b;
-      --panel-2: #0b1b33;
-      --glass: rgba(255,255,255,0.03);
-      --glass-2: rgba(255,255,255,0.02);
+/* Reset & base */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,#020617 0%, #07102a 100%);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+}
 
-      /* Text and muted */
-      --text: #eaf6ff;
-      --muted: #9fb4d9;
+/* Header */
+header{
+  padding:28px 18px;
+  text-align:center;
+  border-bottom:2px solid var(--gold);
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  backdrop-filter: blur(6px);
+}
+header h1{
+  margin:0;
+  font-size:1.6rem;
+  letter-spacing:0.6px;
+}
+header p{margin:6px 0 0;color:var(--muted)}
 
-      /* Accents */
-      --accent-cyan: #00e0ff;
-      --accent-blue: #3b82f6;
-      --accent-gold: #ffd24d;
-      --accent-hot: #ff6b6b;
+/* Navigation */
+.nav-wrap{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  padding:14px;
+  background:linear-gradient(180deg,#000814 0%, rgba(0,8,20,0.6) 100%);
+  flex-wrap:wrap;
+}
+.nav-btn{
+  background:var(--panel);
+  border:1px solid rgba(255,255,255,0.03);
+  color:var(--text);
+  padding:10px 16px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+  transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+  box-shadow:none;
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+}
+.nav-btn:hover{ transform:translateY(-3px); box-shadow:var(--card-glow) }
+.nav-btn:active{ transform:translateY(0) scale(.995) }
 
-      /* UI tokens */
-      --radius-xl: 20px;
-      --radius-lg: 16px;
-      --radius-md: 12px;
-      --radius-sm: 8px;
-      --glass-border: rgba(255,255,255,0.04);
-      --shadow-1: 0 10px 40px rgba(2,6,23,0.7);
-      --glow-cyan: 0 12px 40px rgba(0,224,255,0.12);
-      --focus: 0 0 0 4px rgba(59,130,246,0.12);
-      --max-width: 1200px;
+/* ACTIVE state behavior: when a button is "selected" it should be blue (not black).
+   We'll manage .selected class via JS so the color persists after click. */
+.nav-btn.selected{
+  background: linear-gradient(180deg, rgba(37,99,235,0.95), rgba(37,99,235,0.85));
+  color:white;
+  box-shadow: 0 8px 30px rgba(37,99,235,0.22);
+  transform:translateY(-2px);
+  border: 1px solid rgba(255,255,255,0.06);
+}
 
-      /* Animation durations */
-      --fast: 120ms;
-      --med: 220ms;
-      --slow: 420ms;
-    }
+/* Secondary small action (yellow -> blue on press) */
+.kv{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:8px;
+  background:linear-gradient(180deg,#facc15,#eab308);
+  color:#0b1220;
+  font-weight:800;
+  letter-spacing:0.6px;
+  box-shadow: 0 6px 18px rgba(250,204,21,0.12);
+  transition: background .12s ease, color .12s ease, box-shadow .12s ease;
+}
+.kv.pressed{
+  background: linear-gradient(180deg,#2563eb,#1e40af);
+  color:#fff;
+  box-shadow: 0 10px 30px rgba(37,99,235,0.18);
+}
 
-    /* =========================================================================
-       Base styles
-       ========================================================================= */
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
-      background: var(--bg-deep);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
-      padding-bottom:48px;
-    }
+/* Layout sections */
+.container{
+  max-width:1200px;
+  margin:22px auto;
+  padding:0 18px 80px;
+}
+.section{
+  display:none;
+  margin-top:18px;
+}
+.section.active{ display:block }
 
-    /* =========================================================================
-       Header
-       ========================================================================= */
-    header{
-      position:sticky;
-      top:0;
-      z-index:80;
-      padding:28px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:18px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-      border-bottom: 2px solid rgba(255,210,77,0.08);
-      backdrop-filter: blur(6px);
-    }
-    header .brand{
-      display:flex;
-      gap:14px;
-      align-items:center;
-    }
-    .logo{
-      width:72px;
-      height:72px;
-      border-radius:18px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:900;
-      font-size:22px;
-      color:#07122b;
-      background: radial-gradient(circle at 30% 20%, rgba(255,210,77,0.95), rgba(255,210,77,0.6) 30%, rgba(59,130,246,0.06) 60%);
-      box-shadow: 0 10px 40px rgba(255,210,77,0.12), inset 0 -6px 18px rgba(0,0,0,0.25);
-    }
-    header h1{
-      margin:0;
-      font-size:20px;
-      letter-spacing:0.6px;
-    }
-    header p{ margin:4px 0 0; color:var(--muted); font-size:13px; text-align:center; }
+/* Grid & cards */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+}
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:var(--radius);
+  padding:14px;
+  box-shadow:var(--card-glow);
+  border:1px solid rgba(255,255,255,0.02);
+}
+.card h3{ margin:0 0 8px; font-size:1.05rem }
+.card p{ margin:0 0 12px; color:var(--muted); font-size:0.92rem }
 
-    /* =========================================================================
-       Navigation
-       ========================================================================= */
-    nav{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:center;
-      padding:14px;
-      margin:18px auto;
-      max-width:var(--max-width);
-    }
-    .btn{
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      color:var(--text);
-      border:1px solid var(--glass-border);
-      padding:10px 14px;
-      border-radius:12px;
-      cursor:pointer;
-      font-weight:800;
-      letter-spacing:0.3px;
-      transition: transform var(--fast) ease, box-shadow var(--fast) ease, background var(--fast) ease;
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-    }
-    .btn:hover{ transform:translateY(-4px); box-shadow: var(--glow-cyan); }
-    .btn.gold{
-      background: linear-gradient(90deg, rgba(255,210,77,0.12), rgba(255,210,77,0.06));
-      color:#07122b;
-      border:1px solid rgba(255,210,77,0.18);
-      font-weight:900;
-      animation: goldPulse 4.5s ease-in-out infinite;
-    }
-    .btn.ghost{
-      background:transparent;
-      border:1px dashed rgba(255,255,255,0.03);
-      color:var(--muted);
-      font-weight:700;
-    }
+/* Course action buttons */
+.course-actions{
+  display:flex;
+  gap:8px;
+  margin-top:8px;
+}
+.course-actions button{
+  padding:8px 10px;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+  background:linear-gradient(180deg,#0ea5e9,#0369a1);
+  color:white;
+  transition:transform .08s ease;
+}
+.course-actions button.secondary{
+  background:linear-gradient(180deg,#10b981,#047857);
+}
 
-    @keyframes goldPulse {
-      0% { box-shadow: 0 6px 18px rgba(255,210,77,0.06); transform:translateY(0); }
-      50% { box-shadow: 0 18px 60px rgba(255,210,77,0.12); transform:translateY(-3px); }
-      100% { box-shadow: 0 6px 18px rgba(255,210,77,0.06); transform:translateY(0); }
-    }
+/* Viewer iframe */
+.viewer{
+  width:100%;
+  height:560px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.04);
+  margin-top:20px;
+  background:white;
+  display:block;
+}
 
-    /* =========================================================================
-       Layout
-       ========================================================================= */
-    .container{
-      max-width:var(--max-width);
-      margin:18px auto;
-      padding:0 18px;
-      display:grid;
-      grid-template-columns: 1fr 420px;
-      gap:18px;
-      align-items:start;
-    }
+/* Courses area with tabs (Past Papers / Notes / Assignments) */
+.course-detail{
+  margin-top:12px;
+  background:var(--glass);
+  padding:12px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.02);
+}
+.tabs{
+  display:flex;
+  gap:8px;
+  margin-bottom:12px;
+  flex-wrap:wrap;
+}
+.tab{
+  padding:8px 12px;
+  border-radius:8px;
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.03);
+  color:var(--muted);
+  cursor:pointer;
+  font-weight:700;
+}
+.tab.active{
+  background:linear-gradient(180deg,#1e293b,#0f172a);
+  color:var(--text);
+  border:1px solid rgba(37,99,235,0.12);
+  box-shadow: 0 8px 20px rgba(2,6,23,0.6);
+}
 
-    .panel{
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-      border-radius:var(--radius-lg);
-      padding:18px;
-      border:1px solid var(--glass-border);
-      box-shadow: var(--shadow-1);
-    }
+/* Course list */
+.course-list{ display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)) }
+.course-item{
+  padding:12px;
+  border-radius:10px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  border:1px solid rgba(255,255,255,0.02);
+}
+.course-item h4{ margin:0 0 6px; font-size:1rem }
+.course-item p{ margin:0; color:var(--muted); font-size:0.9rem }
 
-    /* =========================================================================
-       Hero
-       ========================================================================= */
-    .hero{
-      display:flex;
-      gap:18px;
-      align-items:center;
-      margin-bottom:14px;
-    }
-    .hero .badge{
-      width:96px;
-      height:96px;
-      border-radius:18px;
-      background: linear-gradient(135deg, rgba(0,224,255,0.12), rgba(255,210,77,0.08));
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:28px;
-      font-weight:900;
-      color:#07122b;
-      box-shadow: 0 18px 60px rgba(0,224,255,0.06), inset 0 -8px 24px rgba(0,0,0,0.25);
-    }
-    .hero h2{ margin:0; font-size:22px; letter-spacing:0.2px; }
-    .hero p{ margin:6px 0 0; color:var(--muted); font-size:13px }
+/* Footer / contact */
+footer{
+  margin-top:36px;
+  padding:18px;
+  text-align:center;
+  color:var(--muted);
+  border-top:1px solid rgba(255,255,255,0.02);
+}
+.contact{
+  margin-top:8px;
+  font-weight:700;
+  color:var(--text);
+}
 
-    /* =========================================================================
-       Grid & Cards
-       ========================================================================= */
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:12px;
-      margin-top:12px;
-    }
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:12px;
-      padding:14px;
-      border:1px solid rgba(255,255,255,0.02);
-      min-height:96px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      transition: transform var(--fast) ease, box-shadow var(--fast) ease;
-    }
-    .card:hover{ transform:translateY(-6px); box-shadow: 0 20px 60px rgba(3,12,40,0.6); }
-    .card h3{ margin:0; font-size:16px; color:var(--text) }
-    .card p{ margin:6px 0 0; color:var(--muted); font-size:13px }
-    .card .open{
-      margin-top:10px;
-      display:inline-block;
-      padding:10px 12px;
-      border-radius:10px;
-      background: linear-gradient(90deg,var(--accent-cyan), var(--accent-blue));
-      color:#021026;
-      border:none;
-      cursor:pointer;
-      font-weight:900;
-      box-shadow: var(--glow-cyan);
-    }
+/* Responsive tweaks */
+@media (max-width:640px){
+  header h1{ font-size:1.2rem }
+  .viewer{ height:420px }
+}
+</style>
 
-    /* =========================================================================
-       Courses list (dynamic)
-       ========================================================================= */
-    .courses-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      margin-bottom:12px;
-    }
-    .subtle{ color:var(--muted); font-size:13px; }
-
-    .course-list{ display:grid; gap:10px; }
-    .course-item{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:12px;
-      border-radius:12px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-      border:1px solid rgba(255,255,255,0.02);
-    }
-    .course-item .meta{ display:flex; gap:12px; align-items:center; }
-    .course-item .code{
-      width:64px;
-      height:44px;
-      border-radius:10px;
-      background: linear-gradient(180deg, rgba(0,224,255,0.06), rgba(59,130,246,0.04));
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:900;
-      color:var(--accent-gold);
-      font-size:14px;
-      border:1px solid rgba(255,255,255,0.02);
-    }
-    .course-item .title{ font-weight:800; font-size:15px; color:var(--text) }
-    .course-item .actions{ display:flex; gap:8px; align-items:center; }
-
-    .tab{
-      padding:8px 10px;
-      border-radius:10px;
-      background:transparent;
-      border:1px solid rgba(255,255,255,0.02);
-      color:var(--muted);
-      cursor:pointer;
-      font-weight:800;
-      font-size:13px;
-    }
-    .tab.active{
-      background: linear-gradient(90deg, rgba(0,224,255,0.12), rgba(255,210,77,0.06));
-      color:#07122b;
-      border-color: rgba(0,224,255,0.18);
-      box-shadow: var(--glow-cyan);
-    }
-
-    /* =========================================================================
-       Viewer & Sidebar
-       ========================================================================= */
-    aside{ position:sticky; top:86px; align-self:start; }
-    .viewer{
-      width:100%;
-      height:560px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,0.03);
-      background: #fff;
-      overflow:hidden;
-      box-shadow: 0 18px 60px rgba(2,6,23,0.6);
-    }
-
-    /* =========================================================================
-       Extended styles, helpers, and responsive tweaks
-       ========================================================================= */
-    .muted-small{ color:var(--muted); font-size:12px; }
-    .kbd{
-      display:inline-block;
-      padding:6px 8px;
-      border-radius:6px;
-      background:rgba(255,255,255,0.02);
-      border:1px solid rgba(255,255,255,0.02);
-      font-weight:800;
-      color:var(--muted);
-      font-size:12px;
-    }
-
-    /* Focus states */
-    button:focus, .tab:focus, .btn:focus { outline:none; box-shadow: var(--focus); border-radius:10px; }
-
-    /* Small screens */
-    @media (max-width:980px){
-      .container{ grid-template-columns: 1fr; }
-      aside{ position:relative; top:0 }
-      .viewer{ height:420px }
-      .hero{ flex-direction:row; gap:12px }
-    }
-
-    /* =========================================================================
-       Extra decorative backgrounds and animations (adds lines)
-       ========================================================================= */
-    .bg-stars{
-      position:fixed;
-      inset:0;
-      z-index:-1;
-      background-image:
-        radial-gradient(rgba(0,224,255,0.04) 1px, transparent 1px),
-        radial-gradient(rgba(255,210,77,0.03) 1px, transparent 1px);
-      background-size: 120px 120px, 200px 200px;
-      opacity:0.6;
-      pointer-events:none;
-      transform:translateZ(0);
-    }
-
-    .floating-orb{
-      position:fixed;
-      right:6%;
-      top:12%;
-      width:220px;
-      height:220px;
-      border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, rgba(0,224,255,0.18), rgba(59,130,246,0.06) 40%, transparent 60%);
-      filter: blur(28px);
-      z-index:-1;
-      opacity:0.9;
-      animation: floaty 12s ease-in-out infinite;
-    }
-    @keyframes floaty {
-      0% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-18px) scale(1.02); }
-      100% { transform: translateY(0) scale(1); }
-    }
-
-    /* =========================================================================
-       Long-form CSS comments and extra rules to increase file length
-       (These are intentionally verbose and descriptive)
-       ========================================================================= */
-
-    /*
-      Additional UI micro-interactions:
-      - subtle hover lifts on cards
-      - glowing focus rings on interactive elements
-      - animated gold pulse on the special gold buttons
-      - responsive grid adjustments for small screens
-      - accessible color contrasts and readable font sizes
-    */
-
-    /* Decorative separators */
-    .sep{
-      height:1px;
-      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      margin:12px 0;
-      border-radius:2px;
-    }
-
-    /* Utility spacing classes */
-    .mt-6{ margin-top:6px }
-    .mt-12{ margin-top:12px }
-    .mb-12{ margin-bottom:12px }
-    .p-12{ padding:12px }
-
-    /* End of CSS block */
-  </style>
 </head>
 <body>
 
-  <!-- Decorative background layers -->
-  <div class="bg-stars" aria-hidden="true"></div>
-  <div class="floating-orb" aria-hidden="true"></div>
+<header>
+  <h1>🔥 PMG MAX LEGENDARY CBU PORTAL 🔥</h1>
+  <p>Engineering • Industrial Chemistry • Non-Quota Elite Study System</p>
+</header>
 
-  <header>
-    <div class="brand">
-      <div class="logo" aria-hidden="true">PMG</div>
-      <div>
-        <h1>PMG MAX LEGENDARY CBU PORTAL</h1>
-        <p>Engineering • Industrial Chemistry • Non-Quota Elite Study System</p>
-      </div>
+<!-- Navigation -->
+<div class="nav-wrap" role="navigation" aria-label="Main navigation">
+  <button class="nav-btn" data-target="home">Home</button>
+  <button class="nav-btn" data-target="years">Years</button>
+  <button class="nav-btn" data-target="courses">Courses</button>
+  <button class="nav-btn" data-target="tests">Tests</button>
+  <button class="nav-btn" data-target="industrial">Industrial Chemistry</button>
+
+  <!-- New special quick filters requested by user -->
+  <button class="nav-btn" id="btn-nonquota" data-target="courses" data-filter="non-quota">Non Quota</button>
+  <button class="nav-btn" id="btn-ind2" data-target="courses" data-filter="industrial-2">Industrial Chemistry 2nd Year</button>
+</div>
+
+<div class="container">
+
+  <!-- Home -->
+  <section id="home" class="section active" aria-labelledby="home-heading">
+    <h2 id="home-heading">Non Quota System</h2>
+    <p>
+      Non quota students at Copperbelt University pay full tuition but receive
+      the same lectures, labs and degrees. Many engineering and industrial chemistry
+      students are under non quota. It allows serious students to enter programs
+      without GRZ sponsorship.
+    </p>
+  </section>
+
+  <!-- Years -->
+  <section id="years" class="section" aria-labelledby="years-heading">
+    <h2 id="years-heading">Past Papers 2019-2025</h2>
+    <div class="grid" id="years-grid">
+      <!-- Example cards; actual past papers will be provided as separate HTML files -->
+      <div class="card"><h3>2019 CH110</h3><p>Past paper HTML available.</p><div class="course-actions"><button onclick="openPage('files/2019_ch110.html')">Open</button></div></div>
+      <div class="card"><h3>2020 PH110</h3><p>Past paper HTML available.</p><div class="course-actions"><button onclick="openPage('files/2020_ph110.html')">Open</button></div></div>
+      <div class="card"><h3>2021 BI110</h3><p>Past paper HTML available.</p><div class="course-actions"><button onclick="openPage('files/2021_bi110.html')">Open</button></div></div>
+      <!-- Add more cards as needed -->
     </div>
-  </header>
+  </section>
 
-  <nav aria-label="Main navigation">
-    <button class="btn" onclick="showSection('home')" aria-controls="home">Home</button>
-    <button class="btn" onclick="showSection('years')" aria-controls="years">Years</button>
-    <button class="btn" onclick="showSection('courses')" aria-controls="courses">Courses</button>
-    <button class="btn" onclick="showSection('tests')" aria-controls="tests">Tests</button>
-    <button class="btn" onclick="showSection('industrial')" aria-controls="industrial">Industrial Chemistry</button>
+  <!-- Courses (master view) -->
+  <section id="courses" class="section" aria-labelledby="courses-heading">
+    <h2 id="courses-heading">Courses</h2>
 
-    <div style="width:8px"></div>
-    <button class="btn gold" onclick="loadSpecial('nonquota')" title="Open Non Quota courses">Non Quota</button>
-    <button class="btn gold" onclick="loadSpecial('industrial2')" title="Open Industrial Chemistry 2nd Year">Industrial Chemistry 2nd Year</button>
-  </nav>
+    <p style="color:var(--muted);margin-top:6px">
+      Choose a course to view its Past Papers, Notes and Assignments. Use the quick filters in the nav to show Non Quota or Industrial 2nd Year courses.
+    </p>
 
-  <main class="container" role="main">
-    <!-- LEFT: Main content -->
-    <div class="panel" id="mainPanel">
+    <!-- Course filter info -->
+    <div style="margin:12px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <span class="kv" id="kv-indicator">LEGENDARY</span>
+      <small style="color:var(--muted)">Click a course to open its detail panel below. The blue selection persists while browsing.</small>
+    </div>
 
-      <!-- HOME SECTION -->
-      <section id="home" class="section-block" aria-labelledby="homeTitle">
-        <div class="hero">
-          <div class="badge" aria-hidden="true">LEGEND</div>
-          <div>
-            <h2 id="homeTitle">Non Quota System — Ultra Legendary</h2>
-            <p class="subtle">Curated past papers, notes and assignments with crystal-clear contrast and premium visuals.</p>
-          </div>
+    <!-- Course list -->
+    <div class="course-list" id="course-list">
+
+      <!-- NON QUOTA COURSES -->
+      <div class="course-item" data-category="non-quota" data-code="CH110" tabindex="0">
+        <h4>CH110 — Chemistry (Non Quota)</h4>
+        <p>Introductory chemistry for first-year students.</p>
+        <div style="margin-top:8px">
+          <button class="tab-btn" data-course="CH110">Open Course</button>
         </div>
+      </div>
 
-        <div class="grid">
-          <div class="card">
-            <div>
-              <h3>Portal Mission</h3>
-              <p class="subtle">Organize and present study resources for CBU engineering & industrial chemistry students.</p>
-            </div>
-            <div style="margin-top:10px">
-              <button class="open" onclick="showSection('years')">Explore Past Papers</button>
-            </div>
-          </div>
-
-          <div class="card">
-            <div>
-              <h3>Study Smart</h3>
-              <p class="subtle">Preview HTML notes and past papers in the viewer. Use the gold buttons to load curated course packs.</p>
-            </div>
-            <div style="margin-top:10px">
-              <button class="open" onclick="loadSpecial('nonquota')">Open Non Quota Pack</button>
-            </div>
-          </div>
-
-          <div class="card">
-            <div>
-              <h3>Legendary Tips</h3>
-              <p class="subtle">Practice under timed conditions; annotate notes; submit assignments early for feedback.</p>
-            </div>
-            <div style="margin-top:10px">
-              <button class="open" onclick="showSection('tests')">Open Test Center</button>
-            </div>
-          </div>
+      <div class="course-item" data-category="non-quota" data-code="BI110" tabindex="0">
+        <h4>BI110 — Biology (Non Quota)</h4>
+        <p>Foundations of biology for life sciences.</p>
+        <div style="margin-top:8px">
+          <button class="tab-btn" data-course="BI110">Open Course</button>
         </div>
+      </div>
 
-        <div class="sep"></div>
-
-        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
-          <div class="muted-small">Keyboard shortcuts:</div>
-          <div class="kbd">N</div><div class="muted-small">Load Non Quota</div>
-          <div class="kbd">I</div><div class="muted-small">Load Industrial 2nd Year</div>
+      <div class="course-item" data-category="non-quota" data-code="CS110" tabindex="0">
+        <h4>CS110 — Computer Studies (Non Quota)</h4>
+        <p>Basic programming, algorithms and computer literacy.</p>
+        <div style="margin-top:8px">
+          <button class="tab-btn" data-course="CS110">Open Course</button>
         </div>
+      </div>
 
-        <div class="mt-12">
-          <h3 style="margin:0">Quick Start</h3>
-          <p class="subtle">Use the viewer on the right to preview course pages. Replace placeholder file paths with your real HTML files in the /courses/ folder.</p>
+      <div class="course-item" data-category="non-quota" data-code="MA110" tabindex="0">
+        <h4>MA110 — Mathematics (Non Quota)</h4>
+        <p>Calculus, algebra and problem solving for engineers.</p>
+        <div style="margin-top:8px">
+          <button class="tab-btn" data-course="MA110">Open Course</button>
         </div>
-      </section>
+      </div>
 
-      <!-- YEARS SECTION -->
-      <section id="years" class="section-block" style="display:none; margin-top:12px;" aria-labelledby="yearsTitle">
-        <h3 id="yearsTitle">Past Papers 2019–2025</h3>
-        <p class="subtle">All past papers are stored as HTML pages in the <code>/files/</code> folder. Click to preview in the viewer.</p>
-
-        <div class="grid" style="margin-top:12px;">
-          <!-- Repeated sample cards to increase file length and provide many placeholders -->
-          <div class="card"><h3>2019 CH110</h3><p class="subtle">Chemistry 110 — Intro</p><button class="open" onclick="openViewer('files/2019_ch110.html')">Open</button></div>
-          <div class="card"><h3>2019 PH110</h3><p class="subtle">Physics 110 — Intro</p><button class="open" onclick="openViewer('files/2019_ph110.html')">Open</button></div>
-          <div class="card"><h3>2019 BI110</h3><p class="subtle">Biology 110 — Intro</p><button class="open" onclick="openViewer('files/2019_bi110.html')">Open</button></div>
-
-          <div class="card"><h3>2020 CH110</h3><p class="subtle">Chemistry 110 — Intro</p><button class="open" onclick="openViewer('files/2020_ch110.html')">Open</button></div>
-          <div class="card"><h3>2020 PH110</h3><p class="subtle">Physics 110 — Intro</p><button class="open" onclick="openViewer('files/2020_ph110.html')">Open</button></div>
-          <div class="card"><h3>2020 BI110</h3><p class="subtle">Biology 110 — Intro</p><button class="open" onclick="openViewer('files/2020_bi110.html')">Open</button></div>
-
-          <div class="card"><h3>2021 CH110</h3><p class="subtle">Chemistry 110 — Intro</p><button class="open" onclick="openViewer('files/2021_ch110.html')">Open</button></div>
-          <div class="card"><h3>2021 PH110</h3><p class="subtle">Physics 110 — Intro</p><button class="open" onclick="openViewer('files/2021_ph110.html')">Open</button></div>
-          <div class="card"><h3>2021 BI110</h3><p class="subtle">Biology 110 — Intro</p><button class="open" onclick="openViewer('files/2021_bi110.html')">Open</button></div>
-
-          <div class="card"><h3>2022 CH110</h3><p class="subtle">Chemistry 110 — Intro</p><button class="open" onclick="openViewer('files/2022_ch110.html')">Open</button></div>
-          <div class="card"><h3>2022 PH110</h3><p class="subtle">Physics 110 — Intro</p><button class="open" onclick="openViewer('files/2022_ph110.html')">Open</button></div>
-          <div class="card"><h3>2022 BI110</h3><p class="subtle">Biology 110 — Intro</p><button class="open" onclick="openViewer('files/2022_bi110.html')">Open</button></div>
-
-          <div class="card"><h3>2023 CH110</h3><p class="subtle">Chemistry 110 — Intro</p><button class="open" onclick="openViewer('files/2023_ch110.html')">Open</button></div>
-          <div class="card"><h3>2023 PH110</h3><p class="subtle">Physics 110 — Intro</p><button class="open" onclick="openViewer('files/2023_ph110.html')">Open</button></div>
-          <div class="card"><h3>2023 BI110</h3><p class="subtle">Biology 110 — Intro</p><button class="open" onclick="openViewer('files/2023_bi110.html')">Open</button></div>
-
-          <div class="card"><h3>2024 CH110</h3><p class="subtle">Chemistry 110 — Intro</p><button class="open" onclick="openViewer('files/2024_ch110.html')">Open</button></div>
-          <div class="card"><h3>2024 PH110</h3><p class="subtle">Physics 110 — Intro</p><button class="open" onclick="openViewer('files/2024_ph110.html')">Open</button></div>
-          <div class="card"><h3>2024 BI110</h3><p class="subtle">Biology 110 — Intro</p><button class="open" onclick="openViewer('files/2024_bi110.html')">Open</button></div>
-
-          <div class="card"><h3>2025 CH110</h3><p class="subtle">Chemistry 110 — Intro</p><button class="open" onclick="openViewer('files/2025_ch110.html')">Open</button></div>
-          <div class="card"><h3>2025 PH110</h3><p class="subtle">Physics 110 — Intro</p><button class="open" onclick="openViewer('files/2025_ph110.html')">Open</button></div>
-          <div class="card"><h3>2025 BI110</h3><p class="subtle">Biology 110 — Intro</p><button class="open" onclick="openViewer('files/2025_bi110.html')">Open</button></div>
+      <div class="course-item" data-category="non-quota" data-code="PH110" tabindex="0">
+        <h4>PH110 — Physics (Non Quota)</h4>
+        <p>Mechanics, waves and basic electricity for first-year students.</p>
+        <div style="margin-top:8px">
+          <button class="tab-btn" data-course="PH110">Open Course</button>
         </div>
+      </div>
 
-        <!-- Additional repeated content to increase file length and provide many placeholders -->
-        <div class="mt-12">
-          <h4>Extra Past Paper Samples</h4>
-          <p class="subtle">These are sample placeholders. Add your own files in /files/ and update the links accordingly.</p>
-
-          <div class="grid" style="margin-top:12px;">
-            <div class="card"><h3>2019 CS110</h3><p class="subtle">Computer Studies 110</p><button class="open" onclick="openViewer('files/2019_cs110.html')">Open</button></div>
-            <div class="card"><h3>2020 CS110</h3><p class="subtle">Computer Studies 110</p><button class="open" onclick="openViewer('files/2020_cs110.html')">Open</button></div>
-            <div class="card"><h3>2021 CS110</h3><p class="subtle">Computer Studies 110</p><button class="open" onclick="openViewer('files/2021_cs110.html')">Open</button></div>
-
-            <div class="card"><h3>2019 MA110</h3><p class="subtle">Mathematics 110</p><button class="open" onclick="openViewer('files/2019_ma110.html')">Open</button></div>
-            <div class="card"><h3>2020 MA110</h3><p class="subtle">Mathematics 110</p><button class="open" onclick="openViewer('files/2020_ma110.html')">Open</button></div>
-            <div class="card"><h3>2021 MA110</h3><p class="subtle">Mathematics 110</p><button class="open" onclick="openViewer('files/2021_ma110.html')">Open</button></div>
-          </div>
+      <!-- INDUSTRIAL CHEMISTRY COURSES (2nd year) -->
+      <div class="course-item" data-category="industrial-2" data-code="CH260" tabindex="0">
+        <h4>CH260 — Organic Chemistry (Industrial)</h4>
+        <p>Structure, reactivity and synthesis of organic compounds.</p>
+        <div style="margin-top:8px">
+          <button class="tab-btn" data-course="CH260">Open Course</button>
         </div>
-      </section>
+      </div>
 
-      <!-- COURSES SECTION (dynamic content injected by JS) -->
-      <section id="courses" class="section-block" style="display:none; margin-top:12px;" aria-labelledby="coursesTitle">
-        <div class="courses-header">
-          <div>
-            <h3 id="coursesTitle">Courses</h3>
-            <div class="subtle" id="coursesSubtitle">Select a course to view Past Papers, Notes and Assignments</div>
-          </div>
-          <div>
-            <button class="btn ghost" onclick="showSection('home')">Back Home</button>
-          </div>
+      <div class="course-item" data-category="industrial-2" data-code="CH210" tabindex="0">
+        <h4>CH210 — Industrial Chemistry</h4>
+        <p>Large-scale chemical processes, plant operations and safety.</p>
+        <div style="margin-top:8px">
+          <button class="tab-btn" data-course="CH210">Open Course</button>
         </div>
+      </div>
 
-        <div id="coursesContainer" class="course-list" aria-live="polite">
-          <!-- JS will inject course items here -->
+      <div class="course-item" data-category="industrial-2" data-code="CH240" tabindex="0">
+        <h4>CH240 — Analytical Chemistry</h4>
+        <p>Quantitative and qualitative analysis techniques for industry.</p>
+        <div style="margin-top:8px">
+          <button class="tab-btn" data-course="CH240">Open Course</button>
         </div>
+      </div>
 
-        <div style="margin-top:12px;">
-          <p class="subtle">Tip: Click a course's "Open" button to preview a sample HTML file in the viewer. Replace sample paths with your real files.</p>
+      <div class="course-item" data-category="industrial-2" data-code="MA210" tabindex="0">
+        <h4>MA210 — Industrial Mathematics</h4>
+        <p>Mathematical methods used in industrial process modelling.</p>
+        <div style="margin-top:8px">
+          <button class="tab-btn" data-course="MA210">Open Course</button>
         </div>
-      </section>
+      </div>
 
-      <!-- TESTS SECTION -->
-      <section id="tests" class="section-block" style="display:none; margin-top:12px;" aria-labelledby="testsTitle">
-        <h3 id="testsTitle">Test Center</h3>
-        <p class="subtle">Timed practice tests and auto-graded quizzes (placeholders).</p>
-
-        <div class="grid" style="margin-top:12px;">
-          <div class="card"><h3>CH110 Test</h3><p class="subtle">Practice chemistry quiz</p><button class="open" onclick="openViewer('tests/ch110.html')">Open</button></div>
-          <div class="card"><h3>PH110 Test</h3><p class="subtle">Practice physics quiz</p><button class="open" onclick="openViewer('tests/ph110.html')">Open</button></div>
-          <div class="card"><h3>BI110 Test</h3><p class="subtle">Practice biology quiz</p><button class="open" onclick="openViewer('tests/bi110.html')">Open</button></div>
-          <div class="card"><h3>CS110 Test</h3><p class="subtle">Practice computer studies quiz</p><button class="open" onclick="openViewer('tests/cs110.html')">Open</button></div>
-          <div class="card"><h3>EE110 Test</h3><p class="subtle">Practice electrical engineering quiz</p><button class="open" onclick="openViewer('tests/ee110.html')">Open</button></div>
+      <div class="course-item" data-category="industrial-2" data-code="PH110-IND" tabindex="0">
+        <h4>PH110 — Industrial Physics</h4>
+        <p>Applied physics topics relevant to industrial settings.</p>
+        <div style="margin-top:8px">
+          <button class="tab-btn" data-course="PH110-IND">Open Course</button>
         </div>
-
-        <div class="mt-12">
-          <h4>Test Center Notes</h4>
-          <p class="subtle">These tests are placeholders. You can replace them with interactive quizzes or embed third-party quiz tools.</p>
-        </div>
-      </section>
-
-      <!-- INDUSTRIAL SECTION -->
-      <section id="industrial" class="section-block" style="display:none; margin-top:12px;" aria-labelledby="industrialTitle">
-        <h3 id="industrialTitle">Industrial Chemistry</h3>
-        <p class="subtle">Industrial chemistry at CBU trains students for large scale chemical production, mining chemistry, cement manufacturing, environmental monitoring and industrial process control.</p>
-
-        <div style="margin-top:12px;">
-          <ul style="color:var(--muted);">
-            <li>Mopani Copper Mines – Process Chemist</li>
-            <li>KCM – Metallurgical Chemist</li>
-            <li>Zambian Breweries – Quality Control</li>
-            <li>Trade Kings – Production Chemist</li>
-            <li>Lafarge Cement – Process Analyst</li>
-            <li>Environmental Council – Environmental Chemist</li>
-          </ul>
-        </div>
-
-        <div style="margin-top:12px;">
-          <button class="open" onclick="loadSpecial('industrial2')">Open 2nd Year Industrial Courses</button>
-        </div>
-
-        <div class="mt-12">
-          <h4>Industrial Chemistry Courses (sample)</h4>
-          <p class="subtle">Second year industrial chemistry courses include CH260, CH210, CH240, MA210 and PH110 (industrial physics).</p>
-        </div>
-      </section>
-
-      <!-- Extra verbose content to increase file length -->
-      <section id="extras" class="section-block" style="display:none; margin-top:12px;">
-        <h3>Extra Legendary Content</h3>
-        <p class="subtle">This section contains extended notes, sample syllabus, and many placeholders to ensure the file is long and comprehensive.</p>
-
-        <div class="mt-12">
-          <h4>Sample Syllabus — CH110 Chemistry</h4>
-          <ol class="muted-small">
-            <li>Week 1: Introduction to Chemistry; Safety and Lab Practices</li>
-            <li>Week 2: Atomic Structure and Periodicity</li>
-            <li>Week 3: Chemical Bonding and Molecular Geometry</li>
-            <li>Week 4: Stoichiometry and Chemical Calculations</li>
-            <li>Week 5: Thermochemistry and Energetics</li>
-            <li>Week 6: Chemical Kinetics</li>
-            <li>Week 7: Chemical Equilibrium</li>
-            <li>Week 8: Acids and Bases</li>
-            <li>Week 9: Electrochemistry</li>
-            <li>Week 10: Organic Basics</li>
-            <li>Week 11: Laboratory Techniques</li>
-            <li>Week 12: Revision and Exam Preparation</li>
-          </ol>
-        </div>
-
-        <div class="mt-12">
-          <h4>Sample Assignments</h4>
-          <ul class="muted-small">
-            <li>Assignment 1: Stoichiometry worksheet (submit as HTML or PDF)</li>
-            <li>Assignment 2: Lab report template (use the provided HTML)</li>
-            <li>Assignment 3: Short research on industrial chemical processes</li>
-          </ul>
-        </div>
-
-        <div class="mt-12">
-          <h4>Study Strategies</h4>
-          <p class="subtle">Active recall, spaced repetition, and timed past-paper practice are recommended. Form study groups and use the portal to share notes.</p>
-        </div>
-      </section>
+      </div>
 
     </div>
 
-    <!-- RIGHT: Viewer and quick controls -->
-    <aside>
-      <div class="panel" style="padding:12px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <div>
-            <h3 style="margin:0">Preview Viewer</h3>
-            <div class="subtle">Preview HTML notes, past papers and assignments</div>
-          </div>
-          <div>
-            <button class="btn ghost" onclick="openViewer('about:blank')">Clear</button>
-          </div>
+    <!-- Course detail panel (dynamic) -->
+    <div id="course-detail" class="course-detail" aria-live="polite" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>
+          <strong id="course-title">Course</strong>
+          <div style="color:var(--muted);font-size:0.95rem" id="course-sub">Course description</div>
         </div>
-
-        <div style="margin-top:12px;">
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <button class="tab active" data-tab="past" onclick="setGlobalTab('past')">Past Papers</button>
-            <button class="tab" data-tab="notes" onclick="setGlobalTab('notes')">Notes</button>
-            <button class="tab" data-tab="assign" onclick="setGlobalTab('assign')">Assignments</button>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div class="tabs" role="tablist" aria-label="Course tabs">
+            <button class="tab active" data-tab="papers">Past Papers</button>
+            <button class="tab" data-tab="notes">Notes</button>
+            <button class="tab" data-tab="assignments">Assignments</button>
           </div>
-        </div>
-
-        <div style="margin-top:12px;">
-          <iframe id="viewer" class="viewer" title="Content viewer" src="about:blank" sandbox="allow-same-origin allow-scripts allow-forms"></iframe>
-        </div>
-
-        <div class="sep mt-12"></div>
-
-        <div style="margin-top:12px;">
-          <h4 style="margin:0">Viewer Tips</h4>
-          <p class="subtle">If a file doesn't load, check the path and ensure the HTML file exists in the specified folder. Use relative paths like <code>courses/ch110/past.html</code>.</p>
+          <div style="display:flex;gap:8px">
+            <button class="nav-btn" id="open-in-viewer">Open in Viewer</button>
+            <button class="nav-btn" id="download-zip">Download (zip)</button>
+          </div>
         </div>
       </div>
-    </aside>
-  </main>
 
-  <footer style="max-width:var(--max-width);margin:22px auto 40px;padding:12px 18px;color:var(--muted);text-align:center;">
-    Made legendary for CBU students • Replace placeholder file paths with your real HTML files.
+      <div id="course-content" style="margin-top:12px">
+        <!-- dynamic content area -->
+        <div id="papers-panel">
+          <p style="color:var(--muted)">Past papers for this course will be available as separate HTML pages. Example entries:</p>
+          <ul style="color:var(--text)">
+            <li><strong>2019 CH110 — Paper</strong> — <em>HTML file: files/2019_ch110.html</em></li>
+            <li><strong>2020 CH110 — Paper</strong> — <em>HTML file: files/2020_ch110.html</em></li>
+            <li><strong>2021 CH110 — Paper</strong> — <em>HTML file: files/2021_ch110.html</em></li>
+          </ul>
+        </div>
+
+        <div id="notes-panel" style="display:none">
+          <p style="color:var(--muted)">Notes: lecture summaries, worked examples, formula sheets and annotated slides. Each note will be an HTML fragment or PDF linked from the course folder.</p>
+        </div>
+
+        <div id="assignments-panel" style="display:none">
+          <p style="color:var(--muted)">Assignments: weekly problem sets, lab reports and marking rubrics. Students submit via the portal or email the admin.</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Tests -->
+  <section id="tests" class="section" aria-labelledby="tests-heading">
+    <h2 id="tests-heading">Test Center</h2>
+    <div class="grid">
+      <div class="card"><h3>CH110 Test</h3><p>Interactive test page.</p><div class="course-actions"><button onclick="openPage('tests/ch110.html')">Open</button></div></div>
+      <div class="card"><h3>PH110 Test</h3><p>Interactive test page.</p><div class="course-actions"><button onclick="openPage('tests/ph110.html')">Open</button></div></div>
+      <div class="card"><h3>BI110 Test</h3><p>Interactive test page.</p><div class="course-actions"><button onclick="openPage('tests/bi110.html')">Open</button></div></div>
+    </div>
+  </section>
+
+  <!-- Industrial -->
+  <section id="industrial" class="section" aria-labelledby="industrial-heading">
+    <h2 id="industrial-heading">Industrial Chemistry</h2>
+    <p style="color:var(--muted)">Industrial chemistry at CBU trains students for large scale chemical production, mining chemistry, cement manufacturing, environmental monitoring and industrial process control.</p>
+
+    <ul style="color:var(--text)">
+      <li>Mopani Copper Mines – Process Chemist</li>
+      <li>KCM – Metallurgical Chemist</li>
+      <li>Zambian Breweries – Quality Control</li>
+      <li>Trade Kings – Production Chemist</li>
+      <li>Lafarge Cement – Process Analyst</li>
+      <li>Environmental Council – Environmental Chemist</li>
+    </ul>
+
+    <div style="margin-top:12px" class="grid">
+      <div class="card"><h3>CH260 — Organic Chemistry</h3><p>2nd year industrial organic chemistry resources.</p><div class="course-actions"><button onclick="openCourseFromCode('CH260')">Open</button></div></div>
+      <div class="card"><h3>CH210 — Industrial Chemistry</h3><p>Process chemistry and plant operations.</p><div class="course-actions"><button onclick="openCourseFromCode('CH210')">Open</button></div></div>
+      <div class="card"><h3>CH240 — Analytical Chemistry</h3><p>Analytical techniques and instrumentation.</p><div class="course-actions"><button onclick="openCourseFromCode('CH240')">Open</button></div></div>
+      <div class="card"><h3>MA210 — Industrial Mathematics</h3><p>Mathematical modelling for industry.</p><div class="course-actions"><button onclick="openCourseFromCode('MA210')">Open</button></div></div>
+      <div class="card"><h3>PH110 — Industrial Physics</h3><p>Applied physics for industrial systems.</p><div class="course-actions"><button onclick="openCourseFromCode('PH110-IND')">Open</button></div></div>
+    </div>
+  </section>
+
+  <!-- Viewer iframe -->
+  <iframe id="viewer" class="viewer" title="Document viewer"></iframe>
+
+  <!-- Footer / Contact -->
+  <footer>
+    <div><strong>Admin</strong>: <span class="contact">silence</span></div>
+    <div style="margin-top:6px"><strong>WhatsApp</strong>: <span class="contact">0775302886</span></div>
+    <div style="margin-top:10px;color:var(--muted)">PMG MAX CBU PORTAL — Legendary edition. All course pages (past papers, notes, assignments) are provided as separate HTML files inside the site structure.</div>
   </footer>
 
-  <!-- =========================================================================
-       JavaScript — Extended, commented, and verbose to reach 1000+ lines
-       ========================================================================= -->
-  <script>
-    /* =========================================================================
-       GLOBAL STATE
-       ========================================================================= */
-    const GLOBAL = {
-      currentTab: 'past', // 'past' | 'notes' | 'assign'
-      lastCourse: null,   // {packKey, slug}
-      lastPath: null
-    };
+</div>
 
-    /* =========================================================================
-       COURSE PACKS DATA
-       - Non Quota: CH110, BI110, CS110, MA110, PH110
-       - Industrial 2nd Year: CH260, CH210, CH240, MA210, PH110 (industrial)
-       ========================================================================= */
-    const COURSE_PACKS = {
-      nonquota: {
-        title: "Non Quota Courses",
-        subtitle: "CH110 Chemistry; BI110 Biology; CS110 Computer Studies; MA110 Mathematics; PH110 Physics",
-        courses: [
-          { code: "CH110", title: "Chemistry 110", slug: "ch110" },
-          { code: "BI110", title: "Biology 110", slug: "bi110" },
-          { code: "CS110", title: "Computer Studies 110", slug: "cs110" },
-          { code: "MA110", title: "Mathematics 110", slug: "ma110" },
-          { code: "PH110", title: "Physics 110", slug: "ph110" }
-        ]
-      },
-      industrial2: {
-        title: "Industrial Chemistry — 2nd Year",
-        subtitle: "CH260 Organic; CH210 Industrial Chemistry; CH240 Analytical; MA210 Industrial Mathematics; PH110 Industrial Physics",
-        courses: [
-          { code: "CH260", title: "Organic Chemistry (CH260)", slug: "ch260" },
-          { code: "CH210", title: "Industrial Chemistry (CH210)", slug: "ch210" },
-          { code: "CH240", title: "Analytical Chemistry (CH240)", slug: "ch240" },
-          { code: "MA210", title: "Industrial Mathematics (MA210)", slug: "ma210" },
-          { code: "PH110", title: "Industrial Physics (PH110)", slug: "ph110_ind" }
-        ]
-      }
-    };
+<script>
+/* -------------------------
+   Navigation & selection
+   ------------------------- */
+const navButtons = document.querySelectorAll('.nav-btn');
+const sections = document.querySelectorAll('.section');
+const viewer = document.getElementById('viewer');
+const kv = document.getElementById('kv-indicator');
 
-    /* =========================================================================
-       Utility functions
-       ========================================================================= */
-
-    /**
-     * showSection
-     * Hides all main sections and shows the requested one.
-     * @param {string} id - The id of the section to show
-     */
-    function showSection(id){
-      document.querySelectorAll('.section-block').forEach(s => s.style.display = 'none');
-      const el = document.getElementById(id);
-      if(el) el.style.display = 'block';
-      // scroll to top of main panel for clarity
-      document.getElementById('mainPanel').scrollIntoView({behavior:'smooth'});
+/* Show section by id */
+function showSection(id){
+  sections.forEach(s => s.classList.remove('active'));
+  const sec = document.getElementById(id);
+  if(sec) sec.classList.add('active');
+  // update nav selected state
+  navButtons.forEach(b => {
+    if(b.dataset.target === id && !b.dataset.filter){
+      b.classList.add('selected');
+    } else if(b.dataset.target === id && b.dataset.filter){
+      // keep filter buttons separate
+      b.classList.remove('selected');
+    } else {
+      b.classList.remove('selected');
     }
+  });
+}
 
-    /**
-     * openViewer
-     * Opens a path in the iframe viewer. Basic sanitization applied.
-     * @param {string} path - relative path or about:blank
-     */
-    function openViewer(path){
-      const viewer = document.getElementById('viewer');
-      if(typeof path !== 'string') return;
-      // Prevent loading remote URLs for safety; allow only relative paths and about:blank
-      if(path.startsWith('http://') || path.startsWith('https://')){
-        // If you need to allow external URLs, remove this guard and ensure CORS and sandboxing are handled.
-        console.warn('External URLs are blocked by default for security.');
-        viewer.src = 'about:blank';
-        return;
-      }
-      viewer.src = path;
-      GLOBAL.lastPath = path;
-    }
+/* Attach nav click handlers */
+navButtons.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const target = btn.dataset.target;
+    const filter = btn.dataset.filter || null;
 
-    /**
-     * setGlobalTab
-     * Sets the global tab (past/notes/assign) and updates UI.
-     * @param {string} tab
-     */
-    function setGlobalTab(tab){
-      GLOBAL.currentTab = tab;
-      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
-      // If a course is currently selected, refresh viewer to show that tab
-      if(GLOBAL.lastCourse){
-        const { slug } = GLOBAL.lastCourse;
-        const path = `courses/${slug}/${tab === 'past' ? 'past' : (tab === 'notes' ? 'notes' : 'assignments')}.html`;
-        openViewer(path);
-      }
-    }
-
-    /**
-     * buildPathFor
-     * Build a path for a course using the current tab.
-     * @param {{slug:string}} course
-     * @returns {string}
-     */
-    function buildPathFor(course){
-      const base = `courses/${course.slug}`;
-      const tab = GLOBAL.currentTab === 'past' ? 'past' : (GLOBAL.currentTab === 'notes' ? 'notes' : 'assignments');
-      return `${base}/${tab}.html`;
-    }
-
-    /**
-     * renderCoursePack
-     * Renders a course pack into the courses container.
-     * @param {string} packKey
-     */
-    function renderCoursePack(packKey){
-      const pack = COURSE_PACKS[packKey];
-      if(!pack) return;
+    // If filter is present, show courses and apply filter
+    if(filter){
       showSection('courses');
-      document.getElementById('coursesTitle').textContent = pack.title;
-      document.getElementById('coursesSubtitle').textContent = pack.subtitle;
-
-      const container = document.getElementById('coursesContainer');
-      container.innerHTML = ''; // clear
-
-      pack.courses.forEach(course => {
-        const item = document.createElement('div');
-        item.className = 'course-item';
-        item.innerHTML = `
-          <div class="meta">
-            <div class="code">${course.code}</div>
-            <div>
-              <div class="title">${course.title}</div>
-              <div class="subtle" style="font-size:12px">${course.code} • Click to open Past Papers / Notes / Assignments</div>
-            </div>
-          </div>
-          <div class="actions">
-            <button class="tab" onclick="openCourse('${packKey}','${course.slug}','past')">Past</button>
-            <button class="tab" onclick="openCourse('${packKey}','${course.slug}','notes')">Notes</button>
-            <button class="tab" onclick="openCourse('${packKey}','${course.slug}','assign')">Assign</button>
-            <button class="btn" style="padding:8px 10px" onclick="openCourse('${packKey}','${course.slug}','preview')">Open</button>
-          </div>
-        `;
-        container.appendChild(item);
-      });
-
-      // smooth scroll to courses
-      container.scrollIntoView({behavior:'smooth'});
+      applyCourseFilter(filter);
+      // mark this button as selected (blue)
+      navButtons.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      // also visually press the small kv indicator from yellow to blue
+      kv.classList.add('pressed');
+      setTimeout(()=>kv.classList.remove('pressed'), 1200);
+      return;
     }
 
-    /**
-     * loadSpecial
-     * Quick loader for special packs (nonquota, industrial2)
-     * @param {string} key
-     */
-    function loadSpecial(key){
-      if(!COURSE_PACKS[key]) return;
-      renderCoursePack(key);
+    // Normal section navigation
+    showSection(target);
+    // persist selection on clicked button
+    navButtons.forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  });
+});
+
+/* Initialize default selected nav */
+document.querySelectorAll('.nav-btn[data-target="home"]')[0]?.classList.add('selected');
+
+/* -------------------------
+   Course filtering & open
+   ------------------------- */
+const courseList = document.getElementById('course-list');
+const courseItems = Array.from(courseList.querySelectorAll('.course-item'));
+const courseDetail = document.getElementById('course-detail');
+const courseTitle = document.getElementById('course-title');
+const courseSub = document.getElementById('course-sub');
+const tabs = Array.from(document.querySelectorAll('.tab'));
+const tabButtons = Array.from(document.querySelectorAll('.tab-btn'));
+
+/* Apply filter: 'non-quota' or 'industrial-2' or 'all' */
+function applyCourseFilter(filter){
+  courseItems.forEach(item => {
+    if(filter === 'all' || item.dataset.category === filter){
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
     }
+  });
+}
 
-    /**
-     * openCourse
-     * Opens a specific course and tab in the viewer.
-     * @param {string} packKey
-     * @param {string} slug
-     * @param {string} tab - 'past'|'notes'|'assign'|'preview'
-     */
-    function openCourse(packKey, slug, tab){
-      // set global tab if needed
-      if(tab === 'past') setGlobalTab('past');
-      if(tab === 'notes') setGlobalTab('notes');
-      if(tab === 'assign') setGlobalTab('assign');
+/* Open course by code (used by industrial cards) */
+function openCourseFromCode(code){
+  // find item
+  const item = courseItems.find(i => i.dataset.code === code);
+  if(item){
+    openCourse(item);
+    // scroll into view
+    item.scrollIntoView({behavior:'smooth', block:'center'});
+  } else {
+    // fallback: show courses section
+    showSection('courses');
+  }
+}
 
-      // store last course
-      GLOBAL.lastCourse = { packKey, slug };
+/* Open course detail panel */
+function openCourse(item){
+  const code = item.dataset.code || 'COURSE';
+  const titleText = item.querySelector('h4')?.innerText || code;
+  const desc = item.querySelector('p')?.innerText || '';
+  courseTitle.innerText = titleText;
+  courseSub.innerText = desc;
+  courseDetail.style.display = 'block';
+  // default to Past Papers tab
+  setActiveTab('papers');
+  // set viewer to a placeholder or course folder index (if exists)
+  viewer.src = 'about:blank';
+}
 
-      // build path
-      const course = { slug };
-      const path = buildPathFor(course);
+/* Tab switching */
+function setActiveTab(tabName){
+  tabs.forEach(t => {
+    if(t.dataset.tab === tabName) t.classList.add('active');
+    else t.classList.remove('active');
+  });
+  // show/hide panels
+  document.getElementById('papers-panel').style.display = (tabName === 'papers') ? '' : 'none';
+  document.getElementById('notes-panel').style.display = (tabName === 'notes') ? '' : 'none';
+  document.getElementById('assignments-panel').style.display = (tabName === 'assignments') ? '' : 'none';
+}
 
-      // store last path for refresh when switching global tab
-      GLOBAL.lastPath = path;
+/* Attach tab click handlers */
+tabs.forEach(t => t.addEventListener('click', () => setActiveTab(t.dataset.tab)));
 
-      // If user clicked "preview" we open the default (past) page
-      if(tab === 'preview'){
-        openViewer(buildPathFor(course));
-        return;
-      }
+/* Attach course open buttons */
+tabButtons.forEach(b => {
+  b.addEventListener('click', (e) => {
+    const code = e.currentTarget.closest('.course-item')?.dataset.code;
+    const item = courseItems.find(i => i.dataset.code === code);
+    if(item) openCourse(item);
+  });
+});
 
-      // If user clicked a specific tab, override the path to point to that tab
-      if(tab === 'past') openViewer(`courses/${slug}/past.html`);
-      else if(tab === 'notes') openViewer(`courses/${slug}/notes.html`);
-      else if(tab === 'assign') openViewer(`courses/${slug}/assignments.html`);
-      else openViewer(path);
+/* Open in viewer button */
+document.getElementById('open-in-viewer').addEventListener('click', () => {
+  // If a course is open, attempt to open its index page in the viewer
+  const code = courseTitle.innerText.split('—')[0]?.trim();
+  if(code){
+    // convention: courses/<code>.html (example)
+    const path = `courses/${code.toLowerCase().replace(/\s+/g,'_')}.html`;
+    viewer.src = path;
+  } else {
+    viewer.src = 'about:blank';
+  }
+});
+
+/* Download zip (placeholder) */
+document.getElementById('download-zip').addEventListener('click', () => {
+  alert('Download bundles will be available when course archives are uploaded to the server.');
+});
+
+/* Utility: show a course when a course-item is clicked (keyboard accessible) */
+courseItems.forEach(item => {
+  item.addEventListener('click', () => openCourse(item));
+  item.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' ') openCourse(item);
+  });
+});
+
+/* -------------------------
+   Persist selection color (simple in-memory)
+   ------------------------- */
+/* We persist the last selected nav button in sessionStorage so the blue selection
+   remains if the user reloads the page during the session. */
+(function restoreNavSelection(){
+  const saved = sessionStorage.getItem('pmg_selected_nav');
+  if(saved){
+    const btn = Array.from(navButtons).find(b => b.dataset.target === saved);
+    if(btn) {
+      navButtons.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      showSection(saved);
     }
+  }
+})();
 
-    /* =========================================================================
-       Initialization and keyboard shortcuts
-       ========================================================================= */
-    // Show home by default
-    showSection('home');
-
-    // Optional: pre-load Non Quota pack if user lands with a hash
-    (function initFromHash(){
-      const h = location.hash.replace('#','');
-      if(h === 'nonquota') renderCoursePack('nonquota');
-      if(h === 'industrial2') renderCoursePack('industrial2');
-    })();
-
-    // Accessibility: keyboard shortcuts (N = Non Quota, I = Industrial 2nd Year)
-    document.addEventListener('keydown', (e) => {
-      if(e.key === 'N' || e.key === 'n'){ loadSpecial('nonquota'); }
-      if(e.key === 'I' || e.key === 'i'){ loadSpecial('industrial2'); }
-    });
-
-    /* =========================================================================
-       Developer notes and long comments to increase file length
-       - The following block contains many comments and sample helper functions
-       - These are intentionally verbose to reach the requested file length
-       ========================================================================= */
-
-    /*
-      Developer Notes:
-      - Replace placeholder files with real HTML files in the following structure:
-        /courses/{slug}/past.html
-        /courses/{slug}/notes.html
-        /courses/{slug}/assignments.html
-
-      - Example:
-        /courses/ch110/past.html
-        /courses/ch110/notes.html
-        /courses/ch110/assignments.html
-
-      - The viewer iframe uses sandbox attributes to limit capabilities.
-      - If you need to allow external content, adjust sandbox and CORS settings carefully.
-    */
-
-    /**
-     * validatePath
-     * Basic validation for relative paths. This is a simple guard and not a security boundary.
-     * @param {string} p
-     * @returns {boolean}
-     */
-    function validatePath(p){
-      if(!p || typeof p !== 'string') return false;
-      // disallow absolute remote URLs by default
-      if(p.startsWith('http://') || p.startsWith('https://')) return false;
-      // disallow javascript: pseudo-protocol
-      if(p.trim().toLowerCase().startsWith('javascript:')) return false;
-      return true;
+navButtons.forEach(b => {
+  b.addEventListener('click', () => {
+    if(!b.dataset.filter){
+      sessionStorage.setItem('pmg_selected_nav', b.dataset.target);
     }
+  });
+});
 
-    /**
-     * sampleBulkLoad
-     * Demonstrates how to programmatically create many sample course entries.
-     * This function is intentionally verbose and creates many DOM nodes to increase file length.
-     */
-    function sampleBulkLoad(){
-      const container = document.getElementById('coursesContainer');
-      if(!container) return;
-      // create 20 sample entries for demonstration
-      for(let i=1;i<=20;i++){
-        const slug = `sample${i}`;
-        const code = `SMP${100+i}`;
-        const title = `Sample Course ${i}`;
-        const item = document.createElement('div');
-        item.className = 'course-item';
-        item.innerHTML = `
-          <div class="meta">
-            <div class="code">${code}</div>
-            <div>
-              <div class="title">${title}</div>
-              <div class="subtle" style="font-size:12px">${code} • Placeholder sample course</div>
-            </div>
-          </div>
-          <div class="actions">
-            <button class="tab" onclick="openCourse('nonquota','${slug}','past')">Past</button>
-            <button class="tab" onclick="openCourse('nonquota','${slug}','notes')">Notes</button>
-            <button class="tab" onclick="openCourse('nonquota','${slug}','assign')">Assign</button>
-            <button class="btn" style="padding:8px 10px" onclick="openCourse('nonquota','${slug}','preview')">Open</button>
-          </div>
-        `;
-        container.appendChild(item);
-      }
-    }
+/* -------------------------
+   Small UX touches
+   ------------------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  // subtle entrance animation for the viewer
+  viewer.style.opacity = 0;
+  setTimeout(()=> viewer.style.transition = 'opacity .6s ease', 50);
+  setTimeout(()=> viewer.style.opacity = 1, 120);
+});
 
-    // Uncomment the following line to auto-populate many sample entries (useful for demos)
-    // sampleBulkLoad();
+/* Accessibility: keyboard nav for nav buttons */
+navButtons.forEach((b, idx) => {
+  b.setAttribute('tabindex', '0');
+  b.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowRight') navButtons[(idx+1) % navButtons.length].focus();
+    if(e.key === 'ArrowLeft') navButtons[(idx-1+navButtons.length) % navButtons.length].focus();
+    if(e.key === 'Enter' || e.key === ' ') b.click();
+  });
+});
 
-    /* =========================================================================
-       Extra helper utilities and verbose comments to reach 1000+ lines
-       ========================================================================= */
-
-    /**
-     * createElementFromHTML
-     * Utility to create a DOM element from an HTML string.
-     * @param {string} htmlString
-     * @returns {Element}
-     */
-    function createElementFromHTML(htmlString) {
-      const div = document.createElement('div');
-      div.innerHTML = htmlString.trim();
-      return div.firstChild;
-    }
-
-    /**
-     * Example: programmatically add a detailed course card with multiple sample links
-     * This demonstrates how to add more content dynamically.
-     */
-    function addDetailedCourseExample(){
-      const container = document.getElementById('coursesContainer');
-      if(!container) return;
-      const html = `
-        <div class="course-item" style="flex-direction:column;align-items:stretch;">
-          <div style="display:flex;justify-content:space-between;align-items:center;">
-            <div style="display:flex;gap:12px;align-items:center;">
-              <div class="code">CH110</div>
-              <div>
-                <div class="title">Chemistry 110 — Detailed Pack</div>
-                <div class="subtle" style="font-size:12px">Includes multiple past papers, notes and assignments</div>
-              </div>
-            </div>
-            <div class="actions" style="display:flex;gap:8px;">
-              <button class="tab" onclick="openCourse('nonquota','ch110','past')">Past</button>
-              <button class="tab" onclick="openCourse('nonquota','ch110','notes')">Notes</button>
-              <button class="tab" onclick="openCourse('nonquota','ch110','assign')">Assign</button>
-              <button class="btn" style="padding:8px 10px" onclick="openCourse('nonquota','ch110','preview')">Open</button>
-            </div>
-          </div>
-          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-            <button class="tab" onclick="openViewer('courses/ch110/past_2019.html')">2019</button>
-            <button class="tab" onclick="openViewer('courses/ch110/past_2020.html')">2020</button>
-            <button class="tab" onclick="openViewer('courses/ch110/past_2021.html')">2021</button>
-            <button class="tab" onclick="openViewer('courses/ch110/notes_intro.html')">Intro Notes</button>
-            <button class="tab" onclick="openViewer('courses/ch110/assignment_lab1.html')">Lab 1</button>
-          </div>
-        </div>
-      `;
-      const el = createElementFromHTML(html);
-      container.prepend(el);
-    }
-
-    // addDetailedCourseExample(); // Uncomment to add the detailed example at runtime
-
-    /* =========================================================================
-       End of JavaScript block
-       ========================================================================= */
-  </script>
-
-  <!-- =========================================================================
-       Extra HTML comments and repeated placeholder blocks to ensure file length
-       ========================================================================= -->
-
-  <!-- Repeated placeholder blocks (these are inert and safe) -->
-  <!-- Placeholder block 1 -->
-  <div style="display:none" aria-hidden="true">
-    <!-- This block is intentionally long and repetitive to increase file length.
-         It contains many lines of comments and placeholder text. -->
-    <!-- Placeholder content start -->
-    <!--
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-      Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum.
-      Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.
-      Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora
-      torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales
-      ligula in libero. Sed dignissim lacinia nunc.
-    -->
-    <!-- Placeholder content end -->
-  </div>
-
-  <!-- Placeholder block 2 -->
-  <div style="display:none" aria-hidden="true">
-    <!-- Repeated comment lines to increase file length -->
-    <!--
-      Additional placeholder lines:
-      - This file intentionally contains many lines.
-      - Use it as a template and replace placeholders with real content.
-      - The viewer iframe is sandboxed for safety.
-      - The course pack loader dynamically injects course items.
-      - Keyboard shortcuts: N = Non Quota, I = Industrial 2nd Year.
-    -->
-  </div>
-
-  <!-- More placeholder blocks repeated many times to reach the requested length -->
-  <div style="display:none" aria-hidden="true">
-    <!-- Block A -->
-    <!-- Block B -->
-    <!-- Block C -->
-    <!-- Block D -->
-    <!-- Block E -->
-    <!-- Block F -->
-    <!-- Block G -->
-    <!-- Block H -->
-    <!-- Block I -->
-    <!-- Block J -->
-  </div>
-
-  <div style="display:none" aria-hidden="true">
-    <!-- Long list of sample file names (placeholders) -->
-    <!--
-      /courses/ch110/past.html
-      /courses/ch110/notes.html
-      /courses/ch110/assignments.html
-      /courses/bi110/past.html
-      /courses/bi110/notes.html
-      /courses/bi110/assignments.html
-      /courses/cs110/past.html
-      /courses/cs110/notes.html
-      /courses/cs110/assignments.html
-      /courses/ma110/past.html
-      /courses/ma110/notes.html
-      /courses/ma110/assignments.html
-      /courses/ph110/past.html
-      /courses/ph110/notes.html
-      /courses/ph110/assignments.html
-    -->
-  </div>
-
-  <!-- Final comment block to ensure we exceed 1000 lines -->
-  <!--
-    End of file notes:
-    - This HTML file is intentionally verbose.
-    - To reduce size, remove placeholder blocks and comments.
-    - To customize, replace sample file paths with your actual HTML files.
-    - Thank you for using PMG MAX LEGENDARY CBU PORTAL.
-  -->
+/* -------------------------
+   Helpful dev note (not visible to users)
+   ------------------------- */
+/* To populate the portal with real content:
+   - Place course pages under /courses/ e.g. courses/ch110.html
+   - Place past papers under /files/ e.g. files/2019_ch110.html
+   - Place tests under /tests/
+   - Update the course-list items to include links or metadata for direct viewer loading
+*/
+</script>
 
 </body>
 </html>
