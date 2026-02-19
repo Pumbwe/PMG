@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>PMG MAX CBU PORTAL — Unified NON QUOTA & Industrial</title>
-<meta name="description" content="PMG MAX CBU Portal — Unified NON QUOTA (first year) and Industrial Chemistry (2nd year). Past papers, notes, assignments. Admin: silence — WhatsApp 0775302886.">
+<title>PMG MAX CBU PORTAL — NON QUOTA & Industrial</title>
+<meta name="description" content="PMG MAX CBU Portal — Two-track portal: NON QUOTA (unified) and Industrial Chemistry (2nd year). Admin: silence — WhatsApp 0775302886.">
 <style>
 :root{
   --bg:#020617;
@@ -18,7 +18,7 @@
   --card-glow:0 8px 30px rgba(37,99,235,0.12);
 }
 
-/* Reset */
+/* Reset and base */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
@@ -32,73 +32,77 @@ body{
 }
 
 /* Header */
-header{
+.header{
   padding:28px 18px;
   text-align:center;
   border-bottom:2px solid var(--gold);
   background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  backdrop-filter: blur(6px);
 }
-header h1{
+.header h1{
   margin:0;
   font-size:1.6rem;
   letter-spacing:0.6px;
 }
-header p{margin:6px 0 0;color:var(--muted)}
+.header p{margin:6px 0 0;color:var(--muted)}
 
-/* Navigation */
-.nav-wrap{
+/* Big two-button area */
+.hero{
   display:flex;
+  gap:18px;
   justify-content:center;
-  gap:10px;
-  padding:14px;
-  background:linear-gradient(180deg,#000814 0%, rgba(0,8,20,0.6) 100%);
+  align-items:center;
+  padding:28px 18px;
   flex-wrap:wrap;
+  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
 }
-.nav-btn{
-  background:var(--panel);
-  border:1px solid rgba(255,255,255,0.03);
-  color:var(--text);
-  padding:10px 16px;
-  border-radius:10px;
+.big-btn{
+  min-width:260px;
+  max-width:420px;
+  padding:22px 28px;
+  border-radius:18px;
+  border:none;
   cursor:pointer;
-  font-weight:700;
-  transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
-  display:inline-flex;
+  font-weight:900;
+  font-size:1.12rem;
+  color:#07102a;
+  background:linear-gradient(180deg,var(--gold),#eab308);
+  box-shadow: 0 12px 40px rgba(250,204,21,0.12);
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  display:flex;
+  flex-direction:column;
   gap:8px;
   align-items:center;
+  justify-content:center;
+  text-align:center;
 }
-.nav-btn:hover{ transform:translateY(-3px); box-shadow:var(--card-glow) }
-.nav-btn.selected{
-  background: linear-gradient(180deg, rgba(37,99,235,0.95), rgba(37,99,235,0.85));
-  color:white;
-  box-shadow: 0 8px 30px rgba(37,99,235,0.22);
-  transform:translateY(-2px);
-  border: 1px solid rgba(255,255,255,0.06);
+.big-btn:hover{ transform:translateY(-6px) }
+.big-btn.blue{
+  background:linear-gradient(180deg,var(--accent),#1e40af);
+  color:#fff;
+  box-shadow: 0 12px 40px rgba(37,99,235,0.18);
 }
 
-/* Small indicator (yellow -> blue on press) */
-.kv{
+/* Small legend indicator */
+.legend{
   display:inline-block;
-  padding:6px 10px;
-  border-radius:8px;
-  background:linear-gradient(180deg,#facc15,#eab308);
-  color:#0b1220;
+  padding:8px 12px;
+  border-radius:10px;
+  background:linear-gradient(180deg,var(--gold),#eab308);
+  color:#07102a;
   font-weight:800;
-  letter-spacing:0.6px;
-  box-shadow: 0 6px 18px rgba(250,204,21,0.12);
-  transition: background .12s ease, color .12s ease, box-shadow .12s ease;
+  margin-left:8px;
+  cursor:pointer;
+  transition: background .12s ease, color .12s ease;
 }
-.kv.pressed{
-  background: linear-gradient(180deg,#2563eb,#1e40af);
+.legend.pressed{
+  background:linear-gradient(180deg,var(--accent),#1e40af);
   color:#fff;
-  box-shadow: 0 10px 30px rgba(37,99,235,0.18);
 }
 
 /* Container */
 .container{
   max-width:1200px;
-  margin:22px auto;
+  margin:18px auto;
   padding:0 18px 80px;
 }
 
@@ -109,65 +113,65 @@ header p{margin:6px 0 0;color:var(--muted)}
 }
 .section.active{ display:block }
 
-/* Split layout for overview */
-.split{
+/* Two-column layout for lists and viewer */
+.layout{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:360px 1fr;
   gap:18px;
 }
-@media (max-width:900px){ .split{ grid-template-columns:1fr } }
+@media (max-width:980px){
+  .layout{ grid-template-columns:1fr; }
+}
 
-/* Panels and cards */
-.panel{
+/* Left panel (lists) */
+.left-panel{
   background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius:var(--radius);
   padding:14px;
+  border-radius:12px;
   border:1px solid rgba(255,255,255,0.02);
-  box-shadow: 0 6px 20px rgba(2,6,23,0.6);
 }
-.panel h3{ margin:0 0 8px }
-
-/* Course list */
-.course-list{
-  display:grid;
-  gap:10px;
-}
-.course-item{
+.track-title{ margin:0 0 8px; font-size:1.05rem }
+.list{ display:grid; gap:10px; margin-top:8px }
+.list .item{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:12px;
+  padding:10px;
   border-radius:10px;
-  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  background:rgba(255,255,255,0.01);
   border:1px solid rgba(255,255,255,0.02);
 }
-.course-item h4{ margin:0; font-size:1rem }
-.course-item p{ margin:0; color:var(--muted); font-size:0.92rem }
-.course-item button{
-  padding:8px 12px;
+.item .meta{ color:var(--muted); font-size:0.92rem }
+.item button{
+  padding:8px 10px;
   border-radius:8px;
   border:none;
-  cursor:pointer;
-  font-weight:800;
   background:linear-gradient(180deg,#0ea5e9,#0369a1);
   color:white;
+  font-weight:800;
+  cursor:pointer;
 }
 
-/* Course detail */
-.course-detail{
-  margin-top:12px;
-  background:var(--glass);
-  padding:12px;
-  border-radius:10px;
+/* Right panel (viewer + course detail) */
+.right-panel{
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  padding:14px;
+  border-radius:12px;
   border:1px solid rgba(255,255,255,0.02);
-  display:none;
+  min-height:520px;
 }
-.tabs{
+.course-header{
   display:flex;
-  gap:8px;
-  margin-bottom:12px;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
   flex-wrap:wrap;
 }
+.course-header h2{ margin:0; font-size:1.15rem }
+.course-sub{ color:var(--muted) }
+
+/* Tabs */
+.tabs{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap }
 .tab{
   padding:8px 12px;
   border-radius:8px;
@@ -175,20 +179,19 @@ header p{margin:6px 0 0;color:var(--muted)}
   border:1px solid rgba(255,255,255,0.03);
   color:var(--muted);
   cursor:pointer;
-  font-weight:700;
+  font-weight:800;
 }
 .tab.active{
   background:linear-gradient(180deg,#1e293b,#0f172a);
   color:var(--text);
   border:1px solid rgba(37,99,235,0.12);
-  box-shadow: 0 8px 20px rgba(2,6,23,0.6);
 }
 
-/* Panels inside course detail */
-.panel-list{ display:grid; gap:8px }
+/* Panels inside tabs */
+.panel-list{ margin-top:12px; display:grid; gap:8px }
 .panel-list a{
   display:block;
-  padding:8px 10px;
+  padding:10px;
   border-radius:8px;
   background:rgba(255,255,255,0.01);
   color:var(--text);
@@ -196,568 +199,465 @@ header p{margin:6px 0 0;color:var(--muted)}
   border:1px solid rgba(255,255,255,0.02);
 }
 
-/* Viewer */
+/* Viewer iframe */
 .viewer{
   width:100%;
-  height:560px;
-  border-radius:12px;
+  height:420px;
+  border-radius:10px;
   border:1px solid rgba(255,255,255,0.04);
-  margin-top:20px;
+  margin-top:14px;
   background:white;
 }
 
 /* Footer */
-footer{
-  margin-top:36px;
+.footer{
+  margin-top:22px;
   padding:18px;
   text-align:center;
   color:var(--muted);
   border-top:1px solid rgba(255,255,255,0.02);
 }
-.contact{
-  margin-top:8px;
-  font-weight:800;
-  color:var(--text);
-}
+.footer .contact{ font-weight:800; color:var(--text); margin-top:6px }
 
-/* Utility */
+/* Small helpers */
 .small{ font-size:0.92rem; color:var(--muted) }
 .code{ font-family:monospace; background:rgba(255,255,255,0.02); padding:2px 6px; border-radius:6px; color:var(--text) }
 </style>
 </head>
 <body>
 
-<header>
+<header class="header">
   <h1>🔥 PMG MAX CBU PORTAL 🔥</h1>
-  <p>Unified view — <strong>NON QUOTA</strong> (first year) and <strong>Industrial Chemistry</strong> (2nd year)</p>
+  <p class="small">Two-track portal: unified NON QUOTA and Industrial Chemistry (2nd year)</p>
 </header>
 
-<nav class="nav-wrap" role="navigation" aria-label="Main navigation">
-  <button class="nav-btn selected" data-target="overview">Overview</button>
-  <button class="nav-btn" data-target="nonquota">NON QUOTA</button>
-  <button class="nav-btn" data-target="industrial">Industrial Chemistry</button>
-  <button class="nav-btn" data-target="pastpapers">Past Papers</button>
-  <button class="nav-btn" data-target="templates">Templates</button>
-  <span style="margin-left:8px"></span>
-  <span class="kv" id="kv-indicator">LEGEND</span>
-</nav>
+<!-- Hero: two big buttons -->
+<section class="hero" aria-label="Main selection">
+  <button id="btn-nonquota" class="big-btn" aria-controls="nonquota-section" title="Open NON QUOTA track">
+    <span style="font-size:1.28rem">NON QUOTA</span>
+    <span class="small">Unified first-year block — CH110, BI110, CS110, MA110, PH110</span>
+  </button>
+
+  <button id="btn-industrial" class="big-btn" aria-controls="industrial-section" title="Open Industrial Chemistry track">
+    <span style="font-size:1.28rem">INDUSTRIAL CHEMISTRY</span>
+    <span class="small">2nd year industrial track — CH260, CH210, CH240, MA210, PH110</span>
+  </button>
+
+  <span id="legend" class="legend" title="Press to toggle color">LEGEND</span>
+</section>
 
 <div class="container">
 
-  <!-- Overview -->
-  <section id="overview" class="section active" aria-labelledby="overview-heading">
-    <h2 id="overview-heading">Portal Overview</h2>
-    <div class="split" role="region" aria-label="Tracks overview">
-      <div class="panel" aria-labelledby="nonquota-overview">
-        <h3 id="nonquota-overview">NON QUOTA — Unified First Year</h3>
-        <p class="small">All first-year non-quota courses are grouped here as a single block. Each course page contains three sections: <strong>Past Papers</strong>, <strong>Notes</strong>, and <strong>Assignments</strong>. Files are expected under <span class="code">NON_QUOTA/notes/</span>.</p>
-        <div style="margin-top:12px" class="course-list" id="overview-nonquota">
-          <div class="course-item" data-code="CH110">
+  <!-- NON QUOTA section (single unified block) -->
+  <section id="nonquota-section" class="section" aria-labelledby="nonquota-heading">
+    <div class="layout">
+      <aside class="left-panel" aria-label="NON QUOTA courses">
+        <h3 class="track-title" id="nonquota-heading">NON QUOTA — Courses (Unified)</h3>
+        <p class="small">Click a course to load its Past Papers, Notes and Assignments. Notes will be placed under the Notes tab; Tests have their own tab below.</p>
+
+        <div class="list" id="nonquota-list">
+          <div class="item" data-code="CH110">
             <div>
-              <h4>CH110 — Chemistry</h4>
-              <p>Introductory chemistry for first-year students.</p>
+              <strong>CH110</strong>
+              <div class="meta">Chemistry</div>
             </div>
             <button data-open="NON_QUOTA/notes/ch110.html">Open</button>
           </div>
 
-          <div class="course-item" data-code="BI110">
+          <div class="item" data-code="BI110">
             <div>
-              <h4>BI110 — Biology</h4>
-              <p>Foundations of biology for life sciences.</p>
+              <strong>BI110</strong>
+              <div class="meta">Biology</div>
             </div>
             <button data-open="NON_QUOTA/notes/bi110.html">Open</button>
           </div>
 
-          <div class="course-item" data-code="CS110">
+          <div class="item" data-code="CS110">
             <div>
-              <h4>CS110 — Computer Studies</h4>
-              <p>Basic programming and computer literacy.</p>
+              <strong>CS110</strong>
+              <div class="meta">Computer Studies</div>
             </div>
             <button data-open="NON_QUOTA/notes/cs110.html">Open</button>
           </div>
 
-          <div class="course-item" data-code="MA110">
+          <div class="item" data-code="MA110">
             <div>
-              <h4>MA110 — Mathematics</h4>
-              <p>Calculus, algebra and problem solving.</p>
+              <strong>MA110</strong>
+              <div class="meta">Mathematics</div>
             </div>
             <button data-open="NON_QUOTA/notes/ma110.html">Open</button>
           </div>
 
-          <div class="course-item" data-code="PH110">
+          <div class="item" data-code="PH110">
             <div>
-              <h4>PH110 — Physics</h4>
-              <p>Mechanics, waves and basic electricity.</p>
+              <strong>PH110</strong>
+              <div class="meta">Physics</div>
             </div>
             <button data-open="NON_QUOTA/notes/ph110.html">Open</button>
           </div>
         </div>
-      </div>
 
-      <div class="panel" aria-labelledby="industrial-overview">
-        <h3 id="industrial-overview">Industrial Chemistry — 2nd Year</h3>
-        <p class="small">Industrial track courses are grouped separately. Each course page contains Past Papers, Notes, and Assignments. Files are expected under <span class="code">industrial_chemistry/</span>.</p>
-        <div style="margin-top:12px" class="course-list" id="overview-industrial">
-          <div class="course-item" data-code="CH260">
+        <div style="margin-top:12px">
+          <h4 class="small">Notes area</h4>
+          <p class="small">Under Notes you will place lecture notes and resources for the selected course.</p>
+        </div>
+
+        <div style="margin-top:12px">
+          <h4 class="small">Tests area</h4>
+          <p class="small">Under Tests you will place test pages or links for the selected course.</p>
+        </div>
+      </aside>
+
+      <main class="right-panel" aria-live="polite">
+        <div class="course-header">
+          <div>
+            <h2 id="course-title-nq">Select a NON QUOTA course</h2>
+            <div id="course-sub-nq" class="course-sub small">Past Papers · Notes · Assignments · Tests</div>
+          </div>
+
+          <div>
+            <div class="tabs" role="tablist" aria-label="NON QUOTA course tabs">
+              <button class="tab active" data-tab="papers-nq">Past Papers</button>
+              <button class="tab" data-tab="notes-nq">Notes</button>
+              <button class="tab" data-tab="assignments-nq">Assignments</button>
+              <button class="tab" data-tab="tests-nq">Tests</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="panels-nq" style="margin-top:12px">
+          <div id="papers-nq" class="panel-list">
+            <p class="small">Select a course on the left to view its past papers. Example files are listed below as placeholders; replace with your actual files in <span class="code">files/</span> or inside the course folder.</p>
+
+            <!-- CH110 example list (will be replaced dynamically when course selected) -->
+            <a href="files/2019_ch110.html" data-file="files/2019_ch110.html">2019 — CH110</a>
+            <a href="files/2020_ch110.html" data-file="files/2020_ch110.html">2020 — CH110</a>
+            <a href="files/2021_ch110.html" data-file="files/2021_ch110.html">2021 — CH110</a>
+            <a href="files/2022_ch110.html" data-file="files/2022_ch110.html">2022 — CH110</a>
+            <a href="files/2023_ch110.html" data-file="files/2023_ch110.html">2023 — CH110</a>
+            <a href="files/2024_ch110.html" data-file="files/2024_ch110.html">2024 — CH110</a>
+            <a href="files/2025_ch110.html" data-file="files/2025_ch110.html">2025 — CH110</a>
+          </div>
+
+          <div id="notes-nq" class="panel-list" style="display:none">
+            <p class="small">Notes for the selected NON QUOTA course will appear here. Add lecture notes, formula sheets and worked examples in the course page under <span class="code">NON_QUOTA/notes/</span>.</p>
+            <a href="NON_QUOTA/notes/ch110_notes_intro.html" data-file="NON_QUOTA/notes/ch110_notes_intro.html">CH110 — Intro Notes (placeholder)</a>
+            <a href="NON_QUOTA/notes/bi110_notes_intro.html" data-file="NON_QUOTA/notes/bi110_notes_intro.html">BI110 — Intro Notes (placeholder)</a>
+          </div>
+
+          <div id="assignments-nq" class="panel-list" style="display:none">
+            <p class="small">Assignments for the selected NON QUOTA course will appear here. Provide assignment descriptions and submission instructions in the course page.</p>
+            <a href="NON_QUOTA/assignments/ch110_assign1.html" data-file="NON_QUOTA/assignments/ch110_assign1.html">CH110 — Assignment 1 (placeholder)</a>
+          </div>
+
+          <div id="tests-nq" class="panel-list" style="display:none">
+            <p class="small">Tests and quizzes for the selected NON QUOTA course will appear here. You can link interactive test pages or static PDFs.</p>
+            <a href="tests/ch110_test.html" data-file="tests/ch110_test.html">CH110 — Test (placeholder)</a>
+          </div>
+        </div>
+
+        <iframe id="viewer-nq" class="viewer" title="NON QUOTA viewer" src="about:blank"></iframe>
+      </main>
+    </div>
+  </section>
+
+  <!-- INDUSTRIAL section -->
+  <section id="industrial-section" class="section" aria-labelledby="industrial-heading">
+    <div class="layout">
+      <aside class="left-panel" aria-label="Industrial courses">
+        <h3 class="track-title" id="industrial-heading">Industrial Chemistry — 2nd Year</h3>
+        <p class="small">Click a course to load its Past Papers, Notes and Assignments. Tests are separate and will appear under the Tests tab for each course.</p>
+
+        <div class="list" id="industrial-list">
+          <div class="item" data-code="CH260">
             <div>
-              <h4>CH260 — Organic Chemistry</h4>
-              <p>Structure, reactivity and synthesis of organic compounds.</p>
+              <strong>CH260</strong>
+              <div class="meta">Organic Chemistry</div>
             </div>
             <button data-open="industrial_chemistry/ch260.html">Open</button>
           </div>
 
-          <div class="course-item" data-code="CH210">
+          <div class="item" data-code="CH210">
             <div>
-              <h4>CH210 — Industrial Chemistry</h4>
-              <p>Large-scale chemical processes and plant operations.</p>
+              <strong>CH210</strong>
+              <div class="meta">Industrial Chemistry</div>
             </div>
             <button data-open="industrial_chemistry/ch210.html">Open</button>
           </div>
 
-          <div class="course-item" data-code="CH240">
+          <div class="item" data-code="CH240">
             <div>
-              <h4>CH240 — Analytical Chemistry</h4>
-              <p>Quantitative and qualitative analysis techniques.</p>
+              <strong>CH240</strong>
+              <div class="meta">Analytical Chemistry</div>
             </div>
             <button data-open="industrial_chemistry/ch240.html">Open</button>
           </div>
 
-          <div class="course-item" data-code="MA210">
+          <div class="item" data-code="MA210">
             <div>
-              <h4>MA210 — Industrial Mathematics</h4>
-              <p>Mathematical methods used in industrial process modelling.</p>
+              <strong>MA210</strong>
+              <div class="meta">Industrial Mathematics</div>
             </div>
             <button data-open="industrial_chemistry/ma210.html">Open</button>
           </div>
 
-          <div class="course-item" data-code="PH110-IND">
+          <div class="item" data-code="PH110-IND">
             <div>
-              <h4>PH110 — Industrial Physics</h4>
-              <p>Applied physics topics relevant to industrial settings.</p>
+              <strong>PH110</strong>
+              <div class="meta">Industrial Physics</div>
             </div>
             <button data-open="industrial_chemistry/ph110.html">Open</button>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div style="margin-top:16px" class="panel">
-      <strong>How to use</strong>
-      <p class="small">Click a course's Open button to load its course page into the viewer below. Course pages follow the convention:
-        <ul>
-          <li><span class="code">NON_QUOTA/notes/&lt;code&gt;.html</span> for non-quota courses</li>
-          <li><span class="code">industrial_chemistry/&lt;code&gt;.html</span> for industrial courses</li>
-          <li>Past papers may also be stored under <span class="code">files/</span> as <span class="code">files/&lt;year&gt;_&lt;code&gt;.html</span></li>
-        </ul>
-      </p>
-    </div>
-  </section>
-
-  <!-- NON QUOTA section -->
-  <section id="nonquota" class="section" aria-labelledby="nonquota-heading">
-    <h2 id="nonquota-heading">NON QUOTA — First Year (Unified)</h2>
-    <div class="panel">
-      <p class="small">This section treats NON QUOTA as a single unified block. All first-year courses are listed here with direct Open links to their course pages. Course pages must include Past Papers, Notes and Assignments sections.</p>
-
-      <div class="course-list" id="nonquota-courses">
-        <!-- CH110 -->
-        <div class="course-item" data-code="CH110">
-          <div>
-            <h4>CH110 — Chemistry</h4>
-            <p>Core chemistry topics for first-year students.</p>
-          </div>
-          <button data-open="NON_QUOTA/notes/ch110.html">Open</button>
+        <div style="margin-top:12px">
+          <h4 class="small">Notes area</h4>
+          <p class="small">Under Notes you will place lecture notes and resources for the selected industrial course.</p>
         </div>
 
-        <!-- BI110 -->
-        <div class="course-item" data-code="BI110">
+        <div style="margin-top:12px">
+          <h4 class="small">Tests area</h4>
+          <p class="small">Under Tests you will place test pages or links for the selected industrial course.</p>
+        </div>
+      </aside>
+
+      <main class="right-panel" aria-live="polite">
+        <div class="course-header">
           <div>
-            <h4>BI110 — Biology</h4>
-            <p>Foundational biology topics and lab work.</p>
+            <h2 id="course-title-ind">Select an Industrial course</h2>
+            <div id="course-sub-ind" class="course-sub small">Past Papers · Notes · Assignments · Tests</div>
           </div>
-          <button data-open="NON_QUOTA/notes/bi110.html">Open</button>
+
+          <div>
+            <div class="tabs" role="tablist" aria-label="Industrial course tabs">
+              <button class="tab active" data-tab="papers-ind">Past Papers</button>
+              <button class="tab" data-tab="notes-ind">Notes</button>
+              <button class="tab" data-tab="assignments-ind">Assignments</button>
+              <button class="tab" data-tab="tests-ind">Tests</button>
+            </div>
+          </div>
         </div>
 
-        <!-- CS110 -->
-        <div class="course-item" data-code="CS110">
-          <div>
-            <h4>CS110 — Computer Studies</h4>
-            <p>Introductory programming and computer systems.</p>
+        <div id="panels-ind" style="margin-top:12px">
+          <div id="papers-ind" class="panel-list">
+            <p class="small">Select an industrial course on the left to view its past papers. Example placeholders are listed below.</p>
+
+            <a href="files/2019_ch260.html" data-file="files/2019_ch260.html">2019 — CH260</a>
+            <a href="files/2020_ch260.html" data-file="files/2020_ch260.html">2020 — CH260</a>
+            <a href="files/2021_ch260.html" data-file="files/2021_ch260.html">2021 — CH260</a>
+            <a href="files/2022_ch260.html" data-file="files/2022_ch260.html">2022 — CH260</a>
+            <a href="files/2023_ch260.html" data-file="files/2023_ch260.html">2023 — CH260</a>
+            <a href="files/2024_ch260.html" data-file="files/2024_ch260.html">2024 — CH260</a>
+            <a href="files/2025_ch260.html" data-file="files/2025_ch260.html">2025 — CH260</a>
           </div>
-          <button data-open="NON_QUOTA/notes/cs110.html">Open</button>
+
+          <div id="notes-ind" class="panel-list" style="display:none">
+            <p class="small">Notes for the selected industrial course will appear here. Place lecture notes and resources in <span class="code">industrial_chemistry/</span>.</p>
+            <a href="industrial_chemistry/ch260_notes_intro.html" data-file="industrial_chemistry/ch260_notes_intro.html">CH260 — Intro Notes (placeholder)</a>
+          </div>
+
+          <div id="assignments-ind" class="panel-list" style="display:none">
+            <p class="small">Assignments for the selected industrial course will appear here.</p>
+            <a href="industrial_chemistry/ch210_assign1.html" data-file="industrial_chemistry/ch210_assign1.html">CH210 — Assignment 1 (placeholder)</a>
+          </div>
+
+          <div id="tests-ind" class="panel-list" style="display:none">
+            <p class="small">Tests and quizzes for the selected industrial course will appear here.</p>
+            <a href="tests/ch210_test.html" data-file="tests/ch210_test.html">CH210 — Test (placeholder)</a>
+          </div>
         </div>
 
-        <!-- MA110 -->
-        <div class="course-item" data-code="MA110">
-          <div>
-            <h4>MA110 — Mathematics</h4>
-            <p>Calculus, algebra and problem solving for engineers.</p>
-          </div>
-          <button data-open="NON_QUOTA/notes/ma110.html">Open</button>
-        </div>
-
-        <!-- PH110 -->
-        <div class="course-item" data-code="PH110">
-          <div>
-            <h4>PH110 — Physics</h4>
-            <p>Mechanics, waves and electricity fundamentals.</p>
-          </div>
-          <button data-open="NON_QUOTA/notes/ph110.html">Open</button>
-        </div>
-      </div>
-    </div>
-
-    <div style="margin-top:12px" class="panel">
-      <strong>Course page expectations</strong>
-      <p class="small">Each course page should include:
-        <ol>
-          <li><strong>Past Papers</strong> — list of year-labeled HTML files or links to files/&lt;year&gt;_&lt;code&gt;.html</li>
-          <li><strong>Notes</strong> — lecture notes, formula sheets, worked examples</li>
-          <li><strong>Assignments</strong> — weekly problem sets and lab tasks</li>
-        </ol>
-      </p>
+        <iframe id="viewer-ind" class="viewer" title="Industrial viewer" src="about:blank"></iframe>
+      </main>
     </div>
   </section>
-
-  <!-- Industrial section -->
-  <section id="industrial" class="section" aria-labelledby="industrial-heading">
-    <h2 id="industrial-heading">Industrial Chemistry — 2nd Year</h2>
-    <div class="panel">
-      <p class="small">Industrial track courses are listed below. Each course page should follow the same Past Papers / Notes / Assignments layout for consistency.</p>
-
-      <div class="course-list" id="industrial-courses">
-        <div class="course-item" data-code="CH260">
-          <div>
-            <h4>CH260 — Organic Chemistry</h4>
-            <p>Industrial organic chemistry topics and synthesis.</p>
-          </div>
-          <button data-open="industrial_chemistry/ch260.html">Open</button>
-        </div>
-
-        <div class="course-item" data-code="CH210">
-          <div>
-            <h4>CH210 — Industrial Chemistry</h4>
-            <p>Process chemistry, plant operations and safety.</p>
-          </div>
-          <button data-open="industrial_chemistry/ch210.html">Open</button>
-        </div>
-
-        <div class="course-item" data-code="CH240">
-          <div>
-            <h4>CH240 — Analytical Chemistry</h4>
-            <p>Instrumentation and quantitative analysis.</p>
-          </div>
-          <button data-open="industrial_chemistry/ch240.html">Open</button>
-        </div>
-
-        <div class="course-item" data-code="MA210">
-          <div>
-            <h4>MA210 — Industrial Mathematics</h4>
-            <p>Mathematical modelling for industrial processes.</p>
-          </div>
-          <button data-open="industrial_chemistry/ma210.html">Open</button>
-        </div>
-
-        <div class="course-item" data-code="PH110-IND">
-          <div>
-            <h4>PH110 — Industrial Physics</h4>
-            <p>Applied physics for industrial systems.</p>
-          </div>
-          <button data-open="industrial_chemistry/ph110.html">Open</button>
-        </div>
-      </div>
-    </div>
-
-    <div style="margin-top:12px" class="panel">
-      <strong>Industrial course notes</strong>
-      <p class="small">Place industrial course pages under <span class="code">industrial_chemistry/</span>. Example: <span class="code">industrial_chemistry/ch210.html</span>. Each page should include clear links to past papers and notes.</p>
-    </div>
-  </section>
-
-  <!-- Past Papers central -->
-  <section id="pastpapers" class="section" aria-labelledby="pastpapers-heading">
-    <h2 id="pastpapers-heading">Past Papers (Central)</h2>
-    <div class="panel">
-      <p class="small">A central folder <span class="code">files/</span> can host past papers for all courses. Use the naming convention <span class="code">&lt;year&gt;_&lt;code&gt;.html</span> (e.g., <span class="code">2019_ch110.html</span>).</p>
-
-      <div style="margin-top:12px" class="panel-list" id="pastpapers-list">
-        <!-- For each course and year we provide an entry. These are placeholders; replace with actual file links. -->
-        <!-- CH110 past papers -->
-        <a href="files/2019_ch110.html" data-file="files/2019_ch110.html">2019 — CH110</a>
-        <a href="files/2020_ch110.html" data-file="files/2020_ch110.html">2020 — CH110</a>
-        <a href="files/2021_ch110.html" data-file="files/2021_ch110.html">2021 — CH110</a>
-        <a href="files/2022_ch110.html" data-file="files/2022_ch110.html">2022 — CH110</a>
-        <a href="files/2023_ch110.html" data-file="files/2023_ch110.html">2023 — CH110</a>
-        <a href="files/2024_ch110.html" data-file="files/2024_ch110.html">2024 — CH110</a>
-        <a href="files/2025_ch110.html" data-file="files/2025_ch110.html">2025 — CH110</a>
-
-        <!-- PH110 past papers -->
-        <a href="files/2019_ph110.html" data-file="files/2019_ph110.html">2019 — PH110</a>
-        <a href="files/2020_ph110.html" data-file="files/2020_ph110.html">2020 — PH110</a>
-        <a href="files/2021_ph110.html" data-file="files/2021_ph110.html">2021 — PH110</a>
-        <a href="files/2022_ph110.html" data-file="files/2022_ph110.html">2022 — PH110</a>
-        <a href="files/2023_ph110.html" data-file="files/2023_ph110.html">2023 — PH110</a>
-        <a href="files/2024_ph110.html" data-file="files/2024_ph110.html">2024 — PH110</a>
-        <a href="files/2025_ph110.html" data-file="files/2025_ph110.html">2025 — PH110</a>
-
-        <!-- BI110 past papers -->
-        <a href="files/2019_bi110.html" data-file="files/2019_bi110.html">2019 — BI110</a>
-        <a href="files/2020_bi110.html" data-file="files/2020_bi110.html">2020 — BI110</a>
-        <a href="files/2021_bi110.html" data-file="files/2021_bi110.html">2021 — BI110</a>
-        <a href="files/2022_bi110.html" data-file="files/2022_bi110.html">2022 — BI110</a>
-        <a href="files/2023_bi110.html" data-file="files/2023_bi110.html">2023 — BI110</a>
-        <a href="files/2024_bi110.html" data-file="files/2024_bi110.html">2024 — BI110</a>
-        <a href="files/2025_bi110.html" data-file="files/2025_bi110.html">2025 — BI110</a>
-
-        <!-- CS110 past papers -->
-        <a href="files/2019_cs110.html" data-file="files/2019_cs110.html">2019 — CS110</a>
-        <a href="files/2020_cs110.html" data-file="files/2020_cs110.html">2020 — CS110</a>
-        <a href="files/2021_cs110.html" data-file="files/2021_cs110.html">2021 — CS110</a>
-        <a href="files/2022_cs110.html" data-file="files/2022_cs110.html">2022 — CS110</a>
-        <a href="files/2023_cs110.html" data-file="files/2023_cs110.html">2023 — CS110</a>
-        <a href="files/2024_cs110.html" data-file="files/2024_cs110.html">2024 — CS110</a>
-        <a href="files/2025_cs110.html" data-file="files/2025_cs110.html">2025 — CS110</a>
-
-        <!-- CH260 past papers -->
-        <a href="files/2019_ch260.html" data-file="files/2019_ch260.html">2019 — CH260</a>
-        <a href="files/2020_ch260.html" data-file="files/2020_ch260.html">2020 — CH260</a>
-        <a href="files/2021_ch260.html" data-file="files/2021_ch260.html">2021 — CH260</a>
-        <a href="files/2022_ch260.html" data-file="files/2022_ch260.html">2022 — CH260</a>
-        <a href="files/2023_ch260.html" data-file="files/2023_ch260.html">2023 — CH260</a>
-        <a href="files/2024_ch260.html" data-file="files/2024_ch260.html">2024 — CH260</a>
-        <a href="files/2025_ch260.html" data-file="files/2025_ch260.html">2025 — CH260</a>
-
-        <!-- CH210 past papers -->
-        <a href="files/2019_ch210.html" data-file="files/2019_ch210.html">2019 — CH210</a>
-        <a href="files/2020_ch210.html" data-file="files/2020_ch210.html">2020 — CH210</a>
-        <a href="files/2021_ch210.html" data-file="files/2021_ch210.html">2021 — CH210</a>
-        <a href="files/2022_ch210.html" data-file="files/2022_ch210.html">2022 — CH210</a>
-        <a href="files/2023_ch210.html" data-file="files/2023_ch210.html">2023 — CH210</a>
-        <a href="files/2024_ch210.html" data-file="files/2024_ch210.html">2024 — CH210</a>
-        <a href="files/2025_ch210.html" data-file="files/2025_ch210.html">2025 — CH210</a>
-
-        <!-- CH240 past papers -->
-        <a href="files/2019_ch240.html" data-file="files/2019_ch240.html">2019 — CH240</a>
-        <a href="files/2020_ch240.html" data-file="files/2020_ch240.html">2020 — CH240</a>
-        <a href="files/2021_ch240.html" data-file="files/2021_ch240.html">2021 — CH240</a>
-        <a href="files/2022_ch240.html" data-file="files/2022_ch240.html">2022 — CH240</a>
-        <a href="files/2023_ch240.html" data-file="files/2023_ch240.html">2023 — CH240</a>
-        <a href="files/2024_ch240.html" data-file="files/2024_ch240.html">2024 — CH240</a>
-        <a href="files/2025_ch240.html" data-file="files/2025_ch240.html">2025 — CH240</a>
-
-        <!-- MA210 past papers -->
-        <a href="files/2019_ma210.html" data-file="files/2019_ma210.html">2019 — MA210</a>
-        <a href="files/2020_ma210.html" data-file="files/2020_ma210.html">2020 — MA210</a>
-        <a href="files/2021_ma210.html" data-file="files/2021_ma210.html">2021 — MA210</a>
-        <a href="files/2022_ma210.html" data-file="files/2022_ma210.html">2022 — MA210</a>
-        <a href="files/2023_ma210.html" data-file="files/2023_ma210.html">2023 — MA210</a>
-        <a href="files/2024_ma210.html" data-file="files/2024_ma210.html">2024 — MA210</a>
-        <a href="files/2025_ma210.html" data-file="files/2025_ma210.html">2025 — MA210</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Templates section -->
-  <section id="templates" class="section" aria-labelledby="templates-heading">
-    <h2 id="templates-heading">Course Page Template (Drop-in)</h2>
-    <div class="panel">
-      <p class="small">Use the template below to create consistent course pages. Save each as <span class="code">&lt;folder&gt;/&lt;code&gt;.html</span>. Replace placeholders with actual content.</p>
-
-      <pre style="white-space:pre-wrap;background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;color:var(--text);overflow:auto;">
-&lt;!-- Course page template: copy into NON_QUOTA/notes/ch110.html or industrial_chemistry/ch210.html --&gt;
-&lt;!doctype html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-  &lt;meta charset="utf-8"&gt;
-  &lt;meta name="viewport" content="width=device-width,initial-scale=1"&gt;
-  &lt;title&gt;CH110 — Course Page&lt;/title&gt;
-  &lt;style&gt;
-    body{font-family:Segoe UI,Arial;background:#07102a;color:#e5e7eb;padding:18px}
-    h1{margin-top:0}
-    .section{margin-bottom:18px;padding:12px;border-radius:8px;background:#0f172a}
-    a{color:#60a5fa}
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;h1&gt;CH110 — Chemistry&lt;/h1&gt;
-  &lt;div class="section"&gt;
-    &lt;h2&gt;Past Papers&lt;/h2&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href="../files/2019_ch110.html"&gt;2019 — CH110&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href="../files/2020_ch110.html"&gt;2020 — CH110&lt;/a&gt;&lt;/li&gt;
-      &lt;!-- add more years --&gt;
-    &lt;/ul&gt;
-  &lt;/div&gt;
-  &lt;div class="section"&gt;
-    &lt;h2&gt;Notes&lt;/h2&gt;
-    &lt;p&gt;Lecture notes, formula sheets and worked examples go here.&lt;/p&gt;
-  &lt;/div&gt;
-  &lt;div class="section"&gt;
-    &lt;h2&gt;Assignments&lt;/h2&gt;
-    &lt;ol&gt;
-      &lt;li&gt;Assignment 1 — description and submission instructions&lt;/li&gt;
-      &lt;li&gt;Assignment 2 — description and submission instructions&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-      </pre>
-
-      <p class="small">Create one file per course using this template. The portal will load these files into the viewer when Open is clicked.</p>
-    </div>
-  </section>
-
-  <!-- Course detail (dynamic) -->
-  <div id="course-detail" class="course-detail" aria-live="polite">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-      <div>
-        <strong id="course-title">No course selected</strong>
-        <div id="course-sub" class="small">Select a course to view Past Papers, Notes and Assignments.</div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <div class="tabs" role="tablist" aria-label="Course tabs">
-          <button class="tab active" data-tab="papers">Past Papers</button>
-          <button class="tab" data-tab="notes">Notes</button>
-          <button class="tab" data-tab="assignments">Assignments</button>
-        </div>
-        <div style="display:flex;gap:8px">
-          <button class="nav-btn" id="open-in-viewer">Open in Viewer</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="course-content" style="margin-top:12px">
-      <div id="papers-panel">
-        <p class="small">Past papers for the selected course will appear here. Use the central files folder or course folder links.</p>
-      </div>
-
-      <div id="notes-panel" style="display:none">
-        <p class="small">Notes and lecture material will appear here when the course page is loaded.</p>
-      </div>
-
-      <div id="assignments-panel" style="display:none">
-        <p class="small">Assignments and submission instructions will appear here when the course page is loaded.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Viewer iframe -->
-  <iframe id="viewer" class="viewer" title="Document viewer" src="about:blank"></iframe>
 
   <!-- Footer -->
-  <footer>
+  <footer class="footer" role="contentinfo">
     <div><strong>Admin</strong>: <span class="contact">silence</span></div>
     <div><strong>WhatsApp</strong>: <span class="contact">0775302886</span></div>
-    <div style="margin-top:10px;color:var(--muted)">Place course pages and past papers in the repository folders listed above. The portal loads them into the viewer by convention.</div>
   </footer>
-
 </div>
 
 <script>
-/* Navigation */
-const navButtons = document.querySelectorAll('.nav-btn');
-const sections = document.querySelectorAll('.section');
-navButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const target = btn.dataset.target;
-    navButtons.forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    sections.forEach(s => s.classList.remove('active'));
-    const sec = document.getElementById(target);
-    if(sec) sec.classList.add('active');
-    // scroll to top of container for clarity
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-});
+/* Core behavior:
+   - Two big buttons: show NON QUOTA or Industrial sections.
+   - Each section has a left list of courses and a right viewer with tabs: Past Papers, Notes, Assignments, Tests.
+   - Clicking a course loads that course's specific past papers/notes/assignments/tests into the right panel and loads the course page into the iframe viewer.
+   - Notes and Tests are separate tabs; user will place content in the repo under the expected paths.
+*/
 
-/* KV press effect */
-const kv = document.getElementById('kv-indicator');
-kv.addEventListener('click', () => {
-  kv.classList.add('pressed');
-  setTimeout(() => kv.classList.remove('pressed'), 900);
-});
+/* Helpers */
+function $(sel, root=document) { return root.querySelector(sel); }
+function $all(sel, root=document) { return Array.from(root.querySelectorAll(sel)); }
 
-/* Course open logic */
-const openButtons = document.querySelectorAll('button[data-open]');
-const viewer = document.getElementById('viewer');
-const courseDetail = document.getElementById('course-detail');
-const courseTitle = document.getElementById('course-title');
-const courseSub = document.getElementById('course-sub');
-const tabs = Array.from(document.querySelectorAll('.tab'));
+/* Elements */
+const btnNon = document.getElementById('btn-nonquota');
+const btnInd = document.getElementById('btn-industrial');
+const legend = document.getElementById('legend');
 
-function setActiveTab(name){
-  tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-  document.getElementById('papers-panel').style.display = (name === 'papers') ? '' : 'none';
-  document.getElementById('notes-panel').style.display = (name === 'notes') ? '' : 'none';
-  document.getElementById('assignments-panel').style.display = (name === 'assignments') ? '' : 'none';
+const nonSection = document.getElementById('nonquota-section');
+const indSection = document.getElementById('industrial-section');
+
+const navSections = [nonSection, indSection];
+
+/* Show section function */
+function showSection(section){
+  navSections.forEach(s => s.classList.remove('active'));
+  if(section) section.classList.add('active');
+  // scroll to top for clarity
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-openButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const path = btn.getAttribute('data-open');
-    const item = btn.closest('.course-item');
-    const code = item?.dataset.code || path.split('/').pop().split('.')[0];
-    const title = item?.querySelector('h4')?.innerText || code;
-    const meta = item?.querySelector('p')?.innerText || '';
-    // Determine viewer path: prefer exact path if it ends with .html, else try folder index
-    let viewerPath = path;
-    if(!viewerPath.endsWith('.html')){
-      // try conventional paths
-      if(path.startsWith('NON_QUOTA')) viewerPath = path.replace(/\/?$/, '') + '/notes/' + code.toLowerCase() + '.html';
-      else if(path.startsWith('industrial_chemistry')) viewerPath = path.replace(/\/?$/, '') + '/' + code.toLowerCase() + '.html';
-      else viewerPath = path.replace(/\/?$/, '') + '/index.html';
+/* Initial state: none visible until user clicks a big button (keeps hero prominent) */
+showSection(null);
+
+/* Big button handlers */
+btnNon.addEventListener('click', () => {
+  showSection(nonSection);
+  btnNon.classList.add('blue');
+  btnInd.classList.remove('blue');
+});
+btnInd.addEventListener('click', () => {
+  showSection(indSection);
+  btnInd.classList.add('blue');
+  btnNon.classList.remove('blue');
+});
+
+/* Legend press effect (yellow -> blue) */
+legend.addEventListener('click', () => {
+  legend.classList.add('pressed');
+  setTimeout(() => legend.classList.remove('pressed'), 900);
+});
+
+/* Tab switching utility */
+function setupTabs(root, mapping){
+  const tabs = $all('.tab', root);
+  tabs.forEach(t => {
+    t.addEventListener('click', () => {
+      const name = t.dataset.tab;
+      tabs.forEach(x => x.classList.toggle('active', x === t));
+      // hide/show panels based on naming convention
+      Object.keys(mapping).forEach(k => {
+        const el = $(mapping[k], root);
+        if(el) el.style.display = (k === name) ? '' : 'none';
+      });
+    });
+  });
+}
+
+/* NON QUOTA tabs */
+setupTabs(document.getElementById('nonquota-section'), {
+  'papers-nq': '#papers-nq',
+  'notes-nq': '#notes-nq',
+  'assignments-nq': '#assignments-nq',
+  'tests-nq': '#tests-nq'
+});
+
+/* INDUSTRIAL tabs */
+setupTabs(document.getElementById('industrial-section'), {
+  'papers-ind': '#papers-ind',
+  'notes-ind': '#notes-ind',
+  'assignments-ind': '#assignments-ind',
+  'tests-ind': '#tests-ind'
+});
+
+/* Course open logic for both tracks */
+function attachCourseOpen(listRoot, viewerId, titleId, subId, panelsPrefix){
+  const openButtons = $all('button[data-open]', listRoot);
+  openButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const path = btn.getAttribute('data-open');
+      const item = btn.closest('.item');
+      const code = item?.dataset.code || path.split('/').pop().split('.')[0];
+      const title = item?.querySelector('strong')?.innerText || code;
+      const meta = item?.querySelector('.meta')?.innerText || '';
+      // Update header
+      const titleEl = document.getElementById(titleId);
+      const subEl = document.getElementById(subId);
+      if(titleEl) titleEl.innerText = title + ' — ' + code;
+      if(subEl) subEl.innerText = meta;
+      // Show the appropriate panels and default to Past Papers
+      const rootSection = listRoot.closest('.section');
+      if(rootSection){
+        // Activate Past Papers tab
+        const papersTab = rootSection.querySelector('.tab[data-tab="papers-' + (panelsPrefix==='nq' ? 'nq' : 'ind') + '"]');
+        if(papersTab) papersTab.click();
+      }
+      // Load course-specific past papers list into the panel (replace placeholders)
+      // Convention: past papers in files/<year>_<code>.html OR inside course folder
+      const codeLower = code.toLowerCase();
+      const papersPanel = document.getElementById('papers-' + panelsPrefix);
+      if(papersPanel){
+        // Build a list of years 2019-2025 for this course
+        const years = [2019,2020,2021,2022,2023,2024,2025];
+        let html = '<p class="small">Past papers for ' + code + ' (place actual files in <span class=\"code\">files/</span> or in the course folder).</p>';
+        years.forEach(y => {
+          const filePath = 'files/' + y + '_' + codeLower + '.html';
+          html += '<a href=\"' + filePath + '\" data-file=\"' + filePath + '\">' + y + ' — ' + code + '</a>';
+        });
+        papersPanel.innerHTML = html;
+      }
+      // Notes panel: show link to course notes file (convention)
+      const notesPanel = document.getElementById('notes-' + panelsPrefix);
+      if(notesPanel){
+        const notesPath = (panelsPrefix === 'nq' ? 'NON_QUOTA/notes/' : 'industrial_chemistry/') + codeLower + '.html';
+        notesPanel.innerHTML = '<p class=\"small\">Notes for ' + code + ' (place course notes at: <span class=\"code\">' + notesPath + '</span>).</p>' +
+                               '<a href=\"' + notesPath + '\" data-file=\"' + notesPath + '\">Open course notes (' + code + ')</a>';
+      }
+      // Assignments panel
+      const assignPanel = document.getElementById('assignments-' + panelsPrefix);
+      if(assignPanel){
+        const assignPath = (panelsPrefix === 'nq' ? 'NON_QUOTA/assignments/' : 'industrial_chemistry/assignments/') + codeLower + '_assignments.html';
+        assignPanel.innerHTML = '<p class=\"small\">Assignments for ' + code + ' (place assignment pages at: <span class=\"code\">' + assignPath + '</span>).</p>' +
+                                '<a href=\"' + assignPath + '\" data-file=\"' + assignPath + '\">Open assignments (' + code + ')</a>';
+      }
+      // Tests panel
+      const testsPanel = document.getElementById('tests-' + panelsPrefix);
+      if(testsPanel){
+        const testPath = 'tests/' + codeLower + '_test.html';
+        testsPanel.innerHTML = '<p class=\"small\">Tests for ' + code + ' (place test pages at: <span class=\"code\">' + testPath + '</span>).</p>' +
+                               '<a href=\"' + testPath + '\" data-file=\"' + testPath + '\">Open test (' + code + ')</a>';
+      }
+      // Load the course page into the iframe viewer if the path exists or follows convention
+      const viewer = document.getElementById(viewerId);
+      let viewerPath = path;
+      if(!viewerPath.endsWith('.html')){
+        // try conventional path
+        if(path.startsWith('NON_QUOTA')) viewerPath = 'NON_QUOTA/notes/' + codeLower + '.html';
+        else if(path.startsWith('industrial_chemistry')) viewerPath = 'industrial_chemistry/' + codeLower + '.html';
+        else viewerPath = path + '/index.html';
+      }
+      if(viewer) viewer.src = viewerPath;
+      // Ensure course detail area is visible (scroll into view)
+      const rightPanel = viewer ? viewer.closest('.right-panel') : null;
+      if(rightPanel) rightPanel.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+}
+
+/* Attach for NON QUOTA */
+attachCourseOpen(document.getElementById('nonquota-list'), 'viewer-nq', 'course-title-nq', 'course-sub-nq', 'nq');
+
+/* Attach for INDUSTRIAL */
+attachCourseOpen(document.getElementById('industrial-list'), 'viewer-ind', 'course-title-ind', 'course-sub-ind', 'ind');
+
+/* Accessibility: keyboard activation for course items */
+$all('.item').forEach(it => {
+  it.setAttribute('tabindex', '0');
+  it.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      const btn = it.querySelector('button[data-open]');
+      if(btn) btn.click();
     }
-    // Update UI
-    courseTitle.innerText = title;
-    courseSub.innerText = meta;
-    courseDetail.style.display = 'block';
-    setActiveTab('papers');
-    // Load into viewer
-    viewer.src = viewerPath;
   });
 });
 
-/* Tabs click */
-tabs.forEach(t => t.addEventListener('click', () => setActiveTab(t.dataset.tab)));
+/* Prevent accidental navigation inside iframe from breaking layout: nothing special required here.
+   The portal expects course pages and files to be present in the repository. If a file is missing,
+   the iframe will show the host's 404 page. Upload course pages to the repo paths used above to make them load. */
 
-/* Open-in-viewer button */
-document.getElementById('open-in-viewer').addEventListener('click', () => {
-  // If viewer is blank, open a default index
-  if(!viewer.src || viewer.src === 'about:blank') viewer.src = 'about:blank';
-});
-
-/* Keyboard accessibility */
-document.querySelectorAll('.course-item').forEach(item => {
-  item.setAttribute('tabindex', '0');
-  item.addEventListener('keydown', (e) => {
-    if(e.key === 'Enter' || e.key === ' ') item.querySelector('button[data-open]').click();
-  });
-});
-
-/* Restore last selected nav in session */
-(function restoreNav(){
-  const saved = sessionStorage.getItem('pmg_selected_nav');
-  if(saved){
-    const btn = Array.from(navButtons).find(b => b.dataset.target === saved);
-    if(btn){
-      navButtons.forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      sections.forEach(s => s.classList.remove('active'));
-      const sec = document.getElementById(saved);
-      if(sec) sec.classList.add('active');
-    }
-  }
-})();
-navButtons.forEach(b => b.addEventListener('click', () => {
-  if(b.dataset.target) sessionStorage.setItem('pmg_selected_nav', b.dataset.target);
-}));
-
-/* Developer note (invisible to users): keep file structure consistent:
-   - index.html (this file)
-   - NON_QUOTA/notes/<code>.html
-   - industrial_chemistry/<code>.html
-   - files/<year>_<code>.html
-*/
+/* End of script */
 </script>
 
 </body>
