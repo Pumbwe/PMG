@@ -1,588 +1,313 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>PMG MAX CBU PORTAL — Super Legendary</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔥 PMG MAX LEGENDARY CBU PORTAL 🔥</title>
 
-<!-- Styles -->
 <style>
 :root{
-  --bg:#030417;
-  --panel:#07102a;
-  --glass: rgba(255,255,255,0.04);
-  --accent-1: #7c3aed;
-  --accent-2: #06b6d4;
-  --gold: #facc15;
-  --muted: #9ca3af;
-  --text: #e6eef8;
-  --card-glow: 0 8px 30px rgba(124,58,237,0.12);
-  --glass-border: rgba(255,255,255,0.06);
-  --radius: 14px;
-  --max-width: 1200px;
-  --ease: cubic-bezier(.2,.9,.3,1);
+  --bg:#020617;
+  --panel:#0f172a;
+  --accent:#2563eb;
+  --gold:#facc15;
+  --text:#e5e7eb;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
 body{
   margin:0;
-  font-family:Inter, "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
-  background:
-    radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.08), transparent 8%),
-    radial-gradient(900px 400px at 90% 90%, rgba(6,182,212,0.04), transparent 8%),
-    var(--bg);
+  font-family:Segoe UI, sans-serif;
+  background:var(--bg);
   color:var(--text);
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  padding-bottom:48px;
 }
 
-/* Header */
-.header{
-  max-width:var(--max-width);
-  margin:18px auto;
-  padding:18px;
-  display:flex;
-  gap:16px;
-  align-items:center;
-  border-radius:12px;
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border:1px solid var(--glass-border);
-  box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+header{
+  background:black;
+  padding:25px;
+  text-align:center;
+  border-bottom:3px solid var(--gold);
 }
-.logo{
-  width:72px;
-  height:72px;
-  border-radius:12px;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
-  color:white;
-  font-weight:800;
-  font-size:20px;
-  box-shadow: 0 6px 30px rgba(7,16,42,0.6), inset 0 -6px 18px rgba(255,255,255,0.06);
-}
-.header h1{
+
+header h1{
   margin:0;
-  font-size:20px;
-  letter-spacing:0.6px;
-}
-.header p{
-  margin:0;
-  color:var(--muted);
-  font-size:13px;
+  font-size:2rem;
 }
 
-/* Top controls */
-.controls{
-  margin-left:auto;
+nav{
   display:flex;
-  gap:10px;
-  align-items:center;
-}
-.btn{
-  background:var(--panel);
-  border:1px solid var(--glass-border);
-  color:var(--text);
-  padding:8px 12px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:600;
-  transition:transform .18s var(--ease), box-shadow .18s var(--ease);
-}
-.btn:hover{ transform:translateY(-3px); box-shadow:var(--card-glow) }
-.btn.ghost{ background:transparent; color:var(--muted); border:1px dashed rgba(255,255,255,0.03) }
-
-/* Nav */
-.nav{
-  max-width:var(--max-width);
-  margin:18px auto;
-  display:flex;
-  gap:10px;
-  padding:12px;
-  align-items:center;
-  justify-content:center;
   flex-wrap:wrap;
-}
-.nav button{
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-  border:1px solid rgba(255,255,255,0.03);
-  color:var(--text);
-  padding:10px 14px;
-  border-radius:12px;
-  cursor:pointer;
-  font-weight:700;
-  letter-spacing:0.4px;
-  transition:transform .18s var(--ease), background .18s var(--ease);
-}
-.nav button.active{
-  background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
-  color:white;
-  transform:translateY(-4px) scale(1.02);
-  box-shadow: 0 10px 40px rgba(6,182,212,0.12);
+  justify-content:center;
+  gap:10px;
+  padding:15px;
+  background:#000814;
 }
 
-/* Layout */
-.container{
-  max-width:var(--max-width);
-  margin:18px auto;
-  padding:18px;
+nav button{
+  background:var(--panel);
+  border:none;
+  padding:12px 18px;
+  color:white;
+  cursor:pointer;
+  border-radius:8px;
+  font-weight:bold;
+  transition:0.3s;
 }
+
+nav button:hover{
+  background:var(--accent);
+  transform:scale(1.05);
+}
+
 .section{
   display:none;
-  animation:fadeIn .36s var(--ease) both;
+  padding:20px;
+  max-width:1200px;
+  margin:auto;
 }
-.section.active{ display:block }
 
-/* Grid and cards */
+.section.active{
+  display:block;
+}
+
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:16px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:15px;
 }
+
 .card{
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius:var(--radius);
-  padding:14px;
-  border:1px solid var(--glass-border);
-  transition:transform .18s var(--ease), box-shadow .18s var(--ease);
-  cursor:default;
-  position:relative;
-  overflow:hidden;
-}
-.card:hover{ transform:translateY(-8px); box-shadow:var(--card-glow) }
-.card h3{ margin:0 0 8px 0; font-size:16px }
-.card p{ margin:0; color:var(--muted); font-size:13px }
-.card .actions{
-  margin-top:12px;
-  display:flex;
-  gap:8px;
-}
-.card .actions button{
-  flex:1;
-  padding:10px;
-  border-radius:10px;
-  border:none;
-  cursor:pointer;
-  font-weight:700;
-  color:white;
-  background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
-  transition:transform .12s var(--ease);
-}
-.card .tag{
-  position:absolute;
-  right:12px;
-  top:12px;
-  background:rgba(0,0,0,0.25);
-  padding:6px 8px;
-  border-radius:8px;
-  font-size:12px;
-  color:var(--gold);
-  border:1px solid rgba(255,255,255,0.03);
-}
-
-/* Viewer modal */
-.viewer-modal{
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.75));
-  z-index:1200;
-  padding:20px;
-}
-.viewer-modal.open{ display:flex }
-.viewer-frame{
-  width:100%;
-  max-width:1100px;
-  height:72vh;
+  background:var(--panel);
+  padding:16px;
   border-radius:12px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,0.04);
+  box-shadow:0 4px 10px rgba(0,0,0,0.5);
+}
+
+.card h3{
+  margin-top:0;
+}
+
+.card button{
+  width:100%;
+  padding:12px;
+  background:var(--accent);
+  border:none;
+  border-radius:6px;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.2s;
+}
+
+.card button:hover{
+  background:var(--gold);
+  color:black;
+}
+
+.viewer{
+  width:100%;
+  height:550px;
+  border:none;
+  margin-top:20px;
   background:white;
-  box-shadow: 0 30px 80px rgba(2,6,23,0.7);
 }
-.viewer-toolbar{
-  display:flex;
-  gap:8px;
+
+.sub-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+  margin-top:10px;
+}
+
+.sub-card{
+  background:#1e293b;
   padding:10px;
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-  align-items:center;
-  border-bottom:1px solid rgba(255,255,255,0.02);
-}
-.viewer-toolbar .meta{ color:var(--muted); font-size:13px; margin-left:auto }
-
-/* Hero / intro */
-.hero{
-  display:flex;
-  gap:18px;
-  align-items:flex-start;
-  margin-bottom:18px;
-}
-.hero .lead{
-  flex:1;
-}
-.hero .lead h2{ margin:0 0 8px 0; font-size:20px }
-.hero .lead p{ margin:0; color:var(--muted) }
-
-/* Footer */
-.footer{
-  max-width:var(--max-width);
-  margin:28px auto 60px;
-  color:var(--muted);
-  font-size:13px;
+  border-radius:8px;
   text-align:center;
 }
 
-/* Tiny utilities */
-.kbd{
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.03);
-  padding:6px 8px;
-  border-radius:8px;
-  font-weight:700;
-  font-size:12px;
-  color:var(--muted);
+.sub-card button{
+  padding:8px;
+  width:100%;
+  background:var(--accent);
+  border:none;
+  border-radius:6px;
+  color:white;
+  cursor:pointer;
 }
 
-/* Animations */
-@keyframes fadeIn{ from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none} }
-
-/* Responsive tweaks */
-@media (max-width:720px){
-  .header{ flex-direction:column; align-items:flex-start; gap:8px }
-  .controls{ margin-left:0; width:100%; justify-content:space-between }
-  .hero{ flex-direction:column }
-  .viewer-frame{ height:60vh }
+.sub-card button:hover{
+  background:var(--gold);
+  color:black;
 }
 </style>
 
-</head>
-<body>
-
-<!-- Header -->
-<div class="header" role="banner" aria-label="PMG MAX Portal header">
-  <div class="logo" aria-hidden="true">PMG</div>
-  <div>
-    <h1>PMG MAX LEGENDARY CBU PORTAL</h1>
-    <p>Engineering • Industrial Chemistry • Non Quota Elite Study System</p>
-  </div>
-
-  <div class="controls" role="region" aria-label="Top controls">
-    <button class="btn" id="btnLegend">Make Legendary</button>
-    <button class="btn ghost" id="btnHelp" title="Keyboard shortcuts">Shortcuts</button>
-  </div>
-</div>
-
-<!-- Navigation -->
-<nav class="nav" role="navigation" aria-label="Main navigation">
-  <button data-section="home" class="active">Home</button>
-  <button data-section="years">Years</button>
-  <button data-section="courses">Courses</button>
-  <button data-section="tests">Tests</button>
-  <button data-section="industrial">Industrial Chemistry</button>
-</nav>
-
-<!-- Main container -->
-<main class="container" id="main" role="main">
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="lead">
-      <h2>Non Quota System</h2>
-      <p>Non quota students at Copperbelt University pay full tuition but receive the same lectures, labs and degrees. This portal collects past papers, course resources and practice tests for serious students.</p>
-    </div>
-    <div style="min-width:220px; text-align:right">
-      <div style="margin-bottom:8px"><span class="kbd">G</span> jump to grid</div>
-      <div><span class="kbd">/</span> quick search</div>
-    </div>
-  </section>
-
-  <!-- Sections -->
-  <section id="home" class="section active" aria-labelledby="home-heading">
-    <h3 id="home-heading">Overview</h3>
-    <p style="color:var(--muted)">Quick access to past papers, course materials and test center. Use the navigation above or keyboard shortcuts to move fast.</p>
-  </section>
-
-  <section id="years" class="section" aria-labelledby="years-heading">
-    <h3 id="years-heading">Past Papers 2019-2025</h3>
-    <div class="grid" id="papersGrid" tabindex="0" aria-live="polite">
-      <!-- Example card template repeated -->
-      <article class="card" data-path="files/2019_ch110.html" aria-label="2019 CH110 past paper">
-        <div class="tag">2019</div>
-        <h3>CH110 Organic Foundations</h3>
-        <p>Introductory chemistry past paper for 2019.</p>
-        <div class="actions">
-          <button class="openBtn">Open</button>
-          <button class="downloadBtn" data-file="files/2019_ch110.pdf">Download</button>
-        </div>
-      </article>
-
-      <article class="card" data-path="files/2019_ph110.html" aria-label="2019 PH110 past paper">
-        <div class="tag">2019</div>
-        <h3>PH110 Mechanics</h3>
-        <p>Fundamentals of physics past paper for 2019.</p>
-        <div class="actions">
-          <button class="openBtn">Open</button>
-          <button class="downloadBtn" data-file="files/2019_ph110.pdf">Download</button>
-        </div>
-      </article>
-
-      <article class="card" data-path="files/2019_bi110.html" aria-label="2019 BI110 past paper">
-        <div class="tag">2019</div>
-        <h3>BI110 Biology Basics</h3>
-        <p>Introductory biology past paper for 2019.</p>
-        <div class="actions">
-          <button class="openBtn">Open</button>
-          <button class="downloadBtn" data-file="files/2019_bi110.pdf">Download</button>
-        </div>
-      </article>
-
-      <!-- More cards can be added programmatically or by copy/paste -->
-    </div>
-  </section>
-
-  <section id="courses" class="section" aria-labelledby="courses-heading">
-    <h3 id="courses-heading">Courses</h3>
-    <div class="grid">
-      <div class="card">
-        <h3>Mathematics</h3>
-        <p>Calculus, Linear Algebra, Differential Equations.</p>
-        <div class="actions"><button onclick="openPage('courses/math.html')">Open</button></div>
-      </div>
-      <div class="card">
-        <h3>Physics</h3>
-        <p>Mechanics, Thermodynamics, Electromagnetism.</p>
-        <div class="actions"><button onclick="openPage('courses/physics.html')">Open</button></div>
-      </div>
-      <div class="card">
-        <h3>Chemistry</h3>
-        <p>Physical, Organic, Analytical.</p>
-        <div class="actions"><button onclick="openPage('courses/chemistry.html')">Open</button></div>
-      </div>
-      <div class="card">
-        <h3>Industrial Chemistry</h3>
-        <p>Process chemistry, plant operations, quality control.</p>
-        <div class="actions"><button onclick="openPage('courses/industrial.html')">Open</button></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="tests" class="section" aria-labelledby="tests-heading">
-    <h3 id="tests-heading">Test Center</h3>
-    <div class="grid">
-      <div class="card">
-        <h3>CH110 Test</h3>
-        <p>Timed practice test for CH110.</p>
-        <div class="actions"><button onclick="openPage('tests/ch110.html')">Open</button></div>
-      </div>
-      <div class="card">
-        <h3>PH110 Test</h3>
-        <p>Timed practice test for PH110.</p>
-        <div class="actions"><button onclick="openPage('tests/ph110.html')">Open</button></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="industrial" class="section" aria-labelledby="industrial-heading">
-    <h3 id="industrial-heading">Industrial Chemistry</h3>
-    <p style="color:var(--muted)">Training for large scale chemical production, mining chemistry, cement manufacturing, environmental monitoring and industrial process control.</p>
-    <ul>
-      <li>Mopani Copper Mines – Process Chemist</li>
-      <li>KCM – Metallurgical Chemist</li>
-      <li>Zambian Breweries – Quality Control</li>
-      <li>Trade Kings – Production Chemist</li>
-      <li>Lafarge Cement – Process Analyst</li>
-      <li>Environmental Council – Environmental Chemist</li>
-    </ul>
-  </section>
-
-</main>
-
-<!-- Viewer Modal -->
-<div id="viewerModal" class="viewer-modal" role="dialog" aria-modal="true" aria-label="Document viewer">
-  <div style="width:100%; max-width:1100px;">
-    <div class="viewer-toolbar">
-      <button class="btn" id="closeViewer">Close</button>
-      <button class="btn ghost" id="openNewTab">Open in new tab</button>
-      <div class="meta" id="viewerMeta">Loading</div>
-    </div>
-    <iframe id="viewerFrame" class="viewer-frame" title="Document viewer" src=""></iframe>
-  </div>
-</div>
-
-<!-- Footer -->
-<footer class="footer" role="contentinfo">
-  <div>Made legendary for serious students • Saved section in your browser</div>
-  <div style="margin-top:8px; color:var(--muted)">Tip: Press <span class="kbd">1</span> Home <span class="kbd">2</span> Years <span class="kbd">3</span> Courses</div>
-</footer>
-
-<!-- Scripts -->
 <script>
-/* Utility helpers */
-const qs = s => document.querySelector(s);
-const qsa = s => Array.from(document.querySelectorAll(s));
-
-/* Persist last section */
-const LAST_KEY = 'pmg_last_section';
-function showSection(id, push=true){
-  qsa('.section').forEach(s=>s.classList.remove('active'));
-  qsa('.nav button').forEach(b=>b.classList.remove('active'));
-  const btn = qsa('.nav button').find(b=>b.dataset.section===id);
-  if(btn) btn.classList.add('active');
-  const sec = qs('#'+id);
-  if(sec) sec.classList.add('active');
-  if(push) localStorage.setItem(LAST_KEY, id);
-  // focus first actionable element for accessibility
-  setTimeout(()=> {
-    const focusable = sec && sec.querySelector('button, a, [tabindex]');
-    if(focusable) focusable.focus();
-  }, 120);
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
-
-/* Initialize nav */
-qsa('.nav button').forEach(btn=>{
-  btn.addEventListener('click', ()=> showSection(btn.dataset.section));
-});
-
-/* Restore last section */
-const last = localStorage.getItem(LAST_KEY);
-if(last) showSection(last, false);
-
-/* Open page in viewer modal */
-const viewerModal = qs('#viewerModal');
-const viewerFrame = qs('#viewerFrame');
-const viewerMeta = qs('#viewerMeta');
 
 function openPage(path){
-  // If path looks like a PDF or HTML, open in iframe
-  viewerFrame.src = path;
-  viewerMeta.textContent = path.split('/').pop();
-  viewerModal.classList.add('open');
-  viewerModal.style.display = 'flex';
-  // Save last opened file for quick reopen
-  localStorage.setItem('pmg_last_file', path);
+  document.getElementById('viewer').src=path;
 }
 
-/* Wire up card open buttons */
-qsa('.card .openBtn').forEach(btn=>{
-  btn.addEventListener('click', e=>{
-    const card = e.target.closest('.card');
-    const path = card && card.dataset.path;
-    if(path) openPage(path);
-  });
-});
-
-/* Download buttons (graceful fallback) */
-qsa('.card .downloadBtn').forEach(btn=>{
-  btn.addEventListener('click', e=>{
-    const file = btn.dataset.file;
-    if(!file) return alert('No file attached');
-    // create temporary link
-    const a = document.createElement('a');
-    a.href = file;
-    a.download = file.split('/').pop();
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  });
-});
-
-/* Viewer controls */
-qs('#closeViewer').addEventListener('click', ()=> {
-  viewerModal.classList.remove('open');
-  viewerFrame.src = '';
-});
-qs('#openNewTab').addEventListener('click', ()=> {
-  const src = viewerFrame.src || localStorage.getItem('pmg_last_file') || '#';
-  window.open(src, '_blank');
-});
-
-/* Keyboard shortcuts */
-document.addEventListener('keydown', (e)=>{
-  if(e.key === '1') showSection('home');
-  if(e.key === '2') showSection('years');
-  if(e.key === '3') showSection('courses');
-  if(e.key === '4') showSection('tests');
-  if(e.key === '5') showSection('industrial');
-  if(e.key === 'g' || e.key === 'G') {
-    const grid = qs('#papersGrid');
-    if(grid) grid.focus();
-  }
-  if(e.key === 'Escape') {
-    if(viewerModal.classList.contains('open')) {
-      viewerModal.classList.remove('open');
-      viewerFrame.src = '';
-    }
-  }
-  if(e.key === '/') {
-    e.preventDefault();
-    // quick search prompt
-    const q = prompt('Quick search papers and courses (type a keyword)');
-    if(q) {
-      // naive client-side search highlight
-      const cards = qsa('.card');
-      let found = false;
-      cards.forEach(c=>{
-        const text = (c.textContent || '').toLowerCase();
-        if(text.includes(q.toLowerCase())){
-          c.style.border = '1px solid rgba(124,58,237,0.9)';
-          c.scrollIntoView({behavior:'smooth', block:'center'});
-          found = true;
-        } else {
-          c.style.border = '1px solid var(--glass-border)';
-        }
-      });
-      if(!found) alert('No matches found for \"' + q + '\"');
-    }
-  }
-});
-
-/* Make Legendary button effect */
-qs('#btnLegend').addEventListener('click', ()=>{
-  // small celebratory animation: pulse nav and highlight cards
-  qsa('.nav button').forEach((b,i)=>{
-    setTimeout(()=> b.classList.add('active'), i*60);
-    setTimeout(()=> b.classList.remove('active'), 1200 + i*60);
-  });
-  qsa('.card').forEach((c,i)=>{
-    setTimeout(()=> c.style.transform = 'translateY(-12px) scale(1.02)', 200 + i*40);
-    setTimeout(()=> c.style.transform = '', 1200 + i*40);
-  });
-  // flash header
-  const logo = qs('.logo');
-  logo.animate([
-    { transform: 'scale(1)', boxShadow: '0 6px 30px rgba(124,58,237,0.12)' },
-    { transform: 'scale(1.08)', boxShadow: '0 20px 60px rgba(6,182,212,0.18)' },
-    { transform: 'scale(1)', boxShadow: '0 6px 30px rgba(124,58,237,0.12)' }
-  ], { duration:900, easing:'ease-out' });
-});
-
-/* Quick open last file on load if present */
-window.addEventListener('load', ()=>{
-  const lastFile = localStorage.getItem('pmg_last_file');
-  if(lastFile) {
-    // show a subtle hint to reopen
-    console.info('Last opened file', lastFile);
-  }
-});
-
-/* Expose openPage globally for inline onclick handlers */
-window.openPage = openPage;
-
-/* Accessibility improvements */
-document.querySelectorAll('.card').forEach(c=>{
-  c.setAttribute('tabindex','0');
-  c.addEventListener('keydown', (e)=>{
-    if(e.key === 'Enter' || e.key === ' ') {
-      const path = c.dataset.path;
-      if(path) openPage(path);
-    }
-  });
-});
+function showCourses(type){
+  document.querySelectorAll('.courses-grid').forEach(c=>c.style.display='none');
+  document.getElementById(type).style.display='grid';
+  showSection('courses');
+}
 </script>
+</head>
+
+<body>
+
+<header>
+  <h1>🔥 PMG MAX LEGENDARY CBU PORTAL 🔥</h1>
+  <p>Engineering • Industrial Chemistry • Non-Quota Elite Study System</p>
+</header>
+
+<nav>
+  <button onclick="showSection('home')">Home</button>
+  <button onclick="showSection('years')">Years</button>
+  <button onclick="showSection('tests')">Tests</button>
+  <button onclick="showCourses('nonquota')">Non-Quota Courses</button>
+  <button onclick="showCourses('industrial')">Industrial Chemistry</button>
+</nav>
+
+<!-- HOME SECTION -->
+<section id="home" class="section active">
+  <h2>Welcome to PMG MAX CBU Portal</h2>
+  <p>
+    This portal is designed for serious Non-Quota and Industrial Chemistry students.
+    Access past papers, notes, and assignments for your courses, all in one legendary place.
+  </p>
+</section>
+
+<!-- YEARS / PAST PAPERS -->
+<section id="years" class="section">
+  <h2>Past Papers 2019-2025</h2>
+  <div class="grid">
+    <div class="card"><h3>2019 CH110</h3><button onclick="openPage('files/2019_ch110.html')">Open</button></div>
+    <div class="card"><h3>2020 CH110</h3><button onclick="openPage('files/2020_ch110.html')">Open</button></div>
+    <div class="card"><h3>2021 CH110</h3><button onclick="openPage('files/2021_ch110.html')">Open</button></div>
+    <div class="card"><h3>2022 CH110</h3><button onclick="openPage('files/2022_ch110.html')">Open</button></div>
+    <div class="card"><h3>2023 CH110</h3><button onclick="openPage('files/2023_ch110.html')">Open</button></div>
+    <div class="card"><h3>2024 CH110</h3><button onclick="openPage('files/2024_ch110.html')">Open</button></div>
+    <div class="card"><h3>2025 CH110</h3><button onclick="openPage('files/2025_ch110.html')">Open</button></div>
+  </div>
+</section>
+
+<!-- TESTS SECTION -->
+<section id="tests" class="section">
+  <h2>Test Center</h2>
+  <div class="grid">
+    <div class="card"><h3>CH110 Test</h3><button onclick="openPage('tests/ch110.html')">Open</button></div>
+    <div class="card"><h3>PH110 Test</h3><button onclick="openPage('tests/ph110.html')">Open</button></div>
+    <div class="card"><h3>BI110 Test</h3><button onclick="openPage('tests/bi110.html')">Open</button></div>
+    <div class="card"><h3>CS110 Test</h3><button onclick="openPage('tests/cs110.html')">Open</button></div>
+    <div class="card"><h3>EE110 Test</h3><button onclick="openPage('tests/ee110.html')">Open</button></div>
+  </div>
+</section>
+
+<!-- COURSES SECTION -->
+<section id="courses" class="section">
+  <h2>Courses</h2>
+
+  <!-- NON QUOTA COURSES -->
+  <div id="nonquota" class="courses-grid" style="display:none">
+    <div class="grid">
+      <div class="card">
+        <h3>CH110 Chemistry</h3>
+        <div class="sub-grid">
+          <div class="sub-card"><button onclick="openPage('nonquota/ch110/papers.html')">Past Papers</button></div>
+          <div class="sub-card"><button onclick="openPage('nonquota/ch110/notes.html')">Notes</button></div>
+          <div class="sub-card"><button onclick="openPage('nonquota/ch110/assignments.html')">Assignments</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>BI110 Biology</h3>
+        <div class="sub-grid">
+          <div class="sub-card"><button onclick="openPage('nonquota/bi110/papers.html')">Past Papers</button></div>
+          <div class="sub-card"><button onclick="openPage('nonquota/bi110/notes.html')">Notes</button></div>
+          <div class="sub-card"><button onclick="openPage('nonquota/bi110/assignments.html')">Assignments</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>CS110 Computer Studies</h3>
+        <div class="sub-grid">
+          <div class="sub-card"><button onclick="openPage('nonquota/cs110/papers.html')">Past Papers</button></div>
+          <div class="sub-card"><button onclick="openPage('nonquota/cs110/notes.html')">Notes</button></div>
+          <div class="sub-card"><button onclick="openPage('nonquota/cs110/assignments.html')">Assignments</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>MA110 Mathematics</h3>
+        <div class="sub-grid">
+          <div class="sub-card"><button onclick="openPage('nonquota/ma110/papers.html')">Past Papers</button></div>
+          <div class="sub-card"><button onclick="openPage('nonquota/ma110/notes.html')">Notes</button></div>
+          <div class="sub-card"><button onclick="openPage('nonquota/ma110/assignments.html')">Assignments</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>PH110 Physics</h3>
+        <div class="sub-grid">
+          <div class="sub-card"><button onclick="openPage('nonquota/ph110/papers.html')">Past Papers</button></div>
+          <div class="sub-card"><button onclick="openPage('nonquota/ph110/notes.html')">Notes</button></div>
+          <div class="sub-card"><button onclick="openPage('nonquota/ph110/assignments.html')">Assignments</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INDUSTRIAL CHEMISTRY COURSES -->
+  <div id="industrial" class="courses-grid" style="display:none">
+    <div class="grid">
+      <div class="card">
+        <h3>CH260 Organic Chemistry</h3>
+        <div class="sub-grid">
+          <div class="sub-card"><button onclick="openPage('industrial/ch260/papers.html')">Past Papers</button></div>
+          <div class="sub-card"><button onclick="openPage('industrial/ch260/notes.html')">Notes</button></div>
+          <div class="sub-card"><button onclick="openPage('industrial/ch260/assignments.html')">Assignments</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>CH210 Industrial Chemistry</h3>
+        <div class="sub-grid">
+          <div class="sub-card"><button onclick="openPage('industrial/ch210/papers.html')">Past Papers</button></div>
+          <div class="sub-card"><button onclick="openPage('industrial/ch210/notes.html')">Notes</button></div>
+          <div class="sub-card"><button onclick="openPage('industrial/ch210/assignments.html')">Assignments</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>CH240 Analytical Chemistry</h3>
+        <div class="sub-grid">
+          <div class="sub-card"><button onclick="openPage('industrial/ch240/papers.html')">Past Papers</button></div>
+          <div class="sub-card"><button onclick="openPage('industrial/ch240/notes.html')">Notes</button></div>
+          <div class="sub-card"><button onclick="openPage('industrial/ch240/assignments.html')">Assignments</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>MA210 Industrial Mathematics</h3>
+        <div class="sub-grid">
+          <div class="sub-card"><button onclick="openPage('industrial/ma210/papers.html')">Past Papers</button></div>
+          <div class="sub-card"><button onclick="openPage('industrial/ma210/notes.html')">Notes</button></div>
+          <div class="sub-card"><button onclick="openPage('industrial/ma210/assignments.html')">Assignments</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>PH110 Industrial Physics</h3>
+        <div class="sub-grid">
+          <div class="sub-card"><button onclick="openPage('industrial/ph110/papers.html')">Past Papers</button></div>
+          <div class="sub-card"><button onclick="openPage('industrial/ph110/notes.html')">Notes</button></div>
+          <div class="sub-card"><button onclick="openPage('industrial/ph110/assignments.html')">Assignments</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIEWER -->
+<iframe id="viewer" class="viewer"></iframe>
 
 </body>
 </html>
