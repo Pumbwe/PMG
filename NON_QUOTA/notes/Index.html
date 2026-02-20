@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Notes</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        nav {
+            background-color: #1f1f1f;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px;
+        }
+        .course-card {
+            background-color: #2e2e2e;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 15px;
+            transition: transform 0.2s;
+        }
+        .course-card:hover {
+            transform: scale(1.05);
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Course List</a>
+        <a href="#">Contact</a>
+    </nav>
+    <h1>Course Cards</h1>
+    <div class="container">
+        <div class="course-card">
+            <h2>Course 1</h2>
+            <p>Description of course 1.</p>
+        </div>
+        <div class="course-card">
+            <h2>Course 2</h2>
+            <p>Description of course 2.</p>
+        </div>
+        <div class="course-card">
+            <h2>Course 3</h2>
+            <p>Description of course 3.</p>
+        </div>
+    </div>
+</body>
+</html>
